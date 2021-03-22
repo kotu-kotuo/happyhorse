@@ -1,5 +1,11 @@
+import { Layout } from "../components/Layout";
+
 const Show = () => {
-  return <div>show</div>;
+  return (
+    <Layout title="show">
+      <div>show</div>
+    </Layout>
+  );
 };
 
 export default Show;
