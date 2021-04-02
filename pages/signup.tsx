@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Layout } from "../components/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth } from "../src/utils/firebase";
+import { auth, db } from "../src/utils/firebase";
 
 const SignUp: React.FC = () => {
   const router = useRouter();
@@ -16,14 +16,21 @@ const SignUp: React.FC = () => {
       await auth
         .createUserWithEmailAndPassword(email, password)
         .then(async (result) => {
-          return await result.user.updateProfile({
-            displayName: username,
+          db.collection("users").doc(`${result.user.uid}`).set({
+            id: result.user.uid,
+            username: username,
+            avatar: "/avatar.png",
+            cover: "/cover1.jpg",
+            profileText: "",
+            good: 0,
+            bad:0,
           });
+
+          router.push("/");
         })
         .catch((error) => {
           alert(error.message);
         });
-      router.push("/");
     } catch (error) {
       alert(error.message);
     }
