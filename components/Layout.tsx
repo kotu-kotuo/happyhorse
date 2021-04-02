@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../src/auth/AuthProvider";
 import Head from "next/head";
 import Link from "next/link";
@@ -12,7 +12,7 @@ interface TITLE {
 
 export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const { currentUser, setCurrentUser, user } = useContext(AuthContext);
 
   const logout = async (e) => {
     e.preventDefault();
@@ -63,91 +63,97 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
           </div>
 
           <div className="ml-auto flex items-center">
-            <Link href="/show">
-              <a>show</a>
-            </Link>
-            <Link href="/signup">
-              <a>signup</a>
-            </Link>
-            <Link href="/login">
-              <a>login</a>
-            </Link>
+            {!currentUser && (
+              <>
+                <Link href="/signup">
+                  <a className="text-gray-600">新規登録</a>
+                </Link>
+                <span className="mx-1.5"> | </span>
+                <Link href="/login">
+                  <a className="text-gray-600">ログイン</a>
+                </Link>
+              </>
+            )}
 
-            <GoBell className="mx-4 text-3xl text-gray-400" />
+            {currentUser && (
+              <>
+                <GoBell className="mx-4 text-3xl text-gray-400" />
 
-            <div
-              className="mt-1.5 focus:outline-none relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                onClick={() => setIsOpenMenu(!isOpenMenu)}
-                src="/flowers.jpg"
-                className="object-cover rounded-full cursor-pointer"
-                width={40}
-                height={40}
-              />
-              <div hidden={!isOpenMenu}>
-                <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0">
-                  <div className="text-center p-6  border-b">
-                    <img
-                      className="h-24 w-24 rounded-full mx-auto"
-                      src="https://randomuser.me/api/portraits/men/24.jpg"
-                      alt="Randy Robertson"
-                    />
-                    <p className="pt-2 text-lg font-semibold">
-                      Randy Robertson
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      randy.robertson@example.com
-                    </p>
-                    <div className="mt-5">
-                      <a
-                        href="#"
-                        className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700"
-                      >
-                        プロフィールを編集する
-                      </a>
+                <div
+                  className="mt-1.5 focus:outline-none relative"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <img
+                    onClick={() => setIsOpenMenu(!isOpenMenu)}
+                    src={user?.avatar}
+                    className="object-cover rounded-full cursor-pointer h-10 w-10 mb-1"
+                  />
+                  <div hidden={!isOpenMenu}>
+                    <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60">
+                      <div className="text-center p-6  border-b ">
+                        <img
+                          className="h-24 w-24 rounded-full mx-auto"
+                          src={user.avatar}
+                          alt="avatar"
+                        />
+                        <p className="pt-2 text-lg font-semibold">
+                          {`${user.username}`}
+                        </p>
+                        <div className="mt-5">
+                          <Link href="profile">
+                            <a
+                              href="#"
+                              className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700"
+                            >
+                              マイプロフィール
+                            </a>
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="border-b">
+                        <a
+                          href="#"
+                          className="px-4 py-2 hover:bg-gray-100 flex"
+                        >
+                          <div className="text-gray-800">
+                            <svg
+                              fill="none"
+                              stroke="currentColor"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="1"
+                              viewBox="0 0 24 24"
+                              className="w-5 h-5"
+                            >
+                              <path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </div>
+                          <div className="pl-3">
+                            <p className="text-sm font-medium text-gray-800 leading-none">
+                              Personal settings
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              Email, profile, notifications
+                            </p>
+                          </div>
+                        </a>
+                      </div>
+                      <div className="">
+                        <a
+                          onClick={logout}
+                          href="#"
+                          className="px-4 py-4 pb-4 hover:bg-gray-100 flex"
+                        >
+                          <p className="text-sm font-medium text-gray-800 leading-none">
+                            ログアウト
+                          </p>
+                        </a>
+                      </div>
                     </div>
                   </div>
-                  <div className="border-b">
-                    <a href="#" className="px-4 py-2 hover:bg-gray-100 flex">
-                      <div className="text-gray-800">
-                        <svg
-                          fill="none"
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="1"
-                          viewBox="0 0 24 24"
-                          className="w-5 h-5"
-                        >
-                          <path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div className="pl-3">
-                        <p className="text-sm font-medium text-gray-800 leading-none">
-                          Personal settings
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          Email, profile, notifications
-                        </p>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="">
-                    <a
-                      onClick={logout}
-                      href="#"
-                      className="px-4 py-4 pb-4 hover:bg-gray-100 flex"
-                    >
-                      <p className="text-sm font-medium text-gray-800 leading-none">
-                        ログアウト
-                      </p>
-                    </a>
-                  </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
 
             <div className="inline-block ml-6 ">
               <button
@@ -161,7 +167,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
           </div>
         </nav>
       </header>
-      <main className="max-w-5xl mx-auto px-3">{children}</main>
+      <main className="max-w-5xl mx-auto">{children}</main>
       <footer className="h-12 w-full text-center bottom-0 border-t border-gray-200 absolute bg-white">
         <div className="py-3">©︎happy horse</div>
       </footer>
