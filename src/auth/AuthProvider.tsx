@@ -26,7 +26,6 @@ const AuthProvider: React.FC = ({ children }) => {
     auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       db.collection("users").doc(`${user.uid}`).get().then(snapshot => {
-        console.log(snapshot.data())
         setUser(snapshot.data())
       })
     });

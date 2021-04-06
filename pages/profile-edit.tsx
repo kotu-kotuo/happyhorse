@@ -1,9 +1,8 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../src/auth/AuthProvider";
 import { Layout } from "../components/Layout";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth, storage, db } from "../src/utils/firebase";
+import { storage, db } from "../src/utils/firebase";
 import firebase from "firebase/app";
 
 const ProfileEdit = () => {
@@ -107,8 +106,6 @@ const ProfileEdit = () => {
         setUser(snapshot.data());
       });
       router.push("/profile");
-      // location.reload();
-
   };
 
   return (
@@ -162,7 +159,7 @@ const ProfileEdit = () => {
                 type="submit"
                 className="focus:outline-none text-white text-base font-medium py-2.5 px-24 rounded-md bg-mainGreen  max-w-full hover:opacity-90 hover:shadow-lg"
               >
-                Upload
+                更新する
               </button>
             </div>
           </form>
