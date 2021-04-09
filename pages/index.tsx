@@ -1,15 +1,115 @@
+import { useState, useEffect } from "react";
 import { Layout } from "../components/Layout";
 import { AiTwotoneCi } from "react-icons/ai";
 import Image from "next/image";
+import Link from "next/link";
 import { FaYenSign } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaHorse } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-import { auth } from "../src/utils/firebase";
+import {  db } from "../src/utils/firebase";
+import { useRouter } from "next/router";
+
+interface POST {
+  postID: string;
+  userID: string;
+  username: string;
+  avatar: string;
+  image: string;
+  title: string;
+  postText: string;
+  category: string;
+  breed: string;
+  color: string;
+  birth: { year: number; month: number; day: number };
+  age: number;
+  height: number;
+  area: string;
+  features: Array<string>;
+  price: string;
+  createdAt: string;
+  updatedAt: string;
+  likeUserIDs: Array<string>;
+  isAvairable: boolean;
+  pv: number;
+}
 
 export default function Home() {
+  const router = useRouter();
+  const [posts, setPosts] = useState<POST[]>([
+    {
+      postID: "",
+      userID: "",
+      username: "",
+      avatar: "",
+      image: null,
+      title: "",
+      postText: "",
+      category: "",
+      breed: "",
+      color: "",
+      birth: { year: null, month: null, day: null },
+      age: null,
+      height: null,
+      area: "",
+      features: [],
+      price: "",
+      createdAt: "",
+      updatedAt: "",
+      likeUserIDs: [],
+      isAvairable: null,
+      pv: null,
+    },
+  ]);
 
- 
+  useEffect(() => {
+    db.collectionGroup("posts")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        console.log(snapshot);
+        console.log(snapshot.docs);
+
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            postID: doc.data().postID,
+            userID: doc.data().userID,
+            username: doc.data().username,
+            avatar: doc.data().avatar,
+            image: doc.data().image,
+            title: doc.data().title,
+            postText: doc.data().postText,
+            category: doc.data().category,
+            breed: doc.data().breed,
+            color: doc.data().color,
+            birth: {
+              year: doc.data().year,
+              month: doc.data().month,
+              day: doc.data().day,
+            },
+            age: doc.data().age,
+            height: doc.data().height,
+            area: doc.data().area,
+            features: doc.data().features,
+            price: doc.data().price,
+            createdAt: doc.data().createdAt,
+            updatedAt: doc.data().updatedAt,
+            likeUserIDs: doc.data().likeUserIDs,
+            isAvairable: doc.data().isAvairable,
+            pv: doc.data().pv,
+          }))
+        );
+      });
+  }, []);
+
+  const clickPost = (e) => {
+    console.log(e.currentTarget.getAttribute("data-id"));
+    const pid = e.currentTarget.getAttribute("data-id");
+    router.push({
+      pathname: `/${pid}`,
+      query: { pid: pid },
+    });
+  };
+
   return (
     <div>
       <Layout title="index">
@@ -133,70 +233,99 @@ export default function Home() {
             </div>
           </div>
           <div className="w-2/3 ">
-            <div className="border-b border-gray-300 pb-6">
-              <div className="flex mb-5 z-0">
-                <Image
-                  src="/uma1.jpg"
-                  className="object-cover cursor-pointer"
-                  width={800}
-                  height={450}
-                />
-                <div className="">
-                  <div className="-mb-1.5">
-                    <Image
-                      src="/uma1.jpg"
+            {posts.map((post) => (
+              <>
+                <div
+                  key={post.postID}
+                  className="border-b border-gray-300 pb-6 mb-16"
+                >
+                  {/* <Link href={`${post.postID}`}> */}
+                  <div
+                    className="flex mb-5 z-0"
+                    data-id={post.postID}
+                    onClick={clickPost}
+                  >
+                    <img
+                      src={post.image}
                       className="object-cover cursor-pointer"
-                      width={400}
-                      height={225}
+                      width={420}
+                      height={100}
                     />
+                    <div className="">
+                      <div className="-mb-1.5">
+                        <Image
+                          src="/uma1.jpg"
+                          className="object-cover cursor-pointer"
+                          width={400}
+                          height={225}
+                        />
+                      </div>
+                      <div className="-mb-1.5">
+                        <Image
+                          src="/uma1.jpg"
+                          className="object-cover cursor-pointer"
+                          width={400}
+                          height={225}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="-mb-1.5">
-                    <Image
-                      src="/uma1.jpg"
-                      className="object-cover cursor-pointer"
-                      width={400}
-                      height={225}
-                    />
+                  {/* </Link> */}
+                  <div className="flex items-center ml-2">
+                    {post.category === "障害馬" && (
+                      <div className="border rounded-full border-red-700 text-red-700 text-sm px-4 py-0.5  font-semibold">
+                        {post.category}
+                      </div>
+                    )}
+                    {post.category === "馬場馬" && (
+                      <div className="border rounded-full border-blue-900 text-blue-900 text-sm px-4 py-0.5  font-semibold">
+                        {post.category}
+                      </div>
+                    )}
+                    {post.category === "総合馬" && (
+                      <div className="border rounded-full border-green-800 text-green-800 text-sm px-4 py-0.5  font-semibold">
+                        {post.category}
+                      </div>
+                    )}
+                    {post.category === "レクレーション" && (
+                      <div className="border rounded-full border-yellow-300 text-yellow-300 text-sm px-4 py-0.5  font-semibold">
+                        {post.category}
+                      </div>
+                    )}
+
+                    <FaYenSign className="text-gray-400 text-xl ml-4 " />
+                    <div className="text-gray-900 ml-1">{post.price}円</div>
+
+                    <FaHorse className="text-gray-400 text-xl ml-6" />
+                    <div className="text-gray-900 ml-2">{post.breed}</div>
+
+                    <FaMapMarkerAlt className="text-gray-400 text-xl ml-5 " />
+                    <div className="text-gray-900 ml-1.5">{post.area}</div>
+                  </div>
+                  <Link href={`${post.postID}`}>
+                    <div className="cursor-pointer">
+                      <h2 className="font-semibold text-gray-800 text-xl my-3">
+                        {post.title}
+                      </h2>
+                    </div>
+                  </Link>
+                  <p className="text-sm text-gray-500">{post.postText}</p>
+                  <div className="flex justify-between items-center mt-6">
+                    <div className="flex items-center ml-1">
+                      <img
+                        src={post.avatar}
+                        className="object-cover cursor-pointer rounded-full w-12 h-12"
+                      />
+                      <p className="text-gray-900 ml-3">{post.username}</p>
+                    </div>
+                    <div className="flex items-center">
+                      <FaRegHeart className="text-3xl text-gray-900" />
+                      <p className="text-gray-900 ml-3 mr-1">お気に入り</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center ml-2">
-                <div className="border rounded-full border-red-600 text-red-600 text-sm px-4 py-0.5  font-semibold">
-                  障害馬
-                </div>
-
-                <FaYenSign className="text-gray-400 text-xl ml-4 " />
-                <div className="text-gray-900 ml-1">3000000円</div>
-
-                <FaMapMarkerAlt className="text-gray-400 text-xl ml-5 " />
-                <div className="text-gray-900 ml-1.5">東京都</div>
-
-                <FaHorse className="text-gray-400 text-xl ml-5" />
-                <div className="text-gray-900 ml-2">サラブレッド</div>
-              </div>
-              <h2 className="font-semibold text-gray-800 text-xl my-3">
-                130cmも余裕で飛んじゃうスーパージャンピングホース！
-                性格は人懐っこくてみんなの人気者です！
-              </h2>
-              <p className="text-sm text-gray-500">
-                ご覧いただきありがとうございます。今回ご紹介する馬はマジでいい馬ですよ。何処がいいのかというとまず顔がいいですよね。白の模様がかわいいですよね。あと鼻のあたりもなんかかわいいで…
-              </p>
-              <div className="flex justify-between items-center mt-6">
-                <div className="flex items-center ml-1">
-                  <Image
-                    src="/uma1.jpg"
-                    className="object-cover cursor-pointer rounded-full"
-                    width={50}
-                    height={50}
-                  />
-                  <p className="text-gray-900 ml-3">ホースクラブ</p>
-                </div>
-                <div className="flex items-center">
-                  <FaRegHeart className="text-3xl text-gray-900" />
-                  <p className="text-gray-900 ml-3 mr-1">お気に入り</p>
-                </div>
-              </div>
-            </div>
+              </>
+            ))}
             <div className="flex flex-col items-center my-14">
               <div className="flex text-gray-700">
                 <div className="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer">

@@ -141,7 +141,7 @@ const ProfileEdit = () => {
             </div>
             <div className="text-xs text-gray-500 mb-1 ml-1">ユーザネーム</div>
             <input
-              className="block w-full mb-6 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="block w-full mb-6 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               type="text"
               onChange={handleName}
               defaultValue={user.username}
@@ -150,7 +150,7 @@ const ProfileEdit = () => {
               プロフィール文
             </div>
             <textarea
-              className="block w-full mb-7 h-40 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="block w-full mb-7 h-40 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               onChange={handleText}
               defaultValue={user.profileText}
             />
