@@ -7,7 +7,7 @@ import { FaYenSign } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaHorse } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-import {  db } from "../src/utils/firebase";
+import { db } from "../src/utils/firebase";
 import { useRouter } from "next/router";
 
 interface POST {
@@ -66,9 +66,6 @@ export default function Home() {
     db.collectionGroup("posts")
       .orderBy("createdAt", "desc")
       .onSnapshot((snapshot) => {
-        console.log(snapshot);
-        console.log(snapshot.docs);
-
         setPosts(
           snapshot.docs.map((doc) => ({
             postID: doc.data().postID,

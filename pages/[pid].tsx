@@ -21,6 +21,7 @@ const Show = () => {
             username: doc.data().username,
             avatar: doc.data().avatar,
             image: doc.data().image,
+            images:doc.data().images,
             title: doc.data().title,
             postText: doc.data().postText,
             category: doc.data().category,
@@ -48,11 +49,16 @@ const Show = () => {
 
   return (
     <Layout title="post.title">
+      {post && post.images.map((image) => (
+        <img src={image} className="h-24 w-36 object-cover"/>
+      ))}
       {post && (
         <div className="flex justify-between mt-10">
           <div className="w-2/3">
-            <img src={post.image} className=""/>
-            <div className="mt-6 mb-4 text-gray-900 font-semibold text-xl">{post.title}</div>
+            <img src={post.image} className="" />
+            <div className="mt-6 mb-4 text-gray-900 font-semibold text-xl">
+              {post.title}
+            </div>
             <div className="text-gray-700">{post.postText}</div>
             <div className="mt-20 mb-10">
               <div className="flex mb-3">

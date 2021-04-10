@@ -14,6 +14,9 @@ interface IMAGES {
 interface IMAGESURL {
   imagesURL: any;
 }
+interface PREVIEWSURL {
+  previewsURL: any;
+}
 
 interface MyFormValues {
   title: string;
@@ -33,8 +36,9 @@ const Post: React.FC = () => {
   const { user, currentUser } = useContext(AuthContext);
   const [images, setImages]: any = useState<IMAGES[]>([]);
   const [imagesURL, setImagesURL]: any = useState<IMAGESURL[]>([]);
+  const [previewsURL, setPreviewsURL]: any = useState<PREVIEWSURL[]>([]);
+  const [postId, setPostId] = useState("");
   const router = useRouter();
-  const postId = uuidv4();
   const initialValues: MyFormValues = {
     title: "",
     postText: "",
@@ -50,17 +54,43 @@ const Post: React.FC = () => {
   };
 
   useEffect(() => {
+    setPostId(uuidv4());
+  }, []);
+
+  useEffect(() => {
     if (images.length === 0) return;
-    const imageURLs = images.map((image) =>
-      URL.createObjectURL(image)
-    );
-    setImagesURL([...imageURLs]);
+    const imageURLs = images.map((image) => URL.createObjectURL(image));
+    setPreviewsURL([...imageURLs]);
   }, [images]);
 
-  const handleImages = async (e) => {
+  useEffect(() => {
+    if (imagesURL.length === 0) return;
+    db.collection("users")
+      .doc(`${currentUser.uid}`)
+      .collection("posts")
+      .doc(`${postId}`)
+      .update({
+        images: imagesURL,
+      });
+  }, [imagesURL]);
+
+  const uploadImages = async (images) => {
+    console.log(images);
+    const urls = await Promise.all(
+      images.map(async (image) => {
+        await storage.ref(`posts/${postId}/${image.name}`).put(image);
+
+        return await storage
+          .ref(`posts/${postId}/${image.name}`)
+          .getDownloadURL();
+      })
+    );
+    await setImagesURL([...urls]);
+  };
+
+  const handleImages = (e) => {
     const uploadImages = e.target.files;
     setImages([...images, ...uploadImages]);
-    console.log(images);
   };
 
   return (
@@ -69,78 +99,62 @@ const Post: React.FC = () => {
         initialValues={{
           initialValues,
         }}
-        onSubmit={(values: any) => {
-          console.log("submitsentou");
-          console.log(values.image);
-          db.collection("users")
-            .doc(`${currentUser.uid}`)
-            .collection("posts")
-            .doc(`${postId}`)
-            .set({
-              postID: postId,
-              userID: currentUser.uid,
-              username: user.username,
-              avatar: user.avatar,
-              images: [],
-              title: values.title,
-              postText: values.postText,
-              category: values.category,
-              breed: values.breed,
-              color: values.color,
-              birth: {
-                year: values.year,
-                month: values.month,
-                day: values.day,
-              },
-              age: values.age,
-              height: values.height,
-              features: values.features,
-              area: values.area,
-              price: values.price,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              updatedAt: "",
-              likeUserIDs: [],
-              isAvairable: true,
-              pv: 0,
-            });
-
-          {
-            images.map((image) => {
-              const uploadTask = storage.ref(`posts/${postId}`).put(image);
-              uploadTask.on(
-                firebase.storage.TaskEvent.STATE_CHANGED,
-                () => {},
-                (error) => {
-                  console.log(error.message);
+        onSubmit={async (values: any) => {
+          const setPost = async () => {
+            await db
+              .collection("users")
+              .doc(`${currentUser.uid}`)
+              .collection("posts")
+              .doc(`${postId}`)
+              .set({
+                postID: postId,
+                userID: currentUser.uid,
+                username: user.username,
+                avatar: user.avatar,
+                images: [],
+                title: values.title,
+                postText: values.postText,
+                category: values.category,
+                breed: values.breed,
+                color: values.color,
+                birth: {
+                  year: values.year,
+                  month: values.month,
+                  day: values.day,
                 },
-                () => {
-                  storage
-                    .ref(`posts/${postId}`)
-                    .getDownloadURL()
-                    .then((url) => {
-                      db.collection("users")
-                        .doc(`${currentUser.uid}`)
-                        .collection("posts")
-                        .doc(`${postId}`)
-                        .update({
-                          images: url,
-                        });
-                    });
-                }
-              );
-            });
-          }
-          router.push("/");
+                age: values.age,
+                height: values.height,
+                features: values.features,
+                area: values.area,
+                price: values.price,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: "",
+                likeUserIDs: [],
+                isAvairable: true,
+                pv: 0,
+              });
+          };
+
+          const processAll = async () => {
+            await setPost();
+            await uploadImages(images);
+          };
+
+          await processAll();
+
+          await router.push("/");
         }}
       >
         <Form className="max-w-2xl mx-auto mt-16 px-2">
-          {imagesURL &&
-            imagesURL.map((imageURL, index) => (
+          {previewsURL &&
+            previewsURL.map((previewURL, index) => (
               <div key={index}>
-                <img src={imageURL} className="h-24 w-32 mb-6  object-cover" />
+                <img
+                  src={previewURL}
+                  className="h-24 w-32 mb-6  object-cover"
+                />
               </div>
             ))}
-          {console.log(imagesURL)}
 
           <Field
             name="images"
@@ -359,7 +373,7 @@ const Post: React.FC = () => {
               <label className="text-sm font-medium text-gray-800 cursor-pointer">
                 <Field
                   name="features"
-                  value="gentle"
+                  value="おとなしい"
                   type="checkbox"
                   className="mr-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
                 />
