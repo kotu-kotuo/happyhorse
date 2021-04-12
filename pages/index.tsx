@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Layout } from "../components/Layout";
 import { AiTwotoneCi } from "react-icons/ai";
-import Image from "next/image";
 import Link from "next/link";
 import { FaYenSign } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
@@ -15,7 +14,7 @@ interface POST {
   userID: string;
   username: string;
   avatar: string;
-  image: string;
+  images: Array<string>;
   title: string;
   postText: string;
   category: string;
@@ -42,7 +41,7 @@ export default function Home() {
       userID: "",
       username: "",
       avatar: "",
-      image: null,
+      images: [],
       title: "",
       postText: "",
       category: "",
@@ -72,7 +71,7 @@ export default function Home() {
             userID: doc.data().userID,
             username: doc.data().username,
             avatar: doc.data().avatar,
-            image: doc.data().image,
+            images: doc.data().images,
             title: doc.data().title,
             postText: doc.data().postText,
             category: doc.data().category,
@@ -231,97 +230,85 @@ export default function Home() {
           </div>
           <div className="w-2/3 ">
             {posts.map((post) => (
-              <>
+              <div
+                key={post.postID}
+                className="border-b border-gray-300 pb-6 mb-16"
+              >
+                {/* <Link href={`${post.postID}`}> */}
                 <div
-                  key={post.postID}
-                  className="border-b border-gray-300 pb-6 mb-16"
+                  className="flex mb-5 z-0"
+                  data-id={post.postID}
+                  onClick={clickPost}
                 >
-                  {/* <Link href={`${post.postID}`}> */}
-                  <div
-                    className="flex mb-5 z-0"
-                    data-id={post.postID}
-                    onClick={clickPost}
-                  >
+                  <img
+                    src={post.images[0]}
+                    className="object-cover cursor-pointer w-2/3"
+                  />
+                  <div className="w-1/3">
                     <img
-                      src={post.image}
+                      src={post.images[1]}
                       className="object-cover cursor-pointer"
-                      width={420}
-                      height={100}
                     />
-                    <div className="">
-                      <div className="-mb-1.5">
-                        <Image
-                          src="/uma1.jpg"
-                          className="object-cover cursor-pointer"
-                          width={400}
-                          height={225}
-                        />
-                      </div>
-                      <div className="-mb-1.5">
-                        <Image
-                          src="/uma1.jpg"
-                          className="object-cover cursor-pointer"
-                          width={400}
-                          height={225}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {/* </Link> */}
-                  <div className="flex items-center ml-2">
-                    {post.category === "障害馬" && (
-                      <div className="border rounded-full border-red-700 text-red-700 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
-                      </div>
-                    )}
-                    {post.category === "馬場馬" && (
-                      <div className="border rounded-full border-blue-900 text-blue-900 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
-                      </div>
-                    )}
-                    {post.category === "総合馬" && (
-                      <div className="border rounded-full border-green-800 text-green-800 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
-                      </div>
-                    )}
-                    {post.category === "レクレーション" && (
-                      <div className="border rounded-full border-yellow-300 text-yellow-300 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
-                      </div>
-                    )}
-
-                    <FaYenSign className="text-gray-400 text-xl ml-4 " />
-                    <div className="text-gray-900 ml-1">{post.price}円</div>
-
-                    <FaHorse className="text-gray-400 text-xl ml-6" />
-                    <div className="text-gray-900 ml-2">{post.breed}</div>
-
-                    <FaMapMarkerAlt className="text-gray-400 text-xl ml-5 " />
-                    <div className="text-gray-900 ml-1.5">{post.area}</div>
-                  </div>
-                  <Link href={`${post.postID}`}>
-                    <div className="cursor-pointer">
-                      <h2 className="font-semibold text-gray-800 text-xl my-3">
-                        {post.title}
-                      </h2>
-                    </div>
-                  </Link>
-                  <p className="text-sm text-gray-500">{post.postText}</p>
-                  <div className="flex justify-between items-center mt-6">
-                    <div className="flex items-center ml-1">
-                      <img
-                        src={post.avatar}
-                        className="object-cover cursor-pointer rounded-full w-12 h-12"
-                      />
-                      <p className="text-gray-900 ml-3">{post.username}</p>
-                    </div>
-                    <div className="flex items-center">
-                      <FaRegHeart className="text-3xl text-gray-900" />
-                      <p className="text-gray-900 ml-3 mr-1">お気に入り</p>
-                    </div>
+                    <img
+                      src={post.images[2]}
+                      className="object-cover cursor-pointer"
+                    />
                   </div>
                 </div>
-              </>
+                {/* </Link> */}
+                <div className="flex items-center ml-2">
+                  {post.category === "障害馬" && (
+                    <div className="border rounded-full border-red-700 text-red-700 text-sm px-4 py-0.5  font-semibold">
+                      {post.category}
+                    </div>
+                  )}
+                  {post.category === "馬場馬" && (
+                    <div className="border rounded-full border-blue-900 text-blue-900 text-sm px-4 py-0.5  font-semibold">
+                      {post.category}
+                    </div>
+                  )}
+                  {post.category === "総合馬" && (
+                    <div className="border rounded-full border-green-800 text-green-800 text-sm px-4 py-0.5  font-semibold">
+                      {post.category}
+                    </div>
+                  )}
+                  {post.category === "レクレーション" && (
+                    <div className="border rounded-full border-yellow-300 text-yellow-300 text-sm px-4 py-0.5  font-semibold">
+                      {post.category}
+                    </div>
+                  )}
+
+                  <FaYenSign className="text-gray-400 text-xl ml-4 " />
+                  <div className="text-gray-900 ml-1">{post.price}円</div>
+
+                  <FaHorse className="text-gray-400 text-xl ml-6" />
+                  <div className="text-gray-900 ml-2">{post.breed}</div>
+
+                  <FaMapMarkerAlt className="text-gray-400 text-xl ml-5 " />
+                  <div className="text-gray-900 ml-1.5">{post.area}</div>
+                </div>
+                <Link href={`${post.postID}`}>
+                  <div className="cursor-pointer">
+                    <h2 className="font-semibold text-gray-800 text-xl my-3">
+                      {post.title}
+                    </h2>
+                  </div>
+                </Link>
+                <p className="text-sm text-gray-500">{post.postText}</p>
+                <div className="flex justify-between items-center mt-6">
+                  <div className="flex items-center ml-1">
+                    <img
+                      src={post.avatar}
+                      className="object-cover cursor-pointer rounded-full w-12 h-12"
+                    />
+                    <p className="text-gray-900 ml-3">{post.username}</p>
+                  </div>
+                  <div className="flex items-center">
+                    <FaRegHeart className="text-3xl text-gray-900" />
+                    <p className="text-gray-900 ml-3 mr-1">お気に入り</p>
+                  </div>
+                </div>
+              </div>
             ))}
             <div className="flex flex-col items-center my-14">
               <div className="flex text-gray-700">

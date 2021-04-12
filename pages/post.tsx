@@ -6,6 +6,9 @@ import { v4 as uuidv4 } from "uuid";
 import { db, storage } from "../src/utils/firebase";
 import firebase from "firebase/app";
 import { Formik, Field, Form } from "formik";
+import { RiCloseCircleFill } from "react-icons/ri";
+import { RiImageAddFill } from "react-icons/ri";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 interface IMAGES {
   images: any;
@@ -21,6 +24,7 @@ interface PREVIEWSURL {
 interface MyFormValues {
   title: string;
   postText: string;
+  horseName: string;
   category: string;
   breed: string;
   color: string;
@@ -42,6 +46,7 @@ const Post: React.FC = () => {
   const initialValues: MyFormValues = {
     title: "",
     postText: "",
+    horseName: "",
     category: "",
     breed: "",
     color: "",
@@ -74,6 +79,10 @@ const Post: React.FC = () => {
       });
   }, [imagesURL]);
 
+  // useEffect(() => {
+  //   setPreviewsURL(previewsURL);
+  // }, [previewsURL]);
+
   const uploadImages = async (images) => {
     console.log(images);
     const urls = await Promise.all(
@@ -92,6 +101,17 @@ const Post: React.FC = () => {
     const uploadImages = e.target.files;
     setImages([...images, ...uploadImages]);
   };
+
+  const deletePreview = (index) => {
+    images.splice(index, 1);
+    setImages(images);
+    const imageURLs = images.map((image) => URL.createObjectURL(image));
+    setPreviewsURL([...imageURLs]);
+  };
+
+  // const onDragEnd = (result) => {
+  //   if (!result.destination) return;
+  // };
 
   return (
     <Layout title="post">
@@ -114,6 +134,7 @@ const Post: React.FC = () => {
                 images: [],
                 title: values.title,
                 postText: values.postText,
+                horseName: values.horseName,
                 category: values.category,
                 breed: values.breed,
                 color: values.color,
@@ -146,21 +167,42 @@ const Post: React.FC = () => {
         }}
       >
         <Form className="max-w-2xl mx-auto mt-16 px-2">
-          {previewsURL &&
-            previewsURL.map((previewURL, index) => (
-              <div key={index}>
-                <img
-                  src={previewURL}
-                  className="h-24 w-32 mb-6  object-cover"
-                />
-              </div>
-            ))}
-
+          <div className="text-xs text-gray-600 mb-3 ml-1">画像</div>
+          <div className="flex flex-wrap mb-2">
+            {/* <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable> */}
+            {previewsURL &&
+              previewsURL.map((previewURL, index) => (
+                // <Draggable>
+                <div key={index} className="mr-6">
+                  <img
+                    src={previewURL}
+                    className="h-24 w-32 mb-4  object-cover"
+                  />
+                  <div onClick={(e) => deletePreview(index)}>
+                    <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
+                  </div>
+                </div>
+                // </Draggable>
+              ))}
+            {/* </Droppable>
+          </DragDropContext> */}
+          </div>
+          <label
+            htmlFor="file"
+            className="block w-40 mr-3 mb-8 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
+          >
+            <div className="flex items-center text-center">
+              <RiImageAddFill className="text-lg ml-1" />
+              <p className="ml-2.5">画像を選択</p>
+            </div>
+          </label>
           <Field
+            id="file"
             name="images"
             type="file"
             accept="image/*"
-            className="mb-8"
+            className="mb-8 hidden"
             multiple
             onChange={(e) => {
               handleImages(e);
@@ -179,6 +221,13 @@ const Post: React.FC = () => {
             as="textarea"
             name="postText"
             className="mb-8 w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          />
+
+          <div className="text-xs text-gray-600 mb-1 ml-1">馬の名前</div>
+          <Field
+            type="text"
+            name="horseName"
+            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">カテゴリー</div>

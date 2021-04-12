@@ -1,3 +1,80 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slick-dots {
+  margin-top: 5px;
+  margin-left: -5px;
+  margin-right: -5px;
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.slick-dots li {
+  list-style: none;
+  display: inline-block;
+  max-width: 1120px;
+  max-height: 56px;
+  margin: 5px;
+}
+
+.slick-dots img {
+  object-fit: cover;
+  max-height: 54px;
+  max-width: 96px;
+  cursor: pointer;
+}
+
+.slick-current {
+  position: relative;
+}
+
+.slick-current img {
+  padding: 0 80px;
+  border: 0 !important;
+}
+
+.slick-current img:focus {
+  border: 0 !important;
+}
+
+.slick-slider svg {
+  height: 50px;
+  width: 50px;
+  color: #d1d5db;
+}
+
+.slick-next {
+  position: absolute;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  margin: auto !important;
+}
+.slick-prev {
+  position: absolute;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  margin: auto !important;
+}
+.slick-arrow {
+  z-index: 2 !important;
+  cursor: pointer;
+}
+
+.slick-dots img {
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.slick-dots > .slick-active img {
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0);
+  -o-filter: grayscale(0);
+  filter: grayscale(0);
+}
