@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "../src/utils/firebase";
 import { GoBell } from "react-icons/go";
+import { IoChevronForwardOutline } from "react-icons/io5";
 
 interface TITLE {
   title: string;
@@ -109,40 +110,24 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                       <div className="border-b">
                         <a
                           href="#"
-                          className="px-4 py-2 hover:bg-gray-100 flex"
+                          className="px-4 py-4 hover:bg-gray-100 flex items-center"
                         >
-                          <div className="text-gray-800">
-                            <svg
-                              fill="none"
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="1"
-                              viewBox="0 0 24 24"
-                              className="w-5 h-5"
-                            >
-                              <path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                          <div className="pl-3">
-                            <p className="text-sm font-medium text-gray-800 leading-none">
-                              Personal settings
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              Email, profile, notifications
-                            </p>
-                          </div>
+                          <p className="text-sm font-medium text-gray-800 leading-none">
+                            掲載した馬
+                          </p>
+                          <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
                         </a>
                       </div>
                       <div className="">
                         <a
                           onClick={logout}
                           href="#"
-                          className="px-4 py-4 pb-4 hover:bg-gray-100 flex"
+                          className="px-4 py-4 hover:bg-gray-100 flex items-center"
                         >
                           <p className="text-sm font-medium text-gray-800 leading-none">
                             ログアウト
                           </p>
+                          <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
                         </a>
                       </div>
                     </div>
