@@ -6,7 +6,6 @@ import { db } from "../src/utils/firebase";
 import { FaRegHeart } from "react-icons/fa";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
 
@@ -57,13 +56,18 @@ const Show = () => {
     customPaging: function (i) {
       return (
         <a>
-          <img src={post.images[i]} />
+          <img
+            className="max-w-1600 w-full max-h-900 h-full"
+            src={post.images[i]}
+          />
         </a>
       );
     },
     dotsClass: "slick-dots",
     dots: true,
     arrows: true,
+    fade: true,
+    speed: 250,
     prevArrow: <IoChevronBackCircleOutline />,
     nextArrow: <IoChevronForwardCircleOutline />,
     infinite: true,
@@ -79,10 +83,13 @@ const Show = () => {
         <>
           <Slider {...setting1}>
             {post.images.map((image, index) => (
-              <div key={index} className="mt-10 outline-none">
+              <div
+                key={index}
+                className="mt-10 outline-none pb-image w-full h-0 relative"
+              >
                 <img
                   src={image}
-                  className="h-96 w-full object-cover outline-none border-0"
+                  className="object-cover outline-none border-0 w-full h-full absolute"
                 />
               </div>
             ))}

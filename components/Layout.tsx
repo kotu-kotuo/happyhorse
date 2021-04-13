@@ -88,7 +88,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                     <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60">
                       <div className="text-center p-6  border-b ">
                         <img
-                          className="h-24 w-24 rounded-full mx-auto"
+                          className="h-24 w-24 rounded-full mx-auto object-cover"
                           src={user.avatar}
                           alt="avatar"
                         />

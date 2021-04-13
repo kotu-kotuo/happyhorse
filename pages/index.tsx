@@ -240,19 +240,27 @@ export default function Home() {
                   data-id={post.postID}
                   onClick={clickPost}
                 >
-                  <img
-                    src={post.images[0]}
-                    className="object-cover cursor-pointer w-2/3"
-                  />
+                  <div className="w-2/3">
+                    <div className="pb-image w-full h-0 relative">
+                      <img
+                        src={post.images[0] ? post.images[0] : "/no-image.png"}
+                        className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                      />
+                    </div>
+                  </div>
                   <div className="w-1/3">
-                    <img
-                      src={post.images[1]}
-                      className="object-cover cursor-pointer"
-                    />
-                    <img
-                      src={post.images[2]}
-                      className="object-cover cursor-pointer"
-                    />
+                    <div className="pb-image w-full h-0 relative">
+                      <img
+                        src={post.images[1] ? post.images[1] : "/no-image.png"}
+                        className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                      />
+                    </div>
+                    <div className="pb-image w-full h-0 relative">
+                      <img
+                        src={post.images[2] ? post.images[2] : "/no-image.png"}
+                        className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                      />
+                    </div>
                   </div>
                 </div>
                 {/* </Link> */}
@@ -289,12 +297,10 @@ export default function Home() {
                 </div>
                 <Link href={`${post.postID}`}>
                   <div className="cursor-pointer">
-                    <h2 className="font-semibold text-gray-800 text-xl my-3">
-                      {post.title}
-                    </h2>
+                    <h2 className="index-title">{post.title}</h2>
                   </div>
                 </Link>
-                <p className="text-sm text-gray-500">{post.postText}</p>
+                <p className="index-postText">{post.postText}</p>
                 <div className="flex justify-between items-center mt-6">
                   <div className="flex items-center ml-1">
                     <img

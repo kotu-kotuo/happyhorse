@@ -32,80 +32,100 @@ const ProfileEdit = () => {
     setProfileText(text);
   };
 
-  const editProfile = async (e) => {
-    e.preventDefault();
-    if (image !== "") {
-      const next = () => {};
-      const error = (error) => {
-        console.log(error.message);
-      };
+  const updatePost = (url) => {
+    db.collection("users")
+      .doc(`${currentUser.uid}`)
+      .collection("posts")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.map((doc) => {
+          console.log(doc.data().postID);
+          if (username) {
+            db.collection("users")
+              .doc(`${currentUser.uid}`)
+              .collection("posts")
+              .doc(`${doc.data().postID}`)
+              .update({ username: username, avatar: url });
+          } else {
+            db.collection("users")
+              .doc(`${currentUser.uid}`)
+              .collection("posts")
+              .doc(`${doc.data().postID}`)
+              .update({ avatar: url });
+          }
+        });
+      });
+  };
 
-      const complete = () => {
-        storage
-          .ref(`images/${currentUser.uid}/avatar/`)
-          .getDownloadURL()
-          .then(async (url) => {
-            await db.collection("users").doc(`${currentUser.uid}`).update({
-              avatar: url,
-            });
-          });
-      };
-      const uploadTask = storage
+  const editProfile = async(e) => {
+    e.preventDefault();
+
+    if (image !== "") {
+      storage
         .ref(`images/${currentUser.uid}/avatar/`)
-        .put(image);
-      uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-        next,
-        error,
-        complete
-      );
+        .put(image)
+        .on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {},
+          (error) => {
+            console.log(error.message);
+          },
+          () => {
+            storage
+              .ref(`images/${currentUser.uid}/avatar/`)
+              .getDownloadURL()
+              .then(async (url) => {
+                db.collection("users").doc(`${currentUser.uid}`).update({
+                  avatar: url,
+                });
+                await updatePost(url);
+                console.log(url);
+              });
+          }
+        );
     }
 
     if (cover !== "") {
-      const next = () => {};
-      const error = (error) => {
-        console.log(error.message);
-      };
-
-      const complete = () => {
-        storage
-          .ref(`images/${currentUser.uid}/cover/`)
-          .getDownloadURL()
-          .then(async (url) => {
-            await db.collection("users").doc(`${currentUser.uid}`).update({
-              cover: url,
-            });
-          });
-      };
       const uploadTask = storage
         .ref(`images/${currentUser.uid}/cover/`)
         .put(cover);
       uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
-        next,
-        error,
-        complete
+        () => {},
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          storage
+            .ref(`images/${currentUser.uid}/cover/`)
+            .getDownloadURL()
+            .then((url) => {
+              db.collection("users").doc(`${currentUser.uid}`).update({
+                cover: url,
+              });
+            });
+        }
       );
     }
 
     username &&
-      (await db.collection("users").doc(`${currentUser.uid}`).update({
+      db.collection("users").doc(`${currentUser.uid}`).update({
         username: username,
-      }));
+      });
 
     profileText &&
-      (await db.collection("users").doc(`${currentUser.uid}`).update({
+      db.collection("users").doc(`${currentUser.uid}`).update({
         profileText: profileText,
-      }));
+      });
 
-    await db
-      .collection("users")
+    db.collection("users")
       .doc(`${currentUser.uid}`)
       .get()
       .then((snapshot) => {
         setUser(snapshot.data());
       });
-      router.push("/profile");
+
+    await router.push("/profile");
   };
 
   return (

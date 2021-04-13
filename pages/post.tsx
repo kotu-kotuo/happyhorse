@@ -79,10 +79,6 @@ const Post: React.FC = () => {
       });
   }, [imagesURL]);
 
-  // useEffect(() => {
-  //   setPreviewsURL(previewsURL);
-  // }, [previewsURL]);
-
   const uploadImages = async (images) => {
     console.log(images);
     const urls = await Promise.all(

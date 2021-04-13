@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/*==============================================
+# slickの設定
+===============================================*/
+
 .slick-dots {
   margin-top: 5px;
   margin-left: -5px;
@@ -32,7 +36,6 @@
 }
 
 .slick-current img {
-  padding: 0 80px;
   border: 0 !important;
 }
 
@@ -44,6 +47,7 @@
   height: 50px;
   width: 50px;
   color: #d1d5db;
+  opacity: 0.5;
 }
 
 .slick-next {
@@ -66,10 +70,11 @@
 }
 
 .slick-dots img {
-  -webkit-filter: grayscale(100%);
-  -moz-filter: grayscale(100%);
-  -o-filter: grayscale(100%);
-  filter: grayscale(100%);
+  -webkit-filter: grayscale(50%);
+  -moz-filter: grayscale(50%);
+  -o-filter: grayscale(50%);
+  filter: grayscale(50%);
+  opacity: 0.5;
 }
 
 .slick-dots > .slick-active img {
@@ -77,4 +82,29 @@
   -moz-filter: grayscale(0);
   -o-filter: grayscale(0);
   filter: grayscale(0);
+  opacity: 1;
+}
+
+/*==============================================
+# indexのtextの省略
+===============================================*/
+
+.index-title {
+  font-size: 20px;
+  color:  #1F2937;
+  font-weight: 600;
+  margin: 12px 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.index-postText {
+  font-size: 14px;
+  color: #6b7280;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
