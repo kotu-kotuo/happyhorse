@@ -6,6 +6,15 @@ module.exports = {
       colors: {
         mainGreen: "#77c649",
       },
+      width: {
+        1600: "1600px",
+      },
+      height: {
+        900: "900px",
+      },
+      padding: {
+        image: "56.25%",
+      },
     },
   },
   variants: {

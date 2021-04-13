@@ -32,80 +32,100 @@ const ProfileEdit = () => {
     setProfileText(text);
   };
 
-  const editProfile = async (e) => {
-    e.preventDefault();
-    if (image !== "") {
-      const next = () => {};
-      const error = (error) => {
-        console.log(error.message);
-      };
+  const updatePost = (url) => {
+    db.collection("users")
+      .doc(`${currentUser.uid}`)
+      .collection("posts")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.map((doc) => {
+          console.log(doc.data().postID);
+          if (username) {
+            db.collection("users")
+              .doc(`${currentUser.uid}`)
+              .collection("posts")
+              .doc(`${doc.data().postID}`)
+              .update({ username: username, avatar: url });
+          } else {
+            db.collection("users")
+              .doc(`${currentUser.uid}`)
+              .collection("posts")
+              .doc(`${doc.data().postID}`)
+              .update({ avatar: url });
+          }
+        });
+      });
+  };
 
-      const complete = () => {
-        storage
-          .ref(`images/${currentUser.uid}/avatar/`)
-          .getDownloadURL()
-          .then(async (url) => {
-            await db.collection("users").doc(`${currentUser.uid}`).update({
-              avatar: url,
-            });
-          });
-      };
-      const uploadTask = storage
+  const editProfile = async(e) => {
+    e.preventDefault();
+
+    if (image !== "") {
+      storage
         .ref(`images/${currentUser.uid}/avatar/`)
-        .put(image);
-      uploadTask.on(
-        firebase.storage.TaskEvent.STATE_CHANGED,
-        next,
-        error,
-        complete
-      );
+        .put(image)
+        .on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {},
+          (error) => {
+            console.log(error.message);
+          },
+          () => {
+            storage
+              .ref(`images/${currentUser.uid}/avatar/`)
+              .getDownloadURL()
+              .then(async (url) => {
+                db.collection("users").doc(`${currentUser.uid}`).update({
+                  avatar: url,
+                });
+                await updatePost(url);
+                console.log(url);
+              });
+          }
+        );
     }
 
     if (cover !== "") {
-      const next = () => {};
-      const error = (error) => {
-        console.log(error.message);
-      };
-
-      const complete = () => {
-        storage
-          .ref(`images/${currentUser.uid}/cover/`)
-          .getDownloadURL()
-          .then(async (url) => {
-            await db.collection("users").doc(`${currentUser.uid}`).update({
-              cover: url,
-            });
-          });
-      };
       const uploadTask = storage
         .ref(`images/${currentUser.uid}/cover/`)
         .put(cover);
       uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
-        next,
-        error,
-        complete
+        () => {},
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          storage
+            .ref(`images/${currentUser.uid}/cover/`)
+            .getDownloadURL()
+            .then((url) => {
+              db.collection("users").doc(`${currentUser.uid}`).update({
+                cover: url,
+              });
+            });
+        }
       );
     }
 
     username &&
-      (await db.collection("users").doc(`${currentUser.uid}`).update({
+      db.collection("users").doc(`${currentUser.uid}`).update({
         username: username,
-      }));
+      });
 
     profileText &&
-      (await db.collection("users").doc(`${currentUser.uid}`).update({
+      db.collection("users").doc(`${currentUser.uid}`).update({
         profileText: profileText,
-      }));
+      });
 
-    await db
-      .collection("users")
+    db.collection("users")
       .doc(`${currentUser.uid}`)
       .get()
       .then((snapshot) => {
         setUser(snapshot.data());
       });
-      router.push("/profile");
+
+    await router.push("/profile");
   };
 
   return (
@@ -141,7 +161,7 @@ const ProfileEdit = () => {
             </div>
             <div className="text-xs text-gray-500 mb-1 ml-1">ユーザネーム</div>
             <input
-              className="block w-full mb-6 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="block w-full mb-6 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               type="text"
               onChange={handleName}
               defaultValue={user.username}
@@ -150,7 +170,7 @@ const ProfileEdit = () => {
               プロフィール文
             </div>
             <textarea
-              className="block w-full mb-7 h-40 appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="block w-full mb-7 h-40 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               onChange={handleText}
               defaultValue={user.profileText}
             />

@@ -1,3 +1,110 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*==============================================
+# slickの設定
+===============================================*/
+
+.slick-dots {
+  margin-top: 5px;
+  margin-left: -5px;
+  margin-right: -5px;
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.slick-dots li {
+  list-style: none;
+  display: inline-block;
+  max-width: 1120px;
+  max-height: 56px;
+  margin: 5px;
+}
+
+.slick-dots img {
+  object-fit: cover;
+  max-height: 54px;
+  max-width: 96px;
+  cursor: pointer;
+}
+
+.slick-current {
+  position: relative;
+}
+
+.slick-current img {
+  border: 0 !important;
+}
+
+.slick-current img:focus {
+  border: 0 !important;
+}
+
+.slick-slider svg {
+  height: 50px;
+  width: 50px;
+  color: #d1d5db;
+  opacity: 0.5;
+}
+
+.slick-next {
+  position: absolute;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  margin: auto !important;
+}
+.slick-prev {
+  position: absolute;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  margin: auto !important;
+}
+.slick-arrow {
+  z-index: 2 !important;
+  cursor: pointer;
+}
+
+.slick-dots img {
+  -webkit-filter: grayscale(50%);
+  -moz-filter: grayscale(50%);
+  -o-filter: grayscale(50%);
+  filter: grayscale(50%);
+  opacity: 0.5;
+}
+
+.slick-dots > .slick-active img {
+  -webkit-filter: grayscale(0);
+  -moz-filter: grayscale(0);
+  -o-filter: grayscale(0);
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/*==============================================
+# indexのtextの省略
+===============================================*/
+
+.index-title {
+  font-size: 20px;
+  color:  #1F2937;
+  font-weight: 600;
+  margin: 12px 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+
+.index-postText {
+  font-size: 14px;
+  color: #6b7280;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
