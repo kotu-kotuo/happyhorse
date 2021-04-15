@@ -33,7 +33,7 @@ interface POST {
   pv: number;
 }
 
-export default function Home() {
+export default function Index() {
   const router = useRouter();
   const [posts, setPosts] = useState<POST[]>([
     {
