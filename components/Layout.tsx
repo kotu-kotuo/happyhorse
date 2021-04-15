@@ -108,15 +108,14 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                         </div>
                       </div>
                       <div className="border-b">
-                        <a
-                          href="#"
-                          className="px-4 py-4 hover:bg-gray-100 flex items-center"
-                        >
-                          <p className="text-sm font-medium text-gray-800 leading-none">
-                            掲載した馬
-                          </p>
-                          <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
-                        </a>
+                        <Link href="myPostList">
+                          <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
+                            <p className="text-sm font-medium text-gray-800 leading-none">
+                              掲載した馬
+                            </p>
+                            <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
+                          </a>
+                        </Link>
                       </div>
                       <div className="">
                         <a
