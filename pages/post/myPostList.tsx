@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../src/auth/AuthProvider";
-import { Layout } from "../components/Layout";
+import { AuthContext } from "../../src/auth/AuthProvider";
+import { Layout } from "../../components/Layout";
 import Link from "next/link";
-import { db } from "../src/utils/firebase";
+import { db } from "../../src/utils/firebase";
 import { useRouter } from "next/router";
 
 interface POST {

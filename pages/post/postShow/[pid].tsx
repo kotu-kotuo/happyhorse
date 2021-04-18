@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { Layout } from "../components/Layout";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../../src/auth/AuthProvider";
+import { Layout } from "../../../components/Layout";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { db } from "../src/utils/firebase";
+import { db } from "../../../src/utils/firebase";
 import { FaRegHeart } from "react-icons/fa";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -11,46 +12,47 @@ import { IoChevronForwardCircleOutline } from "react-icons/io5";
 
 const Show = () => {
   const router = useRouter();
+  const { currentUser } = useContext(AuthContext);
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    db.collectionGroup("posts")
-      .where("postID", "==", router.query.pid)
-      .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => {
-          console.log(doc.data());
-          setPost({
-            postID: doc.data().postID,
-            userID: doc.data().userID,
-            username: doc.data().username,
-            avatar: doc.data().avatar,
-            image: doc.data().image,
-            images: doc.data().images,
-            title: doc.data().title,
-            postText: doc.data().postText,
-            horseName: doc.data().horseName,
-            category: doc.data().category,
-            breed: doc.data().breed,
-            color: doc.data().color,
-            birth: {
-              year: doc.data().birth.year,
-              month: doc.data().birth.month,
-              day: doc.data().birth.day,
-            },
-            age: doc.data().age,
-            height: doc.data().height,
-            area: doc.data().area,
-            features: doc.data().features,
-            price: doc.data().price,
-            createdAt: doc.data().createdAt,
-            updatedAt: doc.data().updatedAt,
-            likeUserIDs: doc.data().likeUserIDs,
-            isAvairable: doc.data().isAvairable,
-            pv: doc.data().pv,
+    if (router.query.pid) {
+      db.collectionGroup("posts")
+        .where("postID", "==", router.query.pid)
+        .onSnapshot((snapshot) => {
+          snapshot.docs.map((doc) => {
+            setPost({
+              postID: doc.data().postID,
+              userID: doc.data().userID,
+              username: doc.data().username,
+              avatar: doc.data().avatar,
+              images: doc.data().images,
+              title: doc.data().title,
+              postText: doc.data().postText,
+              horseName: doc.data().horseName,
+              category: doc.data().category,
+              breed: doc.data().breed,
+              color: doc.data().color,
+              birth: {
+                year: doc.data().birth.year,
+                month: doc.data().birth.month,
+                day: doc.data().birth.day,
+              },
+              age: doc.data().age,
+              height: doc.data().height,
+              area: doc.data().area,
+              features: doc.data().features,
+              price: doc.data().price,
+              createdAt: doc.data().createdAt,
+              updatedAt: doc.data().updatedAt,
+              likeUserIDs: doc.data().likeUserIDs,
+              isAvairable: doc.data().isAvairable,
+              pv: doc.data().pv,
+            });
           });
         });
-      });
-  }, []);
+    }
+  }, [router]);
 
   const setting1 = {
     customPaging: function (i) {
@@ -77,30 +79,49 @@ const Show = () => {
     adaptiveHeight: true,
   };
 
+  const toPostEdit = (post) => {
+    const pid = post.postID;
+    router.push({
+      pathname: `/post/postEdit/${pid}`,
+    });
+  };
+
   return (
     <Layout title="post.title">
       {post && (
         <>
-          <Slider {...setting1}>
-            {post.images.map((image, index) => (
-              <div
-                key={index}
-                className="mt-10 outline-none pb-image w-full h-0 relative"
-              >
-                <img
-                  src={image}
-                  className="object-cover outline-none border-0 w-full h-full absolute"
-                />
-              </div>
-            ))}
-          </Slider>
+          <div className="mx-auto px-10">
+            <Slider {...setting1}>
+              {post.images.map((image, index) => (
+                <div
+                  key={index}
+                  className="mt-10 outline-none pb-image w-full h-0 relative"
+                >
+                  {currentUser.uid === post.userID && (
+                    <div
+                      className="absolute top-3 right-4 z-50 bg-white px-3.5 py-1.5 rounded opacity-50 cursor-pointer hover:bg-mainGreen hover:text-white hover:opacity-90 ease-in-out duration-300"
+                      onClick={() => toPostEdit(post)}
+                    >
+                      編集
+                    </div>
+                  )}
+                  <img
+                    src={image}
+                    className="object-cover outline-none border-0 w-full h-full absolute"
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
 
           <div className="flex justify-between mt-10">
             <div className="w-2/3 mb-20">
               <div className="mt-6 mb-4 text-gray-900 font-semibold text-xl">
                 {post.title}
               </div>
-              <div className="text-gray-700">{post.postText}</div>
+              <div className="text-gray-700 whitespace-pre-wrap">
+                {post.postText}
+              </div>
               <div className="mt-20 mb-10">
                 <div className="flex mb-3">
                   <div className="ml-10 w-1/4 text-gray-600">名前</div>

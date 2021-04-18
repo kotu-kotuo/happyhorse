@@ -108,7 +108,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                         </div>
                       </div>
                       <div className="border-b">
-                        <Link href="myPostList">
+                        <Link href="/post/myPostList">
                           <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
                             <p className="text-sm font-medium text-gray-800 leading-none">
                               掲載した馬
@@ -136,7 +136,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
             )}
 
             <div className="inline-block ml-6 ">
-              <Link href="/post">
+              <Link href="/post/post">
                 <button
                   type="button"
                   className="mr-3 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"

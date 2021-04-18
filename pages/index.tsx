@@ -98,11 +98,9 @@ export default function Index() {
   }, []);
 
   const clickPost = (e) => {
-    console.log(e.currentTarget.getAttribute("data-id"));
     const pid = e.currentTarget.getAttribute("data-id");
     router.push({
-      pathname: `/${pid}`,
-      query: { pid: pid },
+      pathname: `/post/postShow/${pid}`
     });
   };
 
