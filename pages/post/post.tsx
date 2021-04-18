@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../src/auth/AuthProvider";
-import { Layout } from "../components/Layout";
+import { AuthContext } from "../../src/auth/AuthProvider";
+import { Layout } from "../../components/Layout";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
-import { db, storage } from "../src/utils/firebase";
+import { db, storage } from "../../src/utils/firebase";
 import firebase from "firebase/app";
 import { Formik, Field, Form } from "formik";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 interface IMAGES {
   images: any;
@@ -43,6 +43,7 @@ const Post: React.FC = () => {
   const [previewsURL, setPreviewsURL]: any = useState<PREVIEWSURL[]>([]);
   const [postId, setPostId] = useState("");
   const router = useRouter();
+
   const initialValues: MyFormValues = {
     title: "",
     postText: "",
@@ -58,16 +59,19 @@ const Post: React.FC = () => {
     price: "",
   };
 
+  //posiID設定
   useEffect(() => {
     setPostId(uuidv4());
   }, []);
 
+  //プレビューのURLセット
   useEffect(() => {
     if (images.length === 0) return;
     const imageURLs = images.map((image) => URL.createObjectURL(image));
     setPreviewsURL([...imageURLs]);
   }, [images]);
 
+  //image保存
   useEffect(() => {
     if (imagesURL.length === 0) return;
     db.collection("users")
@@ -81,12 +85,21 @@ const Post: React.FC = () => {
 
   const uploadImages = async (images) => {
     console.log(images);
-    const urls = await Promise.all(
+    const urls: any = await Promise.all(
       images.map(async (image) => {
-        await storage.ref(`posts/${postId}/${image.name}`).put(image);
+        const S =
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const N = 16;
+        const randomChar = Array.from(
+          crypto.getRandomValues(new Uint32Array(N))
+        )
+          .map((n) => S[n % S.length])
+          .join("");
+        const fileName = randomChar + "_" + image.size;
+        await storage.ref(`posts/${postId}/${fileName}`).put(image);
 
         return await storage
-          .ref(`posts/${postId}/${image.name}`)
+          .ref(`posts/${postId}/${fileName}`)
           .getDownloadURL();
       })
     );
@@ -105,16 +118,10 @@ const Post: React.FC = () => {
     setPreviewsURL([...imageURLs]);
   };
 
-  // const onDragEnd = (result) => {
-  //   if (!result.destination) return;
-  // };
-
   return (
     <Layout title="post">
       <Formik
-        initialValues={{
-          initialValues,
-        }}
+        initialValues={initialValues}
         onSubmit={async (values: any) => {
           const setPost = async () => {
             await db

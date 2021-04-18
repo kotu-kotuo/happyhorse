@@ -10,8 +10,10 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.2.1",
     "alpinejs": "^2.8.1",
+    "data-uri-to-file": "^0.1.8",
     "firebase": "^8.3.0",
     "formik": "^2.2.6",
+    "fs": "^0.0.1-security",
     "next": "^10.0.9",
     "node-fetch": "^2.6.1",
     "react": "17.0.1",
