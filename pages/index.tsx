@@ -100,7 +100,7 @@ export default function Index() {
   const clickPost = (e) => {
     const pid = e.currentTarget.getAttribute("data-id");
     router.push({
-      pathname: `/post/postShow/${pid}`
+      pathname: `/post/postShow/${pid}`,
     });
   };
 
@@ -109,122 +109,180 @@ export default function Index() {
       <Layout title="index">
         <div className="flex mt-24 mb-20">
           <div className="w-1/3 pr-8">
-            <div className="px-4 py-6 shadow-md border border-gray-50 rounded-lg">
-              <div className=" text-center text-sm font-semibold text-gray-400 opacity-95">
-                絞り込み検索
-              </div>
-              <div className="mb-4 mt-7 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                カテゴリー
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                障害馬
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                馬場馬
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                総合馬
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                その他
-              </div>
-              <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                価格
-              </div>
-              <div className="flex">
-                <div className="text-gray-700">￥500000</div>
-                <div className="text-gray-700">〜</div>
-                <div className="text-gray-700">￥1000000</div>
-              </div>
-              <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                年齢
-              </div>
-              <div className="flex">
-                <div className="text-gray-700">5歳</div>
-                <div className="text-gray-700">〜</div>
-                <div className="text-gray-700">10歳</div>
-              </div>
-              <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                身長
-              </div>
-              <div className="flex">
-                <div className="text-gray-700">150cm</div>
-                <div className="text-gray-700">〜</div>
-                <div className="text-gray-700">170cm</div>
-              </div>
-              <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                品種
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                サラブレッド
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                ハノーバー
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                KWPN
-              </div>
-              <div className="mb-3 text-xs font-medium text-mainGreen">
-                さらに表示
-              </div>
-              <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                毛色
-              </div>
-              <div className="mb-3 flex items-center">
-                <AiTwotoneCi className="mr-1 text-yellow-900" />
-                <div className="text-base font-semibold text-gray-700">
-                  鹿毛
+            <form>
+              <div className="px-4 py-6 shadow-md border border-gray-50 rounded-lg">
+                <div className=" text-center text-sm font-semibold text-gray-400 opacity-95">
+                  絞り込み検索
+                </div>
+
+                <div className="mb-4 mt-7 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  カテゴリー
+                </div>
+                <div className="checklist">
+                  <input
+                    id="障害馬"
+                    name="category"
+                    value="障害馬"
+                    type="checkbox"
+                    className="hidden w-full"
+                  />
+                  <label
+                    htmlFor="障害馬"
+                    className="font-normal text-base text-gray-400 block w-full cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-lg p-1"
+                  >
+                    障害馬
+                  </label>
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  障害馬
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  馬場馬
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  総合馬
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  その他
+                </div>
+                <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  価格
+                </div>
+                <div className="flex">
+                  <div className="text-gray-700">￥500000</div>
+                  <div className="text-gray-700">〜</div>
+                  <div className="text-gray-700">￥1000000</div>
+                </div>
+                <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  年齢
+                </div>
+                <div className="flex">
+                  <div className="text-gray-700">5歳</div>
+                  <div className="text-gray-700">〜</div>
+                  <div className="text-gray-700">10歳</div>
+                </div>
+                <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  身長
+                </div>
+                <div className="flex">
+                  <div className="text-gray-700">150cm</div>
+                  <div className="text-gray-700">〜</div>
+                  <div className="text-gray-700">170cm</div>
+                </div>
+                <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  品種
+                </div>
+                <div className="mb-3">
+                  <select
+                    name="breed"
+                    className="text-base font-semibold text-gray-700 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  >
+                    <option hidden>------------------------------</option>
+                    <option value="サラブレッド">サラブレッド</option>
+                    <option value="アラブ">アラブ</option>
+                    <option value="アングロアラブ">アングロアラブ</option>
+                    <option value="アパルーサ">アパルーサ</option>
+                    <option value="アハルケテ">アハルケテ</option>
+                    <option value="アンダルシアン">アンダルシアン</option>
+                    <option value="アングロノルマン">アングロノルマン</option>
+                    <option value="ウェストファーレン">
+                      ウェストファーレン
+                    </option>
+                    <option value="オルデンブルグ">オルデンブルグ</option>
+                    <option value="KWPN">KWPN</option>
+                    <option value="クォーターホース">クォーターホース</option>
+                    <option value="クリオージョ">クリオージョ</option>
+                    <option value="クリーブランド・ ベイ">
+                      クリーブランド・ ベイ
+                    </option>
+                    <option value="ザンガーシェイド">ザンガーシェイド</option>
+                    <option value="セルフランセ">セルフランセ</option>
+                    <option value="トラケナー">トラケナー</option>
+                    <option value="トロッター">トロッター</option>
+                    <option value="ハクニー">ハクニー</option>
+                    <option value="ハノーバー">ハノーバー</option>
+                    <option value="パロミノ">パロミノ</option>
+                    <option value="ハンター">ハンター</option>
+                    <option value="フリージアン">フリージアン</option>
+                    <option value="ペイントホース">ペイントホース</option>
+                    <option value="ホルスタイン">ホルスタイン</option>
+                    <option value="モルガン">モルガン</option>
+                    <option value="リピッツァナー">リピッツァナー</option>
+                    <option value="ウォームブラッド">ウォームブラッド</option>
+                    <option value="スポーツホース">スポーツホース</option>
+                    <option value="日本乗系種">日本乗系種</option>
+                    <option value="半血種">半血種</option>
+                    <option value="日本在来種">日本在来種</option>
+                    <option value="ポニー">ポニー</option>
+                    <option value="ミニチュアホース">ミニチュアホース</option>
+                    <option value="重種馬">重種馬</option>
+                    <option value="その他">その他</option>
+                  </select>
+                </div>
+
+                <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  毛色
+                </div>
+                <select
+                  name="color"
+                  className="text-base font-semibold text-gray-700 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                >
+                  <option hidden>------------------------------</option>
+                  <option value="鹿毛">鹿毛</option>
+                  <option value="黒鹿毛">黒鹿毛</option>
+                  <option value="青毛">青毛</option>
+                  <option value="青鹿毛">青鹿毛</option>
+                  <option value="栗毛">栗毛</option>
+                  <option value="栃栗毛">栃栗毛</option>
+                  <option value="芦毛">芦毛</option>
+                  <option value="白毛">白毛</option>
+                  <option value="その他">その他</option>
+                </select>
+
+                <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  地域
+                </div>
+                <select
+                  name="area"
+                  className="text-base font-semibold text-gray-700 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                >
+                  <option value="北海道">北海道</option>
+                  <option value="東北">東北</option>
+                  <option value="関東">関東</option>
+                  <option value="中部">中部</option>
+                  <option value="近畿">近畿</option>
+                  <option value="中国・四国">中国・四国</option>
+                  <option value="九州・沖縄">九州・沖縄</option>
+                </select>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  関東
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  北海道
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  東北
+                </div>
+                <div className="mb-3 text-xs font-medium text-mainGreen">
+                  さらに表示
+                </div>
+                <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+                  特徴
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  おとなしい
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  120cm以上飛べます
+                </div>
+                <div className="mb-3 text-base font-semibold text-gray-700">
+                  初心者OK
+                </div>
+                <div className="mb-3 text-xs font-medium text-mainGreen">
+                  さらに表示
                 </div>
               </div>
-              <div className="mb-3 flex items-center">
-                <AiTwotoneCi className="mr-1 text-gray-900" />
-                <div className="text-base font-semibold text-gray-700">
-                  黒鹿毛
-                </div>
-              </div>
-              <div className="mb-3 flex items-center">
-                <AiTwotoneCi className="mr-1 text-yellow-700" />
-                <div className="text-base font-semibold text-gray-700">
-                  栗毛
-                </div>
-              </div>
-              <div className="mb-3 flex items-center">
-                <AiTwotoneCi className="mr-1 text-gray-100" />
-                <div className="text-base font-semibold text-gray-700">
-                  芦毛
-                </div>
-              </div>
-              <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                地域
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                関東
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                北海道
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                東北
-              </div>
-              <div className="mb-3 text-xs font-medium text-mainGreen">
-                さらに表示
-              </div>
-              <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
-                特徴
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                おとなしい
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                120cm以上飛べます
-              </div>
-              <div className="mb-3 text-base font-semibold text-gray-700">
-                初心者OK
-              </div>
-              <div className="mb-3 text-xs font-medium text-mainGreen">
-                さらに表示
-              </div>
-            </div>
+            </form>
           </div>
           <div className="w-2/3 ">
             {posts.map((post) => (
