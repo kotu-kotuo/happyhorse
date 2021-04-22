@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../src/auth/AuthProvider";
-import { Layout } from "../components/Layout";
+import { AuthContext } from "../auth/AuthProvider";
+import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
-import { storage, db } from "../src/utils/firebase";
+import { storage, db } from "../utils/firebase";
 import firebase from "firebase/app";
 
 const ProfileEdit = () => {

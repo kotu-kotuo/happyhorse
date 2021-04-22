@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../src/auth/AuthProvider";
+import { AuthContext } from "../../auth/AuthProvider";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { auth } from "../src/utils/firebase";
+import { auth } from "../../utils/firebase";
 import { GoBell } from "react-icons/go";
 import { IoChevronForwardOutline } from "react-icons/io5";
 

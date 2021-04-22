@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../src/auth/AuthProvider";
-import { Layout } from "../../components/Layout";
+import { AuthContext } from "../../auth/AuthProvider";
+import { Layout } from "../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
-import { db, storage } from "../../src/utils/firebase";
+import { db, storage } from "../../utils/firebase";
 import firebase from "firebase/app";
 import { Formik, Field, Form } from "formik";
 import { RiCloseCircleFill } from "react-icons/ri";

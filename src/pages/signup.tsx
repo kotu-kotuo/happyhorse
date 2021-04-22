@@ -2,27 +2,43 @@ import { useState } from "react";
 import { Layout } from "../components/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth } from "../src/utils/firebase";
+import { auth, db } from "../utils/firebase";
 
-const Login: React.FC = () => {
+const SignUp: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
 
-  const login = async (e) => {
+  const createUser = async (e) => {
     e.preventDefault();
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      router.push("/");
-      console.log("aaa")
+      await auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(async (result) => {
+          db.collection("users").doc(`${result.user.uid}`).set({
+            id: result.user.uid,
+            username: username,
+            avatar: "/avatar.png",
+            cover: "/cover1.jpg",
+            profileText: "",
+            good: 0,
+            bad:0,
+          });
+
+          router.push("/");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     } catch (error) {
       alert(error.message);
     }
   };
 
   return (
-    <Layout title="login">
-      <div className=" flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <Layout title="signup">
+      <div className=" flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 　">
         <div className="max-w-md w-full space-y-8">
           <div>
             <img
@@ -31,12 +47,35 @@ const Login: React.FC = () => {
               alt="logo"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Login
+              Sign Up
             </h2>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={login}>
+          <form className="mt-8 space-y-6" onSubmit={createUser}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
+                <div className="text-xs text-gray-500 mb-1 ml-1">
+                  ユーザーネーム
+                </div>
+                <label htmlFor="username" className="sr-only">
+                  Username
+                </label>
+                <input
+                  id="username"
+                  type="text"
+                  autoComplete="off"
+                  required
+                  className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="ユーザーネーム"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <div className="text-xs text-gray-500 mb-1 ml-1">
+                  メールアドレス / パスワード
+                </div>
                 <label htmlFor="email-address" className="sr-only">
                   Email address
                 </label>
@@ -86,14 +125,14 @@ const Login: React.FC = () => {
                     />
                   </svg>
                 </span>
-                ログイン
+                新規登録する
               </button>
             </div>
             <div className="flex items-center justify-end">
               <div className="text-sm">
-                <Link href="/signup">
+                <Link href="/login">
                   <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                    新規登録はこちら
+                    ログインはこちら
                   </a>
                 </Link>
               </div>
@@ -105,4 +144,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default SignUp;
