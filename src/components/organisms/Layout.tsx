@@ -108,7 +108,17 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                         </div>
                       </div>
                       <div className="border-b">
-                        <Link href="/post/myPostList">
+                        <Link href="/post/myLikePosts">
+                          <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
+                            <p className="text-sm font-medium text-gray-800 leading-none">
+                              お気に入りの馬
+                            </p>
+                            <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
+                          </a>
+                        </Link>
+                      </div>
+                      <div className="border-b">
+                        <Link href="/post/myPosts">
                           <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
                             <p className="text-sm font-medium text-gray-800 leading-none">
                               掲載した馬
@@ -150,7 +160,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
       </header>
       <main className="max-w-5xl mx-auto">{children}</main>
       <footer className="h-12 w-full text-center bottom-0 border-t border-gray-200 absolute bg-white">
-        <div className="py-3">©︎happy horse</div>
+        <div className="py-3">©︎ happy horse</div>
       </footer>
     </div>
   );

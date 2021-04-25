@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import Link from "next/link";
 import { db } from "../utils/firebase";
@@ -23,7 +24,7 @@ interface POST {
   height: number;
   area: string;
   features: Array<string>;
-  price: string;
+  price: number;
   createdAt: string;
   updatedAt: string;
   likeUserIDs: Array<string>;
@@ -32,6 +33,7 @@ interface POST {
 }
 
 export default function Index() {
+  const { currentUser, user, setUser } = useContext(AuthContext);
   const router = useRouter();
   const [posts, setPosts] = useState<POST[]>([
     {
@@ -50,7 +52,7 @@ export default function Index() {
       height: null,
       area: "",
       features: [],
-      price: "",
+      price: null,
       createdAt: "",
       updatedAt: "",
       likeUserIDs: [],
@@ -69,6 +71,7 @@ export default function Index() {
   const [heightMax, setHeightMax] = useState(null);
   const [breed, setBreed] = useState(null);
   const [color, setColor] = useState(null);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   useEffect(() => {
     db.collectionGroup("posts")
@@ -106,11 +109,79 @@ export default function Index() {
       });
   }, []);
 
+  //詳細画面に遷移
   const clickPost = (e) => {
     const pid = e.currentTarget.getAttribute("data-id");
     router.push({
       pathname: `/post/postShow/${pid}`,
     });
+  };
+
+  //いいね機能
+  const clickHeart = async (e) => {
+    const pid = e.currentTarget.getAttribute("data-id");
+    if (user.likePostIDs.includes(`${pid}`)) {
+      console.log("unlike");
+
+      await db
+        .collection("users")
+        .doc(`${currentUser.uid}`)
+        .update({
+          likePostIDs: [...user.likePostIDs.filter((id) => id !== pid)],
+        });
+
+      await db
+        .collection("users")
+        .doc(`${currentUser.uid}`)
+        .get()
+        .then((snapshot) => {
+          setUser(snapshot.data());
+        });
+
+      const posts = await db
+        .collectionGroup("posts")
+        .where("postID", "==", pid)
+        .get();
+
+      await posts.docs.forEach((snapshot) =>
+        snapshot.ref.update({
+          likeUserIDs: [
+            ...snapshot
+              .data()
+              .likeUserIDs.filter((id) => id !== currentUser.uid),
+          ],
+        })
+      );
+    } else {
+      console.log(user.likePostIDs);
+      console.log("like");
+
+      await db
+        .collection("users")
+        .doc(`${currentUser.uid}`)
+        .update({
+          likePostIDs: [pid, ...user.likePostIDs],
+        });
+
+      await db
+        .collection("users")
+        .doc(`${currentUser.uid}`)
+        .get()
+        .then((snapshot) => {
+          setUser(snapshot.data());
+        });
+
+      const posts = await db
+        .collectionGroup("posts")
+        .where("postID", "==", pid)
+        .get();
+
+      posts.docs.forEach((snapshot) =>
+        snapshot.ref.update({
+          likeUserIDs: [currentUser.uid, ...snapshot.data().likeUserIDs],
+        })
+      );
+    }
   };
 
   const handleCategory = (e) => {
@@ -144,19 +215,61 @@ export default function Index() {
     }
   };
 
-  const filterPost = (e) => {
+  // const filterCategory = async () => {
+  //   if (category === []) return;
+  //   const filtered = await Promise.all(
+  //     category.map(
+  //       async (element) =>
+  //         await posts.filter((post) => post.category.includes(element))
+  //     )
+  //   );
+  //   await setFilteredPosts([...filtered]);
+  // };
+
+  // const filterPriceMin = async () => {
+  //   if (!priceMin) return;
+  //   const filtered = await filteredPosts.filter(
+  //     (post) => post.price > priceMin
+  //   );
+  //   await setFilteredPosts([...filtered]);
+  // };
+
+  // useEffect(() => {
+  //   if (!priceMin) return;
+
+  // }, [priceMin]);
+
+  const filterPost = async (e) => {
     e.preventDefault();
-    console.log(category);
+
+    const filtered = await posts.filter(
+      (post) => post.price >= priceMin && post.price <= priceMax
+
+      // post.breed === breed &&
+      // post.age >= ageMin &&
+      // post.age <= ageMax &&
+      // post.height >= heightMin &&
+      // post.height <= heightMax
+    );
+
+    await setFilteredPosts([...filtered]);
+    // await filterCategory();
+    // await filterPriceMin();
     console.log(area);
     console.log(feature);
     console.log(breed);
     console.log(color);
     console.log(priceMin);
     console.log(priceMax);
+
+    await console.log(filteredPosts);
   };
 
   return (
     <div>
+      {console.log(filteredPosts)}
+      {console.log(priceMin)}
+      {console.log(posts)}
       <Layout title="index">
         <div className="flex mt-24 mb-20">
           <div className="w-1/3 pr-8">
@@ -176,7 +289,12 @@ export default function Index() {
             />
           </div>
           <div className="w-2/3 ">
-            <Posts posts={posts} clickPost={clickPost} />
+            <Posts
+              posts={posts}
+              clickPost={clickPost}
+              clickHeart={clickHeart}
+              currentUser={currentUser}
+            />
             <Pagination />
           </div>
         </div>

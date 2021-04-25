@@ -3,6 +3,7 @@ import { FaYenSign } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaHorse } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
 const Posts = (props) => {
   return (
@@ -84,9 +85,17 @@ const Posts = (props) => {
               />
               <p className="text-gray-900 ml-3">{post.username}</p>
             </div>
-            <div className="flex items-center">
-              <FaRegHeart className="text-3xl text-gray-900" />
-              <p className="text-gray-900 ml-3 mr-1">お気に入り</p>
+            <div
+              className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
+              onClick={props.clickHeart}
+              data-id={post.postID}
+            >
+              {post.likeUserIDs.includes(props.currentUser?.uid) ? (
+                <FaHeart className="text-3xl text-red-400" />
+              ) : (
+                <FaRegHeart className="text-3xl text-gray-900" />
+              )}
+              <p className="text-gray-900 ml-2">お気に入り</p>
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ interface MyFormValues {
   height: number;
   area: string;
   features: Array<string>;
-  price: string;
+  price: number;
 }
 
 const Post: React.FC = () => {
@@ -56,7 +56,7 @@ const Post: React.FC = () => {
     height: null,
     area: "",
     features: [],
-    price: "",
+    price: null,
   };
 
   //posiID設定

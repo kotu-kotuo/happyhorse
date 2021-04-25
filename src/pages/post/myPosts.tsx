@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
-import { Layout } from "../../components/Layout";
+import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
 import { db } from "../../utils/firebase";
-import { useRouter } from "next/router";
+
 
 interface POST {
   postID: string;
@@ -21,8 +21,7 @@ interface POST {
 }
 
 const myPostList = () => {
-  const router = useRouter();
-  const { currentUser, user } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   const [posts, setPosts] = useState<POST[]>([
     {

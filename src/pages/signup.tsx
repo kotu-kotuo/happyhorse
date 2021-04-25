@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout } from "../components/Layout";
+import { Layout } from "../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth, db } from "../utils/firebase";
@@ -23,7 +23,8 @@ const SignUp: React.FC = () => {
             cover: "/cover1.jpg",
             profileText: "",
             good: 0,
-            bad:0,
+            bad: 0,
+            likePostIDs: [],
           });
 
           router.push("/");
