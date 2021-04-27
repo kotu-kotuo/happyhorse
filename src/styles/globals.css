@@ -1,6 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind screens;
+
+/*==============================================
+# tailwind apply
+===============================================*/
+
+.filterCheckText{
+  @apply font-normal text-sm text-gray-400 block w-full cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1;
+}
 
 /*==============================================
 # slickの設定
@@ -86,7 +95,7 @@
 }
 
 /*==============================================
-# indexのtextの省略
+# textの省略
 ===============================================*/
 
 .index-title {
@@ -109,6 +118,14 @@
   overflow: hidden;
 }
 
+.myPostTitle{
+  font-size: 14px;
+  color: #000;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
 /*==============================================
 # 絞り込みのcheckbox
 ===============================================*/

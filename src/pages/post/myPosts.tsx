@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../src/auth/AuthProvider";
-import { Layout } from "../../components/Layout";
+import { AuthContext } from "../../auth/AuthProvider";
+import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
-import { db } from "../../src/utils/firebase";
-import { useRouter } from "next/router";
+import { db } from "../../utils/firebase";
+
 
 interface POST {
   postID: string;
@@ -21,8 +21,7 @@ interface POST {
 }
 
 const myPostList = () => {
-  const router = useRouter();
-  const { currentUser, user } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
 
   const [posts, setPosts] = useState<POST[]>([
     {
@@ -83,7 +82,7 @@ const myPostList = () => {
           {posts.map((post, index) => (
             <>
               <div key={index} className="w-1/3 p-6">
-                <Link href={`${post.postID}`}>
+                <Link href={`postShow/${post.postID}`}>
                   <div className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80">
                     <div className="pb-image w-full h-0 relative">
                       <img
@@ -92,7 +91,7 @@ const myPostList = () => {
                       />
                     </div>
                     <div className="p-2 text-sm text-gray-900">
-                      <div className="p-1">{post.title}</div>
+                      <div className="m-1 myPostTitle">{post.title}</div>
                       <div className="p-1"> {post.price}円</div>
                       <div className="p-1">{createdTime(post)}</div>
                     </div>

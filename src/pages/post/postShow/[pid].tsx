@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../../src/auth/AuthProvider";
-import { Layout } from "../../../components/Layout";
+import { AuthContext } from "../../../auth/AuthProvider";
+import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { db } from "../../../src/utils/firebase";
+import { db } from "../../../utils/firebase";
 import { FaRegHeart } from "react-icons/fa";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

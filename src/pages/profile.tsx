@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../src/auth/AuthProvider";
-import { Layout } from "../components/Layout";
+import { AuthContext } from "../auth/AuthProvider";
+import { Layout } from "../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
