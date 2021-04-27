@@ -3,6 +3,8 @@ import { Layout } from "../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth, db } from "../utils/firebase";
+import { filterInitialValues } from "../utils/initialValues";
+// import {filterInitialValues}from
 
 const SignUp: React.FC = () => {
   const router = useRouter();
@@ -16,7 +18,7 @@ const SignUp: React.FC = () => {
       await auth
         .createUserWithEmailAndPassword(email, password)
         .then(async (result) => {
-          db.collection("users").doc(`${result.user.uid}`).set({
+          await db.collection("users").doc(`${result.user.uid}`).set({
             id: result.user.uid,
             username: username,
             avatar: "/avatar.png",
@@ -26,6 +28,25 @@ const SignUp: React.FC = () => {
             bad: 0,
             likePostIDs: [],
           });
+
+          await db
+            .collection("users")
+            .doc(`${result.user.uid}`)
+            .collection("filters")
+            .doc(`${result.user.uid}`)
+            .set({
+              category: filterInitialValues.category,
+              priceMin: filterInitialValues.priceMin,
+              priceMax: filterInitialValues.priceMax,
+              ageMin: filterInitialValues.ageMin,
+              ageMax: filterInitialValues.ageMax,
+              heightMin: filterInitialValues.heightMin,
+              heightMax: filterInitialValues.heightMax,
+              breed: filterInitialValues.breed,
+              color: filterInitialValues.color,
+              area: filterInitialValues.area,
+              feature: filterInitialValues.features,
+            });
 
           router.push("/");
         })
