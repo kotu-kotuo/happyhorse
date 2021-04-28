@@ -3,42 +3,12 @@ import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
 import { db } from "../../utils/firebase";
-
-
-interface POST {
-  postID: string;
-  userID: string;
-  username: string;
-  avatar: string;
-  images: Array<string>;
-  title: string;
-  price: string;
-  createdAt: any;
-  updatedAt: string;
-  likeUserIDs: Array<string>;
-  isAvairable: boolean;
-  pv: number;
-}
+import * as Types from "../../types/types";
+import { postListInitialValues } from "../../utils/initialValues";
 
 const myPostList = () => {
   const { currentUser } = useContext(AuthContext);
-
-  const [posts, setPosts] = useState<POST[]>([
-    {
-      postID: "",
-      userID: "",
-      username: "",
-      avatar: "",
-      images: [],
-      title: "",
-      price: "",
-      createdAt: "",
-      updatedAt: "",
-      likeUserIDs: [],
-      isAvairable: null,
-      pv: null,
-    },
-  ]);
+  const [posts, setPosts] = useState<Types.PostList[]>([postListInitialValues]);
 
   useEffect(() => {
     if (currentUser) {

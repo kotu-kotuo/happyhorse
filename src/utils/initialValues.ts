@@ -1,4 +1,4 @@
-export const filterInitialValues = {
+export const filterInitialValues: any = {
   category: ["障害馬", "馬場馬", "総合馬", "レクレーション"],
   priceMin: 0,
   priceMax: 99999999999999,
@@ -109,4 +109,43 @@ export const filterInitialValues = {
     "蹴り癖なし",
     "初心者OK",
   ],
+};
+
+export const postInitialValues = {
+  postID: "",
+  userID: "",
+  username: "",
+  avatar: "",
+  images: [],
+  title: "",
+  postText: "",
+  category: "",
+  breed: "",
+  color: "",
+  birth: { year: null, month: null, day: null },
+  age: null,
+  height: null,
+  area: "",
+  features: [],
+  price: null,
+  createdAt: "",
+  updatedAt: "",
+  likeUserIDs: [],
+  isAvairable: null,
+  pv: null,
+};
+
+export const postListInitialValues = {
+  postID: "",
+  userID: "",
+  username: "",
+  avatar: "",
+  images: [],
+  title: "",
+  price: "",
+  createdAt: "",
+  updatedAt: "",
+  likeUserIDs: [],
+  isAvairable: null,
+  pv: null,
 };

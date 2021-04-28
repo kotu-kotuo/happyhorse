@@ -9,6 +9,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
+import { filterInitialValues } from "../../../utils/initialValues";
 
 const Show = () => {
   const router = useRouter();
@@ -97,7 +98,7 @@ const Show = () => {
                   key={index}
                   className="mt-10 outline-none pb-image w-full h-0 relative"
                 >
-                  {currentUser.uid === post.userID && (
+                  {currentUser && currentUser.uid === post.userID && (
                     <div
                       className="absolute top-3 right-4 z-50 bg-white px-3.5 py-1.5 rounded opacity-50 cursor-pointer hover:bg-mainGreen hover:text-white hover:opacity-90 ease-in-out duration-300"
                       onClick={() => toPostEdit(post)}
@@ -204,6 +205,7 @@ const Show = () => {
                     <div className="flex flex-wrap">
                       {post.features
                         .sort((a, b) => {
+                          //逆順に並べ替え
                           if (a < b) {
                             return 1;
                           } else {
