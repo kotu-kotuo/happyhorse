@@ -14,7 +14,6 @@ const Login: React.FC = () => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       router.push("/");
-      console.log("aaa")
     } catch (error) {
       alert(error.message);
     }

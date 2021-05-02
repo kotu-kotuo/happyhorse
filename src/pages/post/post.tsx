@@ -157,6 +157,7 @@ const Post: React.FC = () => {
                 likeUserIDs: [],
                 isAvairable: true,
                 pv: 0,
+                sendMessageUser:[]
               });
           };
 

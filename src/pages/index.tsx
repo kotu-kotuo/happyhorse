@@ -9,6 +9,7 @@ import Pagination from "../components/molecules/Pagination";
 import Filter from "../components/organisms/Filter";
 import { filterInitialValues, postInitialValues } from "../utils/initialValues";
 import * as Types from "../types/types";
+import { setPostStates } from "../utils/states";
 
 export default function Index() {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -36,64 +37,8 @@ export default function Index() {
     db.collectionGroup("posts")
       .orderBy("createdAt", "desc")
       .onSnapshot((snapshot) => {
-        setFilteredPosts(
-          snapshot.docs.map((doc) => ({
-            postID: doc.data().postID,
-            userID: doc.data().userID,
-            username: doc.data().username,
-            avatar: doc.data().avatar,
-            images: doc.data().images,
-            title: doc.data().title,
-            postText: doc.data().postText,
-            category: doc.data().category,
-            breed: doc.data().breed,
-            color: doc.data().color,
-            birth: {
-              year: doc.data().year,
-              month: doc.data().month,
-              day: doc.data().day,
-            },
-            age: doc.data().age,
-            height: doc.data().height,
-            area: doc.data().area,
-            features: doc.data().features,
-            price: doc.data().price,
-            createdAt: doc.data().createdAt,
-            updatedAt: doc.data().updatedAt,
-            likeUserIDs: doc.data().likeUserIDs,
-            isAvairable: doc.data().isAvairable,
-            pv: doc.data().pv,
-          }))
-        );
-        setPosts(
-          snapshot.docs.map((doc) => ({
-            postID: doc.data().postID,
-            userID: doc.data().userID,
-            username: doc.data().username,
-            avatar: doc.data().avatar,
-            images: doc.data().images,
-            title: doc.data().title,
-            postText: doc.data().postText,
-            category: doc.data().category,
-            breed: doc.data().breed,
-            color: doc.data().color,
-            birth: {
-              year: doc.data().year,
-              month: doc.data().month,
-              day: doc.data().day,
-            },
-            age: doc.data().age,
-            height: doc.data().height,
-            area: doc.data().area,
-            features: doc.data().features,
-            price: doc.data().price,
-            createdAt: doc.data().createdAt,
-            updatedAt: doc.data().updatedAt,
-            likeUserIDs: doc.data().likeUserIDs,
-            isAvairable: doc.data().isAvairable,
-            pv: doc.data().pv,
-          }))
-        );
+        setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
+        setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
       });
   }, []);
 

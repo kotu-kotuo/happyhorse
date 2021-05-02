@@ -20,19 +20,5 @@ export type Post = {
   likeUserIDs: Array<string>;
   isAvairable: boolean;
   pv: number;
-};
-
-export type PostList = {
-  postID: string;
-  userID: string;
-  username: string;
-  avatar: string;
-  images: Array<string>;
-  title: string;
-  price: string;
-  createdAt: any;
-  updatedAt: string;
-  likeUserIDs: Array<string>;
-  isAvairable: boolean;
-  pv: number;
+  sendMessageUser: Array<{ ID: string; createdAt: string }>;
 };

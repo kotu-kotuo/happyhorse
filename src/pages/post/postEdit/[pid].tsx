@@ -8,6 +8,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
 import fetch from "node-fetch";
 import { filterInitialValues } from "../../../utils/initialValues";
+import { setPostStates } from "../../../utils/states";
 
 interface IMAGES {
   images: any;
@@ -56,33 +57,7 @@ const postEdit = () => {
         .collection("posts")
         .doc(`${router.query.pid}`)
         .onSnapshot(async (snapshot) => {
-          await setPost({
-            postID: snapshot.data().postID,
-            userID: snapshot.data().userID,
-            username: snapshot.data().username,
-            avatar: snapshot.data().avatar,
-            images: snapshot.data().images,
-            title: snapshot.data().title,
-            postText: snapshot.data().postText,
-            horseName: snapshot.data().horseName,
-            category: snapshot.data().category,
-            breed: snapshot.data().breed,
-            color: snapshot.data().color,
-            birth: {
-              year: snapshot.data().birth.year,
-              month: snapshot.data().birth.month,
-              day: snapshot.data().birth.day,
-            },
-            age: snapshot.data().age,
-            height: snapshot.data().height,
-            area: snapshot.data().area,
-            features: snapshot.data().features,
-            price: snapshot.data().price,
-            createdAt: snapshot.data().createdAt,
-            updatedAt: snapshot.data().updatedAt,
-            likeUserIDs: snapshot.data().likeUserIDs,
-            isAvairable: snapshot.data().isAvairable,
-          });
+          await setPost(setPostStates(snapshot.data()));
           await setPreviewsURL(snapshot.data().images);
         });
     }

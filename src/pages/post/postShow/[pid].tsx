@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
 import { filterInitialValues } from "../../../utils/initialValues";
+import { setPostStates } from "../../../utils/states";
 
 const Show = () => {
   const router = useRouter();
@@ -22,34 +23,7 @@ const Show = () => {
         .where("postID", "==", router.query.pid)
         .onSnapshot((snapshot) => {
           snapshot.docs.map((doc) => {
-            setPost({
-              postID: doc.data().postID,
-              userID: doc.data().userID,
-              username: doc.data().username,
-              avatar: doc.data().avatar,
-              images: doc.data().images,
-              title: doc.data().title,
-              postText: doc.data().postText,
-              horseName: doc.data().horseName,
-              category: doc.data().category,
-              breed: doc.data().breed,
-              color: doc.data().color,
-              birth: {
-                year: doc.data().birth.year,
-                month: doc.data().birth.month,
-                day: doc.data().birth.day,
-              },
-              age: doc.data().age,
-              height: doc.data().height,
-              area: doc.data().area,
-              features: doc.data().features,
-              price: doc.data().price,
-              createdAt: doc.data().createdAt,
-              updatedAt: doc.data().updatedAt,
-              likeUserIDs: doc.data().likeUserIDs,
-              isAvairable: doc.data().isAvairable,
-              pv: doc.data().pv,
-            });
+            setPost(setPostStates(doc.data()));
           });
         });
     }
@@ -232,7 +206,12 @@ const Show = () => {
             </div>
             <div className="w-1/3">
               <div className="pl-10">
-                <Link href="/">
+                <Link
+                  href={{
+                    pathname: "/message/messages",
+                    query: { pid: post.postID },
+                  }}
+                >
                   <button
                     type="button"
                     className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-mainGreen hover:opacity-90 hover:shadow-lg"

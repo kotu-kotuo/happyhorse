@@ -7,7 +7,7 @@
 # tailwind apply
 ===============================================*/
 
-.filterCheckText{
+.filterCheckText {
   @apply font-normal text-sm text-gray-400 block w-full cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1;
 }
 
@@ -118,7 +118,7 @@
   overflow: hidden;
 }
 
-.myPostTitle{
+.myPostTitle {
   font-size: 14px;
   color: #000;
   display: -webkit-box;
@@ -182,4 +182,35 @@
   z-index: -2;
   border: 1px solid #d3d3d3;
   opacity: 0.8;
+}
+
+/*==============================================
+# messageのスイッチ
+===============================================*/
+
+.message-switch input[type="radio"] {
+  display: none;
+}
+.message-switch input[type="radio"] + label {
+  display: inline-block;
+  width: 100%;
+  padding: 8px;
+  background-color: #f3f4f6;
+  text-align: center;
+  font-size: 16px;
+  color: #6b7280;
+}
+.message-switch input[type="radio"]:checked + label {
+  color: #ffffff;
+  background-color: #77c649;
+  transition: all 0.4s ease-out;
+}
+
+/*==============================================
+# チャット画面の高さ固定
+===============================================*/
+
+.chatScreenHeight {
+  min-height: calc(100vh - 175px);
+  height: calc(100vh - 175px);
 }

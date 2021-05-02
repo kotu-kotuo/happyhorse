@@ -133,19 +133,6 @@ export const postInitialValues = {
   likeUserIDs: [],
   isAvairable: null,
   pv: null,
+  sendMessageUser:[]
 };
 
-export const postListInitialValues = {
-  postID: "",
-  userID: "",
-  username: "",
-  avatar: "",
-  images: [],
-  title: "",
-  price: "",
-  createdAt: "",
-  updatedAt: "",
-  likeUserIDs: [],
-  isAvairable: null,
-  pv: null,
-};
