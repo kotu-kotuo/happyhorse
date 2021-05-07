@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { auth } from "../../utils/firebase";
 import { GoBell } from "react-icons/go";
 import { IoChevronForwardOutline } from "react-icons/io5";
+import { FaHorse } from "react-icons/fa";
 
 interface TITLE {
   title: string;
@@ -79,7 +80,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                 <GoBell className="mx-4 text-3xl text-gray-400" />
 
                 <div
-                  className="mt-1.5 focus:outline-none relative"
+                  className="mt-1 focus:outline-none relative"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <img
@@ -162,18 +163,24 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                 <Link href="/post/post">
                   <button
                     type="button"
-                    className="mr-3 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                    className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
                   >
-                    馬を売る
+                    <div className="flex items-center">
+                      <FaHorse className="mr-1.5" />
+                      掲載
+                    </div>
                   </button>
                 </Link>
               ) : (
                 <Link href="/login">
                   <button
                     type="button"
-                    className="mr-3 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                    className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
                   >
-                    馬を売る
+                    <div className="flex items-center">
+                      <FaHorse className="mr-1.5" />
+                      掲載
+                    </div>
                   </button>
                 </Link>
               )}

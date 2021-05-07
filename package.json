@@ -20,6 +20,7 @@
     "node-fetch": "^2.6.1",
     "react": "17.0.1",
     "react-beautiful-dnd": "^13.1.0",
+    "react-confirm-alert": "^2.7.0",
     "react-div-100vh": "^0.6.0",
     "react-dom": "17.0.1",
     "react-dropzone": "^11.3.2",

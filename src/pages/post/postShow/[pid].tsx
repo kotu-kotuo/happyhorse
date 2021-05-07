@@ -9,13 +9,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
-import { filterInitialValues } from "../../../utils/initialValues";
+import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates } from "../../../utils/states";
+import { Post } from "../../../types/types";
 
 const Show = () => {
   const router = useRouter();
   const { currentUser } = useContext(AuthContext);
-  const [post, setPost] = useState(null);
+  const [post, setPost] = useState<Post>(postInitialValues);
 
   useEffect(() => {
     if (router.query.pid) {
@@ -63,7 +64,7 @@ const Show = () => {
 
   return (
     <Layout title="post.title">
-      {post && (
+      {post && currentUser && (
         <>
           <div className="mx-auto px-10">
             <Slider {...setting1}>
@@ -72,7 +73,7 @@ const Show = () => {
                   key={index}
                   className="mt-10 outline-none pb-image w-full h-0 relative"
                 >
-                  {currentUser && currentUser.uid === post.userID && (
+                  {currentUser.uid === post.userID && (
                     <div
                       className="absolute top-3 right-4 z-50 bg-white px-3.5 py-1.5 rounded opacity-50 cursor-pointer hover:bg-mainGreen hover:text-white hover:opacity-90 ease-in-out duration-300"
                       onClick={() => toPostEdit(post)}
@@ -206,19 +207,41 @@ const Show = () => {
             </div>
             <div className="w-1/3">
               <div className="pl-10">
-                <Link
-                  href={{
-                    pathname: "/message/messages",
-                    query: { pid: post.postID },
-                  }}
-                >
-                  <button
-                    type="button"
-                    className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-mainGreen hover:opacity-90 hover:shadow-lg"
-                  >
-                    メッセージを送る
+                {!post.isAvairable ? (
+                  <button className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-gray-400 pointer-events-none">
+                    SOLD OUT!
                   </button>
-                </Link>
+                ) : currentUser.uid === post.userID ? (
+                  <Link href="/message/management">
+                    <button
+                      type="button"
+                      className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                    >
+                      メッセージ管理画面へ
+                    </button>
+                  </Link>
+                ) : (
+                  <Link
+                    href={{
+                      pathname: "/message/messages",
+                      query: {
+                        uid: post.userID,
+                        pid: post.postID,
+                        cid: currentUser.uid,
+                      },
+                    }}
+                  >
+                    <button
+                      type="button"
+                      className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                    >
+                      {post.sendMessageUserIDs.includes(currentUser.uid)
+                        ? "メッセージ画面へ"
+                        : "メッセージを送る"}
+                    </button>
+                  </Link>
+                )}
+
                 <div className="flex items-center mb-4 ml-8">
                   <FaRegHeart className="text-3xl text-gray-900" />
                   <p className="text-gray-900 ml-3 mr-1">お気に入り</p>

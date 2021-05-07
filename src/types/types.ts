@@ -6,6 +6,7 @@ export type Post = {
   images: Array<string>;
   title: string;
   postText: string;
+  horseName: string;
   category: string;
   breed: string;
   color: string;
@@ -20,5 +21,8 @@ export type Post = {
   likeUserIDs: Array<string>;
   isAvairable: boolean;
   pv: number;
-  sendMessageUser: Array<{ ID: string; createdAt: string }>;
+  sendMessageUserIDs: Array<string>;
+  messageUpdatedAt: string;
+  latestMessage: string;
+  clientUserID: string;
 };

@@ -191,6 +191,7 @@
 .message-switch input[type="radio"] {
   display: none;
 }
+
 .message-switch input[type="radio"] + label {
   display: inline-block;
   width: 100%;
@@ -200,6 +201,7 @@
   font-size: 16px;
   color: #6b7280;
 }
+
 .message-switch input[type="radio"]:checked + label {
   color: #ffffff;
   background-color: #77c649;

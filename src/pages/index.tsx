@@ -29,7 +29,6 @@ export default function Index() {
   const [heightMax, setHeightMax] = useState(filterInitialValues.heightMax);
   const [breed, setBreed] = useState(filterInitialValues.breed);
   const [color, setColor] = useState(filterInitialValues.color);
-  // const [filteredPosts, setFilteredPosts] = useState([]);
   const [handle, setHandle] = useState("OFF");
 
   //postsをセット

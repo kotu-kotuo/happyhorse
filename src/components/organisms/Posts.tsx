@@ -18,6 +18,7 @@ const Posts = (props) => {
           >
             <div className="w-2/3">
               <div className="pb-image w-full h-0 relative">
+                {!post.isAvairable && <div className="absolute top-0 left-0 bg-gray-400 font-semibold text-white px-4 py-1 z-10">SOLD OUT!</div>}
                 <img
                   src={post.images[0] ? post.images[0] : "/no-image.png"}
                   className="object-cover outline-none w-full h-full cursor-pointer absolute"

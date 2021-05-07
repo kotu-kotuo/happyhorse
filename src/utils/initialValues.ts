@@ -97,9 +97,9 @@ export const filterInitialValues: any = {
     "佐賀県",
     "長崎県",
     "宮崎県",
+    "熊本県",
     "鹿児島県",
     "沖縄県",
-    "熊本県",
   ],
 
   features: [
@@ -119,6 +119,7 @@ export const postInitialValues = {
   images: [],
   title: "",
   postText: "",
+  horseName: "",
   category: "",
   breed: "",
   color: "",
@@ -133,6 +134,22 @@ export const postInitialValues = {
   likeUserIDs: [],
   isAvairable: null,
   pv: null,
-  sendMessageUser:[]
+  sendMessageUserIDs: [],
+  messageUpdatedAt: "",
+  latestMessage: "",
+  clientUserID: "",
 };
 
+export const chatroomInitialValues = {
+  sendUserID: "",
+  sendUserName: "",
+  sendUserAvatar: "",
+  postUserID: "",
+  postID: "",
+  postImage: "",
+  postTitle: "",
+  latestMessage: "",
+  messageCount: null,
+  createdAt: "",
+  messageUpdatedAt: "",
+};

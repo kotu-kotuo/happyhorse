@@ -25,5 +25,36 @@ export const setPostStates = (data) => ({
   likeUserIDs: data.likeUserIDs,
   isAvairable: data.isAvairable,
   pv: data.pv,
-  sendMessageUser: [{ ID: data.ID, createdAt: data.createdAt }],
+  sendMessageUserIDs: data.sendMessageUserIDs,
+  messageUpdatedAt: data.messageUpdatedAt,
+  latestMessage: data.latestMessage,
+  clientUserID: data.clientUserID,
+});
+
+export const setChatroomStates = (data) => ({
+  sendUserID: data.sendUserID,
+  sendUserName: data.sendUserName,
+  sendUserAvatar: data.sendUserAvatar,
+  postUserID: data.postUserID,
+  postID: data.postID,
+  postImage: data.postImage,
+  postTitle: data.postTitle,
+  latestMessage: data.latestMessage,
+  messageCount: data.messageCount,
+  createdAt: data.createdAt,
+  messageUpdatedAt: data.messageUpdatedAt,
+});
+
+export const setMessageStates = (data) => ({
+  userID: data.userID,
+  postID: data.postID,
+  username: data.username,
+  avatar: data.avatar,
+  messageText: data.messageText,
+  image: data.image,
+  createdAt: data.createdAt,
+  firstOnDate: data.firstOnDate,
+  clientDecision: data.clientDecision,
+  dealInterruption: data.dealInterruption,
+  dealCompleted: data.dealCompleted,
 });
