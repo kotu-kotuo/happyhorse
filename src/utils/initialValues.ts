@@ -1,4 +1,4 @@
-export const filterInitialValues = {
+export const filterInitialValues: any = {
   category: ["障害馬", "馬場馬", "総合馬", "レクレーション"],
   priceMin: 0,
   priceMax: 99999999999999,
@@ -97,9 +97,9 @@ export const filterInitialValues = {
     "佐賀県",
     "長崎県",
     "宮崎県",
+    "熊本県",
     "鹿児島県",
     "沖縄県",
-    "熊本県",
   ],
 
   features: [
@@ -109,4 +109,47 @@ export const filterInitialValues = {
     "蹴り癖なし",
     "初心者OK",
   ],
+};
+
+export const postInitialValues = {
+  postID: "",
+  userID: "",
+  username: "",
+  avatar: "",
+  images: [],
+  title: "",
+  postText: "",
+  horseName: "",
+  category: "",
+  breed: "",
+  color: "",
+  birth: { year: null, month: null, day: null },
+  age: null,
+  height: null,
+  area: "",
+  features: [],
+  price: null,
+  createdAt: "",
+  updatedAt: "",
+  likeUserIDs: [],
+  isAvairable: null,
+  pv: null,
+  sendMessageUserIDs: [],
+  messageUpdatedAt: "",
+  latestMessage: "",
+  clientUserID: "",
+};
+
+export const chatroomInitialValues = {
+  sendUserID: "",
+  sendUserName: "",
+  sendUserAvatar: "",
+  postUserID: "",
+  postID: "",
+  postImage: "",
+  postTitle: "",
+  latestMessage: "",
+  messageCount: null,
+  createdAt: "",
+  messageUpdatedAt: "",
 };

@@ -3,15 +3,18 @@ import { AuthContext } from "../../auth/AuthProvider";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { auth } from "../../utils/firebase";
 import { GoBell } from "react-icons/go";
 import { IoChevronForwardOutline } from "react-icons/io5";
+import { FaHorse } from "react-icons/fa";
 
 interface TITLE {
   title: string;
 }
 
 export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
+  const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const { currentUser, setCurrentUser, user } = useContext(AuthContext);
 
@@ -77,7 +80,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                 <GoBell className="mx-4 text-3xl text-gray-400" />
 
                 <div
-                  className="mt-1.5 focus:outline-none relative"
+                  className="mt-1 focus:outline-none relative"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <img
@@ -90,11 +93,11 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                       <div className="text-center p-6  border-b ">
                         <img
                           className="h-24 w-24 rounded-full mx-auto object-cover"
-                          src={user.avatar}
+                          src={user?.avatar}
                           alt="avatar"
                         />
                         <p className="pt-2 text-lg font-semibold">
-                          {`${user.username}`}
+                          {`${user?.username}`}
                         </p>
                         <div className="mt-5">
                           <Link href="profile">
@@ -106,6 +109,16 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                             </a>
                           </Link>
                         </div>
+                      </div>
+                      <div className="border-b">
+                        <Link href="/message/management">
+                          <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
+                            <p className="text-sm font-medium text-gray-800 leading-none">
+                              メッセージ管理
+                            </p>
+                            <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
+                          </a>
+                        </Link>
                       </div>
                       <div className="border-b">
                         <Link href="/post/myLikePosts">
@@ -146,22 +159,41 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
             )}
 
             <div className="inline-block ml-6 ">
-              <Link href="/post/post">
-                <button
-                  type="button"
-                  className="mr-3 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
-                >
-                  馬を売る
-                </button>
-              </Link>
+              {currentUser ? (
+                <Link href="/post/post">
+                  <button
+                    type="button"
+                    className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                  >
+                    <div className="flex items-center">
+                      <FaHorse className="mr-1.5" />
+                      掲載
+                    </div>
+                  </button>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <button
+                    type="button"
+                    className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                  >
+                    <div className="flex items-center">
+                      <FaHorse className="mr-1.5" />
+                      掲載
+                    </div>
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </nav>
       </header>
       <main className="max-w-5xl mx-auto">{children}</main>
-      <footer className="h-12 w-full text-center bottom-0 border-t border-gray-200 absolute bg-white">
-        <div className="py-3">©︎ happy horse</div>
-      </footer>
+      {router.pathname !== "/message/messages" && (
+        <footer className="h-12 w-full text-center bottom-0 border-t border-gray-200 absolute bg-white">
+          <div className="py-3">©︎ happy horse</div>
+        </footer>
+      )}
     </div>
   );
 };

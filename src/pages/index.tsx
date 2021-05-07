@@ -7,60 +7,17 @@ import { useRouter } from "next/router";
 import Posts from "../components/organisms/Posts";
 import Pagination from "../components/molecules/Pagination";
 import Filter from "../components/organisms/Filter";
-import { filterInitialValues } from "../utils/initialValues";
-
-interface POST {
-  postID: string;
-  userID: string;
-  username: string;
-  avatar: string;
-  images: Array<string>;
-  title: string;
-  postText: string;
-  category: string;
-  breed: string;
-  color: string;
-  birth: { year: number; month: number; day: number };
-  age: number;
-  height: number;
-  area: string;
-  features: Array<string>;
-  price: number;
-  createdAt: string;
-  updatedAt: string;
-  likeUserIDs: Array<string>;
-  isAvairable: boolean;
-  pv: number;
-}
+import { filterInitialValues, postInitialValues } from "../utils/initialValues";
+import * as Types from "../types/types";
+import { setPostStates } from "../utils/states";
 
 export default function Index() {
   const { currentUser, user, setUser } = useContext(AuthContext);
   const router = useRouter();
-  const [posts, setPosts] = useState<POST[]>([
-    {
-      postID: "",
-      userID: "",
-      username: "",
-      avatar: "",
-      images: [],
-      title: "",
-      postText: "",
-      category: "",
-      breed: "",
-      color: "",
-      birth: { year: null, month: null, day: null },
-      age: null,
-      height: null,
-      area: "",
-      features: [],
-      price: null,
-      createdAt: "",
-      updatedAt: "",
-      likeUserIDs: [],
-      isAvairable: null,
-      pv: null,
-    },
+  const [filteredPosts, setFilteredPosts] = useState<Types.Post[]>([
+    postInitialValues,
   ]);
+  const [posts, setPosts] = useState<Types.Post[]>([postInitialValues]);
   const [category, setCategory] = useState(filterInitialValues.category);
   const [area, setArea] = useState(filterInitialValues.area);
   const [feature, setFeature] = useState(filterInitialValues.features);
@@ -72,7 +29,6 @@ export default function Index() {
   const [heightMax, setHeightMax] = useState(filterInitialValues.heightMax);
   const [breed, setBreed] = useState(filterInitialValues.breed);
   const [color, setColor] = useState(filterInitialValues.color);
-  const [filteredPosts, setFilteredPosts] = useState([]);
   const [handle, setHandle] = useState("OFF");
 
   //postsをセット
@@ -80,35 +36,8 @@ export default function Index() {
     db.collectionGroup("posts")
       .orderBy("createdAt", "desc")
       .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => ({
-            postID: doc.data().postID,
-            userID: doc.data().userID,
-            username: doc.data().username,
-            avatar: doc.data().avatar,
-            images: doc.data().images,
-            title: doc.data().title,
-            postText: doc.data().postText,
-            category: doc.data().category,
-            breed: doc.data().breed,
-            color: doc.data().color,
-            birth: {
-              year: doc.data().year,
-              month: doc.data().month,
-              day: doc.data().day,
-            },
-            age: doc.data().age,
-            height: doc.data().height,
-            area: doc.data().area,
-            features: doc.data().features,
-            price: doc.data().price,
-            createdAt: doc.data().createdAt,
-            updatedAt: doc.data().updatedAt,
-            likeUserIDs: doc.data().likeUserIDs,
-            isAvairable: doc.data().isAvairable,
-            pv: doc.data().pv,
-          }))
-        );
+        setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
+        setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
       });
   }, []);
 
@@ -252,68 +181,72 @@ export default function Index() {
 
   //いいね機能
   const clickHeart = async (e) => {
-    const pid = e.currentTarget.getAttribute("data-id");
-    if (user.likePostIDs.includes(`${pid}`)) {
-      console.log("unlike");
-
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .update({
-          likePostIDs: [...user.likePostIDs.filter((id) => id !== pid)],
-        });
-
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .get()
-        .then((snapshot) => {
-          setUser(snapshot.data());
-        });
-
-      const posts = await db
-        .collectionGroup("posts")
-        .where("postID", "==", pid)
-        .get();
-
-      await posts.docs.forEach((snapshot) =>
-        snapshot.ref.update({
-          likeUserIDs: [
-            ...snapshot
-              .data()
-              .likeUserIDs.filter((id) => id !== currentUser.uid),
-          ],
-        })
-      );
+    if (!currentUser) {
+      router.push("login");
     } else {
-      console.log(user.likePostIDs);
-      console.log("like");
+      const pid = e.currentTarget.getAttribute("data-id");
+      if (user.likePostIDs.includes(`${pid}`)) {
+        console.log("unlike");
 
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .update({
-          likePostIDs: [pid, ...user.likePostIDs],
-        });
+        await db
+          .collection("users")
+          .doc(`${currentUser.uid}`)
+          .update({
+            likePostIDs: [...user.likePostIDs.filter((id) => id !== pid)],
+          });
 
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .get()
-        .then((snapshot) => {
-          setUser(snapshot.data());
-        });
+        await db
+          .collection("users")
+          .doc(`${currentUser.uid}`)
+          .get()
+          .then((snapshot) => {
+            setUser(snapshot.data());
+          });
 
-      const posts = await db
-        .collectionGroup("posts")
-        .where("postID", "==", pid)
-        .get();
+        const posts = await db
+          .collectionGroup("posts")
+          .where("postID", "==", pid)
+          .get();
 
-      posts.docs.forEach((snapshot) =>
-        snapshot.ref.update({
-          likeUserIDs: [currentUser.uid, ...snapshot.data().likeUserIDs],
-        })
-      );
+        await posts.docs.forEach((snapshot) =>
+          snapshot.ref.update({
+            likeUserIDs: [
+              ...snapshot
+                .data()
+                .likeUserIDs.filter((id) => id !== currentUser.uid),
+            ],
+          })
+        );
+      } else {
+        console.log(user.likePostIDs);
+        console.log("like");
+
+        await db
+          .collection("users")
+          .doc(`${currentUser.uid}`)
+          .update({
+            likePostIDs: [pid, ...user.likePostIDs],
+          });
+
+        await db
+          .collection("users")
+          .doc(`${currentUser.uid}`)
+          .get()
+          .then((snapshot) => {
+            setUser(snapshot.data());
+          });
+
+        const posts = await db
+          .collectionGroup("posts")
+          .where("postID", "==", pid)
+          .get();
+
+        posts.docs.forEach((snapshot) =>
+          snapshot.ref.update({
+            likeUserIDs: [currentUser.uid, ...snapshot.data().likeUserIDs],
+          })
+        );
+      }
     }
   };
 
@@ -383,54 +316,58 @@ export default function Index() {
   const filterPost = async (e) => {
     e.preventDefault();
 
-    await db
-      .collection("users")
-      .doc(`${currentUser.uid}`)
-      .collection("filters")
-      .doc(`${currentUser.uid}`)
-      .update({
-        category: category,
-        priceMin: priceMin,
-        priceMax: priceMax,
-        ageMin: ageMin,
-        ageMax: ageMax,
-        heightMin: heightMin,
-        heightMax: heightMax,
-        breed: breed,
-        color: color,
-        area: area,
-        feature: feature,
-      });
+    if (!currentUser) {
+      router.push("login");
+    } else {
+      await db
+        .collection("users")
+        .doc(`${currentUser.uid}`)
+        .collection("filters")
+        .doc(`${currentUser.uid}`)
+        .update({
+          category: category,
+          priceMin: priceMin,
+          priceMax: priceMax,
+          ageMin: ageMin,
+          ageMax: ageMax,
+          heightMin: heightMin,
+          heightMax: heightMax,
+          breed: breed,
+          color: color,
+          area: area,
+          feature: feature,
+        });
 
-    const filteredArray = posts.filter(
-      (post) =>
-        category.includes(post.category) &&
-        post.price >= priceMin &&
-        post.price <= priceMax &&
-        post.age >= ageMin &&
-        post.age <= ageMax &&
-        post.height >= heightMin &&
-        post.height <= heightMax &&
-        breed.includes(post.breed) &&
-        color.includes(post.color) &&
-        area.includes(post.area)
-    );
-
-    const filteredFeaturesPosts = feature.map((element) =>
-      posts.filter((post) => post.features.includes(element))
-    );
-    const filteredDouble = []
-      .concat(...filteredFeaturesPosts)
-      .filter((value, index, self) => self.indexOf(value) === index);
-
-    const filteredPostsToSet = filteredArray
-      .concat(filteredDouble)
-      .filter(
-        (value, index, self) =>
-          self.indexOf(value) === index && self.lastIndexOf(value) !== index
+      const filteredArray = posts.filter(
+        (post) =>
+          category.includes(post.category) &&
+          post.price >= priceMin &&
+          post.price <= priceMax &&
+          post.age >= ageMin &&
+          post.age <= ageMax &&
+          post.height >= heightMin &&
+          post.height <= heightMax &&
+          breed.includes(post.breed) &&
+          color.includes(post.color) &&
+          area.includes(post.area)
       );
 
-    setFilteredPosts(filteredPostsToSet);
+      const filteredFeaturesPosts = feature.map((element) =>
+        posts.filter((post) => post.features.includes(element))
+      );
+      const filteredDouble = []
+        .concat(...filteredFeaturesPosts)
+        .filter((value, index, self) => self.indexOf(value) === index);
+
+      const filteredPostsToSet = filteredArray
+        .concat(filteredDouble)
+        .filter(
+          (value, index, self) =>
+            self.indexOf(value) === index && self.lastIndexOf(value) !== index
+        );
+
+      await setFilteredPosts(filteredPostsToSet);
+    }
   };
 
   //クリアが押されたとき
@@ -483,16 +420,7 @@ export default function Index() {
             />
           </div>
           <div className="w-2/3">
-            {!currentUser ? (
-              <>
-                <Posts
-                  posts={posts}
-                  clickPost={clickPost}
-                  clickHeart={clickHeart}
-                  currentUser={currentUser}
-                />
-              </>
-            ) : currentUser && filteredPosts.length === 0 ? (
+            {currentUser && filteredPosts.length === 0 ? (
               <div className="delay-1000 animate-fade-in-down">
                 ご希望の馬は掲載されていませんでした。。
               </div>
@@ -504,7 +432,7 @@ export default function Index() {
                 currentUser={currentUser}
               />
             )}
-
+            {console.log(filteredPosts)}
             <Pagination />
           </div>
         </div>

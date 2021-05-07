@@ -1,0 +1,28 @@
+export type Post = {
+  postID: string;
+  userID: string;
+  username: string;
+  avatar: string;
+  images: Array<string>;
+  title: string;
+  postText: string;
+  horseName: string;
+  category: string;
+  breed: string;
+  color: string;
+  birth: { year: number; month: number; day: number };
+  age: number;
+  height: number;
+  area: string;
+  features: Array<string>;
+  price: number;
+  createdAt: string;
+  updatedAt: string;
+  likeUserIDs: Array<string>;
+  isAvairable: boolean;
+  pv: number;
+  sendMessageUserIDs: Array<string>;
+  messageUpdatedAt: string;
+  latestMessage: string;
+  clientUserID: string;
+};
