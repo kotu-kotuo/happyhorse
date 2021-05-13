@@ -3,8 +3,12 @@ import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
 import { db } from "../../utils/firebase";
-import SwitchMessages from "../../components/molecules/SwitchMessages";
-import { setChatroomStates, setPostStates } from "../../utils/states";
+import SwitchDisplay from "../../components/molecules/SwitchDisplay";
+import {
+  setChatroomStates,
+  setPostStates,
+  setReviewStates,
+} from "../../utils/states";
 import { Post } from "../../types/types";
 import {
   chatroomInitialValues,
@@ -25,6 +29,7 @@ const management = () => {
   const [isSendHidden, setIsSendHidden] = useState(true);
   const [isMyPostChatroomsHidden, setIsMyPostChatroomsHidden] = useState(true);
   const [clickPid, setClickPid] = useState("");
+  const [reviewsOnHold, setReviewsOnHold]: any = useState([]);
 
   useEffect(() => {
     if (currentUser) {
@@ -58,6 +63,15 @@ const management = () => {
           )
         );
     }
+
+    db.collection("reviewsOnHold")
+      .get()
+      .then((snapshot) => {
+        if (!snapshot) return;
+        setReviewsOnHold(
+          snapshot.docs.map((doc) => setReviewStates(doc.data()))
+        );
+      });
   }, [currentUser]);
 
   //時間をUNIXから変換
@@ -69,9 +83,12 @@ const management = () => {
   return (
     <Layout title="management">
       <div className="mt-16">
-        <SwitchMessages
-          setIsMyPostsBlockHidden={setIsMyPostsBlockHidden}
-          setIsSendHidden={setIsSendHidden}
+        <SwitchDisplay
+          setIsLeftHidden={setIsMyPostsBlockHidden}
+          setIsRightHidden={setIsSendHidden}
+          title={"メッセージ管理"}
+          textLeft={"自分の投稿"}
+          textRight={"メッセージを送った投稿"}
         />
         <div className="max-w-3xl w-full mx-auto mt-8">
           {myPosts && sendMessageChatrooms && currentUser && (
@@ -111,7 +128,16 @@ const management = () => {
                               </div>
                             </div>
                             <p className="text-gray-500 text-sm mt-2">
-                              {myPost.latestMessage}
+                              {/* レビューが完了したユーザの最新メッセージを変更 */}
+                              {myPost.latestMessage === "評価をお願いします" &&
+                              reviewsOnHold.filter(
+                                (review) => review.reviewerID === myPost.userID
+                              ).length !== 0 &&
+                              reviewsOnHold.filter(
+                                (review) => review.postID === myPost.postID
+                              ).length !== 0
+                                ? "評価完了しました"
+                                : myPost.latestMessage}
                             </p>
                           </div>
                         </div>
@@ -159,7 +185,19 @@ const management = () => {
                                   </div>
                                 </div>
                                 <p className="text-gray-500 text-sm mt-2">
-                                  {myPostChatroom.latestMessage}
+                                  {myPostChatroom.latestMessage ===
+                                    "評価をお願いします" &&
+                                  reviewsOnHold.filter(
+                                    (review) =>
+                                      review.reviewerID ===
+                                      myPostChatroom.postUserID
+                                  ).length !== 0 &&
+                                  reviewsOnHold.filter(
+                                    (review) =>
+                                      review.postID === myPostChatroom.postID
+                                  ).length !== 0
+                                    ? "評価完了しました"
+                                    : myPostChatroom.latestMessage}
                                 </p>
                               </div>
                             </div>
@@ -172,6 +210,7 @@ const management = () => {
                       setIsMyPostsHidden(false),
                         setIsMyPostChatroomsHidden(true);
                     }}
+                    className="text-gray-900 border-b border-gray-900 ml-12 w-20 cursor-pointer"
                   >
                     戻る
                   </div>
@@ -195,7 +234,7 @@ const management = () => {
                           <div>
                             <img
                               src={sendMessageChatroom.postImage}
-                              className="h-16 w-28 rounded-l-md mr-3 block"
+                              className="h-16 w-28 rounded-l-md mr-3 block object-cover"
                             />
                           </div>
                           <div className="px-3 py-1 max-w-3xl w-full">
@@ -214,7 +253,19 @@ const management = () => {
                               </div>
                             </div>
                             <p className="text-gray-500 text-sm mt-2">
-                              {sendMessageChatroom.latestMessage}
+                              {sendMessageChatroom.latestMessage ===
+                                "評価をお願いします" &&
+                              reviewsOnHold.filter(
+                                (review) =>
+                                  review.reviewerID ===
+                                  sendMessageChatroom.sendUserID
+                              ).length !== 0 &&
+                              reviewsOnHold.filter(
+                                (review) =>
+                                  review.postID === sendMessageChatroom.postID
+                              ).length !== 0
+                                ? "評価完了しました"
+                                : sendMessageChatroom.latestMessage}
                             </p>
                           </div>
                         </div>

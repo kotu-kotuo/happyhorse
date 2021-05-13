@@ -9,6 +9,8 @@ import { postInitialValues } from "../../utils/initialValues";
 import { Post } from "../../types/types";
 import { IoSend } from "react-icons/io5";
 import { BsFillImageFill } from "react-icons/bs";
+import { CgSmile } from "react-icons/cg";
+import { CgSmileNone } from "react-icons/cg";
 import TextareaAutosize from "react-textarea-autosize";
 import Div100vh from "react-div-100vh";
 import ImageModal from "../../components/molecules/ImageModal";
@@ -16,10 +18,11 @@ import {
   setChatroomStates,
   setMessageStates,
   setPostStates,
+  setReviewStates,
 } from "../../utils/states";
 import { generateFileName } from "../../functions/functions";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const messages = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -30,6 +33,11 @@ const messages = () => {
   const [isOpenMyModal, setIsOpenMyModal] = useState(false);
   const [isOpenYourModal, setIsOpenYourModal] = useState(false);
   const [messageText, setMessageText] = useState("");
+  const [reviewsOnHold, setReviewsOnHold]: any = useState([]);
+  const [rateValue, setRateValue] = useState("good");
+  const [reviewText, setReviewText] = useState("");
+  const [postReviews, setPostReviews] = useState([]);
+  const [reviewSwitch, setReviewSwitch] = useState("OFF");
   const ref = useRef(null);
 
   //初期値セット
@@ -69,6 +77,18 @@ const messages = () => {
           setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
         );
     }
+    if (currentUser) {
+      db.collection("reviewsOnHold")
+        .get()
+        .then((snapshot) => {
+          if (!snapshot) return;
+          setReviewsOnHold(
+            snapshot.docs
+              .filter((doc) => doc.data().postID === router.query.pid)
+              .map((element) => setReviewStates(element.data()))
+          );
+        });
+    }
   }, [router.query.uid, router.query.pid, router.query.cid, currentUser]);
 
   useEffect(() => {
@@ -84,8 +104,185 @@ const messages = () => {
           if (!snapshot.data()) return;
           setChatroom(setChatroomStates(snapshot.data()));
         });
+      db.collectionGroup("reviews")
+        .where("postID", "==", post.postID)
+        .get()
+        .then((snapshot) =>
+          setPostReviews(
+            snapshot.docs.map((doc) => setReviewStates(doc.data()))
+          )
+        );
     }
   }, [post]);
+
+  //レビュー送信時、レビューを保持する
+  useEffect(() => {
+    if (reviewSwitch === "ON")
+      db.collection("reviewsOnHold").add({
+        postID: post.postID,
+        postUserID: post.userID,
+        postTitle: post.title,
+        postImage: post.images[0],
+        reviewerID: currentUser.uid,
+        reviewerName: user.username,
+        reviewerAvatar: user.avatar,
+        rating: rateValue,
+        reviewText: reviewText,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+    db.collection("reviewsOnHold")
+      .get()
+      .then((snapshot) => {
+        setReviewsOnHold(
+          snapshot.docs.map((doc) =>
+            setReviewStates(doc.data({ serverTimestamps: "estimate" }))
+          )
+        );
+      });
+  }, [reviewSwitch]);
+
+  //レビューが2つ揃ったら
+  useEffect(() => {
+    if (
+      reviewsOnHold.length !== 0 &&
+      reviewsOnHold.filter((review) => review.postID === post.postID).length ===
+        2 &&
+      post &&
+      chatroom &&
+      user
+    ) {
+      reviewsOnHold
+        .filter((review) => review.postID === post.postID)
+        .map((review) => {
+          console.log(review.reviewText);
+
+          if (review.postUserID === review.reviewerID) {
+            db.collection("users")
+              .doc(`${post.clientUserID}`)
+              .collection("reviews")
+              .doc(`${review.postID}`)
+              .set({
+                postID: review.postID,
+                postUserID: review.postUserID,
+                postTitle: review.postTitle,
+                postImage: review.postImage,
+                reviewerID: review.reviewerID,
+                reviewerName: review.reviewerName,
+                reviewerAvatar: review.reviewerAvatar,
+                rating: review.rating,
+                reviewText: review.reviewText,
+                createdAt: review.createdAt,
+              });
+            if (review.rating === "good") {
+              db.collection("users")
+                .doc(`${post.clientUserID}`)
+                .update({
+                  good: firebase.firestore.FieldValue.increment(1),
+                });
+            } else {
+              db.collection("users")
+                .doc(`${post.clientUserID}`)
+                .update({
+                  bad: firebase.firestore.FieldValue.increment(1),
+                });
+            }
+          } else {
+            db.collection("users")
+              .doc(`${post.userID}`)
+              .collection("reviews")
+              .doc(`${review.postID}`)
+              .set({
+                postID: review.postID,
+                postUserID: review.postUserID,
+                postTitle: review.postTitle,
+                postImage: review.postImage,
+                reviewerID: review.reviewerID,
+                reviewerName: review.reviewerName,
+                reviewerAvatar: review.reviewerAvatar,
+                rating: review.rating,
+                reviewText: review.reviewText,
+                createdAt: review.createdAt,
+              });
+            if (review.rating === "good") {
+              db.collection("users")
+                .doc(`${post.userID}`)
+                .update({
+                  good: firebase.firestore.FieldValue.increment(1),
+                });
+            } else {
+              db.collection("users")
+                .doc(`${post.userID}`)
+                .update({
+                  bad: firebase.firestore.FieldValue.increment(1),
+                });
+            }
+          }
+        });
+
+      db.collection("reviewsOnHold")
+        .where("postID", "==", post.postID)
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((doc) => doc.ref.delete()));
+
+      db.collection("users")
+        .doc(`${post.userID}`)
+        .collection("posts")
+        .doc(`${post.postID}`)
+        .update({
+          messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          latestMessage: "評価完了しました",
+        });
+
+      db.collection("users")
+        .doc(`${post.userID}`)
+        .collection("posts")
+        .doc(`${post.postID}`)
+        .collection("chatrooms")
+        .doc(`${chatroom.sendUserID}`)
+        .update({
+          messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          latestMessage: "評価完了しました",
+          messageCount: chatroom.messageCount + 1,
+        });
+
+      db.collection("users")
+        .doc(`${post.userID}`)
+        .collection("posts")
+        .doc(`${post.postID}`)
+        .collection("chatrooms")
+        .doc(`${chatroom.sendUserID}`)
+        .collection("messages")
+        .add({
+          userID: currentUser.uid,
+          postID: post.postID,
+          username: user.username,
+          avatar: user.avatar,
+          messageText: "評価完了しました",
+          image: "",
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          firstOnDate: handleShowDate,
+          clientDecision: false,
+          dealInterruption: false,
+          dealCompleted: false,
+          pleaseRate: false,
+          rateCompleted: true,
+        });
+
+      db.collection("users")
+        .doc(`${post.userID}`)
+        .collection("posts")
+        .doc(`${post.postID}`)
+        .collection("chatrooms")
+        .doc(`${chatroom.sendUserID}`)
+        .collection("messages")
+        .orderBy("createdAt")
+        .get()
+        .then((snapshot) =>
+          setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
+        );
+    }
+  }, [reviewsOnHold]);
 
   //時間をUNIXから変換
   const createdTime = (post) => {
@@ -208,6 +405,8 @@ const messages = () => {
             clientDecision: false,
             dealInterruption: false,
             dealCompleted: false,
+            pleaseRate: false,
+            rateCompleted: false,
           });
 
         await db
@@ -272,6 +471,8 @@ const messages = () => {
             clientDecision: false,
             dealInterruption: false,
             dealCompleted: false,
+            pleaseRate: false,
+            rateCompleted: false,
           });
 
         await db
@@ -392,6 +593,8 @@ const messages = () => {
                       clientDecision: false,
                       dealInterruption: false,
                       dealCompleted: false,
+                      pleaseRate: false,
+                      rateCompleted: false,
                     });
 
                   await db
@@ -472,6 +675,8 @@ const messages = () => {
                       clientDecision: false,
                       dealInterruption: false,
                       dealCompleted: false,
+                      pleaseRate: false,
+                      rateCompleted: false,
                     });
 
                   await db
@@ -501,8 +706,8 @@ const messages = () => {
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui">
-            <p>この方を取引者に決定しますか？</p>
-            <div className="flex justify-around mt-8">
+            <p className="text-center">この方を取引者に決定しますか？</p>
+            <div className="flex justify-around mt-8 max-w-xs mx-auto">
               <button
                 onClick={async () => {
                   await db
@@ -549,6 +754,8 @@ const messages = () => {
                       clientDecision: true,
                       dealInterruption: false,
                       dealCompleted: false,
+                      pleaseRate: false,
+                      rateCompleted: false,
                     });
 
                   await db
@@ -590,8 +797,8 @@ const messages = () => {
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui">
-            <p>この方との取引を中断しますか？</p>
-            <div className="flex justify-around mt-8">
+            <p className="text-center">この方との取引を中断しますか？</p>
+            <div className="flex justify-around mt-8 max-w-xs mx-auto">
               <button
                 onClick={async () => {
                   await db
@@ -638,6 +845,8 @@ const messages = () => {
                       clientDecision: false,
                       dealInterruption: true,
                       dealCompleted: false,
+                      pleaseRate: false,
+                      rateCompleted: false,
                     });
 
                   await db
@@ -679,8 +888,8 @@ const messages = () => {
       customUI: ({ onClose }) => {
         return (
           <div className="custom-ui">
-            <p>この方との取引を完了させますか？</p>
-            <div className="flex justify-around mt-8">
+            <p className="text-center">この方との取引を完了させますか？</p>
+            <div className="flex justify-around mt-8 max-w-xs mx-auto">
               <button
                 onClick={async () => {
                   await db
@@ -690,7 +899,7 @@ const messages = () => {
                     .doc(`${post.postID}`)
                     .update({
                       messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      latestMessage: "取引完了しました",
+                      latestMessage: "評価をお願いします",
                       isAvairable: false,
                     });
 
@@ -703,7 +912,7 @@ const messages = () => {
                     .doc(`${chatroom.sendUserID}`)
                     .update({
                       messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      latestMessage: "取引完了しました",
+                      latestMessage: "評価をお願いします",
                       messageCount: chatroom.messageCount + 1,
                     });
 
@@ -727,6 +936,32 @@ const messages = () => {
                       clientDecision: false,
                       dealInterruption: false,
                       dealCompleted: true,
+                      pleaseRate: false,
+                      rateCompleted: false,
+                    });
+
+                  await db
+                    .collection("users")
+                    .doc(`${post.userID}`)
+                    .collection("posts")
+                    .doc(`${post.postID}`)
+                    .collection("chatrooms")
+                    .doc(`${chatroom.sendUserID}`)
+                    .collection("messages")
+                    .add({
+                      userID: currentUser.uid,
+                      postID: post.postID,
+                      username: user.username,
+                      avatar: user.avatar,
+                      messageText: "評価をお願いします",
+                      image: "",
+                      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                      firstOnDate: handleShowDate,
+                      clientDecision: false,
+                      dealInterruption: false,
+                      dealCompleted: false,
+                      pleaseRate: true,
+                      rateCompleted: false,
                     });
 
                   await db
@@ -763,6 +998,86 @@ const messages = () => {
     });
   };
 
+  const rating = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        const submitReview = async (e) => {
+          e.preventDefault();
+          setReviewSwitch("ON");
+
+          onClose();
+        };
+        return (
+          <div className="custom-ui w-full">
+            <form className="mx-auto p-2 max-w-2xl" onSubmit={submitReview}>
+              <div className="flex items-center justify-center mb-3">
+                <label className="good-button mr-3">
+                  <input
+                    type="radio"
+                    value="good"
+                    name="rate"
+                    defaultChecked={true}
+                    onChange={(e) => {
+                      setRateValue(e.target.value);
+                    }}
+                    className="hidden"
+                  />
+                  <div className="flex items-center">
+                    <CgSmile className="text-3xl" />
+                    <p className="text-lg">良い</p>
+                  </div>
+                </label>
+
+                <label className="bad-button ml-3">
+                  <input
+                    type="radio"
+                    value="bad"
+                    name="rate"
+                    onChange={(e) => {
+                      setRateValue(e.target.value);
+                    }}
+                    className="hidden"
+                  />
+                  <div className="flex items-center">
+                    <CgSmileNone className="text-3xl" />
+                    <p className="text-lg">残念</p>
+                  </div>
+                </label>
+              </div>
+              <textarea
+                className="w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="この度はありがとうございました！"
+                onChange={(e) => {
+                  setReviewText(e.target.value);
+                }}
+              />
+              <div className="text-right w-full block">
+                <p className="text-xs text-gray-500 text-right ml-auto inline">
+                  ※お互いに評価が完了したのち反映されます
+                </p>
+              </div>
+
+              <div className="flex justify-around mt-8">
+                <button
+                  type="submit"
+                  className="focus:outline-none text-white text-base font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                >
+                  評価を送信
+                </button>
+                <button
+                  onClick={onClose}
+                  className="focus:outline-none text-gray-500 text-base border border-gray-400 font-semibold py-1.5 px-5 rounded-md bg-white hover:opacity-90 hover:shadow-lg"
+                >
+                  キャンセル
+                </button>
+              </div>
+            </form>
+          </div>
+        );
+      },
+    });
+  };
+
   //既読機能
   // if (process.browser) {
   //   const targetMessages = document.querySelectorAll(".targetMessage");
@@ -785,7 +1100,8 @@ const messages = () => {
 
   return (
     <div>
-      {console.log(messages)}
+      {console.log(rateValue)}
+      {console.log(reviewText)}
       <div>
         <Div100vh className="relative">
           <Layout title="messages">
@@ -848,7 +1164,7 @@ const messages = () => {
                   post.clientUserID &&
                   !post.isAvairable &&
                   currentUser.uid === chatroom?.postUserID && (
-                    <div className="shadow-md border border-gray-50 rounded-xl p-2 text-center mt-3">
+                    <div className="rounded-xl p-2 text-center mt-3">
                       <p className="mt-1 text-mainGreen font-semibold">
                         取引完了しました
                       </p>
@@ -871,6 +1187,33 @@ const messages = () => {
                         ) : message.dealCompleted ? (
                           <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
                             取引完了です！
+                          </div>
+                        ) : message.pleaseRate ? (
+                          //レビューしたか判定
+                          reviewsOnHold &&
+                          reviewsOnHold.filter(
+                            (review) => review.reviewerID === currentUser.uid
+                          ).length === 1 ? (
+                            postReviews.length !== 2 && (
+                              <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
+                                評価完了です！
+                              </div>
+                            )
+                          ) : (
+                            postReviews.length !== 2 && (
+                              <div
+                                className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3 mx-3"
+                                onClick={rating}
+                              >
+                                <p className="mt-1 text-mainGreen font-semibold">
+                                  評価をお願いします
+                                </p>
+                              </div>
+                            )
+                          )
+                        ) : message.rateCompleted ? (
+                          <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
+                            評価完了です！
                           </div>
                         ) : message.userID === currentUser.uid ? (
                           <div key={index}>

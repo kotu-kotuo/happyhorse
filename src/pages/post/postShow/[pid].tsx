@@ -91,7 +91,7 @@ const Show = () => {
           </div>
 
           <div className="flex justify-between mt-10">
-            <div className="w-2/3 mb-20">
+            <div className="w-2/3 mb-20 pl-4">
               <div className="mt-6 mb-4 text-gray-900 font-semibold text-xl">
                 {post.title}
               </div>
@@ -207,7 +207,11 @@ const Show = () => {
             </div>
             <div className="w-1/3">
               <div className="pl-10">
-                {!post.isAvairable ? (
+                {!post.isAvairable &&
+                !(
+                  currentUser.uid === post.userID ||
+                  currentUser.uid === post?.clientUserID
+                ) ? (
                   <button className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-gray-400 pointer-events-none">
                     SOLD OUT!
                   </button>

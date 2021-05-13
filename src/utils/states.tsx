@@ -57,4 +57,19 @@ export const setMessageStates = (data) => ({
   clientDecision: data.clientDecision,
   dealInterruption: data.dealInterruption,
   dealCompleted: data.dealCompleted,
+  pleaseRate: data.pleaseRate,
+  rateCompleted: data.rateCompleted,
+});
+
+export const setReviewStates = (data) => ({
+  postID: data.postID,
+  postUserID: data.postUserID,
+  postTitle: data.postTitle,
+  postImage: data.postImage,
+  reviewerID: data.reviewerID,
+  reviewerName: data.reviewerName,
+  reviewerAvatar: data.reviewerAvatar,
+  rating: data.rating,
+  reviewText: data.reviewText,
+  createdAt: data.createdAt,
 });
