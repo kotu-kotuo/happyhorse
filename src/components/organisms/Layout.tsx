@@ -8,6 +8,7 @@ import { auth } from "../../utils/firebase";
 import { GoBell } from "react-icons/go";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { FaHorse } from "react-icons/fa";
+import StarRatings from "react-star-ratings";
 
 interface TITLE {
   title: string;
@@ -75,7 +76,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
               </>
             )}
 
-            {currentUser && (
+            {currentUser && user && (
               <>
                 <GoBell className="mx-4 text-3xl text-gray-400" />
 
@@ -99,12 +100,36 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                         <p className="pt-2 text-lg font-semibold">
                           {`${user?.username}`}
                         </p>
+                        <Link href="/reviews">
+                          <div className="flex justify-center items-center cursor-pointer hover:opacity-80">
+                            <div>
+                              <StarRatings
+                                numberOfStars={5}
+                                rating={
+                                  (user.good * 5 + user.bad * 1) /
+                                  (user.good + user.bad)
+                                }
+                                starRatedColor="#FFD400"
+                                name="rating"
+                                starDimension="16px"
+                                starSpacing="0px"
+                              />
+                            </div>
+                            <a className="text-gray-500 reviewNumbersSize border-b border-gray-500  ml-1 pt-1">
+                              {user.good + user.bad}
+                            </a>
+                          </div>
+                        </Link>
                         <div className="mt-5">
-                          <Link href="profile">
-                            <a
-                              href="#"
-                              className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700"
-                            >
+                          <Link
+                            href={{
+                              pathname: "/profile",
+                              query: {
+                                uid: currentUser.uid,
+                              },
+                            }}
+                          >
+                            <a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700 hover:opacity-80">
                               マイプロフィール
                             </a>
                           </Link>

@@ -1,43 +1,46 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { db } from "../utils/firebase";
+import ProfileContent from "../components/organisms/ProfileContent";
 
 const Profile = () => {
   const { currentUser, user } = useContext(AuthContext);
-  const router = useRouter();
 
+  const router = useRouter();
+  const [queryUser, setQueryUser]: any = useState({
+    id: "",
+    username: "",
+    avatar: "",
+    cover: "",
+    profileText: "",
+    likePostIDs: [],
+    good: null,
+    bad: null,
+  });
+  useEffect(() => {
+    if (router.query.uid) {
+      db.collection("users")
+        .doc(`${router.query.uid}`)
+        .get()
+        .then((snapshot) => setQueryUser(snapshot.data()));
+    }
+  }, [router.query.uid]);
   return (
     <Layout title="profile">
-      <div className="mb-32">
-        <img
-          className="sm:w-full sm:h-80 h-40 w-screen object-cover sm:rounded-b-3xl"
-          src={user.cover}
-          alt="cover"
-        />
-        <div className="max-w-3xl mx-auto">
-          {currentUser && (
-            <div className="flex flex-end mt-4 mr-6 ">
-              <Link href="/profile-edit">
-                <a className="border border-mainGreen rounded-md px-4 py-2 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300">
-                  編集
-                </a>
-              </Link>
-            </div>
-          )}
-
-          <div className="flex justify-center">
-            <img
-              className="rounded-full object-cover sm:h-32 sm:w-32 h-20 w-20 border-2 border-white sm:-mt-32 -mt-24"
-              src={user.avatar}
-              alt="avatar"
-            />
+      {console.log(router.query.uid)}
+      <div>
+        {currentUser && router.query.uid && queryUser && (
+          <div>
+            {currentUser.uid === router.query.uid ? (
+              <ProfileContent user={user} currentUser={currentUser} />
+            ) : (
+              <ProfileContent user={queryUser} currentUser={currentUser} />
+            )}
           </div>
-          <div className="text-gray-900 font-semibold text-xl mt-3 sm:mt-6 px-2 text-center">{`${user.username}`}</div>
-
-          <div className="text-gray-900 sm:text-base text-sm mt-7 px-2 max-w-2xl mx-auto whitespace-pre-wrap">{`${user.profileText}`}</div>
-        </div>
+        )}
       </div>
     </Layout>
   );

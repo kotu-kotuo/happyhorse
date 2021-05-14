@@ -6,19 +6,33 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 
 const Posts = (props) => {
+  const {
+    posts,
+    clickPost,
+    clickHeart,
+    currentUser,
+    user,
+    setUser,
+    router,
+    db,
+  } = props;
+
   return (
     <div>
-      {props.posts.map((post) => (
+      {posts.map((post) => (
         <div key={post.postID} className="border-b border-gray-300 pb-6 mb-16">
-          {/* <Link href={`${post.postID}`}> */}
           <div
             className="flex mb-5 z-0"
             data-id={post.postID}
-            onClick={props.clickPost}
+            onClick={clickPost}
           >
             <div className="w-2/3">
               <div className="pb-image w-full h-0 relative">
-                {!post.isAvairable && <div className="absolute top-0 left-0 bg-gray-400 font-semibold text-white px-4 py-1 z-10">SOLD OUT!</div>}
+                {!post.isAvairable && (
+                  <div className="absolute top-0 left-0 bg-gray-400 font-semibold text-white px-4 py-1 z-10">
+                    SOLD OUT!
+                  </div>
+                )}
                 <img
                   src={post.images[0] ? post.images[0] : "/no-image.png"}
                   className="object-cover outline-none w-full h-full cursor-pointer absolute"
@@ -40,7 +54,7 @@ const Posts = (props) => {
               </div>
             </div>
           </div>
-          {/* </Link> */}
+
           <div className="flex items-center ml-2">
             {post.category === "障害馬" && (
               <div className="border rounded-full border-red-700 text-red-700 text-sm px-4 py-0.5  font-semibold">
@@ -73,25 +87,36 @@ const Posts = (props) => {
             <div className="text-gray-900 ml-1.5">{post.area}</div>
           </div>
           <Link href={`${post.postID}`}>
-            <div className="cursor-pointer">
+            <div className="cursor-pointer hover:opacity-80">
               <h2 className="index-title">{post.title}</h2>
             </div>
           </Link>
           <p className="index-postText">{post.postText}</p>
           <div className="flex justify-between items-center mt-6">
-            <div className="flex items-center ml-1">
-              <img
-                src={post.avatar}
-                className="object-cover cursor-pointer rounded-full w-12 h-12"
-              />
-              <p className="text-gray-900 ml-3">{post.username}</p>
-            </div>
+            <Link
+              href={{
+                pathname: "/profile",
+                query: {
+                  uid: post.userID,
+                },
+              }}
+            >
+              <div className="flex items-center ml-1 cursor-pointer hover:opacity-80">
+                <img
+                  src={post.avatar}
+                  className="object-cover  rounded-full w-12 h-12"
+                />
+                <p className="text-gray-900 ml-3">{post.username}</p>
+              </div>
+            </Link>
             <div
               className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
-              onClick={props.clickHeart}
+              onClick={(e) => {
+                clickHeart(e, currentUser, user, setUser, router, db);
+              }}
               data-id={post.postID}
             >
-              {post.likeUserIDs.includes(props.currentUser?.uid) ? (
+              {post.likeUserIDs.includes(currentUser?.uid) ? (
                 <FaHeart className="text-3xl text-red-400" />
               ) : (
                 <FaRegHeart className="text-3xl text-gray-900" />

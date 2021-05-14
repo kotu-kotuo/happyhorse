@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth, db } from "../utils/firebase";
 import { filterInitialValues } from "../utils/initialValues";
-// import {filterInitialValues}from
+import * as yup from "yup";
+
 
 const SignUp: React.FC = () => {
   const router = useRouter();
