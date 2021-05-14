@@ -57,11 +57,11 @@ const ProfileEdit = () => {
       });
   };
 
-  const editProfile = async(e) => {
+  const editProfile = async (e) => {
     e.preventDefault();
 
     if (image !== "") {
-      storage
+      await storage
         .ref(`images/${currentUser.uid}/avatar/`)
         .put(image)
         .on(
@@ -89,7 +89,7 @@ const ProfileEdit = () => {
       const uploadTask = storage
         .ref(`images/${currentUser.uid}/cover/`)
         .put(cover);
-      uploadTask.on(
+      await uploadTask.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
         () => {},
         (error) => {
@@ -109,23 +109,29 @@ const ProfileEdit = () => {
     }
 
     username &&
-      db.collection("users").doc(`${currentUser.uid}`).update({
+      (await db.collection("users").doc(`${currentUser.uid}`).update({
         username: username,
-      });
+      }));
 
     profileText &&
-      db.collection("users").doc(`${currentUser.uid}`).update({
+      (await db.collection("users").doc(`${currentUser.uid}`).update({
         profileText: profileText,
-      });
+      }));
 
-    db.collection("users")
+    await db
+      .collection("users")
       .doc(`${currentUser.uid}`)
       .get()
       .then((snapshot) => {
         setUser(snapshot.data());
       });
 
-    await router.push("/profile");
+    await router.push({
+      pathname: "/profile",
+      query: {
+        uid: currentUser.uid,
+      },
+    });
   };
 
   return (

@@ -10,6 +10,7 @@ import Filter from "../components/organisms/Filter";
 import { filterInitialValues, postInitialValues } from "../utils/initialValues";
 import * as Types from "../types/types";
 import { setPostStates } from "../utils/states";
+import { clickHeart } from "../functions/functions";
 
 export default function Index() {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -179,76 +180,7 @@ export default function Index() {
     });
   };
 
-  //いいね機能
-  const clickHeart = async (e) => {
-    if (!currentUser) {
-      router.push("login");
-    } else {
-      const pid = e.currentTarget.getAttribute("data-id");
-      if (user.likePostIDs.includes(`${pid}`)) {
-        console.log("unlike");
 
-        await db
-          .collection("users")
-          .doc(`${currentUser.uid}`)
-          .update({
-            likePostIDs: [...user.likePostIDs.filter((id) => id !== pid)],
-          });
-
-        await db
-          .collection("users")
-          .doc(`${currentUser.uid}`)
-          .get()
-          .then((snapshot) => {
-            setUser(snapshot.data());
-          });
-
-        const posts = await db
-          .collectionGroup("posts")
-          .where("postID", "==", pid)
-          .get();
-
-        await posts.docs.forEach((snapshot) =>
-          snapshot.ref.update({
-            likeUserIDs: [
-              ...snapshot
-                .data()
-                .likeUserIDs.filter((id) => id !== currentUser.uid),
-            ],
-          })
-        );
-      } else {
-        console.log(user.likePostIDs);
-        console.log("like");
-
-        await db
-          .collection("users")
-          .doc(`${currentUser.uid}`)
-          .update({
-            likePostIDs: [pid, ...user.likePostIDs],
-          });
-
-        await db
-          .collection("users")
-          .doc(`${currentUser.uid}`)
-          .get()
-          .then((snapshot) => {
-            setUser(snapshot.data());
-          });
-
-        const posts = await db
-          .collectionGroup("posts")
-          .where("postID", "==", pid)
-          .get();
-
-        posts.docs.forEach((snapshot) =>
-          snapshot.ref.update({
-            likeUserIDs: [currentUser.uid, ...snapshot.data().likeUserIDs],
-          })
-        );
-      }
-    }
-  };
 
   //filterの条件が変更されたら値をセット
   const handleCategory = (e) => {
@@ -429,7 +361,11 @@ export default function Index() {
                 posts={filteredPosts}
                 clickPost={clickPost}
                 clickHeart={clickHeart}
-                currentUser={currentUser}
+                  currentUser={currentUser}
+                  user={user}
+                  setUser={setUser}
+                  router={router}
+                  db={db}
               />
             )}
             {console.log(filteredPosts)}

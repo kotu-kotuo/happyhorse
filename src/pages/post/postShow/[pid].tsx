@@ -4,6 +4,7 @@ import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { db } from "../../../utils/firebase";
+import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -12,10 +13,11 @@ import { IoChevronForwardCircleOutline } from "react-icons/io5";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates } from "../../../utils/states";
 import { Post } from "../../../types/types";
+import { clickHeart } from "../../../functions/functions";
 
 const Show = () => {
   const router = useRouter();
-  const { currentUser } = useContext(AuthContext);
+  const { user, setUser, currentUser } = useContext(AuthContext);
   const [post, setPost] = useState<Post>(postInitialValues);
 
   useEffect(() => {
@@ -61,6 +63,8 @@ const Show = () => {
       pathname: `/post/postEdit/${pid}`,
     });
   };
+
+
 
   return (
     <Layout title="post.title">
@@ -246,19 +250,36 @@ const Show = () => {
                   </Link>
                 )}
 
-                <div className="flex items-center mb-4 ml-8">
-                  <FaRegHeart className="text-3xl text-gray-900" />
+                <div
+                  className="flex items-center mb-4 ml-11  cursor-pointer hover:opacity-80"
+                  onClick={(e) => { clickHeart(e,currentUser,user,setUser,router,db) }}
+                  data-id={post.postID}
+                >
+                  {post.likeUserIDs.includes(currentUser?.uid) ? (
+                    <FaHeart className="text-3xl text-red-400" />
+                  ) : (
+                    <FaRegHeart className="text-3xl text-gray-900" />
+                  )}
                   <p className="text-gray-900 ml-3 mr-1">お気に入り</p>
                 </div>
                 <div className="border-b shadow-xs"></div>
                 <p className="mt-4 mb-3 ml-8 text-gray-900">所有者</p>
-                <div className="flex items-center ml-8">
-                  <img
-                    src={post.avatar}
-                    className="object-cover cursor-pointer rounded-full w-12 h-12"
-                  />
-                  <p className="text-gray-900 ml-3">{post.username}</p>
-                </div>
+                <Link
+                  href={{
+                    pathname: "/profile",
+                    query: {
+                      uid: post.userID,
+                    },
+                  }}
+                >
+                  <div className="flex items-center ml-8  cursor-pointer hover:opacity-80">
+                    <img
+                      src={post.avatar}
+                      className="object-cover rounded-full w-12 h-12"
+                    />
+                    <p className="text-gray-900 ml-3">{post.username}</p>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

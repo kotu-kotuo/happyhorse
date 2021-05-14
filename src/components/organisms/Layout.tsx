@@ -101,7 +101,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                           {`${user?.username}`}
                         </p>
                         <Link href="/reviews">
-                          <div className="flex justify-center items-center cursor-pointer">
+                          <div className="flex justify-center items-center cursor-pointer hover:opacity-80">
                             <div>
                               <StarRatings
                                 numberOfStars={5}
@@ -129,7 +129,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                               },
                             }}
                           >
-                            <a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700">
+                            <a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700 hover:opacity-80">
                               マイプロフィール
                             </a>
                           </Link>
