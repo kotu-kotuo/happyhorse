@@ -24,12 +24,15 @@ const AuthProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
+      if (!user) return;
       setCurrentUser(user);
-      db.collection("users").doc(`${user.uid}`).get().then(snapshot => {
-        setUser(snapshot.data())
-      })
+      db.collection("users")
+        .doc(`${user.uid}`)
+        .get()
+        .then((snapshot) => {
+          setUser(snapshot.data());
+        });
     });
-
   }, []);
 
   return (

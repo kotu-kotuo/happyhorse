@@ -12,17 +12,14 @@ const myLikePosts = () => {
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
 
   useEffect(() => {
-    if (
-      currentUser &&
-      user.likePostIDs !== undefined &&
-      user.likePostIDs.length !== 0
-    ) {
-      db.collectionGroup("posts")
-        .where("postID", "in", user.likePostIDs) // TODO: 11件以上の時どうしよう。。
-        .onSnapshot((snapshot) => {
-          setPosts(
-            snapshot.docs.map((doc) => (setPostStates(doc.data())))
-          );
+    if (currentUser) {
+      db.collection("users")
+        .doc(`${currentUser.uid}`)
+        .collection("likePosts")
+        .orderBy("likedAt", "desc")
+        .get()
+        .then((snapshot) => {
+          setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
         });
     }
   }, [currentUser]);
@@ -39,7 +36,7 @@ const myLikePosts = () => {
           お気に入りの馬
         </h2>
         <div className="flex flex-wrap">
-          {posts[0].postID !== "" &&
+          {posts[0]?.postID !== "" &&
             posts.map((post, index) => (
               <>
                 <div key={index} className="w-1/3 p-6">

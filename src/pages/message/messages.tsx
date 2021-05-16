@@ -1319,7 +1319,7 @@ const messages = () => {
                         <div className="relative w-full z-20">
                           <TextareaAutosize
                             maxRows={5}
-                            className="flex items-center h-10 w-full rounded pl-3 pr-8 text-sm resize-none focus:outline-none focus:border-sendBG z-20"
+                            className="flex items-center h-10 w-full rounded pl-3 pr-8 text-sm resize-none focus:outline-none focus:border-subBlue z-20"
                             placeholder="Type your message…"
                             onChange={(e) => {
                               setMessageText(e.target.value);
@@ -1338,7 +1338,7 @@ const messages = () => {
                         </div>
                         <button
                           type="submit"
-                          className="w-10 h-10 bg-sendBG rounded-lg ml-1 mt-auto cursor-pointer z-20 hover:opacity-90"
+                          className="w-10 h-10 bg-subBlue rounded-lg ml-1 mt-auto cursor-pointer z-20 hover:opacity-90"
                           disabled={messageText === ""}
                         >
                           <IoSend className="text-white text-xl mx-auto my-2.5" />

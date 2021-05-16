@@ -541,7 +541,7 @@ const Filter = (props) => {
             {props.feature.length === filterInitialValues.features.length ? (
               <>
                 {filterInitialValues.features.map((element) => (
-                  <>
+                  <div hidden={element === "empty"}>
                     <input
                       id={`${element}`}
                       name="feature"
@@ -553,13 +553,13 @@ const Filter = (props) => {
                     <label htmlFor={`${element}`} className="filterCheckText">
                       {`${element}`}
                     </label>
-                  </>
+                  </div>
                 ))}
               </>
             ) : (
               <>
                 {filterInitialValues.features.map((element) => (
-                  <>
+                  <div hidden={element === "empty"}>
                     <input
                       id={`${element}`}
                       name="feature"
@@ -572,7 +572,7 @@ const Filter = (props) => {
                     <label htmlFor={`${element}`} className="filterCheckText">
                       {`${element}`}
                     </label>
-                  </>
+                  </div>
                 ))}
               </>
             )}
@@ -581,7 +581,7 @@ const Filter = (props) => {
           {/* <div className="mb-3 text-xs font-medium text-mainGreen">
                   さらに表示
                 </div> */}
-          
+
           <div className="flex mt-8">
             <button // TODO: ログインしてなかったら遷移させたい
               type="submit"

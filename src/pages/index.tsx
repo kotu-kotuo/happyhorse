@@ -167,7 +167,7 @@ export default function Index() {
   }, [area]);
 
   useEffect(() => {
-    if (feature.length === 0) {
+    if (feature[0] === "empty") {
       setFeature(filterInitialValues.features);
     }
   }, [feature]);
@@ -179,8 +179,6 @@ export default function Index() {
       pathname: `/post/postShow/${pid}`,
     });
   };
-
-
 
   //filterの条件が変更されたら値をセット
   const handleCategory = (e) => {
@@ -232,7 +230,7 @@ export default function Index() {
   const handleFeature = (e) => {
     if (e.target.checked === true) {
       if (feature.length === filterInitialValues.features.length) {
-        setFeature([e.target.value]);
+        setFeature([e.target.value, "empty"]);
       } else {
         setFeature([e.target.value, ...feature]);
       }
@@ -319,6 +317,7 @@ export default function Index() {
 
   return (
     <div>
+      {console.log(feature)}
       <Layout title="index">
         <div className="flex mt-24 mb-20">
           <div className="w-1/3 pr-8">
@@ -361,11 +360,11 @@ export default function Index() {
                 posts={filteredPosts}
                 clickPost={clickPost}
                 clickHeart={clickHeart}
-                  currentUser={currentUser}
-                  user={user}
-                  setUser={setUser}
-                  router={router}
-                  db={db}
+                currentUser={currentUser}
+                user={user}
+                setUser={setUser}
+                router={router}
+                db={db}
               />
             )}
             {console.log(filteredPosts)}
