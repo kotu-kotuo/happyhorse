@@ -1,14 +1,16 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { auth } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 import { FaBell } from "react-icons/fa";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { FaHorse } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
 import StarRatings from "react-star-ratings";
+import { setNotificationStates } from "../../utils/states";
 
 interface TITLE {
   title: string;
@@ -17,7 +19,24 @@ interface TITLE {
 export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenNotification, setIsOpenNotification] = useState(false);
   const { currentUser, setCurrentUser, user } = useContext(AuthContext);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    if (currentUser) {
+      db.collection("users")
+        .doc(`${currentUser.uid}`)
+        .collection("notifications")
+        .orderBy("createdAt", "desc")
+        .get()
+        .then((snapshot) =>
+          setNotifications(
+            snapshot.docs.map((doc) => setNotificationStates(doc.data()))
+          )
+        );
+    }
+  }, [currentUser]);
 
   const logout = async (e) => {
     e.preventDefault();
@@ -32,10 +51,33 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
     }
   };
 
+  //時間をUNIXから変換
+  const createdTime = (notification) => {
+    const time = new Date(notification?.createdAt.seconds * 1000);
+    return time.toLocaleString([], {
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const notificationChecked = () => {
+    db.collection("users")
+      .doc(`${currentUser.uid}`)
+      .collection("notifications")
+      .where("checked", "==", false)
+
+      .get()
+      .then((snapshot) => db.batch().update(snapshot.docs, { checked: true }));
+  };
+
   return (
     <div
       className="min-h-screen box-border pb-10 relative"
-      onClick={() => setIsOpenMenu(false)}
+      onClick={() => {
+        setIsOpenMenu(false), setIsOpenNotification(false);
+      }}
     >
       <Head>
         <title>{title}</title>
@@ -78,8 +120,53 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
 
             {currentUser && user && (
               <>
-                <FaBell className="mx-4 text-3xl text-gray-400 mt-0.5" />
+                <div className="relative" onClick={(e) => e.stopPropagation()}>
+                  <div
+                    onClick={
+                      (() => setIsOpenNotification(!isOpenNotification),
+                      notificationChecked())
+                    }
+                    className="relative"
+                  >
+                    <FaBell className="mx-4 text-3xl text-gray-400 mt-0.5 cursor-pointer" />
+                    <div
+                      hidden={
+                        !(
+                          notifications &&
+                          notifications.filter(
+                            (notification) => notification.checked === false
+                          ).length !== 0
+                        )
+                      }
+                      className="absolute top-1 right-4 rounded-full h-3 w-3 bg-red-500"
+                    ></div>
+                  </div>
+                  <div hidden={!isOpenNotification}>
+                    <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60 px-1.5 pt-3 pb-2">
+                      {notifications.map((notification) => (
+                        <div className="flex">
+                          <img
+                            className="h-9 w-9 rounded-full object-cover mr-2"
+                            src={notification.avatar}
+                          />
 
+                          <div>
+                            <div className="text-sm text-gray-900">
+                              {notification.text}
+                            </div>
+                            <div className="flex items-center text-xs text-gray-500 ">
+                              <FaRegClock className="ml-auto mr-0.5" />
+                              <div>{createdTime(notification)}</div>
+                            </div>
+                            <div className="border-b border-gray-100 mt-2"></div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {console.log(isOpenNotification)}
                 <div
                   className="mt-1 focus:outline-none relative"
                   onClick={(e) => e.stopPropagation()}

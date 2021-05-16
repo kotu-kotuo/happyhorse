@@ -260,7 +260,7 @@ const Show = () => {
                   ) : (
                     <FaRegHeart className="text-3xl text-gray-900" />
                   )}
-                  <p className="text-gray-900 ml-3 mr-1">お気に入り</p>
+                  <p className="text-gray-900 ml-3 mr-1">お気に入り<span className="ml-3 text-gray-900 font-semibold">{ post.likeUserIDs.length}</span></p>
                 </div>
                 <div className="border-b shadow-xs"></div>
                 <p className="mt-4 mb-3 ml-8 text-gray-900">所有者</p>

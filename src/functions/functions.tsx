@@ -116,6 +116,22 @@ export const clickHeart = async (e, currentUser, user, setUser, router, db) => {
             clientUserID: snapshot.data().clientUserID,
             likedAt:firebase.firestore.FieldValue.serverTimestamp()
           });
+
+        //通知
+        db.collection("users")
+          .doc(`${snapshot.data().userID}`)
+          .collection("notifications")
+          .add({
+            postID: snapshot.data().postID,
+            userID: currentUser.uid,
+            postUserID: snapshot.data().userID,
+            clientUserID: snapshot.data().clientUserID,
+            image: snapshot.data().images[0],
+            avatar: snapshot.data().avatar,
+            text: `${user.username}さんが「${snapshot.data().title}」にいいねしました。`,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            checked: false,
+          });
       });
     }
   }
