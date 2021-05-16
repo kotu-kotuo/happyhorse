@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {
         mainGreen: "#77c649",
-        sendBG: "#49ADF7",
+        subBlue: "#49ADF7",
       },
       width: {
         1600: "1600px",
@@ -79,5 +79,5 @@ module.exports = {
     extend: {},
   },
   plugins: [require("@tailwindcss/forms")],
-  
+
 };

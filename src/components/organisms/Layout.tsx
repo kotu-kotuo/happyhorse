@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { auth } from "../../utils/firebase";
-import { GoBell } from "react-icons/go";
+import { FaBell } from "react-icons/fa";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { FaHorse } from "react-icons/fa";
 import StarRatings from "react-star-ratings";
@@ -78,7 +78,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
 
             {currentUser && user && (
               <>
-                <GoBell className="mx-4 text-3xl text-gray-400" />
+                <FaBell className="mx-4 text-3xl text-gray-400 mt-0.5" />
 
                 <div
                   className="mt-1 focus:outline-none relative"
@@ -183,7 +183,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
               </>
             )}
 
-            <div className="inline-block ml-6 ">
+            <div className="inline-block ml-5 ">
               {currentUser ? (
                 <Link href="/post/post">
                   <button

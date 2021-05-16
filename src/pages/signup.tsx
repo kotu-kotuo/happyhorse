@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth, db } from "../utils/firebase";
 import { filterInitialValues } from "../utils/initialValues";
-import * as yup from "yup";
-
 
 const SignUp: React.FC = () => {
   const router = useRouter();
@@ -15,52 +13,58 @@ const SignUp: React.FC = () => {
 
   const createUser = async (e) => {
     e.preventDefault();
-    try {
-      await auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(async (result) => {
-          await db.collection("users").doc(`${result.user.uid}`).set({
-            id: result.user.uid,
-            username: username,
-            avatar: "/avatar.png",
-            cover: "/cover1.jpg",
-            profileText: "",
-            good: 0,
-            bad: 0,
-            likePostIDs: [],
-          });
-
-          await db
-            .collection("users")
-            .doc(`${result.user.uid}`)
-            .collection("filters")
-            .doc(`${result.user.uid}`)
-            .set({
-              category: filterInitialValues.category,
-              priceMin: filterInitialValues.priceMin,
-              priceMax: filterInitialValues.priceMax,
-              ageMin: filterInitialValues.ageMin,
-              ageMax: filterInitialValues.ageMax,
-              heightMin: filterInitialValues.heightMin,
-              heightMax: filterInitialValues.heightMax,
-              breed: filterInitialValues.breed,
-              color: filterInitialValues.color,
-              area: filterInitialValues.area,
-              feature: filterInitialValues.features,
+    if (username.length > 20) {
+      alert("ユーザーネームは20字以内でお願いします");
+      return;
+    } else {
+      try {
+        await auth
+          .createUserWithEmailAndPassword(email, password)
+          .then(async (result) => {
+            await db.collection("users").doc(`${result.user.uid}`).set({
+              id: result.user.uid,
+              username: username,
+              avatar: "/avatar.png",
+              cover: "/cover1.jpg",
+              profileText: "",
+              good: 0,
+              bad: 0,
+              likePostIDs: [],
             });
 
-          router.push("/");
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    } catch (error) {
-      alert(error.message);
+            await db
+              .collection("users")
+              .doc(`${result.user.uid}`)
+              .collection("filters")
+              .doc(`${result.user.uid}`)
+              .set({
+                category: filterInitialValues.category,
+                priceMin: filterInitialValues.priceMin,
+                priceMax: filterInitialValues.priceMax,
+                ageMin: filterInitialValues.ageMin,
+                ageMax: filterInitialValues.ageMax,
+                heightMin: filterInitialValues.heightMin,
+                heightMax: filterInitialValues.heightMax,
+                breed: filterInitialValues.breed,
+                color: filterInitialValues.color,
+                area: filterInitialValues.area,
+                feature: filterInitialValues.features,
+              });
+
+            router.push("/");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      } catch (error) {
+        alert(error.message);
+      }
     }
   };
 
   return (
     <Layout title="signup">
+      {console.log(username.length)}
       <div className=" flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 　">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -77,7 +81,7 @@ const SignUp: React.FC = () => {
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <div className="text-xs text-gray-500 mb-1 ml-1">
-                  ユーザーネーム
+                  ユーザーネーム(20字以内)
                 </div>
                 <label htmlFor="username" className="sr-only">
                   Username

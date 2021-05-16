@@ -108,6 +108,7 @@ export const filterInitialValues: any = {
     "噛み癖なし",
     "蹴り癖なし",
     "初心者OK",
+    "empty",
   ],
 };
 
@@ -127,7 +128,7 @@ export const postInitialValues = {
   age: null,
   height: null,
   area: "",
-  features: [],
+  features: ["empty"],
   price: null,
   createdAt: "",
   updatedAt: "",
