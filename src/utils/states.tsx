@@ -76,12 +76,15 @@ export const setReviewStates = (data) => ({
 
 export const setNotificationStates = (data) => ({
   postID: data.postID,
-  userID: data.userID,
   postUserID: data.postUserID,
-  clientUserID: data.clientUserID,
+  sendUserID: data.sendUserID,
+  receiveUserID: data.receiveUserID,
+  sendMessageUserID: data.sendMessageUserID,
   image: data.image,
   avatar: data.avatar,
   text: data.text,
   createdAt: data.createdAt,
   checked: data.checked,
+  toMessage: data.toMessage,
+  toProfile: data.toProfile,
 });

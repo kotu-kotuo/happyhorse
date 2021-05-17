@@ -15,6 +15,8 @@ const Posts = (props) => {
     setUser,
     router,
     db,
+    notifications,
+
   } = props;
 
   return (
@@ -112,7 +114,15 @@ const Posts = (props) => {
             <div
               className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
               onClick={(e) => {
-                clickHeart(e, currentUser, user, setUser, router, db);
+                clickHeart(
+                  e,
+                  currentUser,
+                  user,
+                  setUser,
+                  router,
+                  db,
+                  notifications
+                );
               }}
               data-id={post.postID}
             >

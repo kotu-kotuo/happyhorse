@@ -17,7 +17,7 @@ import { clickHeart } from "../../../functions/functions";
 
 const Show = () => {
   const router = useRouter();
-  const { user, setUser, currentUser } = useContext(AuthContext);
+  const { user, setUser, currentUser, notifications } = useContext(AuthContext);
   const [post, setPost] = useState<Post>(postInitialValues);
 
   useEffect(() => {
@@ -63,8 +63,6 @@ const Show = () => {
       pathname: `/post/postEdit/${pid}`,
     });
   };
-
-
 
   return (
     <Layout title="post.title">
@@ -252,7 +250,17 @@ const Show = () => {
 
                 <div
                   className="flex items-center mb-4 ml-11  cursor-pointer hover:opacity-80"
-                  onClick={(e) => { clickHeart(e,currentUser,user,setUser,router,db) }}
+                  onClick={(e) => {
+                    clickHeart(
+                      e,
+                      currentUser,
+                      user,
+                      setUser,
+                      router,
+                      db,
+                      notifications
+                    );
+                  }}
                   data-id={post.postID}
                 >
                   {post.likeUserIDs.includes(currentUser?.uid) ? (
@@ -260,7 +268,12 @@ const Show = () => {
                   ) : (
                     <FaRegHeart className="text-3xl text-gray-900" />
                   )}
-                  <p className="text-gray-900 ml-3 mr-1">お気に入り<span className="ml-3 text-gray-900 font-semibold">{ post.likeUserIDs.length}</span></p>
+                  <p className="text-gray-900 ml-3 mr-1">
+                    お気に入り
+                    <span className="ml-3 text-gray-900 font-semibold">
+                      {post.likeUserIDs.length}
+                    </span>
+                  </p>
                 </div>
                 <div className="border-b shadow-xs"></div>
                 <p className="mt-4 mb-3 ml-8 text-gray-900">所有者</p>

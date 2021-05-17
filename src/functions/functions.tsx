@@ -9,8 +9,17 @@ export const generateFileName = (file) => {
 
 //いいね機能
 import firebase from "firebase/app";
+// import { setNotificationStates } from "../utils/states";
 
-export const clickHeart = async (e, currentUser, user, setUser, router, db) => {
+export const clickHeart = async (
+  e,
+  currentUser,
+  user,
+  setUser,
+  router,
+  db,
+  notifications
+) => {
   if (!currentUser) {
     router.push("login");
   } else {
@@ -114,24 +123,50 @@ export const clickHeart = async (e, currentUser, user, setUser, router, db) => {
             messageUpdatedAt: snapshot.data().messageUpdatedAt,
             latestMessage: snapshot.data().latestMessage,
             clientUserID: snapshot.data().clientUserID,
-            likedAt:firebase.firestore.FieldValue.serverTimestamp()
+            likedAt: firebase.firestore.FieldValue.serverTimestamp(),
           });
 
         //通知
-        db.collection("users")
-          .doc(`${snapshot.data().userID}`)
-          .collection("notifications")
-          .add({
-            postID: snapshot.data().postID,
-            userID: currentUser.uid,
-            postUserID: snapshot.data().userID,
-            clientUserID: snapshot.data().clientUserID,
-            image: snapshot.data().images[0],
-            avatar: snapshot.data().avatar,
-            text: `${user.username}さんが「${snapshot.data().title}」にいいねしました。`,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            checked: false,
-          });
+        if (
+          currentUser.uid !== snapshot.data().userID && //自分の投稿へのいいねは通知されない
+          notifications.filter(
+            //通知が重複しないように
+            (notification) =>
+              notification.postID === snapshot.data().postID &&
+              notification.userID === currentUser.uid
+          ).length === 0
+        ) {
+          db.collection("users")
+            .doc(`${snapshot.data().userID}`)
+            .collection("notifications")
+            .add({
+              postID: snapshot.data().postID,
+              postUserID: snapshot.data().userID,
+              sendUserID: currentUser.uid,
+              receiveUserID: snapshot.data().userID,
+              sendMessageUserID: "",
+              image: snapshot.data().images[0],
+              avatar: snapshot.data().avatar,
+              text: `${user.username}さんが「${
+                snapshot.data().title
+              }」にいいねしました。`,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              checked: false,
+              toMessage: false,
+              toProfile: false,
+            });
+
+          // db.collection("users") TODO:他のユーザーのnotificationsのリアルタイムの更新は可能か？
+          //   .doc(`${snapshot.data().userID}`)
+          //   .collection("notifications")
+          //   .orderBy("createdAt", "desc")
+          //   .get()
+          //   .then(async (snapshot) =>
+          //     setNotifications(
+          //       snapshot.docs.map((doc) => setNotificationStates(doc.data()))
+          //     )
+          //   );
+        }
       });
     }
   }
