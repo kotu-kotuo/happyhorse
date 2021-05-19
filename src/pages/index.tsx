@@ -13,7 +13,7 @@ import { setPostStates } from "../utils/states";
 import { clickHeart } from "../functions/functions";
 
 export default function Index() {
-  const { currentUser, user, setUser } = useContext(AuthContext);
+  const { currentUser, user, setUser, notifications } = useContext(AuthContext);
   const router = useRouter();
   const [filteredPosts, setFilteredPosts] = useState<Types.Post[]>([
     postInitialValues,
@@ -365,9 +365,10 @@ export default function Index() {
                 setUser={setUser}
                 router={router}
                 db={db}
+                notifications={notifications}
               />
             )}
-            {console.log(filteredPosts)}
+
             <Pagination />
           </div>
         </div>

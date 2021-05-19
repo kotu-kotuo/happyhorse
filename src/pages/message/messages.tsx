@@ -281,6 +281,51 @@ const messages = () => {
         .then((snapshot) =>
           setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
         );
+      db.collection("users")
+        .doc(`${chatroom.sendUserID}`)
+        .get()
+        .then((snapshot) => {
+          db.collection("users")
+            .doc(`${post.userID}`)
+            .collection("notifications")
+            .add({
+              postID: post.postID,
+              postUserID: post.userID,
+              sendUserID: chatroom.sendUserID,
+              receiveUserID: post.userID,
+              sendMessageUserID: chatroom.sendUserID,
+              image: post.images[0],
+              avatar: snapshot.data().avatar,
+              text: `${snapshot.data().username}さんから評価が届きました。`,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              checked: false,
+              toMessage: false,
+              toProfile: true,
+            });
+        });
+
+      db.collection("users")
+        .doc(`${post.userID}`)
+        .get()
+        .then((snapshot) => {
+          db.collection("users")
+            .doc(`${chatroom.sendUserID}`)
+            .collection("notifications")
+            .add({
+              postID: post.postID,
+              postUserID: post.userID,
+              sendUserID: post.userID,
+              receiveUserID: chatroom.sendUserID,
+              sendMessageUserID: chatroom.sendUserID,
+              image: post.images[0],
+              avatar: snapshot.data().avatar,
+              text: `${snapshot.data().username}さんから評価が届きました。`,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              checked: false,
+              toMessage: false,
+              toProfile: true,
+            });
+        });
     }
   }, [reviewsOnHold]);
 
@@ -425,6 +470,24 @@ const messages = () => {
             )
           );
         await setMessageText("");
+
+        db.collection("users")
+          .doc(`${post.userID}`)
+          .collection("notifications")
+          .add({
+            postID: post.postID,
+            postUserID: post.userID,
+            sendUserID: currentUser.uid,
+            receiveUserID: post.userID,
+            sendMessageUserID: currentUser.uid,
+            image: post.images[0],
+            avatar: user.avatar,
+            text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            checked: false,
+            toMessage: true,
+            toProfile: false,
+          });
       } else {
         //２通目以降
 
@@ -491,6 +554,44 @@ const messages = () => {
             )
           );
         await setMessageText("");
+
+        if (currentUser.uid === post.userID) { //TODO:相手がメッセージ画面を見ている時は通知を送らない処理にしたい。
+          db.collection("users")
+            .doc(`${chatroom.sendUserID}`)
+            .collection("notifications")
+            .add({
+              postID: post.postID,
+              postUserID: post.userID,
+              sendUserID: currentUser.uid,
+              receiveUserID: chatroom.sendUserID,
+              sendMessageUserID: chatroom.sendUserID,
+              image: post.images[0],
+              avatar: user.avatar,
+              text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              checked: false,
+              toMessage: true,
+              toProfile: false,
+            });
+        } else {
+          db.collection("users")
+            .doc(`${post.userID}`)
+            .collection("notifications")
+            .add({
+              postID: post.postID,
+              postUserID: post.userID,
+              sendUserID: chatroom.sendUserID,
+              receiveUserID: post.userID,
+              sendMessageUserID: chatroom.sendUserID,
+              image: post.images[0],
+              avatar: user.avatar,
+              text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              checked: false,
+              toMessage: true,
+              toProfile: false,
+            });
+        }
       }
     }
   };
@@ -615,6 +716,23 @@ const messages = () => {
                 });
             }
           );
+        db.collection("users")
+          .doc(`${post.userID}`)
+          .collection("notifications")
+          .add({
+            postID: post.postID,
+            postUserID: post.userID,
+            sendUserID: currentUser.uid,
+            receiveUserID: post.userID,
+            sendMessageUserID: currentUser.uid,
+            image: post.images[0],
+            avatar: user.avatar,
+            text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            checked: false,
+            toMessage: true,
+            toProfile: false,
+          });
       } else {
         //２通目以降
 
@@ -697,6 +815,44 @@ const messages = () => {
                 });
             }
           );
+
+        if (currentUser.uid === post.userID) {
+          db.collection("users")
+            .doc(`${chatroom.sendUserID}`)
+            .collection("notifications")
+            .add({
+              postID: post.postID,
+              postUserID: post.userID,
+              sendUserID: currentUser.uid,
+              receiveUserID: chatroom.sendUserID,
+              sendMessageUserID: chatroom.sendUserID,
+              image: post.images[0],
+              avatar: user.avatar,
+              text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              checked: false,
+              toMessage: true,
+              toProfile: false,
+            });
+        } else {
+          db.collection("users")
+            .doc(`${post.userID}`)
+            .collection("notifications")
+            .add({
+              postID: post.postID,
+              postUserID: post.userID,
+              sendUserID: chatroom.sendUserID,
+              receiveUserID: post.userID,
+              sendMessageUserID: chatroom.sendUserID,
+              image: post.images[0],
+              avatar: user.avatar,
+              text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              checked: false,
+              toMessage: true,
+              toProfile: false,
+            });
+        }
       }
     }
   };
@@ -773,6 +929,24 @@ const messages = () => {
                         snapshot.docs.map((doc) => setMessageStates(doc.data()))
                       )
                     );
+
+                  db.collection("users")
+                    .doc(`${chatroom.sendUserID}`)
+                    .collection("notifications")
+                    .add({
+                      postID: post.postID,
+                      postUserID: post.userID,
+                      sendUserID: currentUser.uid,
+                      receiveUserID: chatroom.sendUserID,
+                      sendMessageUserID: chatroom.sendUserID,
+                      image: post.images[0],
+                      avatar: user.avatar,
+                      text: `${user.username}さんがあなたを取引者に決定しました。`,
+                      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                      checked: false,
+                      toMessage: true,
+                      toProfile: false,
+                    });
                   onClose();
                 }}
                 className="focus:outline-none text-white text-base font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
@@ -864,6 +1038,24 @@ const messages = () => {
                         snapshot.docs.map((doc) => setMessageStates(doc.data()))
                       )
                     );
+
+                  db.collection("users")
+                    .doc(`${chatroom.sendUserID}`)
+                    .collection("notifications")
+                    .add({
+                      postID: post.postID,
+                      postUserID: post.userID,
+                      sendUserID: currentUser.uid,
+                      receiveUserID: chatroom.sendUserID,
+                      sendMessageUserID: chatroom.sendUserID,
+                      image: post.images[0],
+                      avatar: user.avatar,
+                      text: `${user.username}さんがあなたとの取引を中断しました。`,
+                      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                      checked: false,
+                      toMessage: true,
+                      toProfile: false,
+                    });
                   onClose();
                 }}
                 className="focus:outline-none text-white text-base font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
@@ -979,6 +1171,24 @@ const messages = () => {
                         snapshot.docs.map((doc) => setMessageStates(doc.data()))
                       )
                     );
+
+                  db.collection("users")
+                    .doc(`${chatroom.sendUserID}`)
+                    .collection("notifications")
+                    .add({
+                      postID: post.postID,
+                      postUserID: post.userID,
+                      sendUserID: currentUser.uid,
+                      receiveUserID: chatroom.sendUserID,
+                      sendMessageUserID: chatroom.sendUserID,
+                      image: post.images[0],
+                      avatar: user.avatar,
+                      text: `${user.username}さんとの取引が完了しました。評価をお願いします。`,
+                      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                      checked: false,
+                      toMessage: true,
+                      toProfile: false,
+                    });
                   onClose();
                 }}
                 className="focus:outline-none text-white text-base font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
