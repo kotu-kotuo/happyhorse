@@ -9,6 +9,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import fetch from "node-fetch";
 import { filterInitialValues } from "../../../utils/initialValues";
 import { setPostStates } from "../../../utils/states";
+import { RequiredMark } from "../../../components/atoms/Atoms";
 
 interface IMAGES {
   images: any;
@@ -208,7 +209,16 @@ const postEdit = () => {
         <>
           {console.log(images)}
           <form onSubmit={updatePost} className="max-w-2xl mx-auto mt-16 px-2">
-            <div className="text-xs text-gray-600 mb-3 ml-1">画像</div>
+            <div className="flex items-center justify-between">
+              <div className="text-xs text-gray-600 mb-3 ml-1">
+                画像
+                <RequiredMark />
+              </div>
+              <div className="text-xs text-gray-600 mb-3 mr-1">
+                <RequiredMark />
+                は必須項目です
+              </div>
+            </div>
             <div className="flex flex-wrap mb-2">
               {previewsURL &&
                 previewsURL.map((previewURL, index) => (
@@ -246,7 +256,10 @@ const postEdit = () => {
               }}
             />
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">タイトル</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              タイトル
+              <RequiredMark />
+            </div>
             <input
               type="text"
               name="title"
@@ -255,7 +268,10 @@ const postEdit = () => {
               className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             />
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">本文</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              本文
+              <RequiredMark />
+            </div>
             <textarea
               name="postText"
               defaultValue={post?.postText}
@@ -263,7 +279,10 @@ const postEdit = () => {
               className="mb-8 w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm whitespace-pre"
             />
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">馬の名前</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              馬の名前
+              <RequiredMark />
+            </div>
             <input
               type="text"
               name="horseName"
@@ -272,7 +291,10 @@ const postEdit = () => {
               className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             />
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">カテゴリー</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              カテゴリー
+              <RequiredMark />
+            </div>
             {post && (
               <select
                 name="category"
@@ -287,7 +309,10 @@ const postEdit = () => {
               </select>
             )}
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">品種</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              品種
+              <RequiredMark />
+            </div>
             {post && (
               <select
                 name="breed"
@@ -302,7 +327,10 @@ const postEdit = () => {
               </select>
             )}
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">毛色</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              毛色
+              <RequiredMark />
+            </div>
             {post && (
               <select
                 name="color"
@@ -317,7 +345,10 @@ const postEdit = () => {
               </select>
             )}
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">生年月日</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              生年月日
+              <RequiredMark />
+            </div>
             <div className="flex items-center">
               <input
                 type="number"
@@ -357,7 +388,10 @@ const postEdit = () => {
               className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
             />
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">身長（cm）</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              身長（cm）
+              <RequiredMark />
+            </div>
             <input
               type="number"
               name="height"
@@ -366,7 +400,10 @@ const postEdit = () => {
               className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
             />
 
-            <div className="text-xs text-gray-600 mb-1 ml-1">地域</div>
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              地域
+              <RequiredMark />
+            </div>
             {post && (
               <select
                 name="area"
@@ -386,7 +423,7 @@ const postEdit = () => {
               <div className="flex flex-wrap">
                 {filterInitialValues.features.map((element) => (
                   <>
-                    <div className="mb-8 ml-4">
+                    <div className="mb-8 ml-4" hidden={element === "empty"}>
                       <label className="text-sm font-medium text-gray-800 cursor-pointer">
                         <input
                           name="features"
@@ -406,7 +443,10 @@ const postEdit = () => {
               </div>
             )}
 
-            <div className="text-xs text-gray-600 mb-1 ml-3">値段</div>
+            <div className="text-xs text-gray-600 mb-1 ml-3">
+              値段
+              <RequiredMark />
+            </div>
             <div className="flex">
               <div className="text-gray-500 text-xl mt-1.5">￥</div>
               <input

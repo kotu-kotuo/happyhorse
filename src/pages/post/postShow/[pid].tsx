@@ -276,7 +276,7 @@ const Show = () => {
                   </p>
                 </div>
                 <div className="border-b shadow-xs"></div>
-                <p className="mt-4 mb-3 ml-8 text-gray-900">所有者</p>
+                <p className="mt-4 mb-3 ml-8 text-gray-900">掲載者</p>
                 <Link
                   href={{
                     pathname: "/profile",
