@@ -2,15 +2,15 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { useRouter } from "next/router";
-import { v4 as uuidv4 } from "uuid";
 import { db, storage } from "../../utils/firebase";
 import firebase from "firebase/app";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
+import fetch from "node-fetch";
 import { filterInitialValues } from "../../utils/initialValues";
-import { generateFileName } from "../../functions/functions";
+import { setPostStates } from "../../utils/states";
 import { RequiredMark } from "../../components/atoms/Atoms";
-// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { generateFileName } from "../../functions/functions";
 
 interface IMAGES {
   images: any;
@@ -23,12 +23,12 @@ interface PREVIEWSURL {
   previewsURL: any;
 }
 
-const Post: React.FC = () => {
+const draft = () => {
   const { user, currentUser } = useContext(AuthContext);
   const [images, setImages]: any = useState<IMAGES[]>([]);
   const [imagesURL, setImagesURL]: any = useState<IMAGESURL[]>([]);
   const [previewsURL, setPreviewsURL]: any = useState<PREVIEWSURL[]>([]);
-  const [postId, setPostId] = useState("");
+  const [post, setPost]: any = useState(null);
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [horseName, setHorseName] = useState("");
@@ -46,10 +46,52 @@ const Post: React.FC = () => {
   const [isDraft, setIsDraft] = useState(false);
   const router = useRouter();
 
-  //posiID設定
   useEffect(() => {
-    setPostId(uuidv4());
-  }, []);
+    if (currentUser && router.query.pid) {
+      db.collection("users")
+        .doc(`${currentUser.uid}`)
+        .collection("drafts")
+        .doc(`${router.query.pid}`)
+        .get()
+        .then(async (snapshot) => {
+          if (!snapshot.data()) return;
+          await setPost(setPostStates(snapshot.data()));
+          await setPreviewsURL(snapshot.data().images);
+        });
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (post) {
+      setTitle(post.title);
+      setPostText(post.postText);
+      setHorseName(post.horseName);
+      setCategory(post.category);
+      setBreed(post.breed);
+      setColor(post.color);
+      setYear(post.birth.year);
+      setMonth(post.birth.month);
+      setDay(post.birth.day);
+      setAge(post.age);
+      setHeight(post.height);
+      setFeatures(post.features);
+      setArea(post.area);
+      setPrice(post.price);
+      urlToFile(post);
+    }
+  }, [post]);
+
+  // URL to File
+  const urlToFile = async (post) => {
+    if (post) {
+      const imageFiles = await Promise.all(
+        post.images.map((image) => {
+          return fetch(image).then((res) => res.blob());
+        })
+      );
+      setImages([...imageFiles]);
+    }
+  };
 
   //プレビューのURLセット
   useEffect(() => {
@@ -65,7 +107,7 @@ const Post: React.FC = () => {
       db.collection("users")
         .doc(`${currentUser.uid}`)
         .collection("drafts")
-        .doc(`${postId}`)
+        .doc(`${post.postID}`)
         .update({
           images: imagesURL,
         });
@@ -74,7 +116,7 @@ const Post: React.FC = () => {
       db.collection("users")
         .doc(`${currentUser.uid}`)
         .collection("posts")
-        .doc(`${postId}`)
+        .doc(`${post.postID}`)
         .update({
           images: imagesURL,
         });
@@ -85,10 +127,10 @@ const Post: React.FC = () => {
     const urls: any = await Promise.all(
       images.map(async (image) => {
         const fileName = generateFileName(image);
-        await storage.ref(`posts/${postId}/${fileName}`).put(image);
+        await storage.ref(`posts/${post.postID}/${fileName}`).put(image);
 
         return await storage
-          .ref(`posts/${postId}/${fileName}`)
+          .ref(`posts/${post.postID}/${fileName}`)
           .getDownloadURL();
       })
     );
@@ -103,13 +145,8 @@ const Post: React.FC = () => {
           .collection("users")
           .doc(`${currentUser.uid}`)
           .collection("drafts")
-          .doc(`${postId}`)
-          .set({
-            postID: postId,
-            userID: currentUser.uid,
-            username: user.username,
-            avatar: user.avatar,
-            images: [],
+          .doc(`${post.postID}`)
+          .update({
             title: title,
             postText: postText,
             horseName: horseName,
@@ -127,14 +164,6 @@ const Post: React.FC = () => {
             area: area,
             price: price,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: "",
-            likeUserIDs: [],
-            isAvairable: true,
-            pv: 0,
-            sendMessageUserIDs: [],
-            messageUpdatedAt: "",
-            latestMessage: "",
-            clientUserID: "",
           });
       };
 
@@ -167,9 +196,9 @@ const Post: React.FC = () => {
             .collection("users")
             .doc(`${currentUser.uid}`)
             .collection("posts")
-            .doc(`${postId}`)
+            .doc(`${post.postID}`)
             .set({
-              postID: postId,
+              postID: post.postID,
               userID: currentUser.uid,
               username: user.username,
               avatar: user.avatar,
@@ -205,6 +234,12 @@ const Post: React.FC = () => {
         const processAll = async () => {
           await setPost();
           await uploadImages(images);
+          await db
+            .collection("users")
+            .doc(`${currentUser.uid}`)
+            .collection("drafts")
+            .doc(`${post.postID}`)
+            .delete();
         };
 
         await processAll();
@@ -264,7 +299,7 @@ const Post: React.FC = () => {
     setImages([...images, ...uploadImages]);
   };
 
-  const handleFeature = (e) => {
+  const handleFeatures = (e) => {
     if (e.target.checked === true) {
       setFeatures([e.target.value, ...features]);
     } else {
@@ -284,7 +319,7 @@ const Post: React.FC = () => {
 
   return (
     <>
-      <Layout title="post">
+      <Layout title="draft">
         <form className="max-w-2xl mx-auto mt-16 px-2" onSubmit={posting}>
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-600 mb-3 ml-1">
@@ -297,11 +332,8 @@ const Post: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-wrap mb-2">
-            {/* <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable> */}
             {previewsURL &&
               previewsURL.map((previewURL, index) => (
-                // <Draggable>
                 <div key={index} className="mr-6">
                   <img
                     src={previewURL}
@@ -311,10 +343,7 @@ const Post: React.FC = () => {
                     <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
                   </div>
                 </div>
-                // </Draggable>
               ))}
-            {/* </Droppable>
-          </DragDropContext> */}
           </div>
           <label
             htmlFor="file"
@@ -325,6 +354,7 @@ const Post: React.FC = () => {
               <p className="ml-2.5">画像を選択</p>
             </div>
           </label>
+
           <input
             id="file"
             name="images"
@@ -332,6 +362,7 @@ const Post: React.FC = () => {
             accept="image/*"
             className="mb-8 hidden"
             multiple
+            defaultValue={post?.images}
             onChange={(e) => {
               handleImages(e);
             }}
@@ -341,37 +372,24 @@ const Post: React.FC = () => {
             タイトル
             <RequiredMark />
           </div>
-          <div className="mb-8">
-            <input
-              type="text"
-              name="title"
-              required
-              className="w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-            />
-            <div className="text-xs text-gray-500 text-right">
-              {`${title.length}` + "/40"}
-            </div>
-          </div>
+          <input
+            type="text"
+            name="title"
+            defaultValue={post?.title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+          />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             本文
             <RequiredMark />
           </div>
-          <div className="mb-8">
-            <textarea
-              name="postText"
-              className="w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              onChange={(e) => {
-                setPostText(e.target.value);
-              }}
-            />
-            <div className="text-xs text-gray-500 text-right">
-              {`${postText.length}` + "/2000"}
-            </div>
-          </div>
+          <textarea
+            name="postText"
+            defaultValue={post?.postText}
+            onChange={(e) => setPostText(e.target.value)}
+            className="mb-8 w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm whitespace-pre"
+          />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             馬の名前
@@ -380,62 +398,64 @@ const Post: React.FC = () => {
           <input
             type="text"
             name="horseName"
+            defaultValue={post?.horseName}
+            onChange={(e) => setHorseName(e.target.value)}
             className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setHorseName(e.target.value);
-            }}
           />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             カテゴリー
             <RequiredMark />
           </div>
-          <select
-            name="category"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setCategory(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.category.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
-            ))}
-          </select>
+          {post && (
+            <select
+              name="category"
+              defaultValue={post?.category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.category.map((element) => (
+                <option value={`${element}`}>{`${element}`}</option>
+              ))}
+            </select>
+          )}
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             品種
             <RequiredMark />
           </div>
-          <select
-            name="breed"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setBreed(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.breed.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
-            ))}
-          </select>
+          {post && (
+            <select
+              name="breed"
+              defaultValue={post?.breed}
+              onChange={(e) => setBreed(e.target.value)}
+              className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.breed.map((element) => (
+                <option value={`${element}`}>{`${element}`}</option>
+              ))}
+            </select>
+          )}
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             毛色
             <RequiredMark />
           </div>
-          <select
-            name="color"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setColor(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.color.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
-            ))}
-          </select>
+          {post && (
+            <select
+              name="color"
+              defaultValue={post?.color}
+              onChange={(e) => setColor(e.target.value)}
+              className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.color.map((element) => (
+                <option value={`${element}`}>{`${element}`}</option>
+              ))}
+            </select>
+          )}
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             生年月日
@@ -446,52 +466,38 @@ const Post: React.FC = () => {
               type="number"
               name="year"
               placeholder="2010"
-              min="1970"
+              defaultValue={post?.birth.year}
+              onChange={(e) => setYear(e.target.value)}
               className="mb-8 w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e) => {
-                setYear(e.target.value);
-              }}
             />
             <div className="mr-6 ml-2 mb-8 text-sm">年</div>
             <input
               type="number"
               name="month"
               placeholder="1"
-              min="1"
-              max="12"
+              defaultValue={post?.birth.month}
+              onChange={(e) => setMonth(e.target.value)}
               className="appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e) => {
-                setMonth(e.target.value);
-              }}
             />
             <div className="mr-6 ml-2 mb-8 text-sm">月</div>
             <input
               type="number"
               name="day"
               placeholder="10"
-              min="1"
-              max="31"
+              defaultValue={post?.birth.day}
+              onChange={(e) => setDay(e.target.value)}
               className="mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e) => {
-                setDay(e.target.value);
-              }}
             />
             <div className="mr-6 ml-2 mb-8 text-sm">日</div>
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            年齢
-            <RequiredMark />
-          </div>
+          <div className="text-xs text-gray-600 mb-1 ml-1">年齢</div>
           <input
             type="number"
             name="age"
-            min="0"
-            max="100"
+            defaultValue={post?.age}
+            onChange={(e) => setAge(e.target.value)}
             className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setAge(e.target.value);
-            }}
           />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
@@ -501,50 +507,53 @@ const Post: React.FC = () => {
           <input
             type="number"
             name="height"
-            min="0"
-            max="1000"
+            defaultValue={post?.height}
+            onChange={(e) => setHeight(e.target.value)}
             className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setHeight(e.target.value);
-            }}
           />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             地域
             <RequiredMark />
           </div>
-          <select
-            name="area"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setArea(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.area.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
-            ))}
-          </select>
+          {post && (
+            <select
+              name="area"
+              defaultValue={post?.area}
+              onChange={(e) => setArea(e.target.value)}
+              className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.area.map((element) => (
+                <option value={`${element}`}>{`${element}`}</option>
+              ))}
+            </select>
+          )}
 
           <div className="text-xs text-gray-600 mb-1 ml-1">特徴</div>
-          <div className="flex flex-wrap">
-            {filterInitialValues.features.map((element) => (
-              <>
-                <div className="mb-8 ml-4" hidden={element === "empty"}>
-                  <label className="text-sm font-medium text-gray-800 cursor-pointer">
-                    <input
-                      name="features"
-                      value={`${element}`}
-                      type="checkbox"
-                      className="mr-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
-                      onChange={handleFeature}
-                    />
-                    {`${element}`}
-                  </label>
-                </div>
-              </>
-            ))}
-          </div>
+          {post && (
+            <div className="flex flex-wrap">
+              {filterInitialValues.features.map((element) => (
+                <>
+                  <div className="mb-8 ml-4" hidden={element === "empty"}>
+                    <label className="text-sm font-medium text-gray-800 cursor-pointer">
+                      <input
+                        name="features"
+                        value={`${element}`}
+                        type="checkbox"
+                        defaultChecked={
+                          post?.features.includes(`${element}`) ? true : false
+                        }
+                        onClick={handleFeatures}
+                        className="mr-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
+                      />
+                      {`${element}`}
+                    </label>
+                  </div>
+                </>
+              ))}
+            </div>
+          )}
 
           <div className="text-xs text-gray-600 mb-1 ml-3">
             値段
@@ -555,11 +564,9 @@ const Post: React.FC = () => {
             <input
               type="number"
               name="price"
-              min="0"
+              defaultValue={post?.price}
+              onChange={(e) => setPrice(e.target.value)}
               className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e) => {
-                setPrice(e.target.value);
-              }}
             />
           </div>
 
@@ -586,4 +593,4 @@ const Post: React.FC = () => {
   );
 };
 
-export default Post;
+export default draft;
