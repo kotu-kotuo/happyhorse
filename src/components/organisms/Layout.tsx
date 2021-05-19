@@ -8,7 +8,6 @@ import { auth, db } from "../../utils/firebase";
 import { FaBell } from "react-icons/fa";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { FaHorse } from "react-icons/fa";
-import { FaRegClock } from "react-icons/fa";
 import StarRatings from "react-star-ratings";
 import { setNotificationStates } from "../../utils/states";
 import Notification from "../molecules/Notification";
@@ -39,19 +38,6 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
       setIsOpenMenu(false);
     } catch (error) {
       alert(error.message);
-    }
-  };
-
-  //時間をUNIXから変換
-  const createdTime = (notification) => {
-    if (notification) {
-      const time = new Date(notification?.createdAt?.seconds * 1000);
-      return time.toLocaleString([], {
-        month: "numeric",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
     }
   };
 
@@ -232,8 +218,8 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                               <StarRatings
                                 numberOfStars={5}
                                 rating={
-                                  (user.good * 5 + user.bad * 1) /
-                                  (user.good + user.bad)
+                                  ((user.good * 5 + user.bad * 1) /
+                                  (user.good + user.bad)) || 0
                                 }
                                 starRatedColor="#FFD400"
                                 name="rating"

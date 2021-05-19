@@ -477,9 +477,9 @@ const messages = () => {
           .add({
             postID: post.postID,
             postUserID: post.userID,
-            sendUserID: chatroom.sendUserID,
+            sendUserID: currentUser.uid,
             receiveUserID: post.userID,
-            sendMessageUserID: chatroom.sendUserID,
+            sendMessageUserID: currentUser.uid,
             image: post.images[0],
             avatar: user.avatar,
             text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,
@@ -722,9 +722,9 @@ const messages = () => {
           .add({
             postID: post.postID,
             postUserID: post.userID,
-            sendUserID: chatroom.sendUserID,
+            sendUserID: currentUser.uid,
             receiveUserID: post.userID,
-            sendMessageUserID: chatroom.sendUserID,
+            sendMessageUserID: currentUser.uid,
             image: post.images[0],
             avatar: user.avatar,
             text: `${user.username}さんから「${post.title}」に新着メッセージがあります。`,

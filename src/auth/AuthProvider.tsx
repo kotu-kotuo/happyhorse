@@ -25,7 +25,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any | null | undefined>(
     undefined
   );
-  const [user, setUser] = useState<any>("");
+  const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -46,11 +46,12 @@ const AuthProvider: React.FC = ({ children }) => {
         .collection("notifications")
         .orderBy("createdAt", "desc")
         .get()
-        .then(async (snapshot) =>
+        .then(async (snapshot) => {
+          if (!snapshot.docs) return;
           setNotifications(
             snapshot.docs.map((doc) => setNotificationStates(doc.data()))
-          )
-        );
+          );
+        });
     });
   }, []);
 
