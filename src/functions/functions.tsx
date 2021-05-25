@@ -93,6 +93,7 @@ export const clickHeart = async (
           .doc(`${currentUser.uid}`)
           .collection("likePosts")
           .add({
+            likePostUserID: currentUser.uid,
             postID: snapshot.data().postID,
             userID: snapshot.data().userID,
             username: snapshot.data().username,
@@ -154,6 +155,7 @@ export const clickHeart = async (
               checked: false,
               toMessage: false,
               toProfile: false,
+              noLink: false,
             });
 
           // db.collection("users") TODO:他のユーザーのnotificationsのリアルタイムの更新は可能か？

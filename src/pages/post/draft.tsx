@@ -317,6 +317,17 @@ const draft = () => {
     setPreviewsURL([...imageURLs]);
   };
 
+  const deleteDraft = async(e) => {
+     e.preventDefault();
+     const result = window.confirm("本当に削除しますか？");
+     if (result) {
+
+       await db.collection("users").doc(`${currentUser.uid}`).collection("drafts").doc(post.postID).delete()
+
+       await router.push("/post/draftList")
+     }
+  }
+
   return (
     <>
       <Layout title="draft">
@@ -570,7 +581,7 @@ const draft = () => {
             />
           </div>
 
-          <div className="text-center">
+          <div className="text-center mb-20">
             <button
               type="submit"
               className="cursor-pointer bg-mainGreen text-white py-3 px-6 rounded-md w-full mt-4"
@@ -579,12 +590,20 @@ const draft = () => {
             </button>
             <button
               type="submit"
-              className="cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 mb-20"
+              className="cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 hover:text-white hover:bg-gray-500  ease-in-out duration-300"
               onClick={() => {
                 setIsDraft(true);
               }}
             >
               下書き保存する
+            </button>
+            <button
+              className="cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 hover:text-white hover:bg-gray-500  ease-in-out duration-300"
+              onClick={(e) => {
+                deleteDraft(e);
+              }}
+            >
+              削除する
             </button>
           </div>
         </form>

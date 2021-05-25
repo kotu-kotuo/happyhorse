@@ -19,6 +19,7 @@ import {
   setMessageStates,
   setPostStates,
   setReviewStates,
+  setUserState,
 } from "../../utils/states";
 import { generateFileName } from "../../functions/functions";
 import { confirmAlert } from "react-confirm-alert";
@@ -38,6 +39,7 @@ const messages = () => {
   const [reviewText, setReviewText] = useState("");
   const [postReviews, setPostReviews] = useState([]);
   const [reviewSwitch, setReviewSwitch] = useState("OFF");
+  const [messageReceiver, setMessageReceiver] = useState(null);
   const ref = useRef(null);
 
   //初期値セット
@@ -77,7 +79,7 @@ const messages = () => {
           setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
         );
     }
-    if (currentUser) {
+    if (router.query.pid) {
       db.collection("reviewsOnHold")
         .get()
         .then((snapshot) => {
@@ -89,7 +91,28 @@ const messages = () => {
           );
         });
     }
-  }, [router.query.uid, router.query.pid, router.query.cid, currentUser]);
+  }, [router.query.uid, router.query.pid, router.query.cid]);
+
+  useEffect(() => {
+    if (currentUser && chatroom) {
+      if (currentUser.uid === chatroom.postUserID) {
+        db.collection("users")
+          .doc(`${chatroom.sendUserID}`)
+          .get()
+          .then((snapshot) =>
+            setMessageReceiver(setUserState(snapshot.data()))
+          );
+      }
+      if (currentUser.uid === chatroom.sendUserID) {
+        db.collection("users")
+          .doc(`${chatroom.postUserID}`)
+          .get()
+          .then((snapshot) =>
+            setMessageReceiver(setUserState(snapshot.data()))
+          );
+      }
+    }
+  }, [currentUser, chatroom]);
 
   useEffect(() => {
     if (post.userID && post.postID && router.query.cid) {
@@ -255,11 +278,14 @@ const messages = () => {
         .collection("messages")
         .add({
           userID: currentUser.uid,
-          postID: post.postID,
           username: user.username,
           avatar: user.avatar,
-          messageText: "評価完了しました",
+          messageReceiverID: messageReceiver.id,
+          messageReceiverName: messageReceiver.username,
+          postID: post.postID,
+          postTitle: post.title,
           image: "",
+          messageText: "評価完了しました",
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           firstOnDate: handleShowDate,
           clientDecision: false,
@@ -301,6 +327,7 @@ const messages = () => {
               checked: false,
               toMessage: false,
               toProfile: true,
+              noLink: false,
             });
         });
 
@@ -324,6 +351,7 @@ const messages = () => {
               checked: false,
               toMessage: false,
               toProfile: true,
+              noLink: false,
             });
         });
     }
@@ -440,11 +468,14 @@ const messages = () => {
           .collection("messages")
           .add({
             userID: currentUser.uid,
-            postID: post.postID,
             username: user.username,
             avatar: user.avatar,
-            messageText: messageText,
+            messageReceiverID: messageReceiver.id,
+            messageReceiverName: messageReceiver.username,
+            postID: post.postID,
+            postTitle: post.title,
             image: "",
+            messageText: messageText,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             firstOnDate: handleShowDate,
             clientDecision: false,
@@ -487,6 +518,7 @@ const messages = () => {
             checked: false,
             toMessage: true,
             toProfile: false,
+            noLink: false,
           });
       } else {
         //２通目以降
@@ -524,11 +556,14 @@ const messages = () => {
           .collection("messages")
           .add({
             userID: currentUser.uid,
-            postID: post.postID,
             username: user.username,
             avatar: user.avatar,
-            messageText: messageText,
+            messageReceiverID: messageReceiver.id,
+            messageReceiverName: messageReceiver.username,
+            postID: post.postID,
+            postTitle: post.title,
             image: "",
+            messageText: messageText,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             firstOnDate: handleShowDate,
             clientDecision: false,
@@ -555,7 +590,7 @@ const messages = () => {
           );
         await setMessageText("");
 
-        if (currentUser.uid === post.userID) { //TODO:相手がメッセージ画面を見ている時は通知を送らない処理にしたい。
+        if (currentUser.uid === post.userID) {
           db.collection("users")
             .doc(`${chatroom.sendUserID}`)
             .collection("notifications")
@@ -572,6 +607,7 @@ const messages = () => {
               checked: false,
               toMessage: true,
               toProfile: false,
+              noLink: false,
             });
         } else {
           db.collection("users")
@@ -590,6 +626,7 @@ const messages = () => {
               checked: false,
               toMessage: true,
               toProfile: false,
+              noLink: false,
             });
         }
       }
@@ -684,11 +721,14 @@ const messages = () => {
                     .collection("messages")
                     .add({
                       userID: currentUser.uid,
-                      postID: post.postID,
                       username: user.username,
                       avatar: user.avatar,
-                      messageText: "",
+                      messageReceiverID: messageReceiver.id,
+                      messageReceiverName: messageReceiver.username,
+                      postID: post.postID,
+                      postTitle: post.title,
                       image: url,
+                      messageText: "",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                       firstOnDate: handleShowDate,
                       clientDecision: false,
@@ -732,6 +772,7 @@ const messages = () => {
             checked: false,
             toMessage: true,
             toProfile: false,
+            noLink: false,
           });
       } else {
         //２通目以降
@@ -783,11 +824,14 @@ const messages = () => {
                     .collection("messages")
                     .add({
                       userID: currentUser.uid,
-                      postID: post.postID,
                       username: user.username,
                       avatar: user.avatar,
-                      messageText: "",
+                      messageReceiverID: messageReceiver.id,
+                      messageReceiverName: messageReceiver.username,
+                      postID: post.postID,
+                      postTitle: post.title,
                       image: url,
+                      messageText: "",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                       firstOnDate: handleShowDate,
                       clientDecision: false,
@@ -833,6 +877,7 @@ const messages = () => {
               checked: false,
               toMessage: true,
               toProfile: false,
+              noLink: false,
             });
         } else {
           db.collection("users")
@@ -851,6 +896,7 @@ const messages = () => {
               checked: false,
               toMessage: true,
               toProfile: false,
+              noLink: false,
             });
         }
       }
@@ -900,11 +946,14 @@ const messages = () => {
                     .collection("messages")
                     .add({
                       userID: currentUser.uid,
-                      postID: post.postID,
                       username: user.username,
                       avatar: user.avatar,
-                      messageText: "取引者を決定しました",
+                      messageReceiverID: messageReceiver.id,
+                      messageReceiverName: messageReceiver.username,
+                      postID: post.postID,
+                      postTitle: post.title,
                       image: "",
+                      messageText: "取引者を決定しました",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                       firstOnDate: handleShowDate,
                       clientDecision: true,
@@ -946,6 +995,7 @@ const messages = () => {
                       checked: false,
                       toMessage: true,
                       toProfile: false,
+                      noLink: false,
                     });
                   onClose();
                 }}
@@ -1009,11 +1059,14 @@ const messages = () => {
                     .collection("messages")
                     .add({
                       userID: currentUser.uid,
-                      postID: post.postID,
                       username: user.username,
                       avatar: user.avatar,
-                      messageText: "取引を中断しました",
+                      messageReceiverID: messageReceiver.id,
+                      messageReceiverName: messageReceiver.username,
+                      postID: post.postID,
+                      postTitle: post.title,
                       image: "",
+                      messageText: "取引を中断しました",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                       firstOnDate: handleShowDate,
                       clientDecision: false,
@@ -1055,6 +1108,7 @@ const messages = () => {
                       checked: false,
                       toMessage: true,
                       toProfile: false,
+                      noLink: false,
                     });
                   onClose();
                 }}
@@ -1118,11 +1172,14 @@ const messages = () => {
                     .collection("messages")
                     .add({
                       userID: currentUser.uid,
-                      postID: post.postID,
                       username: user.username,
                       avatar: user.avatar,
-                      messageText: "取引完了しました",
+                      messageReceiverID: messageReceiver.id,
+                      messageReceiverName: messageReceiver.username,
+                      postID: post.postID,
+                      postTitle: post.title,
                       image: "",
+                      messageText: "取引完了しました",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                       firstOnDate: handleShowDate,
                       clientDecision: false,
@@ -1142,11 +1199,14 @@ const messages = () => {
                     .collection("messages")
                     .add({
                       userID: currentUser.uid,
-                      postID: post.postID,
                       username: user.username,
                       avatar: user.avatar,
-                      messageText: "評価をお願いします",
+                      messageReceiverID: messageReceiver.id,
+                      messageReceiverName: messageReceiver.username,
+                      postID: post.postID,
+                      postTitle: post.title,
                       image: "",
+                      messageText: "評価をお願いします",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                       firstOnDate: handleShowDate,
                       clientDecision: false,
@@ -1188,6 +1248,7 @@ const messages = () => {
                       checked: false,
                       toMessage: true,
                       toProfile: false,
+                      noLink: false,
                     });
                   onClose();
                 }}
@@ -1310,7 +1371,7 @@ const messages = () => {
 
   return (
     <div>
-      {console.log(rateValue)}
+      {console.log(messageReceiver)}
       {console.log(reviewText)}
       <div>
         <Div100vh className="relative">
@@ -1412,7 +1473,7 @@ const messages = () => {
                           ) : (
                             postReviews.length !== 2 && (
                               <div
-                                className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3 mx-3"
+                                className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3 mb-5 mx-3"
                                 onClick={rating}
                               >
                                 <p className="mt-1 text-mainGreen font-semibold">
@@ -1460,7 +1521,7 @@ const messages = () => {
                                           setIsOpenModal={setIsOpenMyModal}
                                         />
                                       )}
-                                      {console.log("カレント", message.image)}
+
                                     </>
                                   )}
                                 </div>
@@ -1507,7 +1568,7 @@ const messages = () => {
                                           setIsOpenModal={setIsOpenYourModal}
                                         />
                                       )}
-                                      {console.log("相手", message.image)}
+
                                     </>
                                   )}
                                 </div>

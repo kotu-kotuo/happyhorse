@@ -68,6 +68,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
       .doc(`${currentUser.uid}`)
       .collection("notifications")
       .orderBy("createdAt", "desc")
+      .limit(30)
       .get()
       .then(async (snapshot) =>
         setNotifications(

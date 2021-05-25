@@ -119,7 +119,7 @@ const management = () => {
                                 {myPost.title}
                               </div>
                               <div className="flex w-full">
-                                <div className="text-gray-600 text-xs mt-auto whitespace-nowrap">{`メッセージユーザー(${myPost.sendMessageUserIDs.length})`}</div>
+                                <div className="text-gray-600 text-xs mt-auto whitespace-nowrap">{`ユーザー(${myPost.sendMessageUserIDs.length})`}</div>
                                 <div className="text-right mt-auto ml-auto max-w-xl w-full">
                                   <div className="text-gray-500 text-xs mt-auto ml-auto">
                                     {createdTime(myPost.messageUpdatedAt)}
@@ -173,6 +173,7 @@ const management = () => {
                                 <div className="flex">
                                   <div className="text-gray-900 mr-2 whitespace-nowrap">
                                     {myPostChatroom.sendUserName}
+                                    <span className="text-gray-500 text-xs ml-1">{`(${myPostChatroom.messageCount})`}</span>
                                   </div>
                                   <div className="flex w-full">
                                     <div className="text-right mt-auto ml-auto max-w-xl w-full">
@@ -241,6 +242,7 @@ const management = () => {
                             <div className="flex">
                               <div className="text-gray-900 mr-2 whitespace-nowrap">
                                 {sendMessageChatroom.postTitle}
+                                <span className="text-gray-500 text-xs ml-1">{`(${sendMessageChatroom.messageCount})`}</span>
                               </div>
                               <div className="flex w-full">
                                 <div className="text-right mt-auto ml-auto max-w-xl w-full">
