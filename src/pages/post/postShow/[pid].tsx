@@ -217,6 +217,15 @@ const Show = () => {
                   <button className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-gray-400 pointer-events-none">
                     SOLD OUT!
                   </button>
+                ) : post.isAvairable &&
+                  post.clientUserID.length !== 0 &&
+                  !(
+                    currentUser.uid === post.userID ||
+                    currentUser.uid === post?.clientUserID
+                  ) ? (
+                  <button className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-gray-400 pointer-events-none">
+                    他の方と取引中
+                  </button>
                 ) : currentUser.uid === post.userID ? (
                   <Link href="/message/management">
                     <button

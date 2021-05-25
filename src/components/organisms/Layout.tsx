@@ -68,6 +68,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
       .doc(`${currentUser.uid}`)
       .collection("notifications")
       .orderBy("createdAt", "desc")
+      .limit(30)
       .get()
       .then(async (snapshot) =>
         setNotifications(
@@ -282,6 +283,16 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                           <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
                             <p className="text-sm font-medium text-gray-800 leading-none">
                               下書き保存リスト
+                            </p>
+                            <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
+                          </a>
+                        </Link>
+                      </div>
+                      <div className="border-b">
+                        <Link href="/setting">
+                          <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
+                            <p className="text-sm font-medium text-gray-800 leading-none">
+                              設定
                             </p>
                             <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
                           </a>

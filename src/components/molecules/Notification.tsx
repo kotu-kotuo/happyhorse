@@ -18,30 +18,49 @@ const createdTime = (notification) => {
 const Notification = (props) => {
   const { notification, href } = props;
   return (
-    <Link href={href}>
-      <div className="flex mt-3 cursor-pointer hover:opacity-80">
-        {!notification.toMessage && notification.toProfile ? (
+    <>
+      {notification.noLink ? (
+        <div className="flex mt-3 cursor-pointer hover:opacity-80">
           <img
             className="h-9 w-9 rounded object-cover mr-2"
-            src={notification.image[0]}
+            src={notification.image}
           />
-        ) : (
-          <img
-            className="h-9 w-9 rounded-full object-cover mr-2"
-            src={notification.avatar}
-          />
-        )}
-
-        <div>
-          <div className="text-sm text-gray-900">{notification.text}</div>
-          <div className="flex items-center text-xs text-gray-500 ">
-            <FaRegClock className="ml-auto mr-0.5" />
-            <div>{createdTime(notification)}</div>
+          <div>
+            <div className="text-sm text-gray-900">{notification.text}</div>
+            <div className="flex items-center text-xs text-gray-500 ">
+              <FaRegClock className="ml-auto mr-0.5" />
+              <div>{createdTime(notification)}</div>
+            </div>
+            <div className="border-b border-gray-100 mt-2"></div>
           </div>
-          <div className="border-b border-gray-100 mt-2"></div>
         </div>
-      </div>
-    </Link>
+      ) : (
+        <Link href={href}>
+          <div className="flex mt-3 cursor-pointer hover:opacity-80">
+            {!(notification.toMessage || notification.toProfile) ? (
+              <img
+                className="h-9 w-9 rounded object-cover mr-2"
+                src={notification.image}
+              />
+            ) : (
+              <img
+                className="h-9 w-9 rounded-full object-cover mr-2"
+                src={notification.avatar}
+              />
+            )}
+
+            <div>
+              <div className="text-sm text-gray-900">{notification.text}</div>
+              <div className="flex items-center text-xs text-gray-500 ">
+                <FaRegClock className="ml-auto mr-0.5" />
+                <div>{createdTime(notification)}</div>
+              </div>
+              <div className="border-b border-gray-100 mt-2"></div>
+            </div>
+          </div>
+        </Link>
+      )}
+    </>
   );
 };
 

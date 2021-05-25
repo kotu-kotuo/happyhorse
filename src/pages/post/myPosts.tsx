@@ -6,6 +6,7 @@ import { db } from "../../utils/firebase";
 import {Post} from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
+import { PageTitle } from "../../components/atoms/Atoms";
 
 const myPostList = () => {
   const { currentUser } = useContext(AuthContext);
@@ -33,9 +34,7 @@ const myPostList = () => {
   return (
     <div>
       <Layout title="myPostList">
-        <h2 className="text-center mt-16 mb-2 text-xl text-gray-900">
-          掲載した馬
-        </h2>
+        <PageTitle title="掲載した馬"/>
         <div className="flex flex-wrap">
           {posts && posts.map((post, index) => (
             <>

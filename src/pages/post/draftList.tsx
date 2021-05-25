@@ -7,6 +7,7 @@ import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
 import image from "next/image";
+import { PageTitle } from "../../components/atoms/Atoms";
 
 const draftList = () => {
   const { currentUser } = useContext(AuthContext);
@@ -30,6 +31,7 @@ const draftList = () => {
   return (
     <div>
       <Layout title="draftList">
+        <PageTitle title="下書き保存リスト"/>
         {currentUser &&
           posts &&
           posts.map((post) => (

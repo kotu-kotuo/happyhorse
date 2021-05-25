@@ -19,50 +19,6 @@ const ProfileEdit = () => {
     }
   }, [user]);
 
-  const handleImage = (e) => {
-    const image = e.target.files[0];
-    setImage(image);
-  };
-  const handleCover = (e) => {
-    const image = e.target.files[0];
-    setCover(image);
-  };
-
-  const handleName = (e) => {
-    const username = e.target.value;
-    setUsername(username);
-  };
-
-  const handleText = (e) => {
-    const text = e.target.value;
-    setProfileText(text);
-  };
-
-  const updatePost = (url) => {
-    db.collection("users")
-      .doc(`${currentUser.uid}`)
-      .collection("posts")
-      .get()
-      .then((snapshot) => {
-        snapshot.docs.map((doc) => {
-          console.log(doc.data().postID);
-          if (username) {
-            db.collection("users")
-              .doc(`${currentUser.uid}`)
-              .collection("posts")
-              .doc(`${doc.data().postID}`)
-              .update({ username: username, avatar: url });
-          } else {
-            db.collection("users")
-              .doc(`${currentUser.uid}`)
-              .collection("posts")
-              .doc(`${doc.data().postID}`)
-              .update({ avatar: url });
-          }
-        });
-      });
-  };
-
   const editProfile = async (e) => {
     e.preventDefault();
     if (username.length > 20) {
@@ -70,7 +26,8 @@ const ProfileEdit = () => {
     } else if (profileText.length > 2000) {
       alert("プロフィール文は2000字以内でお願いします");
     } else {
-      if (image !== "") {
+      //アバター画像変更
+      if (image) {
         await storage
           .ref(`images/${currentUser.uid}/avatar/`)
           .put(image)
@@ -85,17 +42,86 @@ const ProfileEdit = () => {
                 .ref(`images/${currentUser.uid}/avatar/`)
                 .getDownloadURL()
                 .then(async (url) => {
-                  db.collection("users").doc(`${currentUser.uid}`).update({
-                    avatar: url,
-                  });
-                  await updatePost(url);
-                  console.log(url);
+                  await db
+                    .collection("users")
+                    .doc(`${currentUser.uid}`)
+                    .update({
+                      avatar: url,
+                    });
+
+                  await db
+                    .collection("users")
+                    .doc(`${currentUser.uid}`)
+                    .collection("posts")
+                    .get()
+                    .then(async (snapshot) => {
+                      await Promise.all(
+                        snapshot.docs.map((doc) => {
+                          doc.ref.update({ avatar: url });
+                        })
+                      );
+                    });
+
+                  await db
+                    .collectionGroup("chatrooms")
+                    .where("sendUserID", "==", currentUser.uid)
+                    .get()
+                    .then(
+                      async (snapshot) =>
+                        await Promise.all(
+                          snapshot.docs.map((doc) =>
+                            doc.ref.update({ sendUserAvatar: url })
+                          )
+                        )
+                    );
+
+                  await db
+                    .collectionGroup("messages")
+                    .where("userID", "==", currentUser.uid)
+                    .get()
+                    .then((snapshot) =>
+                      snapshot.docs.map((doc) =>
+                        doc.ref.update({
+                          avatar: url,
+                        })
+                      )
+                    );
+
+                  await db
+                    .collectionGroup("reviews")
+                    .where("reviewerID", "==", currentUser.uid)
+                    .get()
+                    .then(
+                      async (snapshot) =>
+                        await Promise.all(
+                          snapshot.docs.map((doc) =>
+                            doc.ref.update({
+                              reviewerAvatar: url,
+                            })
+                          )
+                        )
+                    );
+
+                  await db
+                    .collectionGroup("reviewsOnHold")
+                    .where("reviewerID", "==", currentUser.uid)
+                    .get()
+                    .then(
+                      async (snapshot) =>
+                        await Promise.all(
+                          snapshot.docs.map((doc) =>
+                            doc.ref.update({
+                              reviewerAvatar: url,
+                            })
+                          )
+                        )
+                    );
                 });
             }
           );
       }
 
-      if (cover !== "") {
+      if (cover) {
         const uploadTask = storage
           .ref(`images/${currentUser.uid}/cover/`)
           .put(cover);
@@ -118,15 +144,89 @@ const ProfileEdit = () => {
         );
       }
 
-      username &&
-        (await db.collection("users").doc(`${currentUser.uid}`).update({
+      if (username) {
+        await db.collection("users").doc(`${currentUser.uid}`).update({
           username: username,
-        }));
+        });
 
-      profileText &&
-        (await db.collection("users").doc(`${currentUser.uid}`).update({
+        await db
+          .collection("users")
+          .doc(`${currentUser.uid}`)
+          .collection("posts")
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({
+                    username: username,
+                  })
+                )
+              )
+        );
+
+        await db
+          .collectionGroup("chatrooms")
+          .where("sendUserID", "==", currentUser.uid)
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({ sendUserName: username })
+                )
+              )
+          );
+
+        await db
+          .collectionGroup("messages")
+          .where("userID", "==", currentUser.uid)
+          .get()
+          .then((snapshot) =>
+            snapshot.docs.map((doc) =>
+              doc.ref.update({
+                username: username,
+              })
+            )
+          );
+
+        await db
+          .collectionGroup("reviews")
+          .where("reviewerID", "==", currentUser.uid)
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({
+                    reviewerName: username,
+                  })
+                )
+              )
+          );
+
+        await db
+          .collectionGroup("reviewsOnHold")
+          .where("reviewerID", "==", currentUser.uid)
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({
+                    reviewerName: username,
+                  })
+                )
+              )
+          );
+
+      }
+
+      if (profileText) {
+        await db.collection("users").doc(`${currentUser.uid}`).update({
           profileText: profileText,
-        }));
+        });
+      }
 
       await db
         .collection("users")
@@ -152,28 +252,48 @@ const ProfileEdit = () => {
           <form className="mx-auto max-w-2xl" onSubmit={editProfile}>
             <div className="text-xs text-gray-500 mb-2 ml-1">アバター画像</div>
             <div className="flex items-center mb-6">
-              <img
-                className="w-20 h-20 mr-6 object-cover rounded-full"
-                src={user.avatar}
-                alt="uploaded"
-              />
+              {image ? (
+                <img
+                  className="w-20 h-20 mr-6 object-cover rounded-full"
+                  src={URL.createObjectURL(image)}
+                  alt="uploaded"
+                />
+              ) : (
+                <img
+                  className="w-20 h-20 mr-6 object-cover rounded-full"
+                  src={user.avatar}
+                  alt="uploaded"
+                />
+              )}
               <input
                 className="inline w-full text-gray-500"
                 type="file"
-                onChange={handleImage}
+                onChange={(e) => {
+                  setImage(e.target.files[0]);
+                }}
               />
             </div>
             <div className="text-xs text-gray-500 mb-2 ml-1">カバー画像</div>
             <div className="flex items-center mb-6">
-              <img
-                className="w-20 h-20 mr-6 object-cover rounded"
-                src={user.cover}
-                alt="uploaded"
-              />
+              {cover ? (
+                <img
+                  className="w-20 h-20 mr-6 object-cover rounded"
+                  src={URL.createObjectURL(cover)}
+                  alt="uploaded"
+                />
+              ) : (
+                <img
+                  className="w-20 h-20 mr-6 object-cover rounded"
+                  src={user.cover}
+                  alt="uploaded"
+                />
+              )}
               <input
                 className="inline w-full text-gray-500"
                 type="file"
-                onChange={handleCover}
+                onChange={(e) => {
+                  setCover(e.target.files[0]);
+                }}
               />
             </div>
             <div className="text-xs text-gray-500 mb-1 ml-1">
@@ -182,7 +302,9 @@ const ProfileEdit = () => {
             <input
               className="block w-full mb-6 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               type="text"
-              onChange={handleName}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
               defaultValue={user.username}
             />
             <div className="text-xs text-gray-500 mb-1 ml-1">
@@ -191,7 +313,9 @@ const ProfileEdit = () => {
             <div className="mb-7">
               <textarea
                 className="block w-full h-40 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                onChange={handleText}
+                onChange={(e) => {
+                  setProfileText(e.target.value);
+                }}
                 defaultValue={user.profileText}
               />
               <div className="text-xs text-gray-500 text-right">
