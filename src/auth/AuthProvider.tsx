@@ -45,6 +45,7 @@ const AuthProvider: React.FC = ({ children }) => {
         .doc(`${user.uid}`)
         .collection("notifications")
         .orderBy("createdAt", "desc")
+        .limit(30)
         .get()
         .then(async (snapshot) => {
           if (!snapshot.docs) return;

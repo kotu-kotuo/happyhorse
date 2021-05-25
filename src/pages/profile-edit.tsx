@@ -122,7 +122,6 @@ const ProfileEdit = () => {
       }
 
       if (cover) {
-        console.log("おおお")
         const uploadTask = storage
           .ref(`images/${currentUser.uid}/cover/`)
           .put(cover);
@@ -149,6 +148,78 @@ const ProfileEdit = () => {
         await db.collection("users").doc(`${currentUser.uid}`).update({
           username: username,
         });
+
+        await db
+          .collection("users")
+          .doc(`${currentUser.uid}`)
+          .collection("posts")
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({
+                    username: username,
+                  })
+                )
+              )
+        );
+
+        await db
+          .collectionGroup("chatrooms")
+          .where("sendUserID", "==", currentUser.uid)
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({ sendUserName: username })
+                )
+              )
+          );
+
+        await db
+          .collectionGroup("messages")
+          .where("userID", "==", currentUser.uid)
+          .get()
+          .then((snapshot) =>
+            snapshot.docs.map((doc) =>
+              doc.ref.update({
+                username: username,
+              })
+            )
+          );
+
+        await db
+          .collectionGroup("reviews")
+          .where("reviewerID", "==", currentUser.uid)
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({
+                    reviewerName: username,
+                  })
+                )
+              )
+          );
+
+        await db
+          .collectionGroup("reviewsOnHold")
+          .where("reviewerID", "==", currentUser.uid)
+          .get()
+          .then(
+            async (snapshot) =>
+              await Promise.all(
+                snapshot.docs.map((doc) =>
+                  doc.ref.update({
+                    reviewerName: username,
+                  })
+                )
+              )
+          );
+
       }
 
       if (profileText) {

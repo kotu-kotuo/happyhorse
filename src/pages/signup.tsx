@@ -24,7 +24,7 @@ const SignUp: React.FC = () => {
             await db.collection("users").doc(`${result.user.uid}`).set({
               id: result.user.uid,
               username: username,
-              avatar: "/avatar.png",
+              avatar: "/avatar(1).png",
               cover: "/cover1.jpg",
               profileText: "",
               good: 0,
