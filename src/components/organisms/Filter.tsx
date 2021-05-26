@@ -206,7 +206,7 @@ const Filter = (props) => {
             {props.breed.length === filterInitialValues.breed.length ? (
               <select
                 name="breed"
-                className="text-sm text-gray-700 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 onChange={props.handleBreed}
               >
                 <option hidden></option>
@@ -218,7 +218,7 @@ const Filter = (props) => {
             ) : (
               <select
                 name="breed"
-                className="text-sm text-gray-700 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 onChange={props.handleBreed}
               >
                 <option hidden></option>
@@ -246,7 +246,7 @@ const Filter = (props) => {
           {props.color.length === filterInitialValues.color.length ? (
             <select
               name="color"
-              className="text-sm text-gray-700 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               onChange={props.handleColor}
             >
               <option hidden></option>
@@ -258,7 +258,7 @@ const Filter = (props) => {
           ) : (
             <select
               name="color"
-              className="text-sm text-gray-700 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               onChange={props.handleColor}
             >
               <option hidden></option>
@@ -583,7 +583,6 @@ const Filter = (props) => {
                 </div> */}
 
           <div className="flex mt-8">
-            
             <button // TODO: ログインしてなかったら遷移させたい
               type="submit"
               className="mx-auto whitespace-nowrap focus:outline-none text-white text-base font-semibold py-2 px-5 rounded-md bg-gray-400 block w-44 hover:opacity-90 hover:shadow-lg"

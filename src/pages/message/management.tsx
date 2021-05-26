@@ -164,14 +164,30 @@ const management = () => {
                           <div className="mx-2 my-6 rounded-r-md rounded-l-full shadow border-gray-500 cursor-pointer">
                             <div className="flex">
                               <div>
-                                <img
-                                  src={myPostChatroom.sendUserAvatar}
-                                  className="h-16 w-16 rounded-full mr-3 block object-cover"
-                                />
+                                {myPostChatroom.deletedAccount === true ? (
+                                  <img
+                                    src={myPostChatroom.sendUserAvatar}
+                                    className="h-16 w-16 rounded-full mr-3 block object-cover hover:opacity-80"
+                                  />
+                                ) : (
+                                  <Link
+                                    href={{
+                                      pathname: "/profile",
+                                      query: {
+                                        uid: myPostChatroom.sendUserID,
+                                      },
+                                    }}
+                                  >
+                                    <img
+                                      src={myPostChatroom.sendUserAvatar}
+                                      className="h-16 w-16 rounded-full mr-3 block object-cover hover:opacity-80"
+                                    />
+                                  </Link>
+                                )}
                               </div>
                               <div className="px-3 py-1 max-w-3xl w-full">
                                 <div className="flex">
-                                  <div className="text-gray-900 mr-2 whitespace-nowrap">
+                                  <div className="text-gray-900 mr-2 whitespace-nowrap ">
                                     {myPostChatroom.sendUserName}
                                     <span className="text-gray-500 text-xs ml-1">{`(${myPostChatroom.messageCount})`}</span>
                                   </div>

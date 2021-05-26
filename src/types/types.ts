@@ -25,4 +25,6 @@ export type Post = {
   messageUpdatedAt: string;
   latestMessage: string;
   clientUserID: string;
+  ratingCompleted: boolean;
+  deletedAccount: boolean;
 };

@@ -30,6 +30,7 @@ const SignUp: React.FC = () => {
               good: 0,
               bad: 0,
               likePostIDs: [],
+              deletedAccount: false,
             });
 
             await db
