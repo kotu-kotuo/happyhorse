@@ -40,7 +40,6 @@ const passwordReset = () => {
                         パスワード再設定用のメールアドレス
                       </p>
                       <input
-                        id="email-address"
                         type="email"
                         autoComplete="email"
                         required
@@ -84,9 +83,9 @@ const passwordReset = () => {
                   ご入力されたメールアドレスにパスワード再設定用のメールをお送りしました。
                 </p>
                 <p className="text-gray-900 text-center">
-                    そちらのメールからパスワードの再設定をお願いします。
+                  そちらのメールからパスワードの再設定をお願いします。
                 </p>
-                  <img src="/undraw_ice_cream_s2rh.svg" className="mt-10"/>
+                <img src="/undraw_ice_cream_s2rh.svg" className="mt-10" />
               </>
             )}
           </div>
