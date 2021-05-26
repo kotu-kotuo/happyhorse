@@ -156,7 +156,7 @@ const SignUp: React.FC = () => {
               </button>
             </div>
             <div className="flex items-center justify-end">
-              <div className="text-sm">
+              <div className="text-xs">
                 <Link href="/login">
                   <a className="font-medium text-indigo-600 hover:text-indigo-500">
                     ログインはこちら

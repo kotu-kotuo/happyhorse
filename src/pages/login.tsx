@@ -90,7 +90,7 @@ const Login: React.FC = () => {
             </div>
             <div className="flex items-center justify-between">
               <Link href="/passwordReset">
-                <div className="font-medium text-indigo-600 hover:text-indigo-500 text-xs">
+                <div className="font-medium text-indigo-600 hover:text-indigo-500 text-xs cursor-pointer">
                   パスワードを忘れた場合
                 </div>
               </Link>
