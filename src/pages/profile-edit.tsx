@@ -3,7 +3,6 @@ import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { storage, db } from "../utils/firebase";
-import firebase from "firebase/app";
 
 const ProfileEdit = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -31,117 +30,100 @@ const ProfileEdit = () => {
         await storage
           .ref(`images/${currentUser.uid}/avatar/`)
           .put(image)
-          .on(
-            firebase.storage.TaskEvent.STATE_CHANGED,
-            () => {},
-            (error) => {
-              console.log(error.message);
-            },
-            () => {
-              storage
-                .ref(`images/${currentUser.uid}/avatar/`)
-                .getDownloadURL()
-                .then(async (url) => {
-                  await db
-                    .collection("users")
-                    .doc(`${currentUser.uid}`)
-                    .update({
-                      avatar: url,
-                    });
-
-                  await db
-                    .collection("users")
-                    .doc(`${currentUser.uid}`)
-                    .collection("posts")
-                    .get()
-                    .then(async (snapshot) => {
-                      await Promise.all(
-                        snapshot.docs.map((doc) => {
-                          doc.ref.update({ avatar: url });
-                        })
-                      );
-                    });
-
-                  await db
-                    .collectionGroup("chatrooms")
-                    .where("sendUserID", "==", currentUser.uid)
-                    .get()
-                    .then(
-                      async (snapshot) =>
-                        await Promise.all(
-                          snapshot.docs.map((doc) =>
-                            doc.ref.update({ sendUserAvatar: url })
-                          )
-                        )
-                    );
-
-                  await db
-                    .collectionGroup("messages")
-                    .where("userID", "==", currentUser.uid)
-                    .get()
-                    .then((snapshot) =>
-                      snapshot.docs.map((doc) =>
-                        doc.ref.update({
-                          avatar: url,
-                        })
-                      )
-                    );
-
-                  await db
-                    .collectionGroup("reviews")
-                    .where("reviewerID", "==", currentUser.uid)
-                    .get()
-                    .then(
-                      async (snapshot) =>
-                        await Promise.all(
-                          snapshot.docs.map((doc) =>
-                            doc.ref.update({
-                              reviewerAvatar: url,
-                            })
-                          )
-                        )
-                    );
-
-                  await db
-                    .collectionGroup("reviewsOnHold")
-                    .where("reviewerID", "==", currentUser.uid)
-                    .get()
-                    .then(
-                      async (snapshot) =>
-                        await Promise.all(
-                          snapshot.docs.map((doc) =>
-                            doc.ref.update({
-                              reviewerAvatar: url,
-                            })
-                          )
-                        )
-                    );
+          .then(async () => {
+            await storage
+              .ref(`images/${currentUser.uid}/avatar/`)
+              .getDownloadURL()
+              .then(async (url) => {
+                await db.collection("users").doc(`${currentUser.uid}`).update({
+                  avatar: url,
                 });
-            }
-          );
+
+                await db
+                  .collection("users")
+                  .doc(`${currentUser.uid}`)
+                  .collection("posts")
+                  .get()
+                  .then(async (snapshot) => {
+                    await Promise.all(
+                      snapshot.docs.map((doc) => {
+                        doc.ref.update({ avatar: url });
+                      })
+                    );
+                  });
+
+                await db
+                  .collectionGroup("chatrooms")
+                  .where("sendUserID", "==", currentUser.uid)
+                  .get()
+                  .then(
+                    async (snapshot) =>
+                      await Promise.all(
+                        snapshot.docs.map((doc) =>
+                          doc.ref.update({ sendUserAvatar: url })
+                        )
+                      )
+                  );
+
+                await db
+                  .collectionGroup("messages")
+                  .where("userID", "==", currentUser.uid)
+                  .get()
+                  .then((snapshot) =>
+                    snapshot.docs.map((doc) =>
+                      doc.ref.update({
+                        avatar: url,
+                      })
+                    )
+                  );
+
+                await db
+                  .collectionGroup("reviews")
+                  .where("reviewerID", "==", currentUser.uid)
+                  .get()
+                  .then(
+                    async (snapshot) =>
+                      await Promise.all(
+                        snapshot.docs.map((doc) =>
+                          doc.ref.update({
+                            reviewerAvatar: url,
+                          })
+                        )
+                      )
+                  );
+
+                await db
+                  .collectionGroup("reviewsOnHold")
+                  .where("reviewerID", "==", currentUser.uid)
+                  .get()
+                  .then(
+                    async (snapshot) =>
+                      await Promise.all(
+                        snapshot.docs.map((doc) =>
+                          doc.ref.update({
+                            reviewerAvatar: url,
+                          })
+                        )
+                      )
+                  );
+              });
+          });
       }
 
       if (cover) {
-        const uploadTask = storage
+        await storage
           .ref(`images/${currentUser.uid}/cover/`)
-          .put(cover);
-        await uploadTask.on(
-          firebase.storage.TaskEvent.STATE_CHANGED,
-          () => {},
-          (error) => {
-            console.log(error.message);
-          },
-          () => {
-            storage
+          .put(cover)
+          .then(async () => {
+            await storage
               .ref(`images/${currentUser.uid}/cover/`)
               .getDownloadURL()
-              .then((url) => {
-                db.collection("users").doc(`${currentUser.uid}`).update({
+              .then(async (url) => {
+                await db.collection("users").doc(`${currentUser.uid}`).update({
                   cover: url,
                 });
               });
-          }
-        );
+          });
       }
 
       if (username) {
@@ -163,7 +145,7 @@ const ProfileEdit = () => {
                   })
                 )
               )
-        );
+          );
 
         await db
           .collectionGroup("chatrooms")
@@ -219,7 +201,6 @@ const ProfileEdit = () => {
                 )
               )
           );
-
       }
 
       if (profileText) {
@@ -247,7 +228,7 @@ const ProfileEdit = () => {
 
   return (
     <Layout title="profile-edit">
-      {currentUser && (
+      {currentUser && user && (
         <div className="my-20 px-2">
           <form className="mx-auto max-w-2xl" onSubmit={editProfile}>
             <div className="text-xs text-gray-500 mb-2 ml-1">アバター画像</div>

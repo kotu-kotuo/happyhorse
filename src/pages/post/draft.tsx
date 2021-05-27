@@ -228,6 +228,8 @@ const draft = () => {
               messageUpdatedAt: "",
               latestMessage: "",
               clientUserID: "",
+              ratingCompleted: false,
+              deletedAccount:false,
             });
         };
 

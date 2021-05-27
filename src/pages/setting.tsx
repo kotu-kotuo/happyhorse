@@ -23,7 +23,7 @@ const setting = () => {
 
       db.collectionGroup("posts")
         .where("clientUserID", "==", currentUser.uid)
-        .where("isAvairable", "==", true)
+        .where("isAvairable", "==", true) //TODO:ratingCompleted
         .get()
         .then((snapshot) =>
           setDuringDealingPosts(
@@ -34,7 +34,7 @@ const setting = () => {
   }, [currentUser]);
   const deleteAccount = async () => {
     const filterResult = myPosts.filter(
-      (post) => post.clientUserID && post.isAvairable === true
+      (post) => post.clientUserID && post.isAvairable === true //TODO:ratingCompleted
     );
     console.log(filterResult.length !== 0);
     console.log(duringDealingPosts.length !== 0);
@@ -48,7 +48,7 @@ const setting = () => {
     if (result) {
       await db.collection("users").doc(`${currentUser.uid}`).update({
         username: "退会ユーザー",
-        avatar: "/avatar(1).png",
+        avatar: "/avatar(2).png",
         cover: "/cover1.png",
         profileText: "",
         deletedAccount: true,
@@ -63,7 +63,7 @@ const setting = () => {
           snapshot.docs.map((doc) =>
             doc.ref.update({
               username: "退会ユーザー",
-              avatar: "/avatar(1).png",
+              avatar: "/avatar(2).png",
               deletedAccount: true,
             })
           )
@@ -77,7 +77,7 @@ const setting = () => {
           snapshot.docs.map((doc) =>
             doc.ref.update({
               sendUserName: "退会ユーザー",
-              sendUserAvatar: "/avatar(1).png",
+              sendUserAvatar: "/avatar(2).png",
               deletedAccount: true,
             })
           )
@@ -91,7 +91,7 @@ const setting = () => {
           snapshot.docs.map((doc) =>
             doc.ref.update({
               username: "退会ユーザー",
-              avatar: "/avatar(1).png",
+              avatar: "/avatar(2).png",
               deletedAccount: true,
             })
           )
@@ -105,7 +105,7 @@ const setting = () => {
           snapshot.docs.map((doc) =>
             doc.ref.update({
               reviewerName: "退会ユーザー",
-              reviewerAvatar: "/avatar(1).png",
+              reviewerAvatar: "/avatar(2).png",
               deletedAccount: true,
             })
           )
@@ -150,6 +150,8 @@ const setting = () => {
     }
 
     await auth.currentUser.delete();
+
+    await alert("退会が完了しました。\n今までご使用いただきありがとうございました！")
   };
   return (
     <div>

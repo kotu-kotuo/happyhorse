@@ -94,7 +94,7 @@ const messages = () => {
   }, [router.query.uid, router.query.pid, router.query.cid]);
 
   useEffect(() => {
-    if (currentUser && chatroom) {
+    if (currentUser && chatroom !== null) {
       if (currentUser.uid === chatroom.postUserID) {
         db.collection("users")
           .doc(`${chatroom.sendUserID}`)
@@ -112,10 +112,10 @@ const messages = () => {
           );
       }
     }
-    if (currentUser && !chatroom) {
-      setMessageReceiver(setUserState(currentUser));
+    if (user && chatroom === null) {
+      setMessageReceiver(user);
     }
-  }, [currentUser, chatroom]);
+  }, [currentUser, chatroom, user]);
 
   useEffect(() => {
     if (post.userID && post.postID && router.query.cid) {
@@ -1376,7 +1376,8 @@ const messages = () => {
   return (
     <div>
       {console.log(messageReceiver)}
-      {console.log(reviewText)}
+      {console.log(chatroom)}
+
       <div>
         <Div100vh className="relative">
           <Layout title="messages">

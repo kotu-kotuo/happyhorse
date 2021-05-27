@@ -189,11 +189,14 @@ const Show = () => {
                             return -1;
                           }
                         })
-                        .map((feature, index) => (
-                          <div key={index} className="mr-5">
-                            {feature}
-                          </div>
-                        ))}
+                        .map(
+                          (feature, index) =>
+                            feature !== "empty" && (
+                              <div key={index} className="mr-5">
+                                {feature}
+                              </div>
+                            )
+                        )}
                     </div>
                   </div>
                 </div>
