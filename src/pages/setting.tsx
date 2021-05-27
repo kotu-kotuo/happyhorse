@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { Layout } from "../components/organisms/Layout";
 import { db, auth } from "../utils/firebase";
 import { PageTitle } from "../components/atoms/Atoms";
@@ -11,6 +11,7 @@ const setting = () => {
   const [myPosts, setMyPosts] = useState([]);
   const [duringDealingPosts, setDuringDealingPosts] = useState([]);
   const { currentUser } = useContext(AuthContext);
+  const router = useRouter();
   useEffect(() => {
     if (currentUser) {
       db.collection("users")
@@ -127,12 +128,12 @@ const setting = () => {
         .get()
         .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
 
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .collection("reviews")
-        .get()
-        .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+      // await db                messages.tsxの評価表示切り替えでで不具合が出るため
+      //   .collection("users")
+      //   .doc(`${currentUser.uid}`)
+      //   .collection("reviews")
+      //   .get()
+      //   .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
 
       await db
         .collection("users")
@@ -149,9 +150,16 @@ const setting = () => {
         .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
     }
 
-    await auth.currentUser.delete();
+    // const authuser = auth.currentUser
+    // const credential =
+    // authuser.reauthenticateWithCredential(authuser.email,authuser.pass).then(() => { })
+    await auth.currentUser.delete().catch((error) => alert(error.message));
 
-    await alert("退会が完了しました。\n今までご使用いただきありがとうございました！")
+    await alert(
+      "退会が完了しました。\n今までご使用いただきありがとうございました！"
+    );
+
+    await router.push("/");
   };
   return (
     <div>
