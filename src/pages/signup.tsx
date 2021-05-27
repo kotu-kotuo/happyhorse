@@ -24,12 +24,13 @@ const SignUp: React.FC = () => {
             await db.collection("users").doc(`${result.user.uid}`).set({
               id: result.user.uid,
               username: username,
-              avatar: "/avatar(1).png",
-              cover: "/cover1.jpg",
+              avatar: "/avatar(2).png",
+              cover: "/cover1.png",
               profileText: "",
               good: 0,
               bad: 0,
               likePostIDs: [],
+              deletedAccount: false,
             });
 
             await db
@@ -155,7 +156,7 @@ const SignUp: React.FC = () => {
               </button>
             </div>
             <div className="flex items-center justify-end">
-              <div className="text-sm">
+              <div className="text-xs">
                 <Link href="/login">
                   <a className="font-medium text-indigo-600 hover:text-indigo-500">
                     ログインはこちら

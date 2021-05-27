@@ -75,7 +75,7 @@ const Show = () => {
                   key={index}
                   className="mt-10 outline-none pb-image w-full h-0 relative"
                 >
-                  {currentUser.uid === post.userID && (
+                  {currentUser.uid === post.userID && post.isAvairable && (
                     <div
                       className="absolute top-3 right-4 z-50 bg-white px-3.5 py-1.5 rounded opacity-50 cursor-pointer hover:bg-mainGreen hover:text-white hover:opacity-90 ease-in-out duration-300"
                       onClick={() => toPostEdit(post)}
@@ -189,11 +189,14 @@ const Show = () => {
                             return -1;
                           }
                         })
-                        .map((feature, index) => (
-                          <div key={index} className="mr-5">
-                            {feature}
-                          </div>
-                        ))}
+                        .map(
+                          (feature, index) =>
+                            feature !== "empty" && (
+                              <div key={index} className="mr-5">
+                                {feature}
+                              </div>
+                            )
+                        )}
                     </div>
                   </div>
                 </div>
@@ -286,22 +289,33 @@ const Show = () => {
                 </div>
                 <div className="border-b shadow-xs"></div>
                 <p className="mt-4 mb-3 ml-8 text-gray-900">掲載者</p>
-                <Link
-                  href={{
-                    pathname: "/profile",
-                    query: {
-                      uid: post.userID,
-                    },
-                  }}
-                >
-                  <div className="flex items-center ml-8  cursor-pointer hover:opacity-80">
+
+                {post.deletedAccount === true ? (
+                  <div className="flex items-center ml-8">
                     <img
                       src={post.avatar}
                       className="object-cover rounded-full w-12 h-12"
                     />
                     <p className="text-gray-900 ml-3">{post.username}</p>
                   </div>
-                </Link>
+                ) : (
+                  <Link
+                    href={{
+                      pathname: "/profile",
+                      query: {
+                        uid: post.userID,
+                      },
+                    }}
+                  >
+                    <div className="flex items-center ml-8  cursor-pointer hover:opacity-80">
+                      <img
+                        src={post.avatar}
+                        className="object-cover rounded-full w-12 h-12"
+                      />
+                      <p className="text-gray-900 ml-3">{post.username}</p>
+                    </div>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

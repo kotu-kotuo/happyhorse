@@ -94,7 +94,7 @@ const messages = () => {
   }, [router.query.uid, router.query.pid, router.query.cid]);
 
   useEffect(() => {
-    if (currentUser && chatroom) {
+    if (currentUser && chatroom !== null) {
       if (currentUser.uid === chatroom.postUserID) {
         db.collection("users")
           .doc(`${chatroom.sendUserID}`)
@@ -112,7 +112,10 @@ const messages = () => {
           );
       }
     }
-  }, [currentUser, chatroom]);
+    if (user && chatroom === null) {
+      setMessageReceiver(user);
+    }
+  }, [currentUser, chatroom, user]);
 
   useEffect(() => {
     if (post.userID && post.postID && router.query.cid) {
@@ -255,6 +258,7 @@ const messages = () => {
         .update({
           messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           latestMessage: "評価完了しました",
+          ratingCompleted: true,
         });
 
       db.collection("users")
@@ -1372,7 +1376,8 @@ const messages = () => {
   return (
     <div>
       {console.log(messageReceiver)}
-      {console.log(reviewText)}
+      {console.log(chatroom)}
+
       <div>
         <Div100vh className="relative">
           <Layout title="messages">
@@ -1521,15 +1526,30 @@ const messages = () => {
                                           setIsOpenModal={setIsOpenMyModal}
                                         />
                                       )}
-
                                     </>
                                   )}
                                 </div>
                               </div>
-                              <img
-                                src={message.avatar}
-                                className="h-10 w-10 rounded-full bg-gray-300 ml-3"
-                              />
+                              {message.deletedAccount === true ? (
+                                <img
+                                  src={message.avatar}
+                                  className="h-10 w-10 rounded-full bg-gray-300 ml-3 object-cover"
+                                />
+                              ) : (
+                                <Link
+                                  href={{
+                                    pathname: "/profile",
+                                    query: {
+                                      uid: message.userID,
+                                    },
+                                  }}
+                                >
+                                  <img
+                                    src={message.avatar}
+                                    className="h-10 w-10 rounded-full bg-gray-300 ml-3 object-cover cursor-pointer hover:opacity-80"
+                                  />
+                                </Link>
+                              )}
                             </div>
                           </div>
                         ) : (
@@ -1540,10 +1560,26 @@ const messages = () => {
                               </div>
                             )}
                             <div className="flex w-full mt-2 space-x-3 max-w-2xl p-4  targetMessage">
-                              <img
-                                src={message.avatar}
-                                className="h-10 w-10 rounded-full bg-gray-300 ml-3"
-                              />
+                              {message.deletedAccount === true ? (
+                                <img
+                                  src={message.avatar}
+                                  className="h-10 w-10 rounded-full ml-3 object-cover"
+                                />
+                              ) : (
+                                <Link
+                                  href={{
+                                    pathname: "/profile",
+                                    query: {
+                                      uid: message.userID,
+                                    },
+                                  }}
+                                >
+                                  <img
+                                    src={message.avatar}
+                                    className="h-10 w-10 rounded-full ml-3 object-cover cursor-pointer hover:opacity-80"
+                                  />
+                                </Link>
+                              )}
                               <div className="flex">
                                 <div>
                                   <p className="text-gray-500 text-xs mr-auto text-left">
@@ -1568,7 +1604,6 @@ const messages = () => {
                                           setIsOpenModal={setIsOpenYourModal}
                                         />
                                       )}
-
                                     </>
                                   )}
                                 </div>

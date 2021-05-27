@@ -25,12 +25,14 @@ export const setPostStates = (data) => {
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
       likeUserIDs: data.likeUserIDs,
-      isAvairable: data.isAvairable,
+      isAvairable: data.isAvairable, //TODO:avairableじゃなくて available
       pv: data.pv,
       sendMessageUserIDs: data.sendMessageUserIDs,
       messageUpdatedAt: data.messageUpdatedAt,
       latestMessage: data.latestMessage,
       clientUserID: data.clientUserID,
+      ratingCompleted: data.ratingCompleted,
+      deletedAccount: data.deletedAccount,
     };
 };
 
@@ -46,6 +48,7 @@ export const setChatroomStates = (data) => ({
   messageCount: data.messageCount,
   createdAt: data.createdAt,
   messageUpdatedAt: data.messageUpdatedAt,
+  deletedAccount:data.deletedAccount,
 });
 
 export const setMessageStates = (data) => ({
@@ -64,7 +67,8 @@ export const setMessageStates = (data) => ({
   dealInterruption: data.dealInterruption,
   dealCompleted: data.dealCompleted,
   pleaseRate: data.pleaseRate,
-  rateCompleted: data.rateCompleted,
+  rateCompleted: data.rateCompleted, //TODO:ratingCompleted にしたい
+  deletedAccount: data.deletedAccount,
 });
 
 export const setReviewStates = (data) => ({
@@ -78,6 +82,7 @@ export const setReviewStates = (data) => ({
   rating: data.rating,
   reviewText: data.reviewText,
   createdAt: data.createdAt,
+  deletedAccount: data.deletedAccount,
 });
 
 export const setNotificationStates = (data) => ({
@@ -105,4 +110,5 @@ export const setUserState = (data) => ({
   good: data.good,
   bad: data.bad,
   likePostIDs: data.likePostIDs,
+  deletedAccount: data.deletedAccount,
 });

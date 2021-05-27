@@ -39,7 +39,7 @@ const ProfileContent = (props) => {
                   <StarRatings
                     numberOfStars={5}
                     rating={
-                      (user.good * 5 + user.bad * 1) / (user.good + user.bad)
+                      (user.good * 5 + user.bad * 1) / (user.good + user.bad) || 0
                     }
                     starRatedColor="#FFD400"
                     name="rating"

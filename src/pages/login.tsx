@@ -88,14 +88,18 @@ const Login: React.FC = () => {
                 ログイン
               </button>
             </div>
-            <div className="flex items-center justify-end">
-              <div className="text-sm">
-                <Link href="/signup">
-                  <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                    新規登録はこちら
-                  </a>
-                </Link>
-              </div>
+            <div className="flex items-center justify-between">
+              <Link href="/passwordReset">
+                <div className="font-medium text-indigo-600 hover:text-indigo-500 text-xs cursor-pointer">
+                  パスワードを忘れた場合
+                </div>
+              </Link>
+
+              <Link href="/signup">
+                <a className="font-medium text-xs text-indigo-600 hover:text-indigo-500">
+                  新規登録はこちら
+                </a>
+              </Link>
             </div>
           </form>
         </div>

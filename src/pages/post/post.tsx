@@ -135,6 +135,8 @@ const Post: React.FC = () => {
             messageUpdatedAt: "",
             latestMessage: "",
             clientUserID: "",
+            ratingCompleted: false,
+            deletedAccount:false,
           });
       };
 
@@ -148,7 +150,7 @@ const Post: React.FC = () => {
       await router.push("/");
     } else {
       if (
-        images &&
+        images.length !== 0 &&
         postText &&
         horseName &&
         category &&

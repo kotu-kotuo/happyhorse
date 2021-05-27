@@ -124,6 +124,8 @@ export const clickHeart = async (
             messageUpdatedAt: snapshot.data().messageUpdatedAt,
             latestMessage: snapshot.data().latestMessage,
             clientUserID: snapshot.data().clientUserID,
+            // ratingCompleted: snapshot.data().ratingCompleted,  TODO: ratingCompleted
+            // deletedAccount: snapshot.data().deletedAccount,
             likedAt: firebase.firestore.FieldValue.serverTimestamp(),
           });
 

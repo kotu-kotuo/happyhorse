@@ -139,6 +139,8 @@ export const postInitialValues = {
   messageUpdatedAt: "",
   latestMessage: "",
   clientUserID: "",
+  ratingCompleted: null,
+  deletedAccount: null,
 };
 
 export const chatroomInitialValues = {
@@ -153,4 +155,5 @@ export const chatroomInitialValues = {
   messageCount: null,
   createdAt: "",
   messageUpdatedAt: "",
+  deletedAccount: null,
 };

@@ -16,7 +16,6 @@ const Posts = (props) => {
     router,
     db,
     notifications,
-
   } = props;
 
   return (
@@ -95,14 +94,7 @@ const Posts = (props) => {
           </Link>
           <p className="index-postText">{post.postText}</p>
           <div className="flex justify-between items-center mt-6">
-            <Link
-              href={{
-                pathname: "/profile",
-                query: {
-                  uid: post.userID,
-                },
-              }}
-            >
+            {post.deletedAccount === true ? (
               <div className="flex items-center ml-1 cursor-pointer hover:opacity-80">
                 <img
                   src={post.avatar}
@@ -110,7 +102,24 @@ const Posts = (props) => {
                 />
                 <p className="text-gray-900 ml-3">{post.username}</p>
               </div>
-            </Link>
+            ) : (
+              <Link
+                href={{
+                  pathname: "/profile",
+                  query: {
+                    uid: post.userID,
+                  },
+                }}
+              >
+                <div className="flex items-center ml-1 cursor-pointer hover:opacity-80">
+                  <img
+                    src={post.avatar}
+                    className="object-cover  rounded-full w-12 h-12"
+                  />
+                  <p className="text-gray-900 ml-3">{post.username}</p>
+                </div>
+              </Link>
+            )}
             <div
               className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
               onClick={(e) => {

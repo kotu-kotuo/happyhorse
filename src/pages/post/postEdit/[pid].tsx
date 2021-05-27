@@ -206,6 +206,10 @@ const postEdit = () => {
 
   const deletePost = async (e) => {
     e.preventDefault();
+    if (post.clientUserID) {
+      alert("取引の途中で記事は削除できません。");
+      return;
+    }
     const result = window.confirm("本当に削除しますか？");
     if (result) {
       await Promise.all(
