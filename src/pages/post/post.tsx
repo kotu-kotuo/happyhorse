@@ -8,7 +8,7 @@ import firebase from "firebase/app";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
 import { filterInitialValues } from "../../utils/initialValues";
-import { generateFileName } from "../../functions/functions";
+import { generateFileName } from "../../functions/utils";
 import { RequiredMark } from "../../components/atoms/Atoms";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 

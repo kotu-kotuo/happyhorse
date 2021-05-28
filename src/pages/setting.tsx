@@ -1,17 +1,21 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
-import { useRouter } from "next/router";
 import { Layout } from "../components/organisms/Layout";
-import { db, auth } from "../utils/firebase";
+import { db } from "../utils/firebase";
 import { PageTitle } from "../components/atoms/Atoms";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { setPostStates } from "../utils/states";
+import { useRouter } from "next/router";
+import PasswordModal from "../components/molecules/PasswordModal";
 
 const setting = () => {
   const [myPosts, setMyPosts] = useState([]);
   const [duringDealingPosts, setDuringDealingPosts] = useState([]);
+  const [password, setPassword] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const router = useRouter();
+
   useEffect(() => {
     if (currentUser) {
       db.collection("users")
@@ -33,6 +37,7 @@ const setting = () => {
         );
     }
   }, [currentUser]);
+
   const deleteAccount = async () => {
     const filterResult = myPosts.filter(
       (post) => post.clientUserID && post.isAvairable === true //TODO:ratingCompleted
@@ -47,123 +52,28 @@ const setting = () => {
       "本当に退会しますか？\n削除したユーザーデータは二度と復元することはできません。\n"
     );
     if (result) {
-      await db.collection("users").doc(`${currentUser.uid}`).update({
-        username: "退会ユーザー",
-        avatar: "/avatar(2).png",
-        cover: "/cover1.png",
-        profileText: "",
-        deletedAccount: true,
-      });
-
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .collection("posts")
-        .get()
-        .then((snapshot) =>
-          snapshot.docs.map((doc) =>
-            doc.ref.update({
-              username: "退会ユーザー",
-              avatar: "/avatar(2).png",
-              deletedAccount: true,
-            })
-          )
-        );
-
-      await db
-        .collectionGroup("chatrooms")
-        .where("sendUserID", "==", currentUser.uid)
-        .get()
-        .then((snapshot) =>
-          snapshot.docs.map((doc) =>
-            doc.ref.update({
-              sendUserName: "退会ユーザー",
-              sendUserAvatar: "/avatar(2).png",
-              deletedAccount: true,
-            })
-          )
-        );
-
-      await db
-        .collectionGroup("messages")
-        .where("userID", "==", currentUser.uid)
-        .get()
-        .then((snapshot) =>
-          snapshot.docs.map((doc) =>
-            doc.ref.update({
-              username: "退会ユーザー",
-              avatar: "/avatar(2).png",
-              deletedAccount: true,
-            })
-          )
-        );
-
-      await db
-        .collectionGroup("reviews")
-        .where("reviewerID", "==", currentUser.uid)
-        .get()
-        .then((snapshot) =>
-          snapshot.docs.map((doc) =>
-            doc.ref.update({
-              reviewerName: "退会ユーザー",
-              reviewerAvatar: "/avatar(2).png",
-              deletedAccount: true,
-            })
-          )
-        );
-
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .collection("posts")
-        .where("userID", "==", currentUser.uid)
-        .where("clientUserID", "==", "")
-        .get()
-        .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .collection("likePosts")
-        .get()
-        .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
-      // await db                messages.tsxの評価表示切り替えでで不具合が出るため
-      //   .collection("users")
-      //   .doc(`${currentUser.uid}`)
-      //   .collection("reviews")
-      //   .get()
-      //   .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .collection("notifications")
-        .get()
-        .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .collection("drafts")
-        .get()
-        .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+      setIsModalOpen(true);
     }
-
-    // const authuser = auth.currentUser
-    // const credential =
-    // authuser.reauthenticateWithCredential(authuser.email,authuser.pass).then(() => { })
-    await auth.currentUser.delete().catch((error) => alert(error.message));
-
-    await alert(
-      "退会が完了しました。\n今までご使用いただきありがとうございました！"
-    );
-
-    await router.push("/");
   };
+
   return (
     <div>
       <Layout title="setting">
+        {isModalOpen && (
+          <div className="bg-gray-500 bg-opacity-70 z-30 fixed top-0 bottom-0 left-0 right-0">
+            <div className="w-screen h-screen px-2">
+              <div className="flex justify-center items-center bg-white px-2 py-8 mt-24 max-w-md mx-auto rounded-lg shadow-md ">
+                {/* モーダルが開いてパスワードを入力するとデータ削除 */}
+                <PasswordModal
+                  setPassword={setPassword}
+                  password={password}
+                  currentUser={currentUser}
+                  router={router}
+                />
+              </div>
+            </div>
+          </div>
+        )}
         <div className="max-w-2xl mx-auto">
           <PageTitle title="設定" />
           <ul className="mt-12">

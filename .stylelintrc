@@ -5,6 +5,7 @@
       true,
       {
         "ignoreAtRules": [
+          "extends",
           "tailwind",
           "apply",
           "variants",

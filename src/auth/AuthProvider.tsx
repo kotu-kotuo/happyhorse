@@ -1,4 +1,3 @@
-import firebase from "firebase/app";
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../utils/firebase";
 import { setNotificationStates } from "../utils/states";

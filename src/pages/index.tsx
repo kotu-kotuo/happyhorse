@@ -10,7 +10,8 @@ import Filter from "../components/organisms/Filter";
 import { filterInitialValues, postInitialValues } from "../utils/initialValues";
 import * as Types from "../types/types";
 import { setPostStates } from "../utils/states";
-import { clickHeart } from "../functions/functions";
+import { clickHeart } from "../functions/utils";
+import { useWindowDimensions } from "../hooks/windowSize";
 
 export default function Index() {
   const { currentUser, user, setUser, notifications } = useContext(AuthContext);
@@ -314,12 +315,15 @@ export default function Index() {
     setArea(filterInitialValues.area);
     setFeature(filterInitialValues.features);
   };
+  const { width, height } = useWindowDimensions();
+  console.log(width);
+  console.log(height);
 
   return (
     <div>
       {console.log(feature)}
       <Layout title="index">
-        <div className="flex mt-24 mb-20">
+        <div className="flex mt-24 mb-20 px-3">
           <div className="w-1/3 pr-8">
             <Filter
               filterPost={filterPost}

@@ -21,7 +21,7 @@ import {
   setReviewStates,
   setUserState,
 } from "../../utils/states";
-import { generateFileName } from "../../functions/functions";
+import { generateFileName } from "../../functions/utils";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 
