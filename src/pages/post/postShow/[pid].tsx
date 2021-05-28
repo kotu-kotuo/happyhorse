@@ -13,7 +13,7 @@ import { IoChevronForwardCircleOutline } from "react-icons/io5";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates } from "../../../utils/states";
 import { Post } from "../../../types/types";
-import { clickHeart } from "../../../functions/functions";
+import { clickHeart } from "../../../functions/utils";
 
 const Show = () => {
   const router = useRouter();
@@ -238,6 +238,8 @@ const Show = () => {
                       メッセージ管理画面へ
                     </button>
                   </Link>
+                ) : post.deletedAccount === true ? (
+                  <div></div>
                 ) : (
                   <Link
                     href={{

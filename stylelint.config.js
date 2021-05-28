@@ -5,11 +5,12 @@ module.exports = {
       true,
       {
         ignoreAtRules: [
+          "extends",
           "tailwind",
           "apply",
           "variants",
           "responsive",
-          "screen"
+          "screen",
         ],
       },
     ],

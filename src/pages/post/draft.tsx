@@ -10,7 +10,7 @@ import fetch from "node-fetch";
 import { filterInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
 import { RequiredMark } from "../../components/atoms/Atoms";
-import { generateFileName } from "../../functions/functions";
+import { generateFileName } from "../../functions/utils";
 
 interface IMAGES {
   images: any;
