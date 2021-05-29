@@ -16,21 +16,22 @@ const Posts = (props) => {
     router,
     db,
     notifications,
+    width,
   } = props;
 
   return (
     <div>
       {posts.map((post) => (
-        <div key={post.postID} className="border-b border-gray-300 pb-6 mb-16">
+        <div key={post.postID} className="border-b border-gray-300 pb-6 mb-14 sm:mb-16">
           <div
             className="flex mb-5 z-0"
             data-id={post.postID}
             onClick={clickPost}
           >
-            <div className="w-2/3">
+            <div className="w-full md:w-2/3">
               <div className="pb-image w-full h-0 relative">
                 {!post.isAvairable && (
-                  <div className="absolute top-0 left-0 bg-gray-400 font-semibold text-white px-4 py-1 z-10">
+                  <div className="absolute top-0 left-0 bg-gray-400 font-semibold text-white px-3 py-0.5 z-10 rounded-br-md fontSize-base md:px-4 md:py-1">
                     SOLD OUT!
                   </div>
                 )}
@@ -40,67 +41,81 @@ const Posts = (props) => {
                 />
               </div>
             </div>
-            <div className="w-1/3">
-              <div className="pb-image w-full h-0 relative">
-                <img
-                  src={post.images[1] ? post.images[1] : "/no-image.png"}
-                  className="object-cover outline-none w-full h-full cursor-pointer absolute"
-                />
+            {width > 768 && (
+              <div className="w-1/3">
+                <div className="pb-image w-full h-0 relative">
+                  <img
+                    src={post.images[1] ? post.images[1] : "/no-image.png"}
+                    className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                  />
+                </div>
+                <div className="pb-image w-full h-0 relative">
+                  <img
+                    src={post.images[2] ? post.images[2] : "/no-image.png"}
+                    className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                  />
+                </div>
               </div>
-              <div className="pb-image w-full h-0 relative">
-                <img
-                  src={post.images[2] ? post.images[2] : "/no-image.png"}
-                  className="object-cover outline-none w-full h-full cursor-pointer absolute"
-                />
-              </div>
-            </div>
+            )}
           </div>
 
-          <div className="flex items-center ml-2">
+          <div className="flex items-center md:ml-2">
             {post.category === "障害馬" && (
-              <div className="border rounded-full border-red-700 text-red-700 text-sm px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-red-700 text-red-700 px-4 py-0.5  font-semibold">
                 {post.category}
               </div>
             )}
             {post.category === "馬場馬" && (
-              <div className="border rounded-full border-blue-900 text-blue-900 text-sm px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-blue-900 text-blue-900  px-4 py-0.5  font-semibold">
                 {post.category}
               </div>
             )}
             {post.category === "総合馬" && (
-              <div className="border rounded-full border-green-800 text-green-800 text-sm px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-green-800 text-green-800 px-4 py-0.5  font-semibold">
                 {post.category}
               </div>
             )}
             {post.category === "レクレーション" && (
-              <div className="border rounded-full border-yellow-300 text-yellow-300 text-sm px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-yellow-300 text-yellow-300 px-4 py-0.5  font-semibold">
                 {post.category}
               </div>
             )}
 
             <FaYenSign className="text-gray-400 text-xl ml-4 " />
-            <div className="text-gray-900 ml-1">{post.price}円</div>
+            <div className="fontSize-base text-gray-900 ml-1">
+              {post.price}円
+            </div>
 
-            <FaHorse className="text-gray-400 text-xl ml-6" />
-            <div className="text-gray-900 ml-2">{post.breed}</div>
+            <FaHorse className="text-gray-400 text-xl ml-6 hidden md:block" />
+            <div className="text-gray-900 ml-2 hidden md:block">
+              {post.breed}
+            </div>
 
             <FaMapMarkerAlt className="text-gray-400 text-xl ml-5 " />
-            <div className="text-gray-900 ml-1.5">{post.area}</div>
+            <div className="fontSize-base text-gray-900 ml-1.5">
+              {post.area}
+            </div>
           </div>
-          <Link href={`${post.postID}`}>
+          <Link href={`/post/postShow/${post.postID}`}>
             <div className="cursor-pointer hover:opacity-80">
-              <h2 className="index-title">{post.title}</h2>
+              <h2 className="fontSize-xl font-semibold text-gray-800 mt-3 mb-2 line-clamp-1md:my-3">
+                {post.title}
+              </h2>
             </div>
           </Link>
-          <p className="index-postText">{post.postText}</p>
-          <div className="flex justify-between items-center mt-6">
+          <p className="fontSize-sm text-gray-500 line-clamp-2 ">
+            {post.postText}
+          </p>
+          <div className="flex justify-between items-center mt-4 md:mt-6">
             {post.deletedAccount === true ? (
               <div className="flex items-center ml-1 cursor-pointer hover:opacity-80">
                 <img
                   src={post.avatar}
-                  className="object-cover  rounded-full w-12 h-12"
+                  className="object-cover rounded-full w-10 h-10 md:w-12 md:h-12"
                 />
-                <p className="text-gray-900 ml-3">{post.username}</p>
+                <p className="fontSize-base text-gray-900 ml-3">
+                  {post.username}
+                </p>
               </div>
             ) : (
               <Link
@@ -114,9 +129,11 @@ const Posts = (props) => {
                 <div className="flex items-center ml-1 cursor-pointer hover:opacity-80">
                   <img
                     src={post.avatar}
-                    className="object-cover  rounded-full w-12 h-12"
+                    className="object-cover rounded-full w-10 h-10 md:w-12 md:h-12"
                   />
-                  <p className="text-gray-900 ml-3">{post.username}</p>
+                  <p className="fontSize-base text-gray-900 ml-3">
+                    {post.username}
+                  </p>
                 </div>
               </Link>
             )}
@@ -140,7 +157,9 @@ const Posts = (props) => {
               ) : (
                 <FaRegHeart className="text-3xl text-gray-900" />
               )}
-              <p className="text-gray-900 ml-2">お気に入り</p>
+              <p className="text-gray-900 ml-2 hidden md:inline-block">
+                お気に入り
+              </p>
             </div>
           </div>
         </div>

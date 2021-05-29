@@ -8,7 +8,23 @@
 ===============================================*/
 
 .filterCheckText {
-  @apply font-normal text-sm text-gray-400 block w-full cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1;
+  @apply font-normal text-sm text-gray-400 inline-block cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1 mr-3 lg:w-full lg:block;
+}
+
+.fontSize-xl{
+@apply text-lg md:text-xl;
+}
+
+.fontSize-base {
+  @apply text-sm md:text-base;
+}
+
+.fontSize-sm {
+  @apply text-xs md:text-sm;
+}
+
+.container-base {
+  @apply mx-auto px-2 md:px-3;
 }
 
 /*==============================================
@@ -98,17 +114,6 @@
 # textの省略
 ===============================================*/
 
-.index-title {
-  font-size: 20px;
-  color: #1f2937;
-  font-weight: 600;
-  margin: 12px 0;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-}
-
 .index-postText {
   font-size: 14px;
   color: #6b7280;
@@ -139,6 +144,12 @@
   padding-left: 25px;
   color: rgba(55, 65, 81);
   z-index: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  .checklist label {
+    padding-left: 21px;
+  }
 }
 
 .checklist input[type="checkbox"] + label::after {
@@ -245,7 +256,7 @@
 /*==============================================
 # レビューの総数のスタイル
 ===============================================*/
-.reviewNumbersSize{
+.reviewNumbersSize {
   font-size: 0.9rem;
   line-height: 0.9rem;
 }
@@ -253,8 +264,7 @@
 /*==============================================
 # レビュー一覧の掲載タイトル
 ===============================================*/
-.reviewPostTitleText{
+.reviewPostTitleText {
   line-height: 0.8rem;
   font-size: 0.75rem;
-  
 }

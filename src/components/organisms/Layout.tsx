@@ -99,14 +99,12 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
 
       <header className="h-16 w-full border-b border-gray-100 shadow-sm">
         <nav className="flex items-center h-16 max-w-5xl mx-auto">
-          <div className="mr-auto pt-4">
+          <div className="mr-auto pt-2">
             <Link href="/">
               <a>
-                <Image
+                <img
                   src="/hh-logo2.png"
-                  className="object-cover cursor-pointer"
-                  width={250}
-                  height={50}
+                  className="object-cover cursor-pointer h-12 sm:h-12 sm:w-64"
                 />
               </a>
             </Link>
@@ -128,7 +126,10 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
 
             {currentUser && user && (
               <>
-                <div className="relative" onClick={(e) => e.stopPropagation()}>
+                <div
+                  className="relative hidden sm:block"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div
                     onClick={() => {
                       setIsOpenNotification(!isOpenNotification),
@@ -192,9 +193,8 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                   </div>
                 </div>
 
-                {console.log(isOpenNotification)}
                 <div
-                  className="mt-1 focus:outline-none relative"
+                  className="mt-1 focus:outline-none relative hidden sm:block"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <img
@@ -219,8 +219,8 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
                               <StarRatings
                                 numberOfStars={5}
                                 rating={
-                                  ((user.good * 5 + user.bad * 1) /
-                                  (user.good + user.bad)) || 0
+                                  (user.good * 5 + user.bad * 1) /
+                                    (user.good + user.bad) || 0
                                 }
                                 starRatedColor="#FFD400"
                                 name="rating"

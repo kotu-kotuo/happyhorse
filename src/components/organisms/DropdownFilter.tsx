@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 import { filterInitialValues } from "../../utils/initialValues";
 
-const Filter = (props) => {
+const DropdownFilter = (props) => {
   return (
     <div>
       <form onSubmit={props.filterPost}>
@@ -17,44 +17,40 @@ const Filter = (props) => {
             {props.category?.length === filterInitialValues.category.length ? (
               //filterInitialValuesを表示に反映させたくないので条件分岐
               <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.category.map((element) => (
-                    <>
-                      <input
-                        id={`${element}`}
-                        name="category"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        onChange={props.handleCategory}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </>
-                  ))}
-                </div>
+                {filterInitialValues.category.map((element) => (
+                  <>
+                    <input
+                      id={`${element}`}
+                      name="category"
+                      value={`${element}`}
+                      type="checkbox"
+                      className="hidden w-full"
+                      onChange={props.handleCategory}
+                    />
+                    <label htmlFor={`${element}`} className="filterCheckText">
+                      {`${element}`}
+                    </label>
+                  </>
+                ))}
               </>
             ) : (
               <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.category.map((element) => (
-                    <>
-                      <input
-                        id={`${element}`}
-                        name="category"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        checked={props.category.includes(`${element}`)}
-                        onChange={props.handleCategory}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </>
-                  ))}
-                </div>
+                {filterInitialValues.category.map((element) => (
+                  <>
+                    <input
+                      id={`${element}`}
+                      name="category"
+                      value={`${element}`}
+                      type="checkbox"
+                      className="hidden w-full"
+                      checked={props.category.includes(`${element}`)}
+                      onChange={props.handleCategory}
+                    />
+                    <label htmlFor={`${element}`} className="filterCheckText">
+                      {`${element}`}
+                    </label>
+                  </>
+                ))}
               </>
             )}
           </div>
@@ -544,44 +540,40 @@ const Filter = (props) => {
           <div className="checklist">
             {props.feature.length === filterInitialValues.features.length ? (
               <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.features.map((element) => (
-                    <div hidden={element === "empty"}>
-                      <input
-                        id={`${element}`}
-                        name="feature"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        onChange={props.handleFeature}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </div>
-                  ))}
-                </div>
+                {filterInitialValues.features.map((element) => (
+                  <div hidden={element === "empty"}>
+                    <input
+                      id={`${element}`}
+                      name="feature"
+                      value={`${element}`}
+                      type="checkbox"
+                      className="hidden w-full"
+                      onChange={props.handleFeature}
+                    />
+                    <label htmlFor={`${element}`} className="filterCheckText">
+                      {`${element}`}
+                    </label>
+                  </div>
+                ))}
               </>
             ) : (
               <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.features.map((element) => (
-                    <div hidden={element === "empty"}>
-                      <input
-                        id={`${element}`}
-                        name="feature"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        checked={props.feature.includes(`${element}`)}
-                        onChange={props.handleFeature}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </div>
-                  ))}
-                </div>
+                {filterInitialValues.features.map((element) => (
+                  <div hidden={element === "empty"}>
+                    <input
+                      id={`${element}`}
+                      name="feature"
+                      value={`${element}`}
+                      type="checkbox"
+                      className="hidden w-full"
+                      checked={props.feature.includes(`${element}`)}
+                      onChange={props.handleFeature}
+                    />
+                    <label htmlFor={`${element}`} className="filterCheckText">
+                      {`${element}`}
+                    </label>
+                  </div>
+                ))}
               </>
             )}
           </div>
@@ -590,16 +582,16 @@ const Filter = (props) => {
                   さらに表示
                 </div> */}
 
-          <div className="flex justify-center mt-8 lg:justify-self-auto">
+          <div className="flex mt-8">
             <button // TODO: ログインしてなかったら遷移させたい
               type="submit"
-              className="mr-1.5 whitespace-nowrap focus:outline-none text-white text-base font-semibold py-2 px-5 rounded-md bg-gray-400 block w-44 hover:opacity-90 hover:shadow-lg lg:mx-auto"
+              className="mx-auto whitespace-nowrap focus:outline-none text-white text-base font-semibold py-2 px-5 rounded-md bg-gray-400 block w-44 hover:opacity-90 hover:shadow-lg"
             >
               検索
             </button>
             <button
               type="submit"
-              className="ml-1.5 text-center whitespace-nowrap border border-gray-400 box-border focus:outline-none text-gray-400 text-base rounded-md bg-white block w-20 hover:bg-gray-400 hover:shadow-lg hover:text-white duration-200 lg:mx-auto"
+              className="text-center mx-auto whitespace-nowrap border border-gray-400 box-border focus:outline-none text-gray-400 text-base rounded-md bg-white block w-20 hover:bg-gray-400 hover:shadow-lg hover:text-white duration-200"
               onClick={props.filterClear}
             >
               クリア
@@ -608,7 +600,8 @@ const Filter = (props) => {
         </div>
       </form>
     </div>
-  );
-};
 
-export default Filter;
+  )
+}
+
+export default DropdownFilter

@@ -14,6 +14,8 @@ import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates } from "../../../utils/states";
 import { Post } from "../../../types/types";
 import { clickHeart } from "../../../functions/utils";
+import TableListItem from "../../../components/molecules/TableListItem";
+import Category from "../../../components/atoms/Category";
 
 const Show = () => {
   const router = useRouter();
@@ -68,7 +70,7 @@ const Show = () => {
     <Layout title="post.title">
       {post && currentUser && (
         <>
-          <div className="mx-auto px-10">
+          <div className="mx-auto md:px-10">
             <Slider {...setting1}>
               {post.images.map((image, index) => (
                 <div
@@ -92,125 +94,88 @@ const Show = () => {
             </Slider>
           </div>
 
-          <div className="flex justify-between mt-10">
-            <div className="w-2/3 mb-20 pl-4">
-              <div className="mt-6 mb-4 text-gray-900 font-semibold text-xl">
-                {post.title}
-              </div>
-              <div className="text-gray-700 whitespace-pre-wrap">
-                {post.postText}
+          <div className="flex justify-between md:mt-10">
+            <div className="w-full md:w-2/3 mb-20 px-4 pl-4 md:pr-0">
+              <div className="max-w-2xl">
+                <div className="fontSize-xl mt-6 mb-4 text-gray-900 font-semibold">
+                  {post.title}
+                </div>
+                <div className="fontSize-base text-gray-700 whitespace-pre-wrap">
+                  {post.postText}
+                </div>
               </div>
               <div className="mt-20 mb-10">
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">名前</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.horseName}
-                  </div>
+                <div className="mb-4">
+                  <TableListItem label={"名前"} value={post.horseName} />
                 </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 text-gray-600">カテゴリー</div>
-                  <div className="ml-20">
-                    {post.category === "障害馬" && (
-                      <div className="border rounded-full border-red-700 text-red-700 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
+
+                <div className="mb-4">
+                  <TableListItem
+                    label={"カテゴリー"}
+                    value={<Category category={post.category} />}
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <TableListItem label={"値段"} value={`${post.price}円`} />
+                </div>
+
+                <div className="mb-4">
+                  <TableListItem label={"品種"} value={post.breed} />
+                </div>
+
+                <div className="mb-4">
+                  <TableListItem label={"毛色"} value={post.color} />
+                </div>
+
+                <div className="mb-4">
+                  <TableListItem label={"年齢"} value={`${post.age}歳`} />
+                </div>
+
+                <div className="mb-4">
+                  <TableListItem
+                    label={"生年月日"}
+                    value={`${post.birth.year} / ${post.birth.month} / ${post.birth.day}`}
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <TableListItem label={"身長"} value={`${post.height}cm`} />
+                </div>
+                <div className="mb-4">
+                  <TableListItem
+                    label={"特徴"}
+                    value={
+                      <div className="flex flex-wrap">
+                        {post.features
+                          .sort((a, b) => {
+                            //逆順に並べ替え
+                            if (a < b) {
+                              return 1;
+                            } else {
+                              return -1;
+                            }
+                          })
+                          .map(
+                            (feature, index) =>
+                              feature !== "empty" && (
+                                <div key={index} className="mr-5">
+                                  {feature}
+                                </div>
+                              )
+                          )}
                       </div>
-                    )}
-                    {post.category === "馬場馬" && (
-                      <div className="border rounded-full border-blue-900 text-blue-900 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
-                      </div>
-                    )}
-                    {post.category === "総合馬" && (
-                      <div className="border rounded-full border-green-800 text-green-800 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
-                      </div>
-                    )}
-                    {post.category === "レクレーション" && (
-                      <div className="border rounded-full border-yellow-300 text-yellow-300 text-sm px-4 py-0.5  font-semibold">
-                        {post.category}
-                      </div>
-                    )}
-                  </div>
+                    }
+                  />
                 </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">値段</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.price}円
-                  </div>
+
+                <div className="mb-4">
+                  <TableListItem label={"地域"} value={post.area} />
                 </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">品種</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.breed}
-                  </div>
-                </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">毛色</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.color}
-                  </div>
-                </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">年齢</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.age}歳
-                  </div>
-                </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">生年月日</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.birth.year} / {post.birth.month} / {post.birth.day}
-                  </div>
-                </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">身長</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.height}cm
-                  </div>
-                </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">特徴</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    <div className="flex flex-wrap">
-                      {post.features
-                        .sort((a, b) => {
-                          //逆順に並べ替え
-                          if (a < b) {
-                            return 1;
-                          } else {
-                            return -1;
-                          }
-                        })
-                        .map(
-                          (feature, index) =>
-                            feature !== "empty" && (
-                              <div key={index} className="mr-5">
-                                {feature}
-                              </div>
-                            )
-                        )}
-                    </div>
-                  </div>
-                </div>
-                <div className="border-b shadow-xs mb-4"></div>
-                <div className="flex mb-3">
-                  <div className="ml-10 w-1/4 text-gray-600">地域</div>
-                  <div className="w-3/4 text-gray-700 font-semibold">
-                    {post.area}
-                  </div>
-                </div>
-                <div className="border-b shadow-xs mb-4"></div>
               </div>
             </div>
-            <div className="w-1/3">
+
+            <div className="hidden md:block md:w-1/3">
               <div className="pl-10">
                 {!post.isAvairable &&
                 !(
