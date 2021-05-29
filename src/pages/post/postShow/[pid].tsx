@@ -17,6 +17,7 @@ import { clickHeart } from "../../../functions/utils";
 import TableListItem from "../../../components/molecules/TableListItem";
 import Category from "../../../components/atoms/Category";
 import StarRatings from "react-star-ratings";
+import SlickSlider from "../../../components/molecules/SlickSlider";
 
 const Show = () => {
   const router = useRouter();
@@ -71,6 +72,20 @@ const Show = () => {
     adaptiveHeight: true,
   };
 
+  const setting2 = {
+    dots: true,
+    arrows: true,
+    fade: true,
+    speed: 250,
+    prevArrow: <IoChevronBackCircleOutline />,
+    nextArrow: <IoChevronForwardCircleOutline />,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    swipeToSlide: true,
+    adaptiveHeight: true,
+  };
+
   const toPostEdit = (post) => {
     const pid = post.postID;
     router.push({
@@ -83,27 +98,7 @@ const Show = () => {
       {post && currentUser && postUser && (
         <>
           <div className="mx-auto md:px-10">
-            <Slider {...setting1}>
-              {post.images.map((image, index) => (
-                <div
-                  key={index}
-                  className="mt-10 outline-none pb-image w-full h-0 relative"
-                >
-                  {currentUser.uid === post.userID && post.isAvairable && (
-                    <div
-                      className="absolute top-3 right-4 z-50 bg-white px-3.5 py-1.5 rounded opacity-50 cursor-pointer hover:bg-mainGreen hover:text-white hover:opacity-90 ease-in-out duration-300"
-                      onClick={() => toPostEdit(post)}
-                    >
-                      編集
-                    </div>
-                  )}
-                  <img
-                    src={image}
-                    className="object-cover outline-none border-0 w-full h-full absolute"
-                  />
-                </div>
-              ))}
-            </Slider>
+            <SlickSlider currentUser={currentUser} post={post} />
           </div>
 
           <div className="flex justify-between md:mt-10">
@@ -204,21 +199,20 @@ const Show = () => {
                           <div>
                             <div>{post.username}</div>
                             <div className="-mt-0.5">
-
-                            <StarRatings
-                              numberOfStars={5}
-                              rating={
-                                (postUser.good * 5 + postUser.bad * 1) /
-                                  (postUser.good + postUser.bad) || 0
-                              }
-                              starRatedColor="#FFD400"
-                              name="rating"
-                              starDimension="16px"
-                              starSpacing="0px"
-                            />
-                            <a className="fontSize-sm text-gray-500 reviewNumbersSize border-b border-gray-500 ml-1 pt-1 font-normal">
-                              {user.good + user.bad}
-                            </a>
+                              <StarRatings
+                                numberOfStars={5}
+                                rating={
+                                  (postUser.good * 5 + postUser.bad * 1) /
+                                    (postUser.good + postUser.bad) || 0
+                                }
+                                starRatedColor="#FFD400"
+                                name="rating"
+                                starDimension="16px"
+                                starSpacing="0px"
+                              />
+                              <a className="fontSize-sm text-gray-500 reviewNumbersSize border-b border-gray-500 ml-1 pt-1 font-normal">
+                                {user.good + user.bad}
+                              </a>
                             </div>
                           </div>
                         </div>

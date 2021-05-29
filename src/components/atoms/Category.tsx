@@ -20,7 +20,7 @@ const Category = (props) => {
         </div>
       )}
       {category === "レクレーション" && (
-        <div className="fontSize-sm border rounded-full border-yellow-300 text-yellow-300 px-4 py-0.5  font-semibold w-20 whitespace-nowrap text-center">
+        <div className="fontSize-sm border rounded-full border-yellow-300 text-yellow-300 px-4 py-0.5  font-semibold w-32 whitespace-nowrap text-center">
           {category}
         </div>
       )}
