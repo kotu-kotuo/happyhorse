@@ -14,6 +14,14 @@ module.exports = {
       height: {
         900: "900px",
       },
+      minWidth: {
+        10: "2.5rem",
+        8: "2rem",
+      },
+      minHeight: {
+        10: "2.5rem",
+        8: "2rem",
+      },
       padding: {
         image: "56.25%",
       },

@@ -1,13 +1,9 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../../auth/AuthProvider";
 import StarRatings from "react-star-ratings";
-
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 const ProfileContent = (props) => {
-  const router = useRouter();
   const { user, currentUser } = props;
+
   return (
     <div>
       {user && currentUser && (
@@ -33,13 +29,22 @@ const ProfileContent = (props) => {
               )}
             </div>
             <div className="text-gray-900 font-semibold text-xl mt-3 mb-1 sm:mt-6 px-2 text-center">{`${user.username}`}</div>
-            <Link href="/reviews">
+
+            <Link
+              href={{
+                pathname: "/reviews",
+                query: {
+                  uid: user.id,
+                },
+              }}
+            >
               <div className="flex justify-center items-center cursor-pointer hover:opacity-80">
                 <div>
                   <StarRatings
                     numberOfStars={5}
                     rating={
-                      (user.good * 5 + user.bad * 1) / (user.good + user.bad) || 0
+                      (user.good * 5 + user.bad * 1) / (user.good + user.bad) ||
+                      0
                     }
                     starRatedColor="#FFD400"
                     name="rating"
@@ -52,6 +57,7 @@ const ProfileContent = (props) => {
                 </a>
               </div>
             </Link>
+
             <div className="text-gray-900 sm:text-base text-sm mt-7 px-2 max-w-2xl mx-auto whitespace-pre-wrap">{`${user.profileText}`}</div>
           </div>
         </div>

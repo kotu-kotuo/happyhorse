@@ -11,16 +11,18 @@ import "slick-carousel/slick/slick.css";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
 import { postInitialValues } from "../../../utils/initialValues";
-import { setPostStates } from "../../../utils/states";
+import { setPostStates, setUserState } from "../../../utils/states";
 import { Post } from "../../../types/types";
 import { clickHeart } from "../../../functions/utils";
 import TableListItem from "../../../components/molecules/TableListItem";
 import Category from "../../../components/atoms/Category";
+import StarRatings from "react-star-ratings";
 
 const Show = () => {
   const router = useRouter();
   const { user, setUser, currentUser, notifications } = useContext(AuthContext);
   const [post, setPost] = useState<Post>(postInitialValues);
+  const [postUser, setPostUser] = useState(null);
 
   useEffect(() => {
     if (router.query.pid) {
@@ -33,6 +35,16 @@ const Show = () => {
         });
     }
   }, [router]);
+
+  useEffect(() => {
+    if (post.userID) {
+      console.log(post.userID);
+      db.collection("users")
+        .doc(`${post.userID}`)
+        .get()
+        .then((snapshot) => setPostUser(setUserState(snapshot.data())));
+    }
+  }, [post]);
 
   const setting1 = {
     customPaging: function (i) {
@@ -68,7 +80,7 @@ const Show = () => {
 
   return (
     <Layout title="post.title">
-      {post && currentUser && (
+      {post && currentUser && postUser && (
         <>
           <div className="mx-auto md:px-10">
             <Slider {...setting1}>
@@ -171,6 +183,48 @@ const Show = () => {
 
                 <div className="mb-4">
                   <TableListItem label={"地域"} value={post.area} />
+                </div>
+                <div className="mb-4">
+                  <TableListItem
+                    label={"掲載者"}
+                    value={
+                      <Link
+                        href={{
+                          pathname: "/profile",
+                          query: { uid: postUser.id },
+                        }}
+                      >
+                        <div className="flex items-center cursor-pointer">
+                          <div className="mr-2">
+                            <img
+                              src={post.avatar}
+                              className="min-w-10 min-h-10 w-10 h-10 object-cover rounded-full block"
+                            ></img>
+                          </div>
+                          <div>
+                            <div>{post.username}</div>
+                            <div className="-mt-0.5">
+
+                            <StarRatings
+                              numberOfStars={5}
+                              rating={
+                                (postUser.good * 5 + postUser.bad * 1) /
+                                  (postUser.good + postUser.bad) || 0
+                              }
+                              starRatedColor="#FFD400"
+                              name="rating"
+                              starDimension="16px"
+                              starSpacing="0px"
+                            />
+                            <a className="fontSize-sm text-gray-500 reviewNumbersSize border-b border-gray-500 ml-1 pt-1 font-normal">
+                              {user.good + user.bad}
+                            </a>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    }
+                  />
                 </div>
               </div>
             </div>
