@@ -6,7 +6,6 @@ import Link from "next/link";
 import { db } from "../../../utils/firebase";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
@@ -18,6 +17,7 @@ import TableListItem from "../../../components/molecules/TableListItem";
 import Category from "../../../components/atoms/Category";
 import StarRatings from "react-star-ratings";
 import SlickSlider from "../../../components/molecules/SlickSlider";
+import MessageButtonHandle from "../../../components/molecules/MessageButtonHandle";
 
 const Show = () => {
   const router = useRouter();
@@ -95,10 +95,14 @@ const Show = () => {
 
   return (
     <Layout title="post.title">
-      {post && currentUser && postUser && (
+      {post && postUser && (
         <>
           <div className="mx-auto md:px-10">
-            <SlickSlider currentUser={currentUser} post={post} />
+            <SlickSlider
+              currentUser={currentUser}
+              post={post}
+              toPostEdit={toPostEdit}
+            />
           </div>
 
           <div className="flex justify-between md:mt-10">
@@ -211,7 +215,7 @@ const Show = () => {
                                 starSpacing="0px"
                               />
                               <a className="fontSize-sm text-gray-500 reviewNumbersSize border-b border-gray-500 ml-1 pt-1 font-normal">
-                                {user.good + user.bad}
+                                {postUser.good + postUser.bad}
                               </a>
                             </div>
                           </div>
@@ -223,116 +227,68 @@ const Show = () => {
               </div>
             </div>
 
-            <div className="hidden md:block md:w-1/3">
-              <div className="pl-10">
-                {!post.isAvairable &&
-                !(
-                  currentUser.uid === post.userID ||
-                  currentUser.uid === post?.clientUserID
-                ) ? (
-                  <button className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-gray-400 pointer-events-none">
-                    SOLD OUT!
-                  </button>
-                ) : post.isAvairable &&
-                  post.clientUserID.length !== 0 &&
-                  !(
-                    currentUser.uid === post.userID ||
-                    currentUser.uid === post?.clientUserID
-                  ) ? (
-                  <button className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-gray-400 pointer-events-none">
-                    他の方と取引中
-                  </button>
-                ) : currentUser.uid === post.userID ? (
-                  <Link href="/message/management">
-                    <button
-                      type="button"
-                      className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-mainGreen hover:opacity-90 hover:shadow-lg"
-                    >
-                      メッセージ管理画面へ
-                    </button>
-                  </Link>
-                ) : post.deletedAccount === true ? (
-                  <div></div>
+            {/* <div className="hidden md:block md:w-1/3"> */}
+            <div className="pl-10">
+              <MessageButtonHandle currentUser={currentUser} post={post} />
+
+              <div
+                className="flex items-center mb-4 ml-11  cursor-pointer hover:opacity-80"
+                onClick={(e) => {
+                  clickHeart(
+                    e,
+                    currentUser,
+                    user,
+                    setUser,
+                    router,
+                    db,
+                    notifications
+                  );
+                }}
+                data-id={post.postID}
+              >
+                {currentUser && post.likeUserIDs.includes(currentUser?.uid) ? (
+                  <FaHeart className="text-3xl text-red-400" />
                 ) : (
-                  <Link
-                    href={{
-                      pathname: "/message/messages",
-                      query: {
-                        uid: post.userID,
-                        pid: post.postID,
-                        cid: currentUser.uid,
-                      },
-                    }}
-                  >
-                    <button
-                      type="button"
-                      className="block mt-6 mb-6 ml-8 focus:outline-none text-white text-base font-semibold py-3 px-8 rounded-full bg-mainGreen hover:opacity-90 hover:shadow-lg"
-                    >
-                      {post.sendMessageUserIDs.includes(currentUser.uid)
-                        ? "メッセージ画面へ"
-                        : "メッセージを送る"}
-                    </button>
-                  </Link>
+                  <FaRegHeart className="text-3xl text-gray-900" />
                 )}
+                <p className="text-gray-900 ml-3 mr-1">
+                  お気に入り
+                  <span className="ml-3 text-gray-900 font-semibold">
+                    {post.likeUserIDs.length}
+                  </span>
+                </p>
+              </div>
+              <div className="border-b shadow-xs"></div>
+              <p className="mt-4 mb-3 ml-8 text-gray-900">掲載者</p>
 
-                <div
-                  className="flex items-center mb-4 ml-11  cursor-pointer hover:opacity-80"
-                  onClick={(e) => {
-                    clickHeart(
-                      e,
-                      currentUser,
-                      user,
-                      setUser,
-                      router,
-                      db,
-                      notifications
-                    );
-                  }}
-                  data-id={post.postID}
-                >
-                  {post.likeUserIDs.includes(currentUser?.uid) ? (
-                    <FaHeart className="text-3xl text-red-400" />
-                  ) : (
-                    <FaRegHeart className="text-3xl text-gray-900" />
-                  )}
-                  <p className="text-gray-900 ml-3 mr-1">
-                    お気に入り
-                    <span className="ml-3 text-gray-900 font-semibold">
-                      {post.likeUserIDs.length}
-                    </span>
-                  </p>
+              {post.deletedAccount === true ? (
+                <div className="flex items-center ml-8">
+                  <img
+                    src={post.avatar}
+                    className="object-cover rounded-full w-12 h-12"
+                  />
+                  <p className="text-gray-900 ml-3">{post.username}</p>
                 </div>
-                <div className="border-b shadow-xs"></div>
-                <p className="mt-4 mb-3 ml-8 text-gray-900">掲載者</p>
-
-                {post.deletedAccount === true ? (
-                  <div className="flex items-center ml-8">
+              ) : (
+                <Link
+                  href={{
+                    pathname: "/profile",
+                    query: {
+                      uid: post.userID,
+                    },
+                  }}
+                >
+                  <div className="flex items-center ml-8  cursor-pointer hover:opacity-80">
                     <img
                       src={post.avatar}
                       className="object-cover rounded-full w-12 h-12"
                     />
                     <p className="text-gray-900 ml-3">{post.username}</p>
                   </div>
-                ) : (
-                  <Link
-                    href={{
-                      pathname: "/profile",
-                      query: {
-                        uid: post.userID,
-                      },
-                    }}
-                  >
-                    <div className="flex items-center ml-8  cursor-pointer hover:opacity-80">
-                      <img
-                        src={post.avatar}
-                        className="object-cover rounded-full w-12 h-12"
-                      />
-                      <p className="text-gray-900 ml-3">{post.username}</p>
-                    </div>
-                  </Link>
-                )}
-              </div>
+                </Link>
+              )}
             </div>
+            {/* </div> */}
           </div>
         </>
       )}
