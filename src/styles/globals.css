@@ -28,7 +28,7 @@
 }
 
 .button-round {
-  @apply mt-6 mb-6 ml-8 focus:outline-none text-white font-semibold py-3 px-8 rounded-full hidden md:block;
+  @apply mt-6 mb-6 focus:outline-none text-white font-semibold py-3 px-8 rounded-full hidden md:block;
 }
 
 /*==============================================

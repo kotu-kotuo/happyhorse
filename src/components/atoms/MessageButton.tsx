@@ -8,7 +8,7 @@ const MessageButton = (props) => {
         {label}
       </button>
       <div className="md:hidden inline-block text-center cursor-pointer">
-        <div className={`inline-block rounded-full p-2.5 shadow-md ${bgStyle}`}>
+        <div className={`inline-block rounded-full p-2 shadow-md ${bgStyle}`}>
           <BsChatDots className="text-2xl text-white" />
         </div>
         <p className="text-xs text-gray-500">{label}</p>
