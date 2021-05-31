@@ -31,7 +31,7 @@ const Posts = (props) => {
             <div className="w-full md:w-2/3">
               <div className="pb-image w-full h-0 relative">
                 {!post.isAvairable && (
-                  <div className="absolute top-0 left-0 bg-gray-400 font-semibold text-white px-3 py-0.5 z-10 rounded-br-md fontSize-base md:px-4 md:py-1">
+                  <div className="absolute top-0 left-0 bg-gray-400 font-semibold text-white px-3 py-0.5 z-1 rounded-br-md fontSize-base md:px-4 md:py-1">
                     SOLD OUT!
                   </div>
                 )}
