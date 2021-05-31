@@ -7,7 +7,7 @@ const MenuListItem = (props) => {
   return (
     <div className="border-b">
       <Link href={link}>
-        <a className="px-4 py-4 hover:bg-gray-100 flex items-center">
+        <a className="px-4 py-3.5 hover:bg-gray-100 flex items-center sm:py-4">
           <p className="text-sm font-medium text-gray-800 leading-none">
             {label}
           </p>

@@ -1,12 +1,11 @@
 import Notification from "../molecules/Notification";
 
-
 const NotificationList = (props) => {
   const { notifications, currentUser } = props;
   return (
     <div>
-      {notifications.map((notification) => (
-        <>
+      {notifications.map((notification, index) => (
+        <div key={index}>
           {notification.toMessage ? (
             <Notification
               notification={notification}
@@ -40,10 +39,10 @@ const NotificationList = (props) => {
               }}
             />
           )}
-        </>
+        </div>
       ))}
     </div>
   );
-}
+};
 
-export default NotificationList
+export default NotificationList;

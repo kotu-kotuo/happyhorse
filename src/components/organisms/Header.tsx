@@ -3,10 +3,11 @@ import React from "react";
 import { FaBell, FaHorse } from "react-icons/fa";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import NotificationList from "./NotificationList";
-import { db, auth } from "../../utils/firebase";
+import { db } from "../../utils/firebase";
 import StarRatings from "react-star-ratings";
 import { setNotificationStates } from "../../utils/states";
 import MenuListItem from "../molecules/MenuListItem";
+import MenuList from "./MenuList";
 
 const Header = (props) => {
   const {
@@ -20,19 +21,6 @@ const Header = (props) => {
     isOpenNotification,
     setIsOpenNotification,
   } = props;
-
-  const logout = async (e) => {
-    e.preventDefault();
-    try {
-      await auth.signOut();
-      await auth.onAuthStateChanged((user) => {
-        setCurrentUser(user);
-      });
-      setIsOpenMenu(false);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 
   const notificationChecked = async () => {
     await db
@@ -73,8 +61,8 @@ const Header = (props) => {
   };
 
   return (
-    <header className="h-16 w-full border-b border-gray-100 shadow-sm ">
-      <nav className="flex items-center h-16 max-w-5xl mx-auto">
+    <header className="header-height w-full border-b border-gray-100 shadow-sm">
+      <nav className="header-height flex items-center max-w-5xl mx-auto">
         <div className="mr-auto pt-2">
           <Link href="/">
             <a>
@@ -147,74 +135,12 @@ const Header = (props) => {
                 />
                 <div hidden={!isOpenMenu}>
                   <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60">
-                    <div className="text-center p-6  border-b ">
-                      <img
-                        className="h-24 w-24 rounded-full mx-auto object-cover"
-                        src={user?.avatar}
-                        alt="avatar"
-                      />
-                      <p className="pt-2 text-lg font-semibold">
-                        {`${user?.username}`}
-                      </p>
-                      <Link href="/reviews">
-                        <div className="flex justify-center items-center cursor-pointer hover:opacity-80">
-                          <div>
-                            <StarRatings
-                              numberOfStars={5}
-                              rating={
-                                (user.good * 5 + user.bad * 1) /
-                                  (user.good + user.bad) || 0
-                              }
-                              starRatedColor="#FFD400"
-                              name="rating"
-                              starDimension="16px"
-                              starSpacing="0px"
-                            />
-                          </div>
-                          <a className="text-gray-500 reviewNumbersSize border-b border-gray-500  ml-1 pt-1">
-                            {user.good + user.bad}
-                          </a>
-                        </div>
-                      </Link>
-                      <div className="mt-5">
-                        <Link
-                          href={{
-                            pathname: "/profile",
-                            query: {
-                              uid: currentUser.uid,
-                            },
-                          }}
-                        >
-                          <a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700 hover:opacity-80">
-                            マイプロフィール
-                          </a>
-                        </Link>
-                      </div>
-                    </div>
-                    <MenuListItem
-                      label={"メッセージ管理"}
-                      link={"/message/management"}
+                    <MenuList
+                      currentUser={currentUser}
+                      serCurrentUser={setCurrentUser}
+                      user={user}
+                      setIsOpenMenu={setIsOpenMenu}
                     />
-                    <MenuListItem
-                      label={"お気に入りの馬"}
-                      link={"/post/myLikePosts"}
-                    />
-                    <MenuListItem label={"掲載した馬"} link={"/post/myPosts"} />
-                    <MenuListItem
-                      label={"下書き保存リスト"}
-                      link={"/post/draftList"}
-                    />
-                    <MenuListItem label={"設定"} link={"/setting"} />
-
-                    <a
-                      onClick={logout}
-                      className="px-4 py-4 hover:bg-gray-100 flex items-center"
-                    >
-                      <p className="text-sm font-medium text-gray-800 leading-none">
-                        ログアウト
-                      </p>
-                      <IoChevronForwardOutline className="text-gray-400 text-lg ml-auto" />
-                    </a>
                   </div>
                 </div>
               </div>
@@ -226,9 +152,9 @@ const Header = (props) => {
               <Link href="/post/post">
                 <button
                   type="button"
-                  className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                  className="mr-3 focus:outline-none text-white text-base font-medium py-1.5 px-2.5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg sm:px-4"
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center text-sm sm:text-base">
                     <FaHorse className="mr-1.5" />
                     掲載
                   </div>
@@ -240,7 +166,7 @@ const Header = (props) => {
                   type="button"
                   className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center text-sm sm:text-base">
                     <FaHorse className="mr-1.5" />
                     掲載
                   </div>

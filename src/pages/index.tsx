@@ -331,7 +331,7 @@ export default function Index() {
     <div>
       {console.log(width)}
       <Layout title="index">
-        <div className="flex px-3 my-4 md:mt-10 lg:mt-24 lg:mb-20">
+        <div className="flex px-2 my-4 md:px-3 md:mt-10 lg:mt-24 lg:mb-20">
           {width >= 1024 && (
             <div className="w-1/3 pr-8">
               <Filter

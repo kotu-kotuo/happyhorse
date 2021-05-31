@@ -16,7 +16,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
   const [isOpenBottomNotification, setIsOpenBottomNotification] = useState(
     false
   );
-  const [isOpenBottomMenu, setisOpenBottomMenu] = useState(false);
+  const [isOpenBottomMenu, setIsOpenBottomMenu] = useState(false);
   const {
     currentUser,
     setCurrentUser,
@@ -37,7 +37,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {isOpenBottomNotification && (
+      {(isOpenBottomNotification || isOpenBottomMenu) && (
         <style jsx global>{`
           body {
             overflow: hidden;
@@ -70,8 +70,10 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
             isOpenBottomNotification={isOpenBottomNotification}
             setIsOpenBottomNotification={setIsOpenBottomNotification}
             isOpenBottomMenu={isOpenBottomMenu}
-            setisOpenBottomMenu={setisOpenBottomMenu}
+            setIsOpenBottomMenu={setIsOpenBottomMenu}
+            setIsOpenMenu={setIsOpenMenu}
             currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
             user={user}
             notifications={notifications}
           />

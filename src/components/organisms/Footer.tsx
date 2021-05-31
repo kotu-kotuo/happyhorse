@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { FaBell } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
+import MenuList from "./MenuList";
 import NotificationList from "./NotificationList";
 
 const Footer = (props) => {
@@ -9,9 +10,11 @@ const Footer = (props) => {
     isOpenBottomNotification,
     setIsOpenBottomNotification,
     isOpenBottomMenu,
-    setisOpenBottomMenu,
+    setIsOpenBottomMenu,
+    setIsOpenMenu,
     user,
     currentUser,
+    setCurrentUser,
     notifications,
   } = props;
 
@@ -29,11 +32,11 @@ const Footer = (props) => {
 
   const clickAvatar = () => {
     if (isOpenBottomMenu) {
-      setisOpenBottomMenu(!isOpenBottomMenu);
+      setIsOpenBottomMenu(!isOpenBottomMenu);
       document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
     } else {
     }
-    setIsOpenBottomNotification(!isOpenBottomMenu);
+    setIsOpenBottomMenu(!isOpenBottomMenu);
     document
       .getElementsByTagName("body")[0]
       .classList.remove("overflow-hidden");
@@ -51,7 +54,10 @@ const Footer = (props) => {
               className="w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
               onClick={() => {
                 if (isOpenBottomNotification) {
-                  setIsOpenBottomNotification(!isOpenBottomNotification);
+                  setIsOpenBottomNotification(false);
+                }
+                if (isOpenBottomMenu) {
+                  setIsOpenBottomMenu(false);
                 }
               }}
             >
@@ -60,9 +66,12 @@ const Footer = (props) => {
           </Link>
 
           <div
-            className="-mr-0.5 w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
+            className="-mr-1.5 w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
             onClick={() => {
               clickBell();
+              if (isOpenBottomMenu) {
+                setIsOpenBottomMenu(false);
+              }
             }}
           >
             <FaBell className="text-3xl text-gray-500 mx-auto" />
@@ -73,6 +82,9 @@ const Footer = (props) => {
               className="w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
               onClick={() => {
                 clickAvatar();
+                if (isOpenBottomNotification) {
+                  setIsOpenBottomNotification(false);
+                }
               }}
             >
               <img
@@ -82,14 +94,7 @@ const Footer = (props) => {
             </div>
           ) : (
             <Link href="/login">
-              <div
-                className="w-1/4 pt-2 pb-3  cursor-pointer hover:opacity-80"
-                onClick={() => {
-                  if (isOpenBottomNotification) {
-                    setIsOpenBottomNotification(!isOpenBottomNotification);
-                  }
-                }}
-              >
+              <div className="w-1/4 pt-2 pb-3  cursor-pointer hover:opacity-80">
                 <img
                   src="/avatar(2).png"
                   className="h-9 w-9 rounded-full object-cover mx-auto"
@@ -104,44 +109,52 @@ const Footer = (props) => {
         <div
           className={
             isOpenBottomNotification
-              ? "fixed top-16 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
-              : "fixed top-16 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
+              ? "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
+              : "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
           }
+          onClick={() => {
+            clickBell();
+          }}
         >
           <div
             className={
               isOpenBottomNotification
-                ? `transform translate-x-0 bg-white fixed top-16 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-300`
-                : `transform translate-x-full bg-white fixed top-16 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
+                ? `transform translate-x-0 bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-300`
+                : `transform translate-x-full bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
             }
+            onClick={(e) => e.stopPropagation()}
           >
             <NotificationList
               notifications={notifications}
               currentUser={currentUser}
             />
           </div>
-
         </div>
         <div
           className={
             isOpenBottomMenu
-              ? "fixed top-16 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
-              : "fixed top-16 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
+              ? "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
+              : "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
           }
+          onClick={() => {
+            clickAvatar();
+          }}
         >
           <div
             className={
               isOpenBottomMenu
-                ? `transform translate-x-0 bg-white fixed top-16 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-300`
-                : `transform translate-x-full bg-white fixed top-16 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
+                ? `transform translate-x-0 bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-300 z-30`
+                : `transform translate-x-full bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-500 z-30`
             }
+            onClick={(e) => e.stopPropagation()}
           >
-            <NotificationList
-              notifications={notifications}
+            <MenuList
               currentUser={currentUser}
+              serCurrentUser={setCurrentUser}
+              user={user}
+              setIsOpenMenu={setIsOpenMenu}
             />
           </div>
-
         </div>
       </div>
     </div>
