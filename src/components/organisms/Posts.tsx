@@ -98,7 +98,7 @@ const Posts = (props) => {
           </div>
           <Link href={`/post/postShow/${post.postID}`}>
             <div className="cursor-pointer hover:opacity-80">
-              <h2 className="fontSize-xl font-semibold text-gray-800 mt-3 mb-2 line-clamp-1md:my-3">
+              <h2 className="font-semibold text-gray-800 mt-3 mb-2 line-clamp-1md:my-3 md:text-xl">
                 {post.title}
               </h2>
             </div>

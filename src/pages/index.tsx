@@ -126,11 +126,6 @@ export default function Index() {
   }, [handle]);
 
   //filter条件が選択された後に空になった時、初期値をセットする
-  useEffect(() => {
-    if (category.length === 0) {
-      setCategory(filterInitialValues.category);
-    }
-  }, [category]);
 
   useEffect(() => {
     if (!priceMin) {
@@ -186,68 +181,6 @@ export default function Index() {
     router.push({
       pathname: `/post/postShow/${pid}`,
     });
-  };
-
-  //filterの条件が変更されたら値をセット
-  const handleCategory = (e) => {
-    if (e.target.checked === true) {
-      if (category.length === filterInitialValues.category.length) {
-        setCategory([e.target.value]);
-      } else {
-        setCategory([e.target.value, ...category]);
-      }
-    } else {
-      const filterArray = category.filter(
-        (category) => category !== e.target.value
-      );
-      setCategory([...filterArray]);
-    }
-  };
-
-  const handleBreed = (e) => {
-    if (e.target.value === "allBreed") {
-      setBreed(filterInitialValues.breed);
-    } else {
-      setBreed([e.target.value]);
-    }
-  };
-
-  const handleColor = (e) => {
-    if (e.target.value === "allColor") {
-      setColor(filterInitialValues.color);
-    } else {
-      setColor([e.target.value]);
-    }
-  };
-
-  const handleArea = (e) => {
-    if (e.target.checked === true) {
-      const array = e.target.value.split(",");
-      if (area.length === 47) {
-        setArea([...array]);
-      } else {
-        setArea([...array, ...area]);
-      }
-    } else {
-      const array = e.target.value.split(",");
-      const filterArray = area.filter((area) => !array.includes(area));
-      setArea([...filterArray]);
-    }
-  };
-
-  const handleFeature = (e) => {
-    if (e.target.checked === true) {
-      if (feature.length === filterInitialValues.features.length) {
-        setFeature([e.target.value, "empty"]);
-      } else {
-        setFeature([e.target.value, ...feature]);
-      }
-    } else {
-      const filterArray = feature.filter(
-        (feature) => feature !== e.target.value
-      );
-      setFeature([...filterArray]);
-    }
   };
 
   //検索が押されたときの処理
@@ -329,18 +262,13 @@ export default function Index() {
 
   return (
     <div>
-      {console.log(width)}
+      {console.log(area)}
       <Layout title="index">
         <div className="flex px-2 my-4 md:px-3 md:mt-10 lg:mt-24 lg:mb-20">
           {width >= 1024 && (
             <div className="w-1/3 pr-8">
               <Filter
                 filterPost={filterPost}
-                handleCategory={handleCategory}
-                handleBreed={handleBreed}
-                handleColor={handleColor}
-                handleArea={handleArea}
-                handleFeature={handleFeature}
                 setPriceMin={setPriceMin}
                 setPriceMax={setPriceMax}
                 setAgeMin={setAgeMin}
@@ -350,6 +278,7 @@ export default function Index() {
                 setBreed={setBreed}
                 setColor={setColor}
                 category={category}
+                setCategory={setCategory}
                 priceMin={priceMin}
                 priceMax={priceMax}
                 ageMin={ageMin}
@@ -359,7 +288,9 @@ export default function Index() {
                 breed={breed}
                 color={color}
                 area={area}
+                setArea={setArea}
                 feature={feature}
+                setFeature={setFeature}
                 filterClear={filterClear}
               />
             </div>
@@ -373,7 +304,7 @@ export default function Index() {
                     setIsOpenFilter(!isOpenFilter);
                   }}
                 >
-                  <div className="flex items-center text-gray-600 text-sm py-1 pl-3 pr-2">
+                  <div className="flex items-center text-gray-600 text-sm py-1 pl-3 pr-2 cursor-pointer hover:opacity-80">
                     <BsFilterRight className="text-xl" />
                     <p className="whitespace-nowrap ml-1">絞り込み</p>
                   </div>
@@ -382,11 +313,6 @@ export default function Index() {
                   <div className="mb-4 ">
                     <Filter
                       filterPost={filterPost}
-                      handleCategory={handleCategory}
-                      handleBreed={handleBreed}
-                      handleColor={handleColor}
-                      handleArea={handleArea}
-                      handleFeature={handleFeature}
                       setPriceMin={setPriceMin}
                       setPriceMax={setPriceMax}
                       setAgeMin={setAgeMin}
@@ -396,6 +322,7 @@ export default function Index() {
                       setBreed={setBreed}
                       setColor={setColor}
                       category={category}
+                      setCategory={setCategory}
                       priceMin={priceMin}
                       priceMax={priceMax}
                       ageMin={ageMin}
@@ -405,7 +332,9 @@ export default function Index() {
                       breed={breed}
                       color={color}
                       area={area}
+                      setArea={setArea}
                       feature={feature}
+                      setFeature={setFeature}
                       filterClear={filterClear}
                     />
                   </div>

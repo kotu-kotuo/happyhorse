@@ -1,10 +1,126 @@
 import React from "react";
 import { filterInitialValues } from "../../utils/initialValues";
+import FilterAreaSelect from "../atoms/FilterAreaSelect";
 
 const Filter = (props) => {
+  const {
+    filterPost,
+    setPriceMin,
+    setPriceMax,
+    setAgeMin,
+    setAgeMax,
+    setHeightMin,
+    setHeightMax,
+    setBreed,
+    setColor,
+    category,
+    setCategory,
+    priceMin,
+    priceMax,
+    ageMin,
+    ageMax,
+    heightMin,
+    heightMax,
+    breed,
+    color,
+    area,
+    setArea,
+    feature,
+    setFeature,
+    filterClear,
+  } = props;
+
+  const handleCategory = async (e) => {
+    const value = e.currentTarget.getAttribute("data-value");
+    console.log(1, category, value);
+    if (category.length === filterInitialValues.category.length) {
+      console.log(2, category, value);
+      await setCategory([value]);
+    } else {
+      if (category.includes(value)) {
+        console.log(4, category, value);
+        if (category.length === 1) {
+          setCategory(filterInitialValues.category);
+        } else {
+          const filterArray = await category.filter(
+            (category) => category !== value
+          );
+          await setCategory([...filterArray]);
+        }
+      } else {
+        console.log(3, category, value);
+        await setCategory([value, ...category]);
+      }
+    }
+  };
+
+  const handleArea = async (e) => {
+    const value = e.currentTarget.getAttribute("data-value").split(",");
+    console.log(1, area, value);
+    if (area.length === filterInitialValues.area.length) {
+      console.log(2, area, value);
+      await setArea(value);
+    } else {
+      if (area.includes(value[0])) {
+        console.log(4, area, value);
+        if (area.length < 10) {
+          setArea(filterInitialValues.area);
+        } else {
+          const filterArray = await area.filter(
+            (area) => !value.includes(area)
+          );
+          await setArea([...filterArray]);
+        }
+      } else {
+        console.log(3, area, value);
+        await setArea([...value, ...area]);
+      }
+    }
+  };
+
+  const handleFeature = async (e) => {
+    const value = e.currentTarget.getAttribute("data-value");
+    console.log(1, feature, value);
+    if (feature.length === filterInitialValues.features.length) {
+      console.log(2, feature, value);
+      await setFeature([value]);
+    } else {
+      if (feature.includes(value)) {
+        console.log(4, feature, value);
+        if (feature.length === 1) {
+          setFeature(filterInitialValues.features);
+        } else {
+          const filterArray = await feature.filter(
+            (feature) => feature !== value
+          );
+          await setFeature([...filterArray]);
+        }
+      } else {
+        console.log(3, feature, value);
+        await setFeature([value, ...feature]);
+      }
+    }
+  };
+
+  const handleBreed = (e) => {
+    if (e.target.value === "allBreed") {
+      setBreed(filterInitialValues.breed);
+    } else {
+      setBreed([e.target.value]);
+    }
+  };
+
+  const handleColor = (e) => {
+    if (e.target.value === "allColor") {
+      setColor(filterInitialValues.color);
+    } else {
+      setColor([e.target.value]);
+    }
+  };
+
   return (
     <div>
-      <form onSubmit={props.filterPost}>
+      <form onSubmit={filterPost}>
         <div className="px-4 py-6 shadow-md border border-gray-50 rounded-lg">
           <div className=" text-center text-sm font-semibold text-gray-400 opacity-95">
             絞り込み検索
@@ -13,577 +129,299 @@ const Filter = (props) => {
           <div className="mb-4 mt-7 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             カテゴリー
           </div>
-          <div className="checklist">
-            {props.category?.length === filterInitialValues.category.length ? (
-              //filterInitialValuesを表示に反映させたくないので条件分岐
-              <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.category.map((element) => (
-                    <>
-                      <input
-                        id={`${element}`}
-                        name="category"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        onChange={props.handleCategory}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.category.map((element) => (
-                    <>
-                      <input
-                        id={`${element}`}
-                        name="category"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        checked={props.category.includes(`${element}`)}
-                        onChange={props.handleCategory}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </>
-                  ))}
-                </div>
-              </>
-            )}
+          <div className="flex flex-wrap lg:block">
+            {filterInitialValues.category.map((element, index) => (
+              <div
+                key={index}
+                className="flex items-center mr-3.5 mb-2  hover:bg-gray-50 hover:opacity-95 cursor-pointer rounded-full lg:mr-0"
+                onClick={handleCategory}
+                data-value={element}
+              >
+                <div
+                  className={
+                    category.includes(element) &&
+                    !(category.length === filterInitialValues.category.length)
+                      ? "h-4 w-4 bg-mainGreen rounded-full mr-1 transition-all duration-200 ease-in lg:mr-2"
+                      : "h-4 w-4 bg-transparent border border-gray-300 rounded-full mr-1 transition-all duration-200 ease-in lg:mr-2"
+                  }
+                ></div>
+                <div className="text-sm text-gray-700">{element}</div>
+              </div>
+            ))}
           </div>
 
           <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             価格
           </div>
           <div className="flex">
-            {props.priceMin === filterInitialValues.priceMin ? (
-              <input
-                type="number"
-                name="price"
-                placeholder="min"
-                value=""
-                className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMin(e.target.valueAsNumber)}
-              />
-            ) : (
-              <input
-                type="number"
-                name="price"
-                placeholder="min"
-                value={props.priceMin}
-                className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMin(e.target.valueAsNumber)}
-              />
-            )}
-
+            <input
+              type="number"
+              name="price"
+              placeholder="min"
+              value={priceMin === filterInitialValues.priceMin ? "" : priceMin}
+              className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              onChange={(e) => setPriceMin(e.target.valueAsNumber)}
+            />
             <div className="text-gray-700 text-sm mt-1 whitespace-nowrap">
               〜
             </div>
-            {props.priceMax === filterInitialValues.priceMax ? (
-              <input
-                type="number"
-                name="price"
-                placeholder="max"
-                value=""
-                className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMax(e.target.valueAsNumber)}
-              />
-            ) : (
-              <input
-                type="number"
-                name="price"
-                placeholder="max"
-                value={props.priceMax}
-                className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMax(e.target.valueAsNumber)}
-              />
-            )}
+            <input
+              type="number"
+              name="price"
+              placeholder="max"
+              value={priceMax === filterInitialValues.priceMax ? "" : priceMax}
+              className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              onChange={(e) => setPriceMax(e.target.valueAsNumber)}
+            />
           </div>
 
           <div className="mb-4 mt-10 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             年齢
           </div>
           <div className="flex">
-            {props.ageMin === filterInitialValues.ageMin ? (
-              <input
-                type="number"
-                name="age"
-                placeholder="min"
-                value=""
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMin(e.target.valueAsNumber)}
-              />
-            ) : (
-              <input
-                type="number"
-                name="age"
-                placeholder="min"
-                value={props.ageMin}
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMin(e.target.valueAsNumber)}
-              />
-            )}
+            <input
+              type="number"
+              name="age"
+              placeholder="min"
+              value={ageMin === filterInitialValues.ageMin ? "" : ageMin}
+              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              onChange={(e) => setAgeMin(e.target.valueAsNumber)}
+            />
             <div className="text-gray-700 text-sm mt-1 whitespace-nowrap">
               〜
             </div>
-            {props.ageMax === filterInitialValues.ageMax ? (
-              <input
-                type="number"
-                name="age"
-                placeholder="max"
-                value=""
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMax(e.target.valueAsNumber)}
-              />
-            ) : (
-              <input
-                type="number"
-                name="age"
-                placeholder="max"
-                value={props.ageMax}
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMax(e.target.valueAsNumber)}
-              />
-            )}
+            <input
+              type="number"
+              name="age"
+              placeholder="max"
+              value={ageMax === filterInitialValues.ageMax ? "" : ageMax}
+              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              onChange={(e) => setAgeMax(e.target.valueAsNumber)}
+            />
           </div>
 
           <div className="mb-4 mt-10 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             身長(cm)
           </div>
           <div className="flex">
-            {props.heightMin === filterInitialValues.heightMin ? (
-              <input
-                type="number"
-                name="height"
-                placeholder="min"
-                value=""
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMin(e.target.valueAsNumber)}
-              />
-            ) : (
-              <input
-                type="number"
-                name="height"
-                placeholder="min"
-                value={props.heightMin}
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMin(e.target.valueAsNumber)}
-              />
-            )}
-
+            <input
+              type="number"
+              name="height"
+              placeholder="min"
+              value={
+                heightMin === filterInitialValues.heightMin ? "" : heightMin
+              }
+              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              onChange={(e) => setHeightMin(e.target.valueAsNumber)}
+            />
             <div className="text-gray-700 text-sm mt-1 whitespace-nowrap">
               〜
             </div>
-
-            {props.heightMax === filterInitialValues.heightMax ? (
-              <input
-                type="number"
-                name="height"
-                placeholder="max"
-                value=""
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMax(e.target.valueAsNumber)}
-              />
-            ) : (
-              <input
-                type="number"
-                name="height"
-                placeholder="max"
-                value={props.heightMax}
-                className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMax(e.target.valueAsNumber)}
-              />
-            )}
+            <input
+              type="number"
+              name="height"
+              placeholder="max"
+              value={
+                heightMax === filterInitialValues.heightMax ? "" : heightMax
+              }
+              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              onChange={(e) => setHeightMax(e.target.valueAsNumber)}
+            />
           </div>
 
           <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             品種
           </div>
           <div className="mb-3">
-            {props.breed.length === filterInitialValues.breed.length ? (
-              <select
-                name="breed"
-                className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                onChange={props.handleBreed}
-              >
-                <option hidden></option>
-                <option value="allBreed"></option>
-                {filterInitialValues.breed.map((element) => (
-                  <option value={`${element}`}>{`${element}`}</option>
-                ))}
-              </select>
-            ) : (
-              <select
-                name="breed"
-                className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                onChange={props.handleBreed}
-              >
-                <option hidden></option>
+            <select
+              name="breed"
+              className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              onChange={handleBreed}
+            >
+              <option hidden></option>
+              <option
+                value="allBreed"
+                selected={breed.length === filterInitialValues.breed.length}
+              ></option>
+              {filterInitialValues.breed.map((element, index) => (
                 <option
-                  value="allBreed"
+                  key={index}
+                  value={`${element}`}
                   selected={
-                    props.breed.length === filterInitialValues.breed.length
+                    breed.includes(`${element}`) &&
+                    !(breed.length === filterInitialValues.breed.length)
+                      ? true
+                      : false
                   }
-                ></option>
-                {filterInitialValues.breed.map((element) => (
-                  <option
-                    value={`${element}`}
-                    selected={props.breed.includes(`${element}`)}
-                  >
-                    {`${element}`}
-                  </option>
-                ))}
-              </select>
-            )}
+                >
+                  {`${element}`}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             毛色
           </div>
-          {props.color.length === filterInitialValues.color.length ? (
-            <select
-              name="color"
-              className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              onChange={props.handleColor}
-            >
-              <option hidden></option>
-              <option value="allColor"></option>
-              {filterInitialValues.color.map((element) => (
-                <option value={`${element}`}>{`${element}`}</option>
-              ))}
-            </select>
-          ) : (
-            <select
-              name="color"
-              className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              onChange={props.handleColor}
-            >
-              <option hidden></option>
+          <select
+            name="color"
+            className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            onChange={handleColor}
+          >
+            <option hidden></option>
+            <option
+              value="allColor"
+              selected={color.length === filterInitialValues.color.length}
+            ></option>
+            {filterInitialValues.color.map((element, index) => (
               <option
-                value="allColor"
+                key={index}
+                value={`${element}`}
                 selected={
-                  props.color.length === filterInitialValues.color.length
+                  color.includes(`${element}`) &&
+                  !(color.length === filterInitialValues.color.length)
+                    ? true
+                    : false
                 }
-              ></option>
-              {filterInitialValues.color.map((element) => (
-                <option
-                  value={`${element}`}
-                  selected={props.color.includes(`${element}`)}
-                >{`${element}`}</option>
-              ))}
-            </select>
-          )}
+              >{`${element}`}</option>
+            ))}
+          </select>
 
           <div className="mb-4 mt-10 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             地域
           </div>
-          <div className="checklist">
-            {props.area.length === filterInitialValues.area.length ? (
-              <>
-                <input
-                  id="北海道・東北"
-                  name="area"
-                  value={[
-                    "北海道",
-                    "青森県",
-                    "秋田県",
-                    "福島県",
-                    "岩手県",
-                    "山形県",
-                    "宮城県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="北海道・東北" className="filterCheckText">
-                  北海道・東北
-                </label>
-                <input
-                  id="関東"
-                  name="area"
-                  value={[
-                    "茨城県",
-                    "栃木県",
-                    "群馬県",
-                    "埼玉県",
-                    "千葉県",
-                    "東京都",
-                    "神奈川県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="関東" className="filterCheckText">
-                  関東
-                </label>
-                <input
-                  id="中部"
-                  name="area"
-                  value={[
-                    "愛知県",
-                    "岐阜県",
-                    "福井県",
-                    "山梨県",
-                    "石川県",
-                    "新潟県",
-                    "富山県",
-                    "長野県",
-                    "静岡県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="中部" className="filterCheckText">
-                  中部
-                </label>
-                <input
-                  id="近畿"
-                  name="area"
-                  value={[
-                    "三重県",
-                    "大阪府",
-                    "京都府",
-                    "兵庫県",
-                    "奈良県",
-                    "滋賀県",
-                    "和歌山県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="近畿" className="filterCheckText">
-                  近畿
-                </label>
-                <input
-                  id="中国・四国"
-                  name="area"
-                  value={[
-                    "岡山県",
-                    "広島県",
-                    "鳥取県",
-                    "島根県",
-                    "山口県",
-                    "徳島県",
-                    "香川県",
-                    "愛媛県",
-                    "高知県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="中国・四国" className="filterCheckText">
-                  中国・四国
-                </label>
-                <input
-                  id="九州・沖縄"
-                  name="area"
-                  value={[
-                    "福岡県",
-                    "大分県",
-                    "佐賀県",
-                    "長崎県",
-                    "宮崎県",
-                    "鹿児島県",
-                    "沖縄県",
-                    "熊本県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="九州・沖縄" className="filterCheckText">
-                  九州・沖縄
-                </label>
-              </>
-            ) : (
-              <>
-                <input
-                  id="北海道・東北"
-                  name="area"
-                  value={[
-                    "北海道",
-                    "青森県",
-                    "秋田県",
-                    "福島県",
-                    "岩手県",
-                    "山形県",
-                    "宮城県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  checked={props.area.includes("北海道")}
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="北海道・東北" className="filterCheckText">
-                  北海道・東北
-                </label>
-                <input
-                  id="関東"
-                  name="area"
-                  value={[
-                    "茨城県",
-                    "栃木県",
-                    "群馬県",
-                    "埼玉県",
-                    "千葉県",
-                    "東京都",
-                    "神奈川県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  checked={props.area.includes("東京都")}
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="関東" className="filterCheckText">
-                  関東
-                </label>
-                <input
-                  id="中部"
-                  name="area"
-                  value={[
-                    "愛知県",
-                    "岐阜県",
-                    "福井県",
-                    "山梨県",
-                    "石川県",
-                    "新潟県",
-                    "富山県",
-                    "長野県",
-                    "静岡県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  checked={props.area.includes("愛知県")}
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="中部" className="filterCheckText">
-                  中部
-                </label>
-                <input
-                  id="近畿"
-                  name="area"
-                  value={[
-                    "三重県",
-                    "大阪府",
-                    "京都府",
-                    "兵庫県",
-                    "奈良県",
-                    "滋賀県",
-                    "和歌山県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  checked={props.area.includes("京都府")}
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="近畿" className="filterCheckText">
-                  近畿
-                </label>
-                <input
-                  id="中国・四国"
-                  name="area"
-                  value={[
-                    "岡山県",
-                    "広島県",
-                    "鳥取県",
-                    "島根県",
-                    "山口県",
-                    "徳島県",
-                    "香川県",
-                    "愛媛県",
-                    "高知県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  checked={props.area.includes("高知県")}
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="中国・四国" className="filterCheckText">
-                  中国・四国
-                </label>
-                <input
-                  id="九州・沖縄"
-                  name="area"
-                  value={[
-                    "福岡県",
-                    "大分県",
-                    "佐賀県",
-                    "長崎県",
-                    "宮崎県",
-                    "鹿児島県",
-                    "沖縄県",
-                    "熊本県",
-                  ]}
-                  type="checkbox"
-                  className="hidden w-full"
-                  checked={props.area.includes("福岡県")}
-                  onChange={props.handleArea}
-                />
-                <label htmlFor="九州・沖縄" className="filterCheckText">
-                  九州・沖縄
-                </label>
-              </>
-            )}
+          <div className="flex flex-wrap lg:block">
+            <div className="mr-3.5 mb-2 lg:mr-0">
+              <FilterAreaSelect
+                handleArea={handleArea}
+                area={area}
+                dataValue={[
+                  "北海道",
+                  "青森県",
+                  "秋田県",
+                  "福島県",
+                  "岩手県",
+                  "山形県",
+                  "宮城県",
+                ]}
+                label={"北海道・東北"}
+              />
+            </div>
+            <div className="mr-3.5 mb-2 lg:mr-0">
+              <FilterAreaSelect
+                handleArea={handleArea}
+                area={area}
+                dataValue={[
+                  "茨城県",
+                  "栃木県",
+                  "群馬県",
+                  "埼玉県",
+                  "千葉県",
+                  "東京都",
+                  "神奈川県",
+                ]}
+                label={"関東"}
+              />
+            </div>
+            <div className="mr-3.5 mb-2 lg:mr-0">
+              <FilterAreaSelect
+                handleArea={handleArea}
+                area={area}
+                dataValue={[
+                  "愛知県",
+                  "岐阜県",
+                  "福井県",
+                  "山梨県",
+                  "石川県",
+                  "新潟県",
+                  "富山県",
+                  "長野県",
+                  "静岡県",
+                ]}
+                label={"中部"}
+              />
+            </div>
+            <div className="mr-3.5 mb-2 lg:mr-0">
+              <FilterAreaSelect
+                handleArea={handleArea}
+                area={area}
+                dataValue={[
+                  "三重県",
+                  "大阪府",
+                  "京都府",
+                  "兵庫県",
+                  "奈良県",
+                  "滋賀県",
+                  "和歌山県",
+                ]}
+                label={"近畿"}
+              />
+            </div>
+            <div className="mr-3.5 mb-2 lg:mr-0">
+              <FilterAreaSelect
+                handleArea={handleArea}
+                area={area}
+                dataValue={[
+                  "岡山県",
+                  "広島県",
+                  "鳥取県",
+                  "島根県",
+                  "山口県",
+                  "徳島県",
+                  "香川県",
+                  "愛媛県",
+                  "高知県",
+                ]}
+                label={"中国・四国"}
+              />
+            </div>
+            <div className="mr-3.5 mb-2 lg:mr-0">
+              <FilterAreaSelect
+                handleArea={handleArea}
+                area={area}
+                dataValue={[
+                  "福岡県",
+                  "大分県",
+                  "佐賀県",
+                  "長崎県",
+                  "宮崎県",
+                  "鹿児島県",
+                  "沖縄県",
+                  "熊本県",
+                ]}
+                label={"九州・沖縄"}
+              />
+            </div>
           </div>
 
           <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             特徴
           </div>
-          <div className="checklist">
-            {props.feature.length === filterInitialValues.features.length ? (
-              <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.features.map((element) => (
-                    <div hidden={element === "empty"}>
-                      <input
-                        id={`${element}`}
-                        name="feature"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        onChange={props.handleFeature}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </div>
-                  ))}
+          <div className="flex flex-wrap lg:block">
+            {filterInitialValues.features.map((element, index) => (
+              <div
+                key={index}
+                className="flex items-center mr-3.5 mb-2  hover:bg-gray-50 hover:opacity-95 cursor-pointer rounded-full lg:mr-0"
+                onClick={handleFeature}
+                data-value={element}
+              >
+                <div
+                  className={
+                    feature.includes(element) &&
+                    !(feature.length === filterInitialValues.features.length)
+                      ? "h-4 w-4 bg-mainGreen rounded-full mr-1 transition-all duration-200 ease-in lg:mr-2"
+                      : "h-4 w-4 bg-transparent border border-gray-300 rounded-full mr-1 transition-all duration-200 ease-in lg:mr-2"
+                  }
+                  hidden={element === "empty"}
+                ></div>
+                <div
+                  className="text-sm text-gray-700"
+                  hidden={element === "empty"}
+                >
+                  {element}
                 </div>
-              </>
-            ) : (
-              <>
-                <div className="flex flex-wrap lg:block">
-                  {filterInitialValues.features.map((element) => (
-                    <div hidden={element === "empty"}>
-                      <input
-                        id={`${element}`}
-                        name="feature"
-                        value={`${element}`}
-                        type="checkbox"
-                        className="hidden lg:w-full"
-                        checked={props.feature.includes(`${element}`)}
-                        onChange={props.handleFeature}
-                      />
-                      <label htmlFor={`${element}`} className="filterCheckText">
-                        {`${element}`}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+              </div>
+            ))}
           </div>
 
           {/* <div className="mb-3 text-xs font-medium text-mainGreen">
@@ -600,7 +438,7 @@ const Filter = (props) => {
             <button
               type="submit"
               className="ml-1.5 text-center whitespace-nowrap border border-gray-400 box-border focus:outline-none text-gray-400 text-base rounded-md bg-white block w-20 hover:bg-gray-400 hover:shadow-lg hover:text-white duration-200 lg:mx-auto"
-              onClick={props.filterClear}
+              onClick={filterClear}
             >
               クリア
             </button>
