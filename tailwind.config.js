@@ -8,10 +8,12 @@ module.exports = {
         subBlue: "#49ADF7",
       },
       width: {
+        18: "4.5rem",
         1600: "1600px",
         680: "680px",
       },
       height: {
+        18: "4.5rem",
         900: "900px",
       },
       minWidth: {

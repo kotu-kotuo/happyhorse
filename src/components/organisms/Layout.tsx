@@ -58,9 +58,18 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
       />
 
       {!currentUser && (
-        <div className="h-12 pt-3.5 bg-mainGreen text-gray-50 text-center text-sm block">
-          happy horseは、馬の売買が無料で簡単にできるプラットフォームです
-        </div>
+        <>
+          <div className="hidden sm:block">
+            <div className="h-12 pt-3.5 bg-mainGreen text-gray-50 text-center text-sm block">
+              happy horseは、馬の売買が無料で簡単にできるプラットフォームです
+            </div>
+          </div>
+          <div className="sm:hidden">
+            <div className="h-10 pt-3.5 bg-mainGreen text-gray-50 text-center text-xs block">
+              happy horseでは、馬の売買が無料で簡単にできます
+            </div>
+          </div>
+        </>
       )}
 
       <main className={"max-w-5xl mx-auto"}>{children}</main>

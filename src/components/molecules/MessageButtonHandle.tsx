@@ -30,10 +30,12 @@ const MessageButtonHandle = (props) => {
         </>
       ) : currentUser?.uid === post.userID ? (
         <Link href="/message/management">
-          <MessageButton
-            bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
-            label={"メッセージ管理"}
-          />
+          <a>
+            <MessageButton
+              bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
+              label={"メッセージ管理"}
+            />
+          </a>
         </Link>
       ) : post.deletedAccount === true ? (
         <div></div>
@@ -52,14 +54,16 @@ const MessageButtonHandle = (props) => {
               : { pathname: "/login" }
           }
         >
-          <MessageButton
-            bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
-            label={
-              post.sendMessageUserIDs.includes(currentUser?.uid)
-                ? "メッセージ画面へ"
-                : "メッセージを送る"
-            }
-          />
+          <a>
+            <MessageButton
+              bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
+              label={
+                post.sendMessageUserIDs.includes(currentUser?.uid)
+                  ? "メッセージ画面へ"
+                  : "メッセージを送る"
+              }
+            />
+          </a>
         </Link>
       )}
     </div>

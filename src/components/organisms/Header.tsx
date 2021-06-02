@@ -63,7 +63,7 @@ const Header = (props) => {
   return (
     <header className="header-height w-full border-b border-gray-100 shadow-sm">
       <nav className="header-height flex items-center max-w-5xl mx-auto">
-        <div className="mr-auto pt-2">
+        <div className="mr-auto pt-1 sm:pt-2">
           <Link href="/">
             <a>
               <img
@@ -75,17 +75,17 @@ const Header = (props) => {
         </div>
         {console.log(notifications)}
 
-        <div className="ml-auto flex items-center">
+        <div className="ml-auto flex items-center text-xs sm:text-base">
           {!currentUser && (
-            <>
+            <div className="flex items-center mt-1 mr-3 sm:mt-0.5 sm:mr-0">
               <Link href="/signup">
                 <a className="text-gray-600">新規登録</a>
               </Link>
-              <span className="mx-1.5"> | </span>
+              <div className="mb-0.5 mx-1 sm:mx-2"> | </div>
               <Link href="/login">
                 <a className="text-gray-600">ログイン</a>
               </Link>
-            </>
+            </div>
           )}
 
           {currentUser && user && (
@@ -137,7 +137,7 @@ const Header = (props) => {
                   <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60">
                     <MenuList
                       currentUser={currentUser}
-                      serCurrentUser={setCurrentUser}
+                      setCurrentUser={setCurrentUser}
                       user={user}
                       setIsOpenMenu={setIsOpenMenu}
                     />
@@ -147,7 +147,11 @@ const Header = (props) => {
             </>
           )}
 
-          <div className="inline-block ml-5 ">
+          <div
+            className={
+              currentUser ? "inline-block ml-5" : "hidden ml-5 sm:inline-block"
+            }
+          >
             {currentUser ? (
               <Link href="/post/post">
                 <button

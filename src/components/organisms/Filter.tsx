@@ -429,7 +429,7 @@ const Filter = (props) => {
                 </div> */}
 
           <div className="flex justify-center mt-8 lg:justify-self-auto">
-            <button // TODO: ログインしてなかったら遷移させたい
+            <button
               type="submit"
               className="mr-1.5 whitespace-nowrap focus:outline-none text-white text-base font-semibold py-2 px-5 rounded-md bg-gray-400 block w-44 hover:opacity-90 hover:shadow-lg lg:mx-auto"
             >

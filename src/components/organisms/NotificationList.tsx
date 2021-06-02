@@ -24,7 +24,7 @@ const NotificationList = (props) => {
               href={{
                 pathname: "/profile",
                 query: {
-                  uid: currentUser.uid,
+                  uid: currentUser?.uid,
                 },
               }}
             />
