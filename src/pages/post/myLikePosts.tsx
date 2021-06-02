@@ -7,6 +7,7 @@ import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
 import { PageTitle } from "../../components/atoms/Atoms";
+import { FaRegHeart } from "react-icons/fa";
 
 const myLikePosts = () => {
   const { currentUser, user } = useContext(AuthContext);
@@ -25,39 +26,46 @@ const myLikePosts = () => {
     }
   }, [currentUser]);
 
-  const createdTime = (post) => {
-    const time = new Date(post.createdAt.seconds * 1000);
-    return time.toLocaleDateString();
-  };
-
   return (
     <div>
       <Layout title="myPostList">
-        <PageTitle title="お気に入りの馬"/>
-        <div className="flex flex-wrap">
-          {posts[0]?.postID !== "" &&
-            posts.map((post, index) => (
-              <>
-                <div key={index} className="w-1/3 p-6">
-                  <Link href={`postShow/${post.postID}`}>
-                    <div className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80">
-                      <div className="pb-image w-full h-0 relative">
-                        <img
-                          src={post.images[0]}
-                          className="object-cover outline-none w-full h-full cursor-pointer absolute rounded-t-xl"
-                        />
+        <h2 className="fontSize-xl text-center mt-8 mb-7 text-gray-900 md:my-10 ">
+          お気に入りの馬
+        </h2>
+        {posts[0]?.postID !== "" &&
+          posts.map((post, index) => (
+            <div key={index} className="max-w-2xl mx-auto">
+              <Link href={`postShow/${post.postID}`}>
+                <div className="mx-2 my-4 rounded-md shadow border-gray-500 sm:my-6">
+                  <div className="flex">
+                    <div>
+                      <img
+                        src={post.images[0]}
+                        className="h-14 w-14 rounded-l-md mr-3 block object-cover sm:h-18 sm:w-28"
+                      />
+                    </div>
+                    <div className="px-3 py-1 max-w-3xl w-full">
+                      <div className="fontSize-base text-gray-900 mr-0.5 mt-1 mb-0 line-clamp-1 sm:mt-2 sm:mb-2">
+                        {post.title}
                       </div>
-                      <div className="p-2 text-sm text-gray-900">
-                        <div className="m-1 myPostTitle">{post.title}</div>
-                        <div className="p-1"> {post.price}円</div>
-                        <div className="p-1">{createdTime(post)}</div>
+
+                      <div className="flex justify-start items-center w-full">
+                        <p className="fontSize-sm text-gray-500 mt-1 mb-1 line-clamp-1 sm:mt-0 sm:mb-0">
+                          {`￥${post.price}`}
+                        </p>
+                        <div className="ml-5 mr-2 flex items-center">
+                          <FaRegHeart className="text-gray-500 text-xs mr-1" />
+                          <div className="text-gray-500 text-xs">
+                            {post.likeUserIDs.length}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 </div>
-              </>
-            ))}
-        </div>
+              </Link>
+            </div>
+          ))}
       </Layout>
     </div>
   );

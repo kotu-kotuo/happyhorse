@@ -97,7 +97,7 @@ const management = () => {
               <div hidden={isMyPostsBlockHidden}>
                 <div hidden={isMyPostsHidden}>
                   {myPosts.map((myPost) => (
-                    <div className="mx-2 my-6 rounded-md shadow border-gray-500 ">
+                    <div className="mx-2 my-4 rounded-md shadow border-gray-500 sm:my-6">
                       <div
                         onClick={(e) => {
                           setIsMyPostsHidden(true);
@@ -172,7 +172,7 @@ const management = () => {
                             },
                           }}
                         >
-                          <div className="mx-2 my-6 rounded-r-md rounded-l-full shadow border-gray-500 cursor-pointer">
+                          <div className="mx-2 my-3 rounded-r-md rounded-l-full shadow border-gray-500 cursor-pointer sm:my-6">
                             <div className="flex">
                               <div>
                                 {myPostChatroom.deletedAccount === true ? (
@@ -191,7 +191,7 @@ const management = () => {
                                   >
                                     <img
                                       src={myPostChatroom.sendUserAvatar}
-                                      className="h-16 w-16 rounded-full mr-3 block object-cover hover:opacity-80"
+                                      className="h-12 w-12 rounded-full mr-3 block object-cover hover:opacity-80 sm:h-16 sm:w-16"
                                     />
                                   </Link>
                                 )}
@@ -202,7 +202,7 @@ const management = () => {
                                     <div className="fontSize-base text-gray-900 line-clamp-1 sm:mr-2">
                                       {myPostChatroom.sendUserName}
                                     </div>
-                                    <div className="text-gray-500 text-xs mr-1">{`(${myPostChatroom.messageCount})`}</div>
+                                    <div className="text-gray-500 text-xs ml-1 mr-1">{`(${myPostChatroom.messageCount})`}</div>
                                   </div>
                                   <div className="text-gray-500 text-xs mt-0.5">
                                     {createdTime(
@@ -255,7 +255,7 @@ const management = () => {
                     }}
                   >
                     <div>
-                      <div className="mx-2 my-6 rounded-md shadow border-gray-500 cursor-pointer">
+                      <div className="mx-2 my-3 rounded-md shadow border-gray-500 cursor-pointer sm:my-6">
                         <div className="flex">
                           <div>
                             <img
@@ -266,10 +266,10 @@ const management = () => {
                           <div className="px-3 py-1 max-w-3xl w-full">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center">
-                                <div className="fontSize-base text-gray-900 mr-2 line-clamp-1">
+                                <div className="fontSize-base text-gray-900 line-clamp-1 sm:mr-2">
                                   {sendMessageChatroom.postTitle}
                                 </div>
-                                <div className="text-gray-500 text-xs ml-1">{`(${sendMessageChatroom.messageCount})`}</div>
+                                <div className="text-gray-500 text-xs ml-1 mr-1">{`(${sendMessageChatroom.messageCount})`}</div>
                               </div>
                               <div className=" text-xs text-gray-500 mt-0.5">
                                 {createdTime(
