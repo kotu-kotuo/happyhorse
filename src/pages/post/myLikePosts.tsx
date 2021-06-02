@@ -36,7 +36,7 @@ const myLikePosts = () => {
           posts.map((post, index) => (
             <div key={index} className="max-w-2xl mx-auto">
               <Link href={`postShow/${post.postID}`}>
-                <div className="mx-2 my-4 rounded-md shadow border-gray-500 sm:my-6">
+                <div className="mx-2 my-4 rounded-md shadow border-gray-500">
                   <div className="flex">
                     <div>
                       <img
