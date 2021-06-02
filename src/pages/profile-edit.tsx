@@ -247,7 +247,7 @@ const ProfileEdit = () => {
                 />
               )}
               <input
-                className="inline w-full text-gray-500"
+                className="text-sm inline w-full text-gray-500 sm:text-base"
                 type="file"
                 onChange={(e) => {
                   setImage(e.target.files[0]);
@@ -270,7 +270,7 @@ const ProfileEdit = () => {
                 />
               )}
               <input
-                className="inline w-full text-gray-500"
+                className="text-sm inline w-full text-gray-500 sm:text-base"
                 type="file"
                 onChange={(e) => {
                   setCover(e.target.files[0]);
@@ -281,7 +281,7 @@ const ProfileEdit = () => {
               ユーザネーム(20字以内)
             </div>
             <input
-              className="block w-full mb-6 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="text-sm block w-full mb-6 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-base"
               type="text"
               onChange={(e) => {
                 setUsername(e.target.value);
@@ -293,7 +293,7 @@ const ProfileEdit = () => {
             </div>
             <div className="mb-7">
               <textarea
-                className="block w-full h-40 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="text-sm block w-full h-40 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-base"
                 onChange={(e) => {
                   setProfileText(e.target.value);
                 }}

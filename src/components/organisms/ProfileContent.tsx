@@ -22,13 +22,13 @@ const ProfileContent = (props) => {
               />
               {user.id === currentUser.uid && (
                 <Link href="/profile-edit">
-                  <a className="absolute bottom-0 right-10 border border-mainGreen rounded-md px-4 py-2 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300">
+                  <a className="absolute bottom-0 right-7 border border-mainGreen rounded-md px-3 py-1 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300 sm:px-4 sm:py-2 sm:right-10">
                     編集
                   </a>
                 </Link>
               )}
             </div>
-            <div className="text-gray-900 font-semibold text-xl mt-3 mb-1 sm:mt-6 px-2 text-center">{`${user.username}`}</div>
+            <div className="text-base text-gray-900 font-semibold mt-3 mb-1 sm:mt-6 px-2 text-center sm:text-lg">{`${user.username}`}</div>
 
             <Link
               href={{

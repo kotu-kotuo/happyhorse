@@ -339,7 +339,7 @@ const postEdit = () => {
                   <div key={index} className="mr-6">
                     <img
                       src={previewURL}
-                      className="h-24 w-32 mb-4  object-cover"
+                      className="h-12 w-20 mb-4 object-cover sm:h-20 sm:w-32"
                     />
                     <div onClick={(e) => deletePreview(index)}>
                       <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
@@ -352,8 +352,8 @@ const postEdit = () => {
               className="block w-40 mr-3 mb-8 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
             >
               <div className="flex items-center text-center">
-                <RiImageAddFill className="text-lg ml-1" />
-                <p className="ml-2.5">画像を選択</p>
+                <RiImageAddFill className="text-lg ml-1 sm:text-base" />
+                <p className="ml-2.5 fontSize-base">画像を選択</p>
               </div>
             </label>
 
@@ -379,7 +379,7 @@ const postEdit = () => {
               name="title"
               defaultValue={post?.title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="mb-8 text-sm w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
             />
 
             <div className="text-xs text-gray-600 mb-1 ml-1">
@@ -390,7 +390,7 @@ const postEdit = () => {
               name="postText"
               defaultValue={post?.postText}
               onChange={(e) => setPostText(e.target.value)}
-              className="mb-8 w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm whitespace-pre"
+              className="mb-8 text-sm w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 whitespace-pre"
             />
 
             <div className="text-xs text-gray-600 mb-1 ml-1">
@@ -402,7 +402,7 @@ const postEdit = () => {
               name="horseName"
               defaultValue={post?.horseName}
               onChange={(e) => setHorseName(e.target.value)}
-              className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="mb-8 text-sm w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
             />
 
             <div className="text-xs text-gray-600 mb-1 ml-1">
@@ -414,7 +414,7 @@ const postEdit = () => {
                 name="category"
                 defaultValue={post?.category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="mb-8 text-sm w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
               >
                 <option hidden>選択してください</option>
                 {filterInitialValues.category.map((element) => (
@@ -432,7 +432,7 @@ const postEdit = () => {
                 name="breed"
                 defaultValue={post?.breed}
                 onChange={(e) => setBreed(e.target.value)}
-                className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="mb-8 text-sm w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
               >
                 <option hidden>選択してください</option>
                 {filterInitialValues.breed.map((element) => (
@@ -450,7 +450,7 @@ const postEdit = () => {
                 name="color"
                 defaultValue={post?.color}
                 onChange={(e) => setColor(e.target.value)}
-                className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="mb-8 text-sm w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
               >
                 <option hidden>選択してください</option>
                 {filterInitialValues.color.map((element) => (
@@ -470,7 +470,7 @@ const postEdit = () => {
                 placeholder="2010"
                 defaultValue={post?.birth.year}
                 onChange={(e) => setYear(e.target.value)}
-                className="mb-8 w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+                className="mb-8 text-sm w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10"
               />
               <div className="mr-6 ml-2 mb-8 text-sm">年</div>
               <input
@@ -479,7 +479,7 @@ const postEdit = () => {
                 placeholder="1"
                 defaultValue={post?.birth.month}
                 onChange={(e) => setMonth(e.target.value)}
-                className="appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+                className="appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
               />
               <div className="mr-6 ml-2 mb-8 text-sm">月</div>
               <input
@@ -488,7 +488,7 @@ const postEdit = () => {
                 placeholder="10"
                 defaultValue={post?.birth.day}
                 onChange={(e) => setDay(e.target.value)}
-                className="mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+                className="mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
               />
               <div className="mr-6 ml-2 mb-8 text-sm">日</div>
             </div>
@@ -499,7 +499,7 @@ const postEdit = () => {
               name="age"
               defaultValue={post?.age}
               onChange={(e) => setAge(e.target.value)}
-              className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
             />
 
             <div className="text-xs text-gray-600 mb-1 ml-1">
@@ -511,7 +511,7 @@ const postEdit = () => {
               name="height"
               defaultValue={post?.height}
               onChange={(e) => setHeight(e.target.value)}
-              className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
             />
 
             <div className="text-xs text-gray-600 mb-1 ml-1">
@@ -523,7 +523,7 @@ const postEdit = () => {
                 name="area"
                 defaultValue={post?.area}
                 onChange={(e) => setArea(e.target.value)}
-                className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
               >
                 <option hidden>選択してください</option>
                 {filterInitialValues.area.map((element) => (
@@ -568,7 +568,7 @@ const postEdit = () => {
                 name="price"
                 defaultValue={post?.price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+                className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
               />
             </div>
 

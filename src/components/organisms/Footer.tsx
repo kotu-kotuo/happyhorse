@@ -66,7 +66,7 @@ const Footer = (props) => {
           </Link>
 
           <div
-            className="-mr-1.5 w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
+            className="-mr-0.5 w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
             onClick={() => {
               clickBell();
               if (isOpenBottomMenu) {
@@ -109,8 +109,8 @@ const Footer = (props) => {
         <div
           className={
             isOpenBottomNotification
-              ? "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
-              : "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
+              ? "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
+              : "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
           }
           onClick={() => {
             clickBell();
@@ -119,11 +119,12 @@ const Footer = (props) => {
           <div
             className={
               isOpenBottomNotification
-                ? `transform translate-x-0 bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-300`
-                : `transform translate-x-full bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
+                ? `transform translate-x-0 bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-300`
+                : `transform translate-x-full bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
             }
             onClick={(e) => e.stopPropagation()}
-          >
+          ><div className="text-gray-900 my-3">お知らせ</div>
+            <div className="border border-b border-gray-50 mt-1 w-full"></div>
             <NotificationList
               notifications={notifications}
               currentUser={currentUser}
@@ -133,8 +134,8 @@ const Footer = (props) => {
         <div
           className={
             isOpenBottomMenu
-              ? "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
-              : "fixed top-12 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
+              ? "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
+              : "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
           }
           onClick={() => {
             clickAvatar();
@@ -143,8 +144,8 @@ const Footer = (props) => {
           <div
             className={
               isOpenBottomMenu
-                ? `transform translate-x-0 bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-300 z-30`
-                : `transform translate-x-full bg-white fixed top-12 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-500 z-30`
+                ? `transform translate-x-0 bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-300 z-30`
+                : `transform translate-x-full bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-500 z-30`
             }
             onClick={(e) => e.stopPropagation()}
           >
