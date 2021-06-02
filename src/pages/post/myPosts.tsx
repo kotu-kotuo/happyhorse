@@ -28,9 +28,7 @@ const myPostList = () => {
   return (
     <div>
       <Layout title="myPostList">
-        <h2 className="fontSize-xl text-center mt-8 mb-7 text-gray-900 md:my-10 ">
-          掲載した馬
-        </h2>
+        <h2 className="pageTitle">掲載した馬</h2>
         {posts?.length !== 0 &&
           posts.map((post, index) => (
             <>

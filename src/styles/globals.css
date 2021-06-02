@@ -43,6 +43,10 @@
   @apply mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
 }
 
+.pageTitle{
+  @apply fontSize-xl text-center mt-8 mb-7 text-gray-900 md:mt-10 md:mb-9;
+}
+
 /*==============================================
 # slickの設定
 ===============================================*/

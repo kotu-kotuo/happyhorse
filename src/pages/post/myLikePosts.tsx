@@ -21,7 +21,10 @@ const myLikePosts = () => {
         .orderBy("likedAt", "desc")
         .get()
         .then((snapshot) => {
-          setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
+          setPosts(
+            snapshot.docs
+              .map((doc) => setPostStates(doc.data()))
+          );
         });
     }
   }, [currentUser]);
@@ -29,9 +32,7 @@ const myLikePosts = () => {
   return (
     <div>
       <Layout title="myPostList">
-        <h2 className="fontSize-xl text-center mt-8 mb-7 text-gray-900 md:my-10 ">
-          お気に入りの馬
-        </h2>
+        <h2 className="pageTitle">お気に入りの馬</h2>
         {posts[0]?.postID !== "" &&
           posts.map((post, index) => (
             <div key={index} className="max-w-2xl mx-auto">
