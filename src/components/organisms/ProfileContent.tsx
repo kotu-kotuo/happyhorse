@@ -1,13 +1,9 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../../auth/AuthProvider";
 import StarRatings from "react-star-ratings";
-
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 const ProfileContent = (props) => {
-  const router = useRouter();
   const { user, currentUser } = props;
+
   return (
     <div>
       {user && currentUser && (
@@ -26,20 +22,29 @@ const ProfileContent = (props) => {
               />
               {user.id === currentUser.uid && (
                 <Link href="/profile-edit">
-                  <a className="absolute bottom-0 right-10 border border-mainGreen rounded-md px-4 py-2 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300">
+                  <a className="absolute bottom-0 right-7 border border-mainGreen rounded-md px-3 py-1 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300 sm:px-4 sm:py-2 sm:right-10">
                     編集
                   </a>
                 </Link>
               )}
             </div>
-            <div className="text-gray-900 font-semibold text-xl mt-3 mb-1 sm:mt-6 px-2 text-center">{`${user.username}`}</div>
-            <Link href="/reviews">
+            <div className="text-base text-gray-900 font-semibold mt-3 mb-1 sm:mt-6 px-2 text-center sm:text-lg">{`${user.username}`}</div>
+
+            <Link
+              href={{
+                pathname: "/reviews",
+                query: {
+                  uid: user.id,
+                },
+              }}
+            >
               <div className="flex justify-center items-center cursor-pointer hover:opacity-80">
                 <div>
                   <StarRatings
                     numberOfStars={5}
                     rating={
-                      (user.good * 5 + user.bad * 1) / (user.good + user.bad) || 0
+                      (user.good * 5 + user.bad * 1) / (user.good + user.bad) ||
+                      0
                     }
                     starRatedColor="#FFD400"
                     name="rating"
@@ -52,6 +57,7 @@ const ProfileContent = (props) => {
                 </a>
               </div>
             </Link>
+
             <div className="text-gray-900 sm:text-base text-sm mt-7 px-2 max-w-2xl mx-auto whitespace-pre-wrap">{`${user.profileText}`}</div>
           </div>
         </div>

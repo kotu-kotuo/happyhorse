@@ -14,6 +14,7 @@ import {
   chatroomInitialValues,
   postInitialValues,
 } from "../../utils/initialValues";
+import { FaRegUser, FaRegClock, FaRegHeart } from "react-icons/fa";
 
 const management = () => {
   const { currentUser } = useContext(AuthContext);
@@ -82,7 +83,7 @@ const management = () => {
 
   return (
     <Layout title="management">
-      <div className="mt-16">
+      <div className="mt-10 sm:mt-16">
         <SwitchDisplay
           setIsLeftHidden={setIsMyPostsBlockHidden}
           setIsRightHidden={setIsSendHidden}
@@ -90,13 +91,13 @@ const management = () => {
           textLeft={"自分の投稿"}
           textRight={"メッセージを送った投稿"}
         />
-        <div className="max-w-3xl w-full mx-auto mt-8">
+        <div className="max-w-3xl w-full mx-auto mt-4 sm:mt-8">
           {myPosts && sendMessageChatrooms && currentUser && (
             <>
               <div hidden={isMyPostsBlockHidden}>
                 <div hidden={isMyPostsHidden}>
                   {myPosts.map((myPost) => (
-                    <div className="mx-2 my-6 rounded-md shadow border-gray-500 ">
+                    <div className="mx-2 my-4 rounded-md shadow border-gray-500 sm:my-6">
                       <div
                         onClick={(e) => {
                           setIsMyPostsHidden(true);
@@ -110,24 +111,14 @@ const management = () => {
                           <div>
                             <img
                               src={myPost.images[0]}
-                              className="h-16 w-28 rounded-l-md mr-3 block object-cover"
+                              className="h-18 w-18 rounded-l-md mr-3 block object-cover sm:h-18 sm:w-28"
                             />
                           </div>
                           <div className="px-3 py-1 max-w-3xl w-full">
-                            <div className="flex">
-                              <div className="text-gray-900 mr-2 whitespace-nowrap">
-                                {myPost.title}
-                              </div>
-                              <div className="flex w-full">
-                                <div className="text-gray-600 text-xs mt-auto whitespace-nowrap">{`ユーザー(${myPost.sendMessageUserIDs.length})`}</div>
-                                <div className="text-right mt-auto ml-auto max-w-xl w-full">
-                                  <div className="text-gray-500 text-xs mt-auto ml-auto">
-                                    {createdTime(myPost.messageUpdatedAt)}
-                                  </div>
-                                </div>
-                              </div>
+                            <div className="fontSize-base text-gray-900 mr-0.5 mt-0 line-clamp-1 sm:mr-2 sm:mt-1">
+                              {myPost.title}
                             </div>
-                            <p className="text-gray-500 text-sm mt-2">
+                            <p className="fontSize-sm text-gray-500 mt-1 mb-1 line-clamp-1 sm:mt-0 sm:mb-0">
                               {/* レビューが完了したユーザの最新メッセージを変更 */}
                               {myPost.latestMessage === "評価をお願いします" &&
                               reviewsOnHold.filter(
@@ -139,6 +130,26 @@ const management = () => {
                                 ? "評価完了しました"
                                 : myPost.latestMessage}
                             </p>
+                            <div className="flex justify-end items-center w-full">
+                              <div className="mr-2 flex items-center">
+                                <FaRegUser className="text-gray-500 text-xs mr-0.5" />
+                                <div className="text-gray-500 text-xs">
+                                  {myPost.sendMessageUserIDs.length}
+                                </div>
+                              </div>
+                              <div className="mr-2 flex items-center">
+                                <FaRegHeart className="text-gray-500 text-xs mr-1" />
+                                <div className="text-gray-500 text-xs">
+                                  {myPost.likeUserIDs.length}
+                                </div>
+                              </div>
+                              <div className="mr-2 flex items-center">
+                                <FaRegClock className="text-gray-500 text-xs mr-0.5" />
+                                <div className="text-gray-500 text-xs">
+                                  {createdTime(myPost.messageUpdatedAt)}
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -161,13 +172,13 @@ const management = () => {
                             },
                           }}
                         >
-                          <div className="mx-2 my-6 rounded-r-md rounded-l-full shadow border-gray-500 cursor-pointer">
+                          <div className="mx-2 my-3 rounded-r-md rounded-l-full shadow border-gray-500 cursor-pointer sm:my-6">
                             <div className="flex">
                               <div>
                                 {myPostChatroom.deletedAccount === true ? (
                                   <img
                                     src={myPostChatroom.sendUserAvatar}
-                                    className="h-16 w-16 rounded-full mr-3 block object-cover hover:opacity-80"
+                                    className="h-12 w-12 rounded-full mr-3 block object-cover hover:opacity-80 sm:h-16 sm:w-16"
                                   />
                                 ) : (
                                   <Link
@@ -180,28 +191,26 @@ const management = () => {
                                   >
                                     <img
                                       src={myPostChatroom.sendUserAvatar}
-                                      className="h-16 w-16 rounded-full mr-3 block object-cover hover:opacity-80"
+                                      className="h-12 w-12 rounded-full mr-3 block object-cover hover:opacity-80 sm:h-16 sm:w-16"
                                     />
                                   </Link>
                                 )}
                               </div>
                               <div className="px-3 py-1 max-w-3xl w-full">
-                                <div className="flex">
-                                  <div className="text-gray-900 mr-2 whitespace-nowrap ">
-                                    {myPostChatroom.sendUserName}
-                                    <span className="text-gray-500 text-xs ml-1">{`(${myPostChatroom.messageCount})`}</span>
-                                  </div>
-                                  <div className="flex w-full">
-                                    <div className="text-right mt-auto ml-auto max-w-xl w-full">
-                                      <div className="text-gray-500 text-xs mt-auto ml-auto">
-                                        {createdTime(
-                                          myPostChatroom.messageUpdatedAt
-                                        )}
-                                      </div>
+                                <div className="flex justify-between">
+                                  <div className="flex items-center">
+                                    <div className="fontSize-base text-gray-900 line-clamp-1 sm:mr-2">
+                                      {myPostChatroom.sendUserName}
                                     </div>
+                                    <div className="text-gray-500 text-xs ml-1 mr-1">{`(${myPostChatroom.messageCount})`}</div>
+                                  </div>
+                                  <div className="text-gray-500 text-xs mt-0.5">
+                                    {createdTime(
+                                      myPostChatroom.messageUpdatedAt
+                                    )}
                                   </div>
                                 </div>
-                                <p className="text-gray-500 text-sm mt-2">
+                                <p className="fontSize-sm text-gray-500 mt-1 line-clamp-1 sm:mt-2">
                                   {myPostChatroom.latestMessage ===
                                     "評価をお願いします" &&
                                   reviewsOnHold.filter(
@@ -246,31 +255,29 @@ const management = () => {
                     }}
                   >
                     <div>
-                      <div className="mx-2 my-6 rounded-md shadow border-gray-500 cursor-pointer">
+                      <div className="mx-2 my-3 rounded-md shadow border-gray-500 cursor-pointer sm:my-6">
                         <div className="flex">
                           <div>
                             <img
                               src={sendMessageChatroom.postImage}
-                              className="h-16 w-28 rounded-l-md mr-3 block object-cover"
+                              className="h-12 w-12 rounded-l-md mr-3 block object-cover sm:h-16 sm:w-28"
                             />
                           </div>
                           <div className="px-3 py-1 max-w-3xl w-full">
-                            <div className="flex">
-                              <div className="text-gray-900 mr-2 whitespace-nowrap">
-                                {sendMessageChatroom.postTitle}
-                                <span className="text-gray-500 text-xs ml-1">{`(${sendMessageChatroom.messageCount})`}</span>
-                              </div>
-                              <div className="flex w-full">
-                                <div className="text-right mt-auto ml-auto max-w-xl w-full">
-                                  <div className="text-gray-500 text-xs mt-auto ml-auto">
-                                    {createdTime(
-                                      sendMessageChatroom.messageUpdatedAt
-                                    )}
-                                  </div>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center">
+                                <div className="fontSize-base text-gray-900 line-clamp-1 sm:mr-2">
+                                  {sendMessageChatroom.postTitle}
                                 </div>
+                                <div className="text-gray-500 text-xs ml-1 mr-1">{`(${sendMessageChatroom.messageCount})`}</div>
+                              </div>
+                              <div className=" text-xs text-gray-500 mt-0.5">
+                                {createdTime(
+                                  sendMessageChatroom.messageUpdatedAt
+                                )}
                               </div>
                             </div>
-                            <p className="text-gray-500 text-sm mt-2">
+                            <p className="fontSize-sm text-gray-500 line-clamp-1 mt-1 sm:mt-2">
                               {sendMessageChatroom.latestMessage ===
                                 "評価をお願いします" &&
                               reviewsOnHold.filter(

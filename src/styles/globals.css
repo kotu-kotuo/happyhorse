@@ -8,7 +8,63 @@
 ===============================================*/
 
 .filterCheckText {
-  @apply font-normal text-sm text-gray-400 block w-full cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1;
+  @apply font-normal text-sm text-gray-400 inline-block cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1 mr-3 lg:w-full lg:block;
+}
+
+.fontSize-xl {
+  @apply text-lg md:text-xl;
+}
+
+.fontSize-base {
+  @apply text-sm md:text-base;
+}
+
+.fontSize-sm {
+  @apply text-xs md:text-sm;
+}
+
+.container-base {
+  @apply mx-auto px-2 md:px-3;
+}
+
+.button-round {
+  @apply mt-6 mb-6 focus:outline-none text-white font-semibold py-3 px-8 rounded-full hidden md:block;
+}
+
+.header-height {
+  @apply h-12 sm:h-16;
+}
+
+.postSelect {
+  @apply text-sm md:text-base mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
+}
+
+.postInputText {
+  @apply mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
+}
+
+.pageTitle {
+  @apply fontSize-xl text-center mt-8 mb-7 text-gray-900 md:mt-10 md:mb-9;
+}
+
+.messageAnnounce {
+  @apply text-center text-sm text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2 sm:text-base;
+}
+
+/*==============================================
+# 共通
+===============================================*/
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.z-10- {
+  z-index: -1;
+}
+
+.z-1 {
+  z-index: 1;
 }
 
 /*==============================================
@@ -25,12 +81,38 @@
   width: 100%;
 }
 
+@media screen and (max-width: 768px) {
+  .slick-dots {
+    margin-top: -3px;
+    z-index: 10;
+  }
+}
+
 .slick-dots li {
   list-style: none;
   display: inline-block;
   max-width: 1120px;
   max-height: 56px;
   margin: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .slick-dots li {
+    height: 8px;
+    width: 8px;
+    border-radius: 1000px;
+    background-color: rgba(55, 65, 81, 0.2);
+    z-index: 10;
+  }
+
+  .slick-dots .slick-active {
+    background-color: rgba(55, 65, 81, 0.6);
+  }
+}
+@media screen and (max-width: 768px) {
+  .slick-dots li button {
+    display: none;
+  }
 }
 
 .slick-dots img {
@@ -59,19 +141,37 @@
   opacity: 0.5;
 }
 
+@media screen and (max-width: 768px) {
+  .slick-slider svg {
+    height: 35px;
+    width: 35px;
+  }
+}
+
 .slick-next {
   position: absolute;
   right: 0 !important;
-  top: 0 !important;
+  top: 0;
   bottom: 0 !important;
   margin: auto !important;
 }
+
 .slick-prev {
   position: absolute;
   left: 0 !important;
-  top: 0 !important;
+  top: 0;
   bottom: 0 !important;
   margin: auto !important;
+}
+
+@media screen and (max-width: 768px) {
+  .slick-next {
+    top: 30px !important;
+  }
+
+  .slick-prev {
+    top: 30px !important;
+  }
 }
 .slick-arrow {
   z-index: 2 !important;
@@ -92,96 +192,6 @@
   -o-filter: grayscale(0);
   filter: grayscale(0);
   opacity: 1;
-}
-
-/*==============================================
-# textの省略
-===============================================*/
-
-.index-title {
-  font-size: 20px;
-  color: #1f2937;
-  font-weight: 600;
-  margin: 12px 0;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-}
-
-.index-postText {
-  font-size: 14px;
-  color: #6b7280;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-
-.myPostTitle {
-  font-size: 14px;
-  color: #000;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-}
-/*==============================================
-# 絞り込みのcheckbox
-===============================================*/
-
-.checklist input[type="checkbox"] {
-  display: none;
-}
-
-.checklist label {
-  position: relative;
-  padding-left: 25px;
-  color: rgba(55, 65, 81);
-  z-index: 1;
-}
-
-.checklist input[type="checkbox"] + label::after {
-  position: absolute;
-  content: "";
-  display: block;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  background: #77c649;
-  left: 0;
-  top: 5px;
-  z-index: -1;
-  transform: scale(0, 0);
-}
-
-.checklist input[type="checkbox"] + label::after {
-  background: #77c649;
-  transition: 0.3s;
-  opacity: 0;
-}
-
-.checklist input[type="checkbox"]:checked + label::after {
-  transform: scale(1, 1);
-  opacity: 1;
-}
-
-.border-circle {
-  position: relative;
-}
-
-.checklist input[type="checkbox"] + label::before {
-  position: absolute;
-  content: "";
-  display: block;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  left: 0;
-  top: 5px;
-  z-index: -2;
-  border: 1px solid #d3d3d3;
-  opacity: 0.8;
 }
 
 /*==============================================
@@ -213,8 +223,15 @@
 ===============================================*/
 
 .chatScreenHeight {
-  min-height: calc(100vh - 175px);
-  height: calc(100vh - 175px);
+  min-height: calc(100vh - 115px);
+  height: calc(100vh - 115px);
+}
+
+@media screen and (max-width: 640px) {
+  .chatScreenHeight {
+    min-height: calc(100vh - 0px);
+    height: calc(100vh - 0px);
+  }
 }
 
 /*==============================================
@@ -245,7 +262,7 @@
 /*==============================================
 # レビューの総数のスタイル
 ===============================================*/
-.reviewNumbersSize{
+.reviewNumbersSize {
   font-size: 0.9rem;
   line-height: 0.9rem;
 }
@@ -253,8 +270,14 @@
 /*==============================================
 # レビュー一覧の掲載タイトル
 ===============================================*/
-.reviewPostTitleText{
+.reviewPostTitleText {
   line-height: 0.8rem;
   font-size: 0.75rem;
-  
+}
+
+/*==============================================
+# message
+===============================================*/
+.mb-sendButton{
+  margin-bottom: 0.075rem;
 }

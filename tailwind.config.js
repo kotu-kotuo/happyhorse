@@ -8,11 +8,23 @@ module.exports = {
         subBlue: "#49ADF7",
       },
       width: {
+        18: "4.5rem",
         1600: "1600px",
         680: "680px",
       },
       height: {
+        18: "4.5rem",
         900: "900px",
+      },
+      minWidth: {
+        18: "4.5rem",
+        10: "2.5rem",
+        8: "2rem",
+      },
+      minHeight: {
+        18: "4.5rem",
+        10: "2.5rem",
+        8: "2rem",
       },
       padding: {
         image: "56.25%",
@@ -66,6 +78,22 @@ module.exports = {
             transform: "translateY(10px)",
           },
         },
+        "fade-in": {
+          from: {
+            opacity: "0",
+          },
+          to: {
+            opacity: "1",
+          },
+        },
+        "fade-out": {
+          from: {
+            opacity: "1",
+          },
+          to: {
+            opacity: "0",
+          },
+        },
       },
       animation: {
         "fade-in-down": "fade-in-down 3s ease-out",
@@ -78,6 +106,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/forms")],
-
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/line-clamp")],
 };

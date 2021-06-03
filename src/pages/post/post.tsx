@@ -136,7 +136,7 @@ const Post: React.FC = () => {
             latestMessage: "",
             clientUserID: "",
             ratingCompleted: false,
-            deletedAccount:false,
+            deletedAccount: false,
           });
       };
 
@@ -263,7 +263,11 @@ const Post: React.FC = () => {
 
   const handleImages = (e) => {
     const uploadImages = e.target.files;
-    setImages([...images, ...uploadImages]);
+    if ([...images, ...uploadImages].length <= 10) {
+      setImages([...images, ...uploadImages]);
+    } else {
+      alert("画像は10枚までです。");
+    }
   };
 
   const handleFeature = (e) => {
@@ -290,7 +294,7 @@ const Post: React.FC = () => {
         <form className="max-w-2xl mx-auto mt-16 px-2" onSubmit={posting}>
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-600 mb-3 ml-1">
-              画像
+              画像(10枚まで)
               <RequiredMark />
             </div>
             <div className="text-xs text-gray-600 mb-3 mr-1">
@@ -307,7 +311,7 @@ const Post: React.FC = () => {
                 <div key={index} className="mr-6">
                   <img
                     src={previewURL}
-                    className="h-24 w-32 mb-4  object-cover"
+                    className="h-12 w-20 mb-4  object-cover sm:h-20 sm:w-32"
                   />
                   <div onClick={(e) => deletePreview(index)}>
                     <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
@@ -323,8 +327,8 @@ const Post: React.FC = () => {
             className="block w-40 mr-3 mb-8 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
           >
             <div className="flex items-center text-center">
-              <RiImageAddFill className="text-lg ml-1" />
-              <p className="ml-2.5">画像を選択</p>
+              <RiImageAddFill className="text-lg ml-1 sm:text-base" />
+              <p className="ml-2.5 fontSize-base">画像を選択</p>
             </div>
           </label>
           <input
@@ -348,7 +352,7 @@ const Post: React.FC = () => {
               type="text"
               name="title"
               required
-              className="w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
@@ -365,7 +369,7 @@ const Post: React.FC = () => {
           <div className="mb-8">
             <textarea
               name="postText"
-              className="w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 h-36"
               onChange={(e) => {
                 setPostText(e.target.value);
               }}
@@ -382,7 +386,7 @@ const Post: React.FC = () => {
           <input
             type="text"
             name="horseName"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            className="mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
             onChange={(e) => {
               setHorseName(e.target.value);
             }}
@@ -394,7 +398,7 @@ const Post: React.FC = () => {
           </div>
           <select
             name="category"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            className="postSelect"
             onChange={(e) => {
               setCategory(e.target.value);
             }}
@@ -411,7 +415,7 @@ const Post: React.FC = () => {
           </div>
           <select
             name="breed"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            className="postSelect"
             onChange={(e) => {
               setBreed(e.target.value);
             }}
@@ -428,7 +432,7 @@ const Post: React.FC = () => {
           </div>
           <select
             name="color"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            className="postSelect"
             onChange={(e) => {
               setColor(e.target.value);
             }}
@@ -449,7 +453,7 @@ const Post: React.FC = () => {
               name="year"
               placeholder="2010"
               min="1970"
-              className="mb-8 w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              className="text-sm md:text-base mb-8 w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10"
               onChange={(e) => {
                 setYear(e.target.value);
               }}
@@ -461,7 +465,7 @@ const Post: React.FC = () => {
               placeholder="1"
               min="1"
               max="12"
-              className="appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              className="text-sm md:text-base appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
               onChange={(e) => {
                 setMonth(e.target.value);
               }}
@@ -473,7 +477,7 @@ const Post: React.FC = () => {
               placeholder="10"
               min="1"
               max="31"
-              className="mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              className="text-sm md:text-base mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
               onChange={(e) => {
                 setDay(e.target.value);
               }}
@@ -490,7 +494,7 @@ const Post: React.FC = () => {
             name="age"
             min="0"
             max="100"
-            className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+            className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
             onChange={(e) => {
               setAge(e.target.value);
             }}
@@ -505,7 +509,7 @@ const Post: React.FC = () => {
             name="height"
             min="0"
             max="1000"
-            className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+            className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
             onChange={(e) => {
               setHeight(e.target.value);
             }}
@@ -517,7 +521,7 @@ const Post: React.FC = () => {
           </div>
           <select
             name="area"
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            className="postSelect"
             onChange={(e) => {
               setArea(e.target.value);
             }}
@@ -529,10 +533,10 @@ const Post: React.FC = () => {
           </select>
 
           <div className="text-xs text-gray-600 mb-1 ml-1">特徴</div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap mb-4">
             {filterInitialValues.features.map((element) => (
               <>
-                <div className="mb-8 ml-4" hidden={element === "empty"}>
+                <div className="mb-4 ml-4" hidden={element === "empty"}>
                   <label className="text-sm font-medium text-gray-800 cursor-pointer">
                     <input
                       name="features"
@@ -558,7 +562,7 @@ const Post: React.FC = () => {
               type="number"
               name="price"
               min="0"
-              className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
               onChange={(e) => {
                 setPrice(e.target.value);
               }}

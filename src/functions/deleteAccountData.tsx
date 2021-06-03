@@ -82,7 +82,16 @@ const deleteAccountData = async (currentUser, password, router) => {
         .where("userID", "==", currentUser.uid)
         .where("clientUserID", "==", "")
         .get()
-        .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+        .then((snapshot) =>
+          snapshot.docs.map((doc) => {
+            doc.ref.delete();
+
+            db.collectionGroup("likePosts")
+              .where("userID", "==", doc.data().userID)
+              .get()
+              .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+          })
+        );
 
       await db
         .collection("users")

@@ -48,7 +48,7 @@ export const setChatroomStates = (data) => ({
   messageCount: data.messageCount,
   createdAt: data.createdAt,
   messageUpdatedAt: data.messageUpdatedAt,
-  deletedAccount:data.deletedAccount,
+  deletedAccount: data.deletedAccount,
 });
 
 export const setMessageStates = (data) => ({
@@ -101,14 +101,17 @@ export const setNotificationStates = (data) => ({
   noLink: data.noLink,
 });
 
-export const setUserState = (data) => ({
-  id: data.id,
-  username: data.username,
-  avatar: data.avatar,
-  cover: data.cover,
-  profileText: data.profileText,
-  good: data.good,
-  bad: data.bad,
-  likePostIDs: data.likePostIDs,
-  deletedAccount: data.deletedAccount,
-});
+export const setUserState = (data) => {
+  if (data)
+    return {
+      id: data.id,
+      username: data.username,
+      avatar: data.avatar,
+      cover: data.cover,
+      profileText: data.profileText,
+      good: data.good,
+      bad: data.bad,
+      likePostIDs: data.likePostIDs,
+      deletedAccount: data.deletedAccount,
+    };
+};

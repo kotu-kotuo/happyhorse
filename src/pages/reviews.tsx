@@ -1,27 +1,22 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { setReviewStates } from "../utils/states";
 import { db } from "../utils/firebase";
 import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import ReviewListItem from "../components/molecules/reviewListItem";
 
-// import { Post } from "../../types/types";
-// import { postInitialValues } from "../../utils/initialValues";
-// import { setPostStates } from "../../utils/states";
-
 const reviews = () => {
-  const { currentUser } = useContext(AuthContext);
   const [goodReviews, setGoodReviews] = useState([]);
   const [badReviews, setBadReviews] = useState([]);
   const [isLeftHidden, setIsLeftHidden] = useState(false);
   const [isRightHidden, setIsRightHidden] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    if (currentUser) {
+    if (router.query.uid) {
       db.collection("users")
-        .doc(`${currentUser.uid}`)
+        .doc(`${router.query.uid}`)
         .collection("reviews")
         .where("rating", "==", "good")
         .get()
@@ -34,7 +29,7 @@ const reviews = () => {
         );
 
       db.collection("users")
-        .doc(`${currentUser.uid}`)
+        .doc(`${router.query.uid}`)
         .collection("reviews")
         .where("rating", "==", "bad")
         .get()
@@ -46,12 +41,12 @@ const reviews = () => {
           )
         );
     }
-  }, [currentUser]);
+  }, [router.query.uid]);
 
   return (
     <div>
       <Layout title="reviews">
-        {currentUser && reviews && (
+        {router.query.uid && (goodReviews || badReviews) && (
           <div className="max-w-2xl mx-auto">
             <SwitchDisplay
               setIsLeftHidden={setIsLeftHidden}
