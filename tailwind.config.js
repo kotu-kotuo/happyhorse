@@ -17,10 +17,12 @@ module.exports = {
         900: "900px",
       },
       minWidth: {
+        18: "4.5rem",
         10: "2.5rem",
         8: "2rem",
       },
       minHeight: {
+        18: "4.5rem",
         10: "2.5rem",
         8: "2rem",
       },

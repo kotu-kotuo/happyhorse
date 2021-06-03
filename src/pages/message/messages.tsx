@@ -3,16 +3,16 @@ import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Router from "next/router";
 import { db, storage } from "../../utils/firebase";
 import firebase from "firebase/app";
 import { postInitialValues } from "../../utils/initialValues";
 import { Post } from "../../types/types";
-import { IoSend } from "react-icons/io5";
+import { IoSend, IoChevronBack } from "react-icons/io5";
 import { BsFillImageFill } from "react-icons/bs";
 import { CgSmile } from "react-icons/cg";
 import { CgSmileNone } from "react-icons/cg";
 import TextareaAutosize from "react-textarea-autosize";
-import Div100vh from "react-div-100vh";
 import ImageModal from "../../components/molecules/ImageModal";
 import {
   setChatroomStates,
@@ -24,6 +24,8 @@ import {
 import { generateFileName } from "../../functions/utils";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import DealProgressButton from "../../components/atoms/DealProgressButton";
+import isFirstOnDate from "../../functions/messages/isFirstOnDate";
 
 const messages = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -40,6 +42,7 @@ const messages = () => {
   const [postReviews, setPostReviews] = useState([]);
   const [reviewSwitch, setReviewSwitch] = useState("OFF");
   const [messageReceiver, setMessageReceiver] = useState(null);
+  const [handleShowDate, setHandleShowDate] = useState(false);
   const ref = useRef(null);
 
   //初期値セット
@@ -291,7 +294,7 @@ const messages = () => {
           image: "",
           messageText: "評価完了しました",
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          firstOnDate: handleShowDate,
+          firstOnDate: isFirstOnDate(messages),
           clientDecision: false,
           dealInterruption: false,
           dealCompleted: false,
@@ -375,21 +378,6 @@ const messages = () => {
     return time.toLocaleDateString();
   };
 
-  //日付を表示するか判定
-  if (
-    messages &&
-    messages
-      .map(
-        (message) =>
-          new Date(message.createdAt?.seconds * 1000).toLocaleDateString
-      )
-      .includes(new Date().toLocaleDateString)
-  ) {
-    var handleShowDate = false;
-  } else {
-    var handleShowDate = true;
-  }
-
   useEffect(() => {
     if (ref.current) {
       ref.current.scrollIntoView({
@@ -399,6 +387,18 @@ const messages = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    //日付を表示するか判定
+    const messageDate = messages.map(
+      (message) =>
+        new Date(message.createdAt?.seconds * 1000).toLocaleDateString
+    );
+    if (messages && messageDate.includes(new Date().toLocaleDateString)) {
+      setHandleShowDate(false);
+    } else {
+      setHandleShowDate(true);
+    }
+  }, []);
   //メッセージ送信
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -481,7 +481,7 @@ const messages = () => {
             image: "",
             messageText: messageText,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            firstOnDate: handleShowDate,
+            firstOnDate: isFirstOnDate(messages),
             clientDecision: false,
             dealInterruption: false,
             dealCompleted: false,
@@ -569,7 +569,7 @@ const messages = () => {
             image: "",
             messageText: messageText,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            firstOnDate: handleShowDate,
+            firstOnDate: isFirstOnDate(messages),
             clientDecision: false,
             dealInterruption: false,
             dealCompleted: false,
@@ -734,7 +734,7 @@ const messages = () => {
                       image: url,
                       messageText: "",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      firstOnDate: handleShowDate,
+                      firstOnDate: isFirstOnDate(messages),
                       clientDecision: false,
                       dealInterruption: false,
                       dealCompleted: false,
@@ -837,7 +837,7 @@ const messages = () => {
                       image: url,
                       messageText: "",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      firstOnDate: handleShowDate,
+                      firstOnDate: isFirstOnDate(messages),
                       clientDecision: false,
                       dealInterruption: false,
                       dealCompleted: false,
@@ -959,7 +959,7 @@ const messages = () => {
                       image: "",
                       messageText: "取引者を決定しました",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      firstOnDate: handleShowDate,
+                      firstOnDate: isFirstOnDate(messages),
                       clientDecision: true,
                       dealInterruption: false,
                       dealCompleted: false,
@@ -1072,7 +1072,7 @@ const messages = () => {
                       image: "",
                       messageText: "取引を中断しました",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      firstOnDate: handleShowDate,
+                      firstOnDate: isFirstOnDate(messages),
                       clientDecision: false,
                       dealInterruption: true,
                       dealCompleted: false,
@@ -1185,7 +1185,7 @@ const messages = () => {
                       image: "",
                       messageText: "取引完了しました",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      firstOnDate: handleShowDate,
+                      firstOnDate: isFirstOnDate(messages),
                       clientDecision: false,
                       dealInterruption: false,
                       dealCompleted: true,
@@ -1212,7 +1212,7 @@ const messages = () => {
                       image: "",
                       messageText: "評価をお願いします",
                       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                      firstOnDate: handleShowDate,
+                      firstOnDate: isFirstOnDate(messages),
                       clientDecision: false,
                       dealInterruption: false,
                       dealCompleted: false,
@@ -1375,95 +1375,137 @@ const messages = () => {
 
   return (
     <div>
-      {console.log(messageReceiver)}
-      {console.log(chatroom)}
+      {console.log(isFirstOnDate(messages))}
 
       <div>
-        <Div100vh className="relative">
-          <Layout title="messages">
-            <div className=" mx-auto flex flex-row-reverse mt-10 px-2">
-              <div className="w-1/4 ml-4">
-                <Link href={`/post/postShow/${post.postID}`}>
-                  <div className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80">
-                    <div className="pb-image w-full h-0 relative">
-                      <img
-                        src={post.images[0]}
-                        className="object-cover outline-none w-full h-full cursor-pointer absolute rounded-t-xl"
-                      />
-                    </div>
-                    <div className="p-2 text-sm text-gray-900">
-                      <div className="m-1 myPostTitle">{post.title}</div>
-                      <div className="p-1"> {post.price}円</div>
-                      <div className="p-1">{createdTime(post)}</div>
-                    </div>
+        <Layout title="messages">
+          <div className="sm:hidden">
+            <div className="absolute top-0 right-0 left-0">
+              <div className="flex items-center bg-white h-10 align-middle border-b border-gray-500">
+                <IoChevronBack
+                  className="text-2xl text-gray-500 ml-2 mr-3 cursor-pointer"
+                  onClick={() => {
+                    Router.back();
+                  }}
+                />
+                <div className="text-sm text-gray-900 line-clamp-1">
+                  {messageReceiver?.username}
+                </div>
+              </div>
+            </div>
+            <div className="absolute top-10 right-0 left-0 h-10 align-middle">
+              {currentUser &&
+                chatroom &&
+                !post.clientUserID &&
+                currentUser.uid === chatroom?.postUserID && (
+                  <div
+                    className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center bg-white"
+                    onClick={decideClient}
+                  >
+                    <p className="text-mainGreen font-semibold">取引者に決定</p>
                   </div>
-                </Link>
-                {currentUser &&
-                  chatroom &&
-                  !post.clientUserID &&
-                  currentUser.uid === chatroom?.postUserID && (
+                )}
+              {currentUser &&
+                chatroom &&
+                post.clientUserID &&
+                post.isAvairable &&
+                currentUser.uid === chatroom?.postUserID && (
+                  <div className="flex items-center bg-white">
                     <div
-                      className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3"
-                      onClick={decideClient}
+                      className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center bg-white w-3/5"
+                      onClick={completedDeal}
                     >
                       <p className="mt-1 text-mainGreen font-semibold">
-                        取引者に決定
+                        取引を完了する
                       </p>
                     </div>
-                  )}
-                {currentUser &&
-                  chatroom &&
-                  post.clientUserID &&
-                  post.isAvairable &&
-                  currentUser.uid === chatroom?.postUserID && (
-                    <>
-                      <div
-                        className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3"
-                        onClick={completedDeal}
-                      >
-                        <p className="mt-1 text-mainGreen font-semibold">
-                          取引を完了する
-                        </p>
-                      </div>
-                      <div
-                        className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3"
-                        onClick={interruptionDeal}
-                      >
-                        <p className="mt-1 text-gray-300 font-semibold">
-                          取引を中断する
-                        </p>
-                      </div>
-                    </>
-                  )}
-                {currentUser &&
-                  chatroom &&
-                  post.clientUserID &&
-                  !post.isAvairable &&
-                  currentUser.uid === chatroom?.postUserID && (
-                    <div className="rounded-xl p-2 text-center mt-3">
-                      <p className="mt-1 text-mainGreen font-semibold">
-                        取引完了しました
+                    <div
+                      className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center bg-white w-2/5"
+                      onClick={interruptionDeal}
+                    >
+                      <p className="mt-1 text-gray-300 font-semibold">
+                        取引を中断する
                       </p>
                     </div>
-                  )}
-              </div>
-              <div className="shadow-xl w-full">
-                <div className="w-full bg-white rounded-lg overflow-y-scroll z-10 chatScreenHeight">
-                  <div>
-                    {messages &&
-                      messages.map((message, index) =>
-                        message.clientDecision ? (
-                          <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
+                  </div>
+                )}
+              {currentUser &&
+                chatroom &&
+                post.clientUserID &&
+                !post.isAvairable &&
+                currentUser.uid === chatroom?.postUserID && (
+                  <div className="rounded-xl p-2 text-center bg-white">
+                    <p className="text-mainGreen font-semibold">
+                      取引完了しました
+                    </p>
+                  </div>
+                )}
+            </div>
+          </div>
+          <div className="mx-auto flex flex-row-reverse p-0 sm:px-2 sm:mt-10">
+            {/* サイドメニュー =========================================*/}
+            <div className="ml-4 hidden sm:block sm:w-1/4">
+              <Link href={`/post/postShow/${post.postID}`}>
+                <div className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80">
+                  <div className="pb-image w-full h-0 relative">
+                    <img
+                      src={post.images[0]}
+                      className="object-cover outline-none w-full h-full cursor-pointer absolute rounded-t-xl"
+                    />
+                  </div>
+                  <div className="p-2 text-sm text-gray-900">
+                    <div className="m-1 text-sm line-clamp-2">{post.title}</div>
+                    <div className="p-1"> {post.price}円</div>
+                  </div>
+                </div>
+              </Link>
+              <DealProgressButton
+                currentUser={currentUser}
+                chatroom={chatroom}
+                post={post}
+                decideClient={decideClient}
+                completedDeal={completedDeal}
+                interruptionDeal={interruptionDeal}
+              />
+            </div>
+            {/* メッセージリスト =========================================*/}
+            <div className="shadow-xl w-full">
+              <div className="w-full bg-white rounded-lg overflow-y-scroll z-10 chatScreenHeight pb-16 px-2 sm:px-0">
+                <div className="pt-20 sm:pt-0">
+                  <div className="sm:hidden">
+                    <Link href={`/post/postShow/${post.postID}`}>
+                      <div
+                        className={
+                          currentUser?.uid === chatroom?.postUserID
+                            ? "flex items-center w-full border-b border-t border-gray-500 mt-8 mb-6 cursor-pointer"
+                            : "flex items-center w-full border-b border-t border-gray-500 -mt-3 mb-6 cursor-pointer"
+                        }
+                      >
+                        <div>
+                          <img
+                            src={post.images[0]}
+                            className="min-h-10 h-10 min-w-18 w-18 mr-2 object-cover"
+                          />
+                        </div>
+                        <div className="text-gray-900 line-clamp-1 text-sm text-left ">
+                          {post.title}
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                  {messages &&
+                    messages.map((message, index) => (
+                      <div key={index}>
+                        {message.clientDecision ? (
+                          <div className="messageAnnounce">
                             取引者を決定しました
                           </div>
                         ) : message.dealInterruption ? (
-                          <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
+                          <div className="messageAnnounce">
                             取引を中断しました
                           </div>
                         ) : message.dealCompleted ? (
-                          <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
-                            取引完了です！
-                          </div>
+                          <div className="messageAnnounce">取引完了です！</div>
                         ) : message.pleaseRate ? (
                           //レビューしたか判定
                           reviewsOnHold &&
@@ -1471,7 +1513,7 @@ const messages = () => {
                             (review) => review.reviewerID === currentUser.uid
                           ).length === 1 ? (
                             postReviews.length !== 2 && (
-                              <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
+                              <div className="messageAnnounce">
                                 評価完了です！
                               </div>
                             )
@@ -1488,28 +1530,26 @@ const messages = () => {
                             )
                           )
                         ) : message.rateCompleted ? (
-                          <div className="text-center text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2">
-                            評価完了です！
-                          </div>
+                          <div className="messageAnnounce">評価完了です！</div>
                         ) : message.userID === currentUser.uid ? (
-                          <div key={index}>
+                          <>
                             {message.firstOnDate && (
                               <div className="text-center mx-auto text-gray-600 text-sm border border-gray-600 rounded-full py-0.5 w-36">
                                 {createdMessageDate(message)}
                               </div>
                             )}
-                            <div className="flex w-full mt-2 max-w-2xl ml-auto justify-end p-4">
+                            <div className="flex w-full max-w-2xl ml-auto justify-end p-0 sm:p-4 my-4 sm:mt-2">
                               <div className="flex">
-                                <p className="text-xs text-gray-500 leading-none whitespace-nowrap mt-auto mr-2">
+                                <p className="text-xs text-gray-500 leading-none whitespace-nowrap mt-auto mr-1 sm:mr-2">
                                   {createdMessageTime(message)}
                                 </p>
                                 <div>
-                                  <p className="text-gray-500 text-xs ml-auto text-right">
+                                  <p className="text-gray-500 text-xs ml-auto text-right hidden sm:inline-block">
                                     {message.username}
                                   </p>
                                   {message.image === "" ? (
-                                    <div className="bg-mainGreen text-white px-3 py-2.5 rounded-l-lg rounded-br-lg">
-                                      <p className="text-sm whitespace-pre-wrap ">
+                                    <div className="bg-mainGreen text-white px-2.5 py-2 sm:px-3 sm:py-2.5 rounded-l-lg rounded-br-lg">
+                                      <p className="text-sm whitespace-pre-wrap">
                                         {message.messageText}
                                       </p>
                                     </div>
@@ -1533,7 +1573,7 @@ const messages = () => {
                               {message.deletedAccount === true ? (
                                 <img
                                   src={message.avatar}
-                                  className="h-10 w-10 rounded-full bg-gray-300 ml-3 object-cover"
+                                  className="h-8 w-8 rounded-full bg-gray-300 ml-3 object-cover sm:h-10 sm:w-10"
                                 />
                               ) : (
                                 <Link
@@ -1546,24 +1586,25 @@ const messages = () => {
                                 >
                                   <img
                                     src={message.avatar}
-                                    className="h-10 w-10 rounded-full bg-gray-300 ml-3 object-cover cursor-pointer hover:opacity-80"
+                                    className="h-8 w-8 rounded-full bg-gray-300 ml-3 object-cover cursor-pointer hover:opacity-80 sm:h-8 sm:w-8"
                                   />
                                 </Link>
                               )}
                             </div>
-                          </div>
+                          </>
                         ) : (
-                          <div key={index}>
+                          <>
                             {message.firstOnDate && (
                               <div className="text-center mx-auto text-gray-600 text-sm border border-gray-600 rounded-full py-0.5 w-36">
                                 {createdMessageDate(message)}
                               </div>
                             )}
-                            <div className="flex w-full mt-2 space-x-3 max-w-2xl p-4  targetMessage">
+                            <div className="flex w-full space-x-3 max-w-2xl p-0  targetMessage sm:p-4 my-4 sm:mt-2">
+                              {/* プロフィールへのリンクの切り替え */}
                               {message.deletedAccount === true ? (
                                 <img
                                   src={message.avatar}
-                                  className="h-10 w-10 rounded-full ml-3 object-cover"
+                                  className="h-8 w-8 rounded-full ml-0 object-cover sm:h-10 sm:w-10 sm:ml-3"
                                 />
                               ) : (
                                 <Link
@@ -1576,17 +1617,17 @@ const messages = () => {
                                 >
                                   <img
                                     src={message.avatar}
-                                    className="h-10 w-10 rounded-full ml-3 object-cover cursor-pointer hover:opacity-80"
+                                    className="h-8 w-8 rounded-full ml-0 object-cover cursor-pointer hover:opacity-80 sm:h-10 sm:w-10 sm:ml-3"
                                   />
                                 </Link>
                               )}
                               <div className="flex">
                                 <div>
-                                  <p className="text-gray-500 text-xs mr-auto text-left">
+                                  <p className="text-gray-500 text-xs mr-auto text-left hidden sm:inline-block">
                                     {message.username}
                                   </p>
                                   {message.image === "" ? (
-                                    <div className="bg-gray-300 px-3 py-2.5 rounded-r-lg rounded-bl-lg">
+                                    <div className="bg-gray-300 px-2.5 py-2 rounded-r-lg rounded-bl-lg sm:px-3 sm:py-2.5">
                                       <p className="text-sm text-gray-900 whitespace-pre-wrap">
                                         {message.messageText}
                                       </p>
@@ -1607,57 +1648,57 @@ const messages = () => {
                                     </>
                                   )}
                                 </div>
-                                <p className="text-xs text-gray-500 leading-none mt-auto ml-2">
+                                <p className="text-xs text-gray-500 leading-none mt-auto ml-1 sm:ml-2">
                                   {createdMessageTime(message)}
                                 </p>
                               </div>
                             </div>
-                          </div>
-                        )
-                      )}
-                    <div ref={ref} />
-                  </div>
-                </div>
-                <form onSubmit={sendMessage}>
-                  <div className="relative z-20">
-                    <div className="absolute bottom-0 w-full">
-                      <div className="bg-gray-300 p-2 flex items-center rounded-b-lg">
-                        <div className="relative w-full z-20">
-                          <TextareaAutosize
-                            maxRows={5}
-                            className="flex items-center h-10 w-full rounded pl-3 pr-8 text-sm resize-none focus:outline-none focus:border-subBlue z-20"
-                            placeholder="Type your message…"
-                            onChange={(e) => {
-                              setMessageText(e.target.value);
-                            }}
-                            value={messageText}
-                          />
-                          <label htmlFor="image">
-                            <BsFillImageFill className="text-lg text-gray-500 opacity-70 absolute bottom-2.5 right-3 z-20 cursor-pointer hover:opacity-100" />
-                          </label>
-                          <input
-                            id="image"
-                            type="file"
-                            className="hidden"
-                            onChange={sendImage}
-                          />
-                        </div>
-                        <button
-                          type="submit"
-                          className="w-10 h-10 bg-subBlue rounded-lg ml-1 mt-auto cursor-pointer z-20 hover:opacity-90"
-                          disabled={messageText === ""}
-                        >
-                          <IoSend className="text-white text-xl mx-auto my-2.5" />
-                        </button>
+                          </>
+                        )}
                       </div>
-                    </div>
-                    <div className="opacity-0 h-14 z-0"></div>
-                  </div>
-                </form>
+                    ))}
+                  <div ref={ref} />
+                </div>
               </div>
+              <form onSubmit={sendMessage}>
+                <div className="relative z-20">
+                  <div className="absolute bottom-0 w-full">
+                    <div className="bg-gray-300 p-1 flex items-center sm:rounded-b-lg sm:p-2">
+                      <div className="relative w-full z-20">
+                        <TextareaAutosize
+                          maxRows={5}
+                          className="flex items-center h-10 w-full rounded pl-3 pr-8 text-sm resize-none focus:outline-none focus:border-subBlue z-20"
+                          placeholder="Type your message…"
+                          onChange={(e) => {
+                            setMessageText(e.target.value);
+                          }}
+                          value={messageText}
+                        />
+                        <label htmlFor="image">
+                          <BsFillImageFill className="text-lg text-gray-500 opacity-70 absolute bottom-2.5 right-3 z-20 cursor-pointer hover:opacity-100" />
+                        </label>
+                        <input
+                          id="image"
+                          type="file"
+                          className="hidden"
+                          onChange={sendImage}
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="w-9 h-9 bg-subBlue rounded-lg ml-1 mt-auto cursor-pointer z-20 hover:opacity-90 align-middle mb-sendButton sm:h-10 sm:w-10 sm:mb-0"
+                        disabled={messageText === ""}
+                      >
+                        <IoSend className="text-white text-xl mx-auto sm:my-2.5" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* <div className="opacity-0 z-0 h-14 bg-transparent"></div> */}
+                </div>
+              </form>
             </div>
-          </Layout>
-        </Div100vh>
+          </div>
+        </Layout>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -17,6 +17,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
     false
   );
   const [isOpenBottomMenu, setIsOpenBottomMenu] = useState(false);
+  const [width, setWidth] = useState(null);
   const {
     currentUser,
     setCurrentUser,
@@ -25,9 +26,19 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
     setNotifications,
   } = useContext(AuthContext);
 
+  useEffect(() => {
+    if (process.browser) {
+      setWidth(window.innerWidth);
+    }
+  }, []);
+
   return (
     <div
-      className="min-h-screen box-border pb-10 relative touchAction-none"
+      className={
+        !(router.pathname === "/message/messages" && width < 640)
+          ? "min-h-screen box-border pb-10 relative touchAction-none"
+          : "min-h-screen box-border relative touchAction-none"
+      }
       onClick={() => {
         setIsOpenMenu(false), setIsOpenNotification(false);
       }}
@@ -44,18 +55,19 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
           }
         `}</style>
       )}
-
-      <Header
-        user={user}
-        currentUser={currentUser}
-        setCurrentUser={setCurrentUser}
-        isOpenMenu={isOpenMenu}
-        setIsOpenMenu={setIsOpenMenu}
-        notifications={notifications}
-        setNotifications={setNotifications}
-        isOpenNotification={isOpenNotification}
-        setIsOpenNotification={setIsOpenNotification}
-      />
+      {!(router.pathname === "/message/messages" && width < 640) && (
+        <Header
+          user={user}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          isOpenMenu={isOpenMenu}
+          setIsOpenMenu={setIsOpenMenu}
+          notifications={notifications}
+          setNotifications={setNotifications}
+          isOpenNotification={isOpenNotification}
+          setIsOpenNotification={setIsOpenNotification}
+        />
+      )}
 
       {!currentUser && (
         <>
