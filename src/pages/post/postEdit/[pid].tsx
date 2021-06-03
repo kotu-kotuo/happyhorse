@@ -10,6 +10,7 @@ import fetch from "node-fetch";
 import { filterInitialValues } from "../../../utils/initialValues";
 import { setPostStates } from "../../../utils/states";
 import { RequiredMark } from "../../../components/atoms/Atoms";
+import { generateFileName } from "../../../functions/utils";
 
 interface IMAGES {
   images: any;
@@ -117,18 +118,9 @@ const postEdit = () => {
   }, [imagesURL]);
 
   const uploadImages = async () => {
-    console.log(images);
     const urls = await Promise.all(
       images.map(async (image) => {
-        const S =
-          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        const N = 16;
-        const randomChar = Array.from(
-          crypto.getRandomValues(new Uint32Array(N))
-        )
-          .map((n) => S[n % S.length])
-          .join("");
-        const fileName = randomChar + "_" + image.size;
+        const fileName = generateFileName(image);
         await storage.ref(`posts/${post.postID}/${fileName}`).put(image);
 
         return await storage
@@ -141,7 +133,11 @@ const postEdit = () => {
 
   const handleImages = (e) => {
     const uploadImages = e.target.files;
-    setImages([...images, ...uploadImages]);
+    if ([...images, ...uploadImages].length <= 10) {
+      setImages([...images, ...uploadImages]);
+    } else {
+      alert("画像は10枚までです。");
+    }
   };
 
   const deletePreview = (index) => {

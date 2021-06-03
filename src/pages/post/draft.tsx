@@ -298,7 +298,11 @@ const draft = () => {
 
   const handleImages = (e) => {
     const uploadImages = e.target.files;
-    setImages([...images, ...uploadImages]);
+     if ([...images, ...uploadImages].length <= 10) {
+       setImages([...images, ...uploadImages]);
+     } else {
+       alert("画像は10枚までです。");
+     }
   };
 
   const handleFeatures = (e) => {
@@ -336,7 +340,7 @@ const draft = () => {
         <form className="max-w-2xl mx-auto mt-16 px-2" onSubmit={posting}>
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-600 mb-3 ml-1">
-              画像
+              画像(10枚まで)
               <RequiredMark />
             </div>
             <div className="text-xs text-gray-600 mb-3 mr-1">
