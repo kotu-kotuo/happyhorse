@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { FaBell } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
+import notificationChecked from "../../functions/notificationChecked";
 import MenuList from "./MenuList";
 import NotificationList from "./NotificationList";
 
@@ -16,6 +17,7 @@ const Footer = (props) => {
     currentUser,
     setCurrentUser,
     notifications,
+    setNotifications,
   } = props;
 
   const clickBell = () => {
@@ -69,12 +71,26 @@ const Footer = (props) => {
             className="-mr-0.5 w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
             onClick={() => {
               clickBell();
+              notificationChecked(currentUser, setNotifications);
               if (isOpenBottomMenu) {
                 setIsOpenBottomMenu(false);
               }
             }}
           >
-            <FaBell className="text-3xl text-gray-500 mx-auto" />
+            <div className="w-0 h-0 bg-transparent mx-auto z-0 relative">
+              <div
+                hidden={
+                  !(
+                    notifications &&
+                    notifications.filter(
+                      (notification) => notification.checked === false
+                    ).length !== 0
+                  )
+                }
+                className="absolute top-1 left-1.5 rounded-full h-2.5 w-2.5 bg-red-500"
+              ></div>
+            </div>
+            <FaBell className="text-3xl text-gray-500 mx-auto z-10" />
           </div>
 
           {user ? (
@@ -123,7 +139,8 @@ const Footer = (props) => {
                 : `transform translate-x-full bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
             }
             onClick={(e) => e.stopPropagation()}
-          ><div className="text-gray-900 my-3">お知らせ</div>
+          >
+            <div className="text-gray-900 my-3">お知らせ</div>
             <div className="border border-b border-gray-50 mt-1 w-full"></div>
             <NotificationList
               notifications={notifications}

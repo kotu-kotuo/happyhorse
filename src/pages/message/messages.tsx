@@ -42,7 +42,7 @@ const messages = () => {
   const [postReviews, setPostReviews] = useState([]);
   const [reviewSwitch, setReviewSwitch] = useState("OFF");
   const [messageReceiver, setMessageReceiver] = useState(null);
-  const [handleShowDate, setHandleShowDate] = useState(false);
+
   const ref = useRef(null);
 
   //初期値セット
@@ -387,18 +387,6 @@ const messages = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    //日付を表示するか判定
-    const messageDate = messages.map(
-      (message) =>
-        new Date(message.createdAt?.seconds * 1000).toLocaleDateString
-    );
-    if (messages && messageDate.includes(new Date().toLocaleDateString)) {
-      setHandleShowDate(false);
-    } else {
-      setHandleShowDate(true);
-    }
-  }, []);
   //メッセージ送信
   const sendMessage = async (e) => {
     e.preventDefault();

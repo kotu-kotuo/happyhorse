@@ -97,6 +97,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
             setCurrentUser={setCurrentUser}
             user={user}
             notifications={notifications}
+            setNotifications={setNotifications}
           />
         </>
       )}

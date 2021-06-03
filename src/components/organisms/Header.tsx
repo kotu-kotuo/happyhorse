@@ -1,13 +1,11 @@
 import Link from "next/link";
 import React from "react";
 import { FaBell, FaHorse } from "react-icons/fa";
-import { IoChevronForwardOutline } from "react-icons/io5";
 import NotificationList from "./NotificationList";
 import { db } from "../../utils/firebase";
-import StarRatings from "react-star-ratings";
 import { setNotificationStates } from "../../utils/states";
-import MenuListItem from "../molecules/MenuListItem";
 import MenuList from "./MenuList";
+import notificationChecked from "../../functions/notificationChecked";
 
 const Header = (props) => {
   const {
@@ -22,43 +20,43 @@ const Header = (props) => {
     setIsOpenNotification,
   } = props;
 
-  const notificationChecked = async () => {
-    await db
-      .collection("users")
-      .doc(`${currentUser.uid}`)
-      .collection("notifications")
-      .where("checked", "==", false)
-      .get()
-      .then(
-        async (snapshot) =>
-          await Promise.all(
-            snapshot.docs.map((doc) =>
-              db
-                .collection("users")
-                .doc(`${currentUser.uid}`)
-                .collection("notifications")
-                .doc(doc.id)
-                .update({
-                  checked: true,
-                })
-            )
-          )
-      );
-    await db
-      .collection("users")
-      .doc(`${currentUser.uid}`)
-      .collection("notifications")
-      .orderBy("createdAt", "desc")
-      .limit(30)
-      .get()
-      .then(async (snapshot) =>
-        setNotifications(
-          await Promise.all(
-            snapshot.docs.map((doc) => setNotificationStates(doc.data()))
-          )
-        )
-      );
-  };
+  // const notificationChecked = async () => {
+  //   await db
+  //     .collection("users")
+  //     .doc(`${currentUser.uid}`)
+  //     .collection("notifications")
+  //     .where("checked", "==", false)
+  //     .get()
+  //     .then(
+  //       async (snapshot) =>
+  //         await Promise.all(
+  //           snapshot.docs.map((doc) =>
+  //             db
+  //               .collection("users")
+  //               .doc(`${currentUser.uid}`)
+  //               .collection("notifications")
+  //               .doc(doc.id)
+  //               .update({
+  //                 checked: true,
+  //               })
+  //           )
+  //         )
+  //     );
+  //   await db
+  //     .collection("users")
+  //     .doc(`${currentUser.uid}`)
+  //     .collection("notifications")
+  //     .orderBy("createdAt", "desc")
+  //     .limit(30)
+  //     .get()
+  //     .then(async (snapshot) =>
+  //       setNotifications(
+  //         await Promise.all(
+  //           snapshot.docs.map((doc) => setNotificationStates(doc.data()))
+  //         )
+  //       )
+  //     );
+  // };
 
   return (
     <header className="header-height w-full border-b border-gray-100 shadow-sm">
@@ -97,7 +95,7 @@ const Header = (props) => {
                 <div
                   onClick={() => {
                     setIsOpenNotification(!isOpenNotification),
-                      notificationChecked();
+                      notificationChecked(currentUser, setNotifications);
                   }}
                   className="relative"
                 >
