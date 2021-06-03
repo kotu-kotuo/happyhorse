@@ -168,7 +168,7 @@ const Footer = (props) => {
           >
             <MenuList
               currentUser={currentUser}
-              serCurrentUser={setCurrentUser}
+              setCurrentUser={setCurrentUser}
               user={user}
               setIsOpenMenu={setIsOpenMenu}
             />

@@ -69,7 +69,7 @@ const SignUp: React.FC = () => {
         <div className="max-w-md w-full space-y-8">
           <div>
             <img
-              className="mx-auto h-14 w-auto mt-10  sm:mt-32"
+              className="mx-auto h-14 w-auto sm:mt-28"
               src="/hh-face.png"
               alt="logo"
             />
@@ -91,7 +91,7 @@ const SignUp: React.FC = () => {
                   type="text"
                   autoComplete="off"
                   required
-                  className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="ユーザーネーム"
                   onChange={(e) => setUsername(e.target.value)}
                 />
@@ -111,7 +111,7 @@ const SignUp: React.FC = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="メールアドレス"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -125,7 +125,7 @@ const SignUp: React.FC = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="パスワード"
                   onChange={(e) => setPassword(e.target.value)}
                 />
