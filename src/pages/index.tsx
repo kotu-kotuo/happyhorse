@@ -360,7 +360,7 @@ export default function Index() {
               />
             )}
 
-            <Pagination />
+            {/* <Pagination /> */}
           </div>
         </div>
       </Layout>
