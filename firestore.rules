@@ -1,9 +1,146 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 4, 12);
+    match /users/{userID} {
+      allow read;
+      allow create;
+      allow update, delete: if isAuthenticated();
+
+      match /posts/{postID} {
+        allow read;
+        allow write: if isAuthenticated();
+
+        match /chatrooms/{sendUserID} {
+          allow read: if isAuthenticated();
+          allow create: if isUserAuthenticated(incomingData().sendUserID);
+          allow update, delete: if isAuthenticated();
+
+          match /messages/{messageId} {
+            allow read: if isAuthenticated();
+            allow create: if isUserAuthenticated(incomingData().userID);
+            allow update: if isAuthenticated() && (incomingData().userID == userID || incomingData().messageReceiverID == userID);
+            allow delete: if isAuthenticated();
+          }
+        }
+      }
+
+      match /reviews/{postID} {
+        allow read;
+        allow create, update: if isAuthenticated();
+      }
+
+      match /filters/{userID} {
+        allow read;
+        allow write: if isAuthenticated();
+      }
+
+      match /likePosts/{likePostId} {
+        allow read: if isAuthenticated();
+        allow create: if isUserAuthenticated(incomingData().likePostUserID);
+        allow update: if isAuthenticated();
+        allow delete: if isAuthenticated();
+      }
+
+      match /drafts/{postID} {
+        allow read: if isUserAuthenticated(userID);
+        allow create, update: if isUserAuthenticated(incomingData().userID);
+        allow delete: if isUserAuthenticated(userID);
+      }
+
+      match /notifications/{notificationId} {
+        allow read, write: if isAuthenticated();
+        // allow write: if isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID) || isUserAuthenticated(incomingData().receiveUserID);
+      }
     }
+
+    match /reviewsOnHold/{reviewsOnHoldId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+
+    match /{paths=**}/posts/{postID} {
+      allow read;
+      allow write: if isAuthenticated();
+    }
+
+    match /{paths=**}/chatrooms/{sendUserID} {
+      allow read, write: if isAuthenticated();
+      // allow read: if isUserAuthenticated(existingData().sendUserID) || isUserAuthenticated(existingData().postUserID);
+      // allow write: if isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID);
+    }
+
+    match /{paths=**}/messages/{messageId} {
+      allow read, write: if isAuthenticated();
+      // allow read: if isUserAuthenticated(existingData().userID) || isUserAuthenticated(existingData().messageReceiverID);
+      // allow write: if isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID);
+    }
+
+    match /{paths=**}/likePosts/{likePostId} {
+      allow read;
+      allow write: if isAuthenticated();
+    }
+
+    match /{paths=**}/reviews/{reviewId} {
+      allow read;
+      allow create, update: if isAuthenticated();
+    }
+
   }
 }
+
+
+   function documentPath(paths) {
+      return path([
+        ['databases', database, 'documents'].join('/'),
+        paths.join('/')
+      ].join('/'));
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUserAuthenticated(userID) {
+      return request.auth.uid == userID;
+    }
+
+    function incomingData() {
+      return request.resource.data;
+    }
+
+    function existingData() {
+      return resource.data;
+    }
+
+    function getData(path) {
+      return get(path).data;
+    }
+
+    function getAfterData(path) {
+      return getAfter(path).data;
+    }
+
+    function isRequestedTime(time) {
+      return time == request.time;
+    }
+
+    function validateString(text, min, max) {
+      return text is string
+        && min <= text.size()
+        && text.size() <= max;
+    }
+
+    function validateNumber(num, min, max) {
+      return num is number
+        && min <= num
+        && num <= max;
+    }
+
+    function dataDiff() {
+      return incomingData().diff(existingData());
+    }
+
+    function isNotChanged(keys) {
+      let affectedKeys = dataDiff().affectedKeys();
+      return !affectedKeys.hasAny(keys.toSet());
+    }

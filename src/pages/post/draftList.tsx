@@ -34,7 +34,7 @@ const draftList = () => {
         <div className="pageTitle">下書き保存リスト</div>
         {currentUser &&
           posts &&
-          posts.map((post) => (
+          posts.map((post,index) => (
             <Link
               href={{
                 pathname: "/post/draft",
@@ -42,6 +42,7 @@ const draftList = () => {
                   pid: post.postID,
                 },
               }}
+              key={index}
             >
               <div className="max-w-xl mx-auto">
                 <div className="mx-2 my-6 rounded-md shadow border-gray-500 cursor-pointer">

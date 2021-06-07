@@ -5,7 +5,7 @@ const TableListItem = (props) => {
   return (
     <div>
       <div className="flex mb-3">
-        <div className="fontSize-base w-1/4 whitespace-nowrap text-gray-600 md:ml-10">
+        <div className="fontSize-base w-1/4 text-gray-600 md:ml-10">
           {label}
         </div>
         <div className="fontSize-base w-3/4 text-gray-700 font-semibold">

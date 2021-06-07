@@ -55,7 +55,7 @@ const ReviewListItem = (props) => {
               <div className="text-gray-900 text-base">
                 {review.reviewerName}
               </div>
-              <div className="text-gray-800 text-sm mb-1.5">
+              <div className="text-gray-800 text-sm mb-1.5 whitespace-pre-wrap">
                 {review.reviewText}
               </div>
               <div className="text-gray-500 reviewPostTitleText -mb-0.5">
@@ -114,7 +114,7 @@ const ReviewListItem = (props) => {
                 <div className="text-gray-900 text-base">
                   {review.reviewerName}
                 </div>
-                <div className="text-gray-800 text-sm mb-1.5">
+                <div className="text-gray-800 text-sm mb-1.5 whitespace-pre-wrap">
                   {review.reviewText}
                 </div>
                 <div className="text-gray-500 reviewPostTitleText -mb-0.5">

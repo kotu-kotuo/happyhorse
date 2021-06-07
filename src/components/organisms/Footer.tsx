@@ -68,7 +68,7 @@ const Footer = (props) => {
           </Link>
 
           <div
-            className="-mr-0.5 w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
+            className="-mr-0.5 w-1/4 pt-2.5 pb-3 cursor-pointer hover:opacity-80"
             onClick={() => {
               clickBell();
               notificationChecked(currentUser, setNotifications);

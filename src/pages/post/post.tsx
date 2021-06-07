@@ -153,6 +153,7 @@ const Post: React.FC = () => {
         images.length !== 0 &&
         postText &&
         horseName &&
+        horseName.length <= 20 &&
         category &&
         breed &&
         color &&
@@ -227,6 +228,9 @@ const Post: React.FC = () => {
     }
     if (horseName.length === 0) {
       ("馬の名前を記入してください");
+    }
+    if (horseName.length > 20) {
+      alert("馬の名前は20字まででお願いします");
     }
     if (category.length === 0) {
       alert("カテゴリーを選択してください");
@@ -404,8 +408,8 @@ const Post: React.FC = () => {
             }}
           >
             <option hidden>選択してください</option>
-            {filterInitialValues.category.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
+            {filterInitialValues.category.map((element, index) => (
+              <option value={`${element}`} key={index}>{`${element}`}</option>
             ))}
           </select>
 
@@ -421,8 +425,8 @@ const Post: React.FC = () => {
             }}
           >
             <option hidden>選択してください</option>
-            {filterInitialValues.breed.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
+            {filterInitialValues.breed.map((element, index) => (
+              <option value={`${element}`} key={index}>{`${element}`}</option>
             ))}
           </select>
 
@@ -438,8 +442,8 @@ const Post: React.FC = () => {
             }}
           >
             <option hidden>選択してください</option>
-            {filterInitialValues.color.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
+            {filterInitialValues.color.map((element, index) => (
+              <option value={`${element}`} key={index}>{`${element}`}</option>
             ))}
           </select>
 
@@ -527,15 +531,15 @@ const Post: React.FC = () => {
             }}
           >
             <option hidden>選択してください</option>
-            {filterInitialValues.area.map((element) => (
-              <option value={`${element}`}>{`${element}`}</option>
+            {filterInitialValues.area.map((element, index) => (
+              <option value={`${element}`} key={index}>{`${element}`}</option>
             ))}
           </select>
 
           <div className="text-xs text-gray-600 mb-1 ml-1">特徴</div>
           <div className="flex flex-wrap mb-4">
-            {filterInitialValues.features.map((element) => (
-              <>
+            {filterInitialValues.features.map((element, index) => (
+              <div key={index}>
                 <div className="mb-4 ml-4" hidden={element === "empty"}>
                   <label className="text-sm font-medium text-gray-800 cursor-pointer">
                     <input
@@ -548,7 +552,7 @@ const Post: React.FC = () => {
                     {`${element}`}
                   </label>
                 </div>
-              </>
+              </div>
             ))}
           </div>
 

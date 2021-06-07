@@ -22,7 +22,10 @@ const Posts = (props) => {
   return (
     <div>
       {posts.map((post) => (
-        <div key={post.postID} className="border-b border-gray-300 pb-6 mb-14 sm:mb-16">
+        <div
+          key={post.postID}
+          className="border-b border-gray-300 pb-6 mb-14 sm:mb-16"
+        >
           <div
             className="flex mb-5 z-0"
             data-id={post.postID}
@@ -61,22 +64,22 @@ const Posts = (props) => {
 
           <div className="flex items-center md:ml-2">
             {post.category === "障害馬" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-red-700 text-red-700 px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-red-700 text-red-700 px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
                 {post.category}
               </div>
             )}
             {post.category === "馬場馬" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-blue-900 text-blue-900  px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-blue-900 text-blue-900  px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
                 {post.category}
               </div>
             )}
             {post.category === "総合馬" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-green-800 text-green-800 px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-green-800 text-green-800 px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
                 {post.category}
               </div>
             )}
             {post.category === "レクレーション" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-yellow-300 text-yellow-300 px-4 py-0.5  font-semibold">
+              <div className="fontSize-sm whitespace-nowrap border rounded-full border-yellow-300 text-yellow-300 px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
                 {post.category}
               </div>
             )}

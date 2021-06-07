@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 const SwitchDisplay = (props) => {
   const {
@@ -11,7 +12,7 @@ const SwitchDisplay = (props) => {
 
   return (
     <>
-      <h2 className="fontSize-xl text-center mt-4 mb-4 text-gray-900 sm:mb-8 sm:mt-4">
+      <h2 className="fontSize-xl text-center mt-8 mb-7 text-gray-900 sm:mb-8 sm:mt-4">
         {title}
       </h2>
       <div className="message-switch flex justify-around max-w-2xl mx-auto text-center items-center px-1">
@@ -35,7 +36,15 @@ const SwitchDisplay = (props) => {
             setIsRightHidden(false);
           }}
         >
-          <p className="text-xs sm:text-base">{textRight}</p>
+          <p
+            className={
+              useRouter().pathname === "/reviews"
+                ? "text-sm sm:text-base"
+                : "text-xs my-0.5 sm:text-base"
+            }
+          >
+            {textRight}
+          </p>
         </label>
       </div>
     </>
