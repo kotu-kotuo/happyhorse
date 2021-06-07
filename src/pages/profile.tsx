@@ -32,6 +32,7 @@ const Profile = () => {
             )}
           </div>
         )}
+        {!currentUser && <ProfileContent user={queryUser} currentUser={null} />}
       </div>
     </Layout>
   );

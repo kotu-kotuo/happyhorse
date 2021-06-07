@@ -83,7 +83,7 @@ const management = () => {
 
   return (
     <Layout title="management">
-      <div className="mt-10 sm:mt-16">
+      <div className="sm:mt-16">
         <SwitchDisplay
           setIsLeftHidden={setIsMyPostsBlockHidden}
           setIsRightHidden={setIsSendHidden}
@@ -91,13 +91,16 @@ const management = () => {
           textLeft={"自分の投稿"}
           textRight={"メッセージを送った投稿"}
         />
-        <div className="max-w-3xl w-full mx-auto mt-4 sm:mt-8">
+        <div className="max-w-3xl w-full mx-auto mt-4 pb-4 sm:mt-8">
           {myPosts && sendMessageChatrooms && currentUser && (
             <>
               <div hidden={isMyPostsBlockHidden}>
                 <div hidden={isMyPostsHidden}>
-                  {myPosts.map((myPost) => (
-                    <div className="mx-2 my-4 rounded-md shadow border-gray-500 sm:my-6">
+                  {myPosts.map((myPost, index) => (
+                    <div
+                      className="mx-2 my-4 rounded-md shadow border-gray-500 sm:my-6"
+                      key={index}
+                    >
                       <div
                         onClick={(e) => {
                           setIsMyPostsHidden(true);
@@ -160,8 +163,8 @@ const management = () => {
                 <div hidden={isMyPostChatroomsHidden}>
                   {myPostChatrooms
                     .filter((element) => clickPid === element.postID)
-                    .map((myPostChatroom) => (
-                      <>
+                    .map((myPostChatroom, index) => (
+                      <div key={index}>
                         <Link
                           href={{
                             pathname: "/message/messages",
@@ -229,7 +232,7 @@ const management = () => {
                             </div>
                           </div>
                         </Link>
-                      </>
+                      </div>
                     ))}
                   <div
                     onClick={() => {
@@ -243,7 +246,7 @@ const management = () => {
                 </div>
               </div>
               <div hidden={isSendHidden}>
-                {sendMessageChatrooms.map((sendMessageChatroom) => (
+                {sendMessageChatrooms.map((sendMessageChatroom, index) => (
                   <Link
                     href={{
                       pathname: "/message/messages",
@@ -253,6 +256,7 @@ const management = () => {
                         cid: sendMessageChatroom.sendUserID,
                       },
                     }}
+                    key={index}
                   >
                     <div>
                       <div className="mx-2 my-3 rounded-md shadow border-gray-500 cursor-pointer sm:my-6">

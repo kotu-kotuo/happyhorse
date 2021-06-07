@@ -84,12 +84,22 @@ const deleteAccountData = async (currentUser, password, router) => {
         .get()
         .then((snapshot) =>
           snapshot.docs.map((doc) => {
-            doc.ref.delete();
+            db.collectionGroup("chatrooms")
+              .where("postID", "==", doc.data().postID)
+              .get()
+              .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+
+            db.collectionGroup("messages")
+              .where("postID", "==", doc.data().postID)
+              .get()
+              .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
 
             db.collectionGroup("likePosts")
               .where("userID", "==", doc.data().userID)
               .get()
               .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+
+            doc.ref.delete();
           })
         );
 

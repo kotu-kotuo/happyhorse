@@ -6,6 +6,7 @@ import { db } from "../utils/firebase";
 import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import ReviewListItem from "../components/molecules/reviewListItem";
 
+
 const reviews = () => {
   const [goodReviews, setGoodReviews] = useState([]);
   const [badReviews, setBadReviews] = useState([]);
@@ -47,7 +48,7 @@ const reviews = () => {
     <div>
       <Layout title="reviews">
         {router.query.uid && (goodReviews || badReviews) && (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto px-2 pb-3">
             <SwitchDisplay
               setIsLeftHidden={setIsLeftHidden}
               setIsRightHidden={setIsRightHidden}

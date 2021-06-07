@@ -1,7 +1,8 @@
 import { db } from "../utils/firebase";
 import { setNotificationStates } from "../utils/states";
 
-const notificationChecked = async (currentUser,setNotifications) => {
+const notificationChecked = async (currentUser, setNotifications) => {
+  if (!currentUser) return;
   await db
     .collection("users")
     .doc(`${currentUser.uid}`)

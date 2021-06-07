@@ -283,18 +283,7 @@ const postEdit = () => {
                   .then(
                     async (snapshot) =>
                       await Promise.all(
-                        snapshot.docs.map((document) =>
-                          db
-                            .collection("users")
-                            .doc(`${currentUser.uid}`)
-                            .collection("posts")
-                            .doc(post.postID)
-                            .collection("chatrooms")
-                            .doc(`${doc.id}`)
-                            .collection("messages")
-                            .doc(`${document.id}`)
-                            .delete()
-                        )
+                        snapshot.docs.map((document) => document.ref.delete())
                       )
                   );
                 doc.ref.delete();

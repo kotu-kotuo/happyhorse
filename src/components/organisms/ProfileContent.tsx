@@ -6,7 +6,7 @@ const ProfileContent = (props) => {
 
   return (
     <div>
-      {user && currentUser && (
+      {user &&  (
         <div className="mb-32">
           <img
             className="sm:w-full sm:h-80 h-40 w-screen object-cover sm:rounded-b-3xl"
@@ -20,7 +20,7 @@ const ProfileContent = (props) => {
                 src={user.avatar}
                 alt="avatar"
               />
-              {user.id === currentUser.uid && (
+              {user.id === currentUser?.uid && (
                 <Link href="/profile-edit">
                   <a className="absolute bottom-0 right-7 border border-mainGreen rounded-md px-3 py-1 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300 sm:px-4 sm:py-2 sm:right-10">
                     編集

@@ -365,10 +365,7 @@ const messages = () => {
   }, [reviewsOnHold]);
 
   //時間をUNIXから変換
-  const createdTime = (post) => {
-    const time = new Date(post?.createdAt?.seconds * 1000);
-    return time.toLocaleDateString();
-  };
+
   const createdMessageTime = (message) => {
     const time = new Date(message?.createdAt?.seconds * 1000);
     return time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
@@ -1442,7 +1439,7 @@ const messages = () => {
                     />
                   </div>
                   <div className="p-2 text-sm text-gray-900">
-                    <div className="m-1 text-sm line-clamp-2">{post.title}</div>
+                    <div className="m-1 text-sm line-clamp-3">{post.title}</div>
                     <div className="p-1"> {post.price}円</div>
                   </div>
                 </div>
@@ -1458,7 +1455,7 @@ const messages = () => {
             </div>
             {/* メッセージリスト =========================================*/}
             <div className="shadow-xl w-full">
-              <div className="w-full bg-white rounded-lg overflow-y-scroll z-10 chatScreenHeight pb-16 px-2 sm:px-0">
+              <div className="w-full bg-white rounded-lg overflow-y-scroll z-10 chatScreenHeight pb-6 px-2 sm:px-0">
                 <div className="pt-20 sm:pt-0">
                   <div className="sm:hidden">
                     <Link href={`/post/postShow/${post.postID}`}>
@@ -1645,7 +1642,7 @@ const messages = () => {
                         )}
                       </div>
                     ))}
-                  <div ref={ref} />
+                  <div ref={ref} className="h-20"/>
                 </div>
               </div>
               <form onSubmit={sendMessage}>
