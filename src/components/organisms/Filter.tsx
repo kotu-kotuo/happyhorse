@@ -27,6 +27,8 @@ const Filter = (props) => {
     setArea,
     feature,
     setFeature,
+    showOnlyAvailable,
+    setShowOnlyAvailable,
     filterClear,
   } = props;
 
@@ -124,6 +126,27 @@ const Filter = (props) => {
         <div className="px-4 py-6 shadow-md border border-gray-50 rounded-lg">
           <div className=" text-center text-sm font-semibold text-gray-400 opacity-95">
             絞り込み検索
+          </div>
+
+          <div
+            className="flex items-center cursor-pointer mt-8 mb-8 pl-1"
+            onClick={() => {
+              setShowOnlyAvailable(!showOnlyAvailable);
+            }}
+          >
+            <div className="relative mr-3">
+              <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+              <div
+                className={
+                  showOnlyAvailable
+                    ? "absolute w-6 h-6 bg-mainGreen rounded-full shadow -left-1 -top-1  ease-in-out transition-all duration-300 transform translate-x-full"
+                    : "absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1  ease-in-out transition-all duration-300"
+                }
+              ></div>
+            </div>
+            <div className="text-sm text-gray-700 hover:opacity-80">
+              販売中のみ表示
+            </div>
           </div>
 
           <div className="mb-4 mt-7 ml-2 text-sm font-semibold text-gray-400 opacity-90">

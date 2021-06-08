@@ -1,4 +1,5 @@
 export const filterInitialValues: any = {
+  showOnlyAvailable: false,
   category: ["障害馬", "馬場馬", "総合馬", "レクレーション"],
   priceMin: 0,
   priceMax: 99999999999999,

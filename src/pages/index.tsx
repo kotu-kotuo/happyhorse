@@ -19,6 +19,9 @@ export default function Index() {
     postInitialValues,
   ]);
   const [posts, setPosts] = useState<Types.Post[]>([postInitialValues]);
+  const [showOnlyAvailable, setShowOnlyAvailable] = useState(
+    filterInitialValues.showOnlyAvailable
+  );
   const [category, setCategory] = useState(filterInitialValues.category);
   const [area, setArea] = useState(filterInitialValues.area);
   const [feature, setFeature] = useState(filterInitialValues.features);
@@ -59,6 +62,7 @@ export default function Index() {
         .doc(`${currentUser.uid}`)
         .get()
         .then((snapshot) => {
+          setShowOnlyAvailable(snapshot.data()?.showOnlyAvailable);
           setCategory(snapshot.data().category);
           setPriceMin(snapshot.data().priceMin);
           setPriceMax(snapshot.data().priceMax);
@@ -82,6 +86,7 @@ export default function Index() {
       posts &&
       currentUser &&
       !(
+        showOnlyAvailable === filterInitialValues.showOnlyAvailable &&
         category === filterInitialValues.category &&
         priceMin === filterInitialValues.priceMin &&
         priceMax === filterInitialValues.priceMax &&
@@ -93,19 +98,23 @@ export default function Index() {
         feature === filterInitialValues.features
       )
     ) {
-      const filteredArray = posts.filter(
-        (post) =>
-          category.includes(post.category) &&
-          post.price >= priceMin &&
-          post.price <= priceMax &&
-          post.age >= ageMin &&
-          post.age <= ageMax &&
-          post.height >= heightMin &&
-          post.height <= heightMax &&
-          breed.includes(post.breed) &&
-          color.includes(post.color) &&
-          area.includes(post.area)
-      );
+      const filteredArray = posts
+        .filter(
+          (post) =>
+            category.includes(post.category) &&
+            post.price >= priceMin &&
+            post.price <= priceMax &&
+            post.age >= ageMin &&
+            post.age <= ageMax &&
+            post.height >= heightMin &&
+            post.height <= heightMax &&
+            breed.includes(post.breed) &&
+            color.includes(post.color) &&
+            area.includes(post.area)
+        )
+        .filter((post) =>
+          showOnlyAvailable ? post.isAvairable === true : true
+        );
 
       const filteredFeaturesPosts = feature.map((element) =>
         posts.filter((post) => post.features.includes(element))
@@ -213,19 +222,23 @@ export default function Index() {
           feature: feature,
         });
 
-      const filteredArray = posts.filter(
-        (post) =>
-          category.includes(post.category) &&
-          post.price >= priceMin &&
-          post.price <= priceMax &&
-          post.age >= ageMin &&
-          post.age <= ageMax &&
-          post.height >= heightMin &&
-          post.height <= heightMax &&
-          breed.includes(post.breed) &&
-          color.includes(post.color) &&
-          area.includes(post.area)
-      );
+      const filteredArray = posts
+        .filter(
+          (post) =>
+            category.includes(post.category) &&
+            post.price >= priceMin &&
+            post.price <= priceMax &&
+            post.age >= ageMin &&
+            post.age <= ageMax &&
+            post.height >= heightMin &&
+            post.height <= heightMax &&
+            breed.includes(post.breed) &&
+            color.includes(post.color) &&
+            area.includes(post.area)
+        )
+        .filter((post) =>
+          showOnlyAvailable ? post.isAvairable === true : true
+        );
 
       const filteredFeaturesPosts = feature.map((element) =>
         posts.filter((post) => post.features.includes(element))
@@ -247,6 +260,7 @@ export default function Index() {
 
   //クリアが押されたとき
   const filterClear = () => {
+    setShowOnlyAvailable(filterInitialValues.showOnlyAvailable);
     setCategory(filterInitialValues.category);
     setPriceMin(filterInitialValues.priceMin);
     setPriceMax(filterInitialValues.priceMax);
@@ -291,6 +305,8 @@ export default function Index() {
                 setArea={setArea}
                 feature={feature}
                 setFeature={setFeature}
+                showOnlyAvailable={showOnlyAvailable}
+                setShowOnlyAvailable={setShowOnlyAvailable}
                 filterClear={filterClear}
               />
             </div>
@@ -335,6 +351,8 @@ export default function Index() {
                       setArea={setArea}
                       feature={feature}
                       setFeature={setFeature}
+                      showOnlyAvailable={showOnlyAvailable}
+                      setShowOnlyAvailable={setShowOnlyAvailable}
                       filterClear={filterClear}
                     />
                   </div>
