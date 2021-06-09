@@ -66,7 +66,9 @@ const DropdownFilter = (props) => {
                 placeholder="min"
                 value=""
                 className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMin(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setPriceMin(e.target.valueAsNumber)
+                }
               />
             ) : (
               <input
@@ -75,7 +77,9 @@ const DropdownFilter = (props) => {
                 placeholder="min"
                 value={props.priceMin}
                 className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMin(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setPriceMin(e.target.valueAsNumber)
+                }
               />
             )}
 
@@ -89,7 +93,9 @@ const DropdownFilter = (props) => {
                 placeholder="max"
                 value=""
                 className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMax(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setPriceMax(e.target.valueAsNumber)
+                }
               />
             ) : (
               <input
@@ -98,7 +104,9 @@ const DropdownFilter = (props) => {
                 placeholder="max"
                 value={props.priceMax}
                 className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setPriceMax(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setPriceMax(e.target.valueAsNumber)
+                }
               />
             )}
           </div>
@@ -114,7 +122,9 @@ const DropdownFilter = (props) => {
                 placeholder="min"
                 value=""
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMin(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setAgeMin(e.target.valueAsNumber)
+                }
               />
             ) : (
               <input
@@ -123,7 +133,9 @@ const DropdownFilter = (props) => {
                 placeholder="min"
                 value={props.ageMin}
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMin(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setAgeMin(e.target.valueAsNumber)
+                }
               />
             )}
             <div className="text-gray-700 text-sm mt-1 whitespace-nowrap">
@@ -136,7 +148,9 @@ const DropdownFilter = (props) => {
                 placeholder="max"
                 value=""
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMax(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setAgeMax(e.target.valueAsNumber)
+                }
               />
             ) : (
               <input
@@ -145,7 +159,9 @@ const DropdownFilter = (props) => {
                 placeholder="max"
                 value={props.ageMax}
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setAgeMax(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setAgeMax(e.target.valueAsNumber)
+                }
               />
             )}
           </div>
@@ -161,7 +177,9 @@ const DropdownFilter = (props) => {
                 placeholder="min"
                 value=""
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMin(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setHeightMin(e.target.valueAsNumber)
+                }
               />
             ) : (
               <input
@@ -170,7 +188,9 @@ const DropdownFilter = (props) => {
                 placeholder="min"
                 value={props.heightMin}
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMin(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setHeightMin(e.target.valueAsNumber)
+                }
               />
             )}
 
@@ -185,7 +205,9 @@ const DropdownFilter = (props) => {
                 placeholder="max"
                 value=""
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMax(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setHeightMax(e.target.valueAsNumber)
+                }
               />
             ) : (
               <input
@@ -194,7 +216,9 @@ const DropdownFilter = (props) => {
                 placeholder="max"
                 value={props.heightMax}
                 className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-                onChange={(e) => props.setHeightMax(e.target.valueAsNumber)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  props.setHeightMax(e.target.valueAsNumber)
+                }
               />
             )}
           </div>
@@ -583,7 +607,7 @@ const DropdownFilter = (props) => {
                 </div> */}
 
           <div className="flex mt-8">
-            <button // TODO: ログインしてなかったら遷移させたい
+            <button 
               type="submit"
               className="mx-auto whitespace-nowrap focus:outline-none text-white text-base font-semibold py-2 px-5 rounded-md bg-gray-400 block w-44 hover:opacity-90 hover:shadow-lg"
             >
@@ -600,8 +624,7 @@ const DropdownFilter = (props) => {
         </div>
       </form>
     </div>
-
-  )
+  );
 }
 
 export default DropdownFilter

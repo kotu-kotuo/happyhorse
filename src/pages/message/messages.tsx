@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
@@ -6,8 +6,13 @@ import { useRouter } from "next/router";
 import Router from "next/router";
 import { db, storage } from "../../utils/firebase";
 import firebase from "firebase/app";
-import { postInitialValues } from "../../utils/initialValues";
-import { Post } from "../../types/types";
+import {
+  chatroomInitialValues,
+  messageInitialValues,
+  postInitialValues,
+  reviewInitialValues,
+} from "../../utils/initialValues";
+import { Chatroom, Message, Post, Review } from "../../types/types";
 import { IoSend, IoChevronBack } from "react-icons/io5";
 import { BsFillImageFill } from "react-icons/bs";
 import { CgSmile } from "react-icons/cg";
@@ -21,25 +26,30 @@ import {
   setReviewStates,
   setUserState,
 } from "../../utils/states";
-import { generateFileName } from "../../functions/utils";
+import { generateFileName } from "../../functions/generateFileName";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import DealProgressButton from "../../components/atoms/DealProgressButton";
 import isFirstOnDate from "../../functions/messages/isFirstOnDate";
+import { NextPage } from "next";
 
-const messages = () => {
+const messages: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
   const router = useRouter();
   const [post, setPost] = useState<Post>(postInitialValues);
-  const [messages, setMessages] = useState([]);
-  const [chatroom, setChatroom] = useState(null);
+  const [chatroom, setChatroom] = useState<Chatroom>(chatroomInitialValues);
+  const [messages, setMessages] = useState<Message[]>([messageInitialValues]);
+  const [reviewsOnHold, setReviewsOnHold] = useState<Review[]>([
+    reviewInitialValues,
+  ]);
+  const [postReviews, setPostReviews] = useState<Review[]>([
+    reviewInitialValues,
+  ]);
   const [isOpenMyModal, setIsOpenMyModal] = useState(false);
   const [isOpenYourModal, setIsOpenYourModal] = useState(false);
   const [messageText, setMessageText] = useState("");
-  const [reviewsOnHold, setReviewsOnHold]: any = useState([]);
   const [rateValue, setRateValue] = useState("good");
   const [reviewText, setReviewText] = useState("");
-  const [postReviews, setPostReviews] = useState([]);
   const [reviewSwitch, setReviewSwitch] = useState("OFF");
   const [messageReceiver, setMessageReceiver] = useState(null);
 
@@ -1277,7 +1287,7 @@ const messages = () => {
                     value="good"
                     name="rate"
                     defaultChecked={true}
-                    onChange={(e) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setRateValue(e.target.value);
                     }}
                     className="hidden"
@@ -1307,7 +1317,7 @@ const messages = () => {
               <textarea
                 className="w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="この度はありがとうございました！"
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   setReviewText(e.target.value);
                 }}
               />
@@ -1642,7 +1652,7 @@ const messages = () => {
                         )}
                       </div>
                     ))}
-                  <div ref={ref} className="h-20"/>
+                  <div ref={ref} className="h-20" />
                 </div>
               </div>
               <form onSubmit={sendMessage}>
@@ -1654,7 +1664,9 @@ const messages = () => {
                           maxRows={5}
                           className="flex items-center h-10 w-full rounded pl-3 pr-8 text-sm resize-none focus:outline-none focus:border-subBlue z-20"
                           placeholder="Type your message…"
-                          onChange={(e) => {
+                          onChange={(
+                            e: React.ChangeEvent<HTMLTextAreaElement>
+                          ) => {
                             setMessageText(e.target.value);
                           }}
                           value={messageText}

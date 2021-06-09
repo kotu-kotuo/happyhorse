@@ -2,15 +2,19 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { db } from "../utils/firebase";
-import { PageTitle } from "../components/atoms/Atoms";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { setPostStates } from "../utils/states";
 import { useRouter } from "next/router";
 import PasswordModal from "../components/molecules/PasswordModal";
+import { NextPage } from "next";
+import { postInitialValues } from "../utils/initialValues";
+import { Post } from "../types/types";
 
-const setting = () => {
-  const [myPosts, setMyPosts] = useState([]);
-  const [duringDealingPosts, setDuringDealingPosts] = useState([]);
+const setting: NextPage = () => {
+  const [myPosts, setMyPosts] = useState<Post[]>([postInitialValues]);
+  const [duringDealingPosts, setDuringDealingPosts] = useState<Post[]>([
+    postInitialValues,
+  ]);
   const [password, setPassword] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);

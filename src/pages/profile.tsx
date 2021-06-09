@@ -4,18 +4,22 @@ import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db } from "../utils/firebase";
 import ProfileContent from "../components/organisms/ProfileContent";
+import { NextPage } from "next";
+import { userInitialValues } from "../utils/initialValues";
+import { User } from "../types/types";
+import { setUserState } from "../utils/states";
 
-const Profile = () => {
+const Profile: NextPage = () => {
   const { currentUser, user } = useContext(AuthContext);
 
   const router = useRouter();
-  const [queryUser, setQueryUser] = useState(null);
+  const [queryUser, setQueryUser] = useState<User>(userInitialValues);
   useEffect(() => {
     if (router.query.uid) {
       db.collection("users")
         .doc(`${router.query.uid}`)
         .get()
-        .then((snapshot) => setQueryUser(snapshot.data()));
+        .then((snapshot) => setQueryUser(setUserState(snapshot.data())));
     }
   }, [router.query.uid]);
   return (

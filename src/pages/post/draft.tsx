@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, FormEventHandler } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { useRouter } from "next/router";
@@ -7,42 +7,33 @@ import firebase from "firebase/app";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
 import fetch from "node-fetch";
-import { filterInitialValues } from "../../utils/initialValues";
+import { filterInitialValues, postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
-import { RequiredMark } from "../../components/atoms/Atoms";
-import { generateFileName } from "../../functions/utils";
+import  RequiredMark  from "../../components/atoms/RequiredMark";
+import { generateFileName } from "../../functions/generateFileName";
+import { NextPage } from "next";
+import { Post } from "../../types/types";
 
-interface IMAGES {
-  images: any;
-}
-
-interface IMAGESURL {
-  imagesURL: any;
-}
-interface PREVIEWSURL {
-  previewsURL: any;
-}
-
-const draft = () => {
+const draft: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
-  const [images, setImages]: any = useState<IMAGES[]>([]);
-  const [imagesURL, setImagesURL]: any = useState<IMAGESURL[]>([]);
-  const [previewsURL, setPreviewsURL]: any = useState<PREVIEWSURL[]>([]);
-  const [post, setPost]: any = useState(null);
+  const [images, setImages] = useState([]);
+  const [imagesURL, setImagesURL] = useState([]);
+  const [previewsURL, setPreviewsURL] = useState([]);
+  const [post, setPost] = useState<Post>(postInitialValues);
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [horseName, setHorseName] = useState("");
   const [category, setCategory] = useState("");
   const [breed, setBreed] = useState("");
   const [color, setColor] = useState("");
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [age, setAge] = useState("");
-  const [height, setHeight] = useState("");
+  const [year, setYear] = useState(null);
+  const [month, setMonth] = useState(null);
+  const [day, setDay] = useState(null);
+  const [age, setAge] = useState(null);
+  const [height, setHeight] = useState(null);
   const [features, setFeatures] = useState(["empty"]);
   const [area, setArea] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(null);
   const [isDraft, setIsDraft] = useState(false);
   const router = useRouter();
 
@@ -229,7 +220,7 @@ const draft = () => {
               latestMessage: "",
               clientUserID: "",
               ratingCompleted: false,
-              deletedAccount:false,
+              deletedAccount: false,
             });
         };
 
@@ -298,11 +289,11 @@ const draft = () => {
 
   const handleImages = (e) => {
     const uploadImages = e.target.files;
-     if ([...images, ...uploadImages].length <= 10) {
-       setImages([...images, ...uploadImages]);
-     } else {
-       alert("画像は10枚までです。");
-     }
+    if ([...images, ...uploadImages].length <= 10) {
+      setImages([...images, ...uploadImages]);
+    } else {
+      alert("画像は10枚までです。");
+    }
   };
 
   const handleFeatures = (e) => {
@@ -323,16 +314,20 @@ const draft = () => {
     setPreviewsURL([...imageURLs]);
   };
 
-  const deleteDraft = async(e) => {
-     e.preventDefault();
-     const result = window.confirm("本当に削除しますか？");
-     if (result) {
+  const deleteDraft = async (e) => {
+    e.preventDefault();
+    const result = window.confirm("本当に削除しますか？");
+    if (result) {
+      await db
+        .collection("users")
+        .doc(`${currentUser.uid}`)
+        .collection("drafts")
+        .doc(post.postID)
+        .delete();
 
-       await db.collection("users").doc(`${currentUser.uid}`).collection("drafts").doc(post.postID).delete()
-
-       await router.push("/post/draftList")
-     }
-  }
+      await router.push("/post/draftList");
+    }
+  };
 
   return (
     <>
@@ -356,7 +351,7 @@ const draft = () => {
                     src={previewURL}
                     className="h-12 w-20 mb-4  object-cover sm:h-20 sm:w-32"
                   />
-                  <div onClick={(e) => deletePreview(index)}>
+                  <div onClick={() => deletePreview(index)}>
                     <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
                   </div>
                 </div>
@@ -380,7 +375,7 @@ const draft = () => {
             className="mb-8 hidden"
             multiple
             defaultValue={post?.images}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               handleImages(e);
             }}
           />
@@ -393,7 +388,9 @@ const draft = () => {
             type="text"
             name="title"
             defaultValue={post?.title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setTitle(e.target.value)
+            }
             className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
           />
 
@@ -404,7 +401,9 @@ const draft = () => {
           <textarea
             name="postText"
             defaultValue={post?.postText}
-            onChange={(e) => setPostText(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+              setPostText(e.target.value)
+            }
             className="mb-8 w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm whitespace-pre"
           />
 
@@ -416,7 +415,9 @@ const draft = () => {
             type="text"
             name="horseName"
             defaultValue={post?.horseName}
-            onChange={(e) => setHorseName(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setHorseName(e.target.value)
+            }
             className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
           />
 
@@ -428,7 +429,9 @@ const draft = () => {
             <select
               name="category"
               defaultValue={post?.category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setCategory(e.target.value)
+              }
               className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
             >
               <option hidden>選択してください</option>
@@ -446,7 +449,9 @@ const draft = () => {
             <select
               name="breed"
               defaultValue={post?.breed}
-              onChange={(e) => setBreed(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setBreed(e.target.value)
+              }
               className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
             >
               <option hidden>選択してください</option>
@@ -464,7 +469,9 @@ const draft = () => {
             <select
               name="color"
               defaultValue={post?.color}
-              onChange={(e) => setColor(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setColor(e.target.value)
+              }
               className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
             >
               <option hidden>選択してください</option>
@@ -484,7 +491,9 @@ const draft = () => {
               name="year"
               placeholder="2010"
               defaultValue={post?.birth.year}
-              onChange={(e) => setYear(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setYear(e.target.value)
+              }
               className="mb-8 w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
             />
             <div className="mr-6 ml-2 mb-8 text-sm">年</div>
@@ -493,7 +502,9 @@ const draft = () => {
               name="month"
               placeholder="1"
               defaultValue={post?.birth.month}
-              onChange={(e) => setMonth(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setMonth(e.target.value)
+              }
               className="appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
             />
             <div className="mr-6 ml-2 mb-8 text-sm">月</div>
@@ -502,7 +513,9 @@ const draft = () => {
               name="day"
               placeholder="10"
               defaultValue={post?.birth.day}
-              onChange={(e) => setDay(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setDay(e.target.value)
+              }
               className="mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
             />
             <div className="mr-6 ml-2 mb-8 text-sm">日</div>
@@ -513,7 +526,9 @@ const draft = () => {
             type="number"
             name="age"
             defaultValue={post?.age}
-            onChange={(e) => setAge(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setAge(e.target.value)
+            }
             className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
           />
 
@@ -525,7 +540,9 @@ const draft = () => {
             type="number"
             name="height"
             defaultValue={post?.height}
-            onChange={(e) => setHeight(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setHeight(e.target.value)
+            }
             className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
           />
 
@@ -537,7 +554,9 @@ const draft = () => {
             <select
               name="area"
               defaultValue={post?.area}
-              onChange={(e) => setArea(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setArea(e.target.value)
+              }
               className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
             >
               <option hidden>選択してください</option>
@@ -582,7 +601,9 @@ const draft = () => {
               type="number"
               name="price"
               defaultValue={post?.price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPrice(e.target.value)
+              }
               className="mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm"
             />
           </div>

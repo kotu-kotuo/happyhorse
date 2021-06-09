@@ -1,13 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Layout } from "../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth } from "../utils/firebase";
+import { NextPage } from "next";
 
-const Login: React.FC = () => {
+const Login: NextPage = () => {
   const router = useRouter();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const login = async (e) => {
     e.preventDefault();
@@ -46,7 +47,9 @@ const Login: React.FC = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="メールアドレス"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
                 />
               </div>
               <div>
@@ -60,7 +63,9 @@ const Login: React.FC = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="パスワード"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
                 />
               </div>
             </div>

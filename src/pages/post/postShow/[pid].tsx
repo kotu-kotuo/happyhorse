@@ -3,23 +3,22 @@ import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db } from "../../../utils/firebase";
-import { FaHeart } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
-import "slick-carousel/slick/slick.css";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates, setUserState } from "../../../utils/states";
 import { Post } from "../../../types/types";
-import { clickHeart } from "../../../functions/utils";
+import  clickHeart from "../../../functions/clickHeart";
 import TableListItem from "../../../components/molecules/TableListItem";
 import Category from "../../../components/atoms/Category";
 import SlickSlider from "../../../components/molecules/SlickSlider";
 import MessageButtonHandle from "../../../components/molecules/MessageButtonHandle";
 import PublisherValue from "../../../components/molecules/PublisherValue";
 import LikeButton from "../../../components/atoms/LikeButton";
+import { NextPage } from "next";
+import "slick-carousel/slick/slick.css";
 
-const Show = () => {
+const Show: NextPage = () => {
   const router = useRouter();
   const { user, setUser, currentUser, notifications } = useContext(AuthContext);
   const [post, setPost] = useState<Post>(postInitialValues);

@@ -113,6 +113,18 @@ export const filterInitialValues: any = {
   ],
 };
 
+export const userInitialValues = {
+  id: "",
+  username: "",
+  avatar: "",
+  cover: "",
+  profileText: "",
+  good: 0,
+  bad: 0,
+  likePostIDs: [],
+  deletedAccount: false,
+};
+
 export const postInitialValues = {
   postID: "",
   userID: "",
@@ -134,14 +146,14 @@ export const postInitialValues = {
   createdAt: "",
   updatedAt: "",
   likeUserIDs: [],
-  isAvairable: null,
+  isAvairable: false,
   pv: null,
   sendMessageUserIDs: [],
   messageUpdatedAt: "",
   latestMessage: "",
   clientUserID: "",
-  ratingCompleted: null,
-  deletedAccount: null,
+  ratingCompleted: false,
+  deletedAccount: false,
 };
 
 export const chatroomInitialValues = {
@@ -156,5 +168,55 @@ export const chatroomInitialValues = {
   messageCount: null,
   createdAt: "",
   messageUpdatedAt: "",
-  deletedAccount: null,
+  deletedAccount: false,
 };
+
+export const messageInitialValues = {
+  userID: "",
+  username: "",
+  avatar: "",
+  messageReceiverID: "",
+  messageReceiverName: "",
+  postID: "",
+  postTitle: "",
+  image: "",
+  messageText: "",
+  createdAt: "",
+  firstOnDate: false,
+  clientDecision: false,
+  dealInterruption: false,
+  dealCompleted: false,
+  pleaseRate: false,
+  rateCompleted: false,
+  deletedAccount: false,
+};
+
+export const reviewInitialValues = {
+  postID: "",
+  postUserID: "",
+  postTitle: "",
+  postImage: "",
+  reviewerID: "",
+  reviewerName: "",
+  reviewerAvatar: "",
+  rating: "",
+  reviewText: "",
+  createdAt: "",
+  deletedAccount: false,
+};
+
+export const notificationInitialValues = {
+  postID: "",
+  postUserID: "",
+  sendUserID: "",
+  receiveUserID: "",
+  sendMessageUserID: "",
+  image: "",
+  avatar: "",
+  text: "",
+  createdAt: "",
+  checked: false,
+  toMessage: false,
+  toProfile: false,
+  noLink: false,
+}

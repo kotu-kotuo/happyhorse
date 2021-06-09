@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Layout } from "../components/organisms/Layout";
+import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth, db } from "../utils/firebase";
 import { filterInitialValues } from "../utils/initialValues";
 
-const SignUp: React.FC = () => {
+const SignUp: NextPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -39,6 +40,7 @@ const SignUp: React.FC = () => {
               .collection("filters")
               .doc(`${result.user.uid}`)
               .set({
+                showOnlyAvailable: false,
                 category: filterInitialValues.category,
                 priceMin: filterInitialValues.priceMin,
                 priceMax: filterInitialValues.priceMax,
@@ -93,7 +95,9 @@ const SignUp: React.FC = () => {
                   required
                   className="appearance-none  relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="ユーザーネーム"
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setUsername(e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -113,7 +117,9 @@ const SignUp: React.FC = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="メールアドレス"
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
                 />
               </div>
               <div>
@@ -127,7 +133,9 @@ const SignUp: React.FC = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
                   placeholder="パスワード"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
                 />
               </div>
             </div>

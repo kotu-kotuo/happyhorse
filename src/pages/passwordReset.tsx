@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { NextPage } from "next";
+import React, { useState } from "react";
 import { Layout } from "../components/organisms/Layout";
 import { auth } from "../utils/firebase";
 
-const passwordReset = () => {
+const passwordReset: NextPage = () => {
   const [email, setEmail] = useState("");
   const [handleDisplay, setHandleDisplay] = useState(false);
 
@@ -40,13 +41,12 @@ const passwordReset = () => {
                         パスワード再設定用のメールアドレス
                       </p>
                       <input
-
                         type="email"
                         autoComplete="email"
                         required
                         placeholder="メールアドレス"
                         className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        onChange={(e) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setEmail(e.target.value);
                         }}
                       />
@@ -84,9 +84,9 @@ const passwordReset = () => {
                   ご入力されたメールアドレスにパスワード再設定用のメールをお送りしました。
                 </p>
                 <p className="text-gray-900 text-center">
-                    そちらのメールからパスワードの再設定をお願いします。
+                  そちらのメールからパスワードの再設定をお願いします。
                 </p>
-                  <img src="/undraw_ice_cream_s2rh.svg" className="mt-10"/>
+                <img src="/undraw_ice_cream_s2rh.svg" className="mt-10" />
               </>
             )}
           </div>

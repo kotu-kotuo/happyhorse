@@ -1,17 +1,9 @@
-export const generateFileName = (file) => {
-  const S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const N = 16;
-  const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
-    .map((n) => S[n % S.length])
-    .join("");
-  return randomChar + "_" + file.size;
-};
+import React from "react";
 
 //いいね機能
 import firebase from "firebase/app";
-// import { setNotificationStates } from "../utils/states";
 
-export const clickHeart = async (
+const clickHeart = async (
   e,
   currentUser,
   user,
@@ -82,8 +74,6 @@ export const clickHeart = async (
           async (snapshot) =>
             await Promise.all(snapshot.docs.map((doc) => doc.ref.delete()))
         );
-
-
     } else {
       await db
         .collection("users")
@@ -213,3 +203,5 @@ export const clickHeart = async (
     }
   }
 };
+
+export default clickHeart;

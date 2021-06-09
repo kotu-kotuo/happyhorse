@@ -5,11 +5,14 @@ import { setReviewStates } from "../utils/states";
 import { db } from "../utils/firebase";
 import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import ReviewListItem from "../components/molecules/reviewListItem";
+import { NextPage } from "next";
+import { reviewInitialValues } from "../utils/initialValues";
+import { Review } from "../types/types";
 
 
-const reviews = () => {
-  const [goodReviews, setGoodReviews] = useState([]);
-  const [badReviews, setBadReviews] = useState([]);
+const reviews: NextPage = () => {
+  const [goodReviews, setGoodReviews] = useState<Review[]>([reviewInitialValues]);
+  const [badReviews, setBadReviews] = useState<Review[]>([reviewInitialValues]);
   const [isLeftHidden, setIsLeftHidden] = useState(false);
   const [isRightHidden, setIsRightHidden] = useState(true);
   const router = useRouter();

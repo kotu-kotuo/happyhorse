@@ -25,7 +25,7 @@ export const setPostStates = (data) => {
       createdAt: data.createdAt,
       updatedAt: data.updatedAt,
       likeUserIDs: data.likeUserIDs,
-      isAvairable: data.isAvairable, //TODO:avairableじゃなくて available
+      isAvairable: data.isAvairable,
       pv: data.pv,
       sendMessageUserIDs: data.sendMessageUserIDs,
       messageUpdatedAt: data.messageUpdatedAt,
@@ -67,7 +67,7 @@ export const setMessageStates = (data) => ({
   dealInterruption: data.dealInterruption,
   dealCompleted: data.dealCompleted,
   pleaseRate: data.pleaseRate,
-  rateCompleted: data.rateCompleted, //TODO:ratingCompleted にしたい
+  rateCompleted: data.rateCompleted,
   deletedAccount: data.deletedAccount,
 });
 

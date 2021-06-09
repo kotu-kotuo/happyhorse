@@ -8,26 +8,16 @@ import firebase from "firebase/app";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
 import { filterInitialValues } from "../../utils/initialValues";
-import { generateFileName } from "../../functions/utils";
-import { RequiredMark } from "../../components/atoms/Atoms";
+import { generateFileName } from "../../functions/generateFileName";
+import RequiredMark  from "../../components/atoms/RequiredMark";
+import { NextPage } from "next";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-interface IMAGES {
-  images: any;
-}
-
-interface IMAGESURL {
-  imagesURL: any;
-}
-interface PREVIEWSURL {
-  previewsURL: any;
-}
-
-const Post: React.FC = () => {
+const Post: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
-  const [images, setImages]: any = useState<IMAGES[]>([]);
-  const [imagesURL, setImagesURL]: any = useState<IMAGESURL[]>([]);
-  const [previewsURL, setPreviewsURL]: any = useState<PREVIEWSURL[]>([]);
+  const [images, setImages] = useState([]);
+  const [imagesURL, setImagesURL] = useState([]);
+  const [previewsURL, setPreviewsURL] = useState([]);
   const [postId, setPostId] = useState("");
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
@@ -317,7 +307,7 @@ const Post: React.FC = () => {
                     src={previewURL}
                     className="h-12 w-20 mb-4  object-cover sm:h-20 sm:w-32"
                   />
-                  <div onClick={(e) => deletePreview(index)}>
+                  <div onClick={() => deletePreview(index)}>
                     <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
                   </div>
                 </div>
@@ -342,7 +332,7 @@ const Post: React.FC = () => {
             accept="image/*"
             className="mb-8 hidden"
             multiple
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               handleImages(e);
             }}
           />
@@ -357,7 +347,7 @@ const Post: React.FC = () => {
               name="title"
               required
               className="text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setTitle(e.target.value);
               }}
             />
@@ -374,7 +364,7 @@ const Post: React.FC = () => {
             <textarea
               name="postText"
               className="text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 h-36"
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                 setPostText(e.target.value);
               }}
             />
@@ -391,7 +381,7 @@ const Post: React.FC = () => {
             type="text"
             name="horseName"
             className="mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setHorseName(e.target.value);
             }}
           />
@@ -403,7 +393,7 @@ const Post: React.FC = () => {
           <select
             name="category"
             className="postSelect"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setCategory(e.target.value);
             }}
           >
@@ -420,7 +410,7 @@ const Post: React.FC = () => {
           <select
             name="breed"
             className="postSelect"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setBreed(e.target.value);
             }}
           >
@@ -437,7 +427,7 @@ const Post: React.FC = () => {
           <select
             name="color"
             className="postSelect"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setColor(e.target.value);
             }}
           >
@@ -458,7 +448,7 @@ const Post: React.FC = () => {
               placeholder="2010"
               min="1970"
               className="text-sm md:text-base mb-8 w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10"
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setYear(e.target.value);
               }}
             />
@@ -470,7 +460,7 @@ const Post: React.FC = () => {
               min="1"
               max="12"
               className="text-sm md:text-base appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setMonth(e.target.value);
               }}
             />
@@ -482,7 +472,7 @@ const Post: React.FC = () => {
               min="1"
               max="31"
               className="text-sm md:text-base mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setDay(e.target.value);
               }}
             />
@@ -514,7 +504,7 @@ const Post: React.FC = () => {
             min="0"
             max="1000"
             className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setHeight(e.target.value);
             }}
           />
@@ -526,7 +516,7 @@ const Post: React.FC = () => {
           <select
             name="area"
             className="postSelect"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setArea(e.target.value);
             }}
           >
@@ -567,7 +557,7 @@ const Post: React.FC = () => {
               name="price"
               min="0"
               className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setPrice(e.target.value);
               }}
             />

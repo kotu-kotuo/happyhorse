@@ -1,3 +1,15 @@
+export type User = {
+  id: string;
+  username: string;
+  avatar: string;
+  cover: string;
+  profileText: string;
+  good: number;
+  bad: number;
+  likePostIDs: string[];
+  deletedAccount: boolean;
+};
+
 export type Post = {
   postID: string;
   userID: string;
@@ -16,8 +28,8 @@ export type Post = {
   area: string;
   features: Array<string>;
   price: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: string | object;
+  updatedAt: string | object;
   likeUserIDs: Array<string>;
   isAvairable: boolean;
   pv: number;
@@ -27,4 +39,69 @@ export type Post = {
   clientUserID: string;
   ratingCompleted: boolean;
   deletedAccount: boolean;
+};
+
+export type Chatroom = {
+  sendUserID: string;
+  sendUserName: string;
+  sendUserAvatar: string;
+  postUserID: string;
+  postID: string;
+  postImage: string;
+  postTitle: string;
+  latestMessage: string;
+  messageCount: number;
+  createdAt: string | object;
+  messageUpdatedAt: string | object;
+  deletedAccount: boolean;
+};
+
+export type Message = {
+  userID: string;
+  username: string;
+  avatar: string;
+  messageReceiverID: string;
+  messageReceiverName: string;
+  postID: string;
+  postTitle: string;
+  image: string;
+  messageText: string;
+  createdAt: string | object;
+  firstOnDate: boolean;
+  clientDecision: boolean;
+  dealInterruption: boolean;
+  dealCompleted: boolean;
+  pleaseRate: boolean;
+  rateCompleted: boolean;
+  deletedAccount: boolean;
+};
+
+export type Review = {
+  postID: string;
+  postUserID: string;
+  postTitle: string;
+  postImage: string;
+  reviewerID: string;
+  reviewerName: string;
+  reviewerAvatar: string;
+  rating: string;
+  reviewText: string;
+  createdAt: string | object;
+  deletedAccount: boolean;
+};
+
+export type Notification = {
+  postID: string;
+  postUserID: string;
+  sendUserID: string;
+  receiveUserID: string;
+  sendMessageUserID: string;
+  image: string;
+  avatar: string;
+  text: string;
+  createdAt: string | object;
+  checked: boolean;
+  toMessage: boolean;
+  toProfile: boolean;
+  noLink: boolean;
 };

@@ -6,10 +6,10 @@ import { db } from "../../utils/firebase";
 import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
-import { PageTitle } from "../../components/atoms/Atoms";
 import { FaRegHeart } from "react-icons/fa";
+import { NextPage } from "next";
 
-const myPostList = () => {
+const myPostList: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
 

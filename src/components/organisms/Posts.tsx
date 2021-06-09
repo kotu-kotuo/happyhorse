@@ -1,9 +1,11 @@
 import Link from "next/link";
+import React from "react";
 import { FaYenSign } from "react-icons/fa";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { FaHorse } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
+import Category from "../atoms/Category";
 
 const Posts = (props) => {
   const {
@@ -24,7 +26,7 @@ const Posts = (props) => {
       {posts.map((post) => (
         <div
           key={post.postID}
-          className="border-b border-gray-300 pb-6 mb-14 sm:mb-16"
+          className="border-b border-gray-300 pb-6 mb-10 sm:mb-16"
         >
           <div
             className="flex mb-5 z-0"
@@ -63,26 +65,7 @@ const Posts = (props) => {
           </div>
 
           <div className="flex items-center md:ml-2">
-            {post.category === "障害馬" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-red-700 text-red-700 px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
-                {post.category}
-              </div>
-            )}
-            {post.category === "馬場馬" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-blue-900 text-blue-900  px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
-                {post.category}
-              </div>
-            )}
-            {post.category === "総合馬" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-green-800 text-green-800 px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
-                {post.category}
-              </div>
-            )}
-            {post.category === "レクレーション" && (
-              <div className="fontSize-sm whitespace-nowrap border rounded-full border-yellow-300 text-yellow-300 px-4 pt-1 pb-0.5 font-semibold sm:py-0.5">
-                {post.category}
-              </div>
-            )}
+            <Category category={post.category}/>
 
             <FaYenSign className="text-gray-400 text-xl ml-4 " />
             <div className="fontSize-base text-gray-900 ml-1">
@@ -101,7 +84,7 @@ const Posts = (props) => {
           </div>
           <Link href={`/post/postShow/${post.postID}`}>
             <div className="cursor-pointer hover:opacity-80">
-              <h2 className="font-semibold text-gray-800 mt-3 mb-2 line-clamp-1md:my-3 md:text-xl">
+              <h2 className="font-semibold text-gray-800 mt-3 mb-2 line-clamp-2 md:my-3 md:text-xl">
                 {post.title}
               </h2>
             </div>
@@ -142,7 +125,7 @@ const Posts = (props) => {
             )}
             <div
               className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
-              onClick={(e) => {
+              onClick={(e:React.MouseEvent<HTMLElement>) => {
                 clickHeart(
                   e,
                   currentUser,

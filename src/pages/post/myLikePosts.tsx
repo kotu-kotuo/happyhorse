@@ -6,11 +6,11 @@ import { db } from "../../utils/firebase";
 import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
-import { PageTitle } from "../../components/atoms/Atoms";
 import { FaRegHeart } from "react-icons/fa";
+import { NextPage } from "next";
 
-const myLikePosts = () => {
-  const { currentUser, user } = useContext(AuthContext);
+const myLikePosts: NextPage = () => {
+  const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
 
   useEffect(() => {
@@ -21,10 +21,7 @@ const myLikePosts = () => {
         .orderBy("likedAt", "desc")
         .get()
         .then((snapshot) => {
-          setPosts(
-            snapshot.docs
-              .map((doc) => setPostStates(doc.data()))
-          );
+          setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
         });
     }
   }, [currentUser]);

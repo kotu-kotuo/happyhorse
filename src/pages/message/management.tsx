@@ -9,20 +9,22 @@ import {
   setPostStates,
   setReviewStates,
 } from "../../utils/states";
-import { Post } from "../../types/types";
+import { Chatroom, Post, Review } from "../../types/types";
 import {
   chatroomInitialValues,
   postInitialValues,
+  reviewInitialValues,
 } from "../../utils/initialValues";
 import { FaRegUser, FaRegClock, FaRegHeart } from "react-icons/fa";
+import { NextPage } from "next";
 
-const management = () => {
+const management: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   const [myPosts, setMyPosts] = useState<Post[]>([postInitialValues]);
-  const [sendMessageChatrooms, setSendMessageChatrooms] = useState([
+  const [sendMessageChatrooms, setSendMessageChatrooms] = useState<Chatroom[]>([
     chatroomInitialValues,
   ]);
-  const [myPostChatrooms, setMyPostChatrooms] = useState([
+  const [myPostChatrooms, setMyPostChatrooms] = useState<Chatroom[]>([
     chatroomInitialValues,
   ]);
   const [isMyPostsHidden, setIsMyPostsHidden] = useState(false);
@@ -30,7 +32,7 @@ const management = () => {
   const [isSendHidden, setIsSendHidden] = useState(true);
   const [isMyPostChatroomsHidden, setIsMyPostChatroomsHidden] = useState(true);
   const [clickPid, setClickPid] = useState("");
-  const [reviewsOnHold, setReviewsOnHold]: any = useState([]);
+  const [reviewsOnHold, setReviewsOnHold] = useState<Review[]>([reviewInitialValues]);
 
   useEffect(() => {
     if (currentUser) {

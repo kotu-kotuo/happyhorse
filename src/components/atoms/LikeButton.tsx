@@ -18,7 +18,7 @@ const LikeButton = (props) => {
       <div className="hidden md:block">
         <div
           className="flex items-center mb-4 cursor-pointer hover:opacity-80"
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
             clickHeart(
               e,
               currentUser,
@@ -47,7 +47,7 @@ const LikeButton = (props) => {
       <div className="md:hidden text-center">
         <div
           className="cursor-pointer mb-0.5 hover:opacity-80"
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
             clickHeart(
               e,
               currentUser,

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { db } from "../utils/firebase";
@@ -7,18 +7,19 @@ import Posts from "../components/organisms/Posts";
 import Pagination from "../components/molecules/Pagination";
 import Filter from "../components/organisms/Filter";
 import { filterInitialValues, postInitialValues } from "../utils/initialValues";
-import * as Types from "../types/types";
 import { setPostStates } from "../utils/states";
-import { clickHeart } from "../functions/utils";
+import  clickHeart  from "../functions/clickHeart";
 import { BsFilterRight } from "react-icons/bs";
+import { NextPage } from "next";
+import { Post } from "../types/types";
 
-export default function Index() {
+const Index: NextPage = () => {
   const { currentUser, user, setUser, notifications } = useContext(AuthContext);
   const router = useRouter();
-  const [filteredPosts, setFilteredPosts] = useState<Types.Post[]>([
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([
     postInitialValues,
   ]);
-  const [posts, setPosts] = useState<Types.Post[]>([postInitialValues]);
+  const [posts, setPosts] = useState<Post[]>([postInitialValues]);
   const [showOnlyAvailable, setShowOnlyAvailable] = useState(
     filterInitialValues.showOnlyAvailable
   );
@@ -384,4 +385,6 @@ export default function Index() {
       </Layout>
     </div>
   );
-}
+};
+
+export default Index;

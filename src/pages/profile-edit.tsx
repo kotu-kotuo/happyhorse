@@ -1,10 +1,11 @@
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { storage, db } from "../utils/firebase";
+import { NextPage } from "next";
 
-const ProfileEdit = () => {
+const ProfileEdit: NextPage = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
   const [image, setImage] = useState<any>("");
   const [cover, setCover] = useState<any>("");
@@ -228,6 +229,7 @@ const ProfileEdit = () => {
 
   return (
     <Layout title="profile-edit">
+      {console.log(typeof image)}
       {currentUser && user && (
         <div className="my-20 px-2">
           <form className="mx-auto max-w-2xl" onSubmit={editProfile}>
@@ -249,7 +251,7 @@ const ProfileEdit = () => {
               <input
                 className="text-sm inline w-full text-gray-500 sm:text-base"
                 type="file"
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setImage(e.target.files[0]);
                 }}
               />
@@ -272,7 +274,7 @@ const ProfileEdit = () => {
               <input
                 className="text-sm inline w-full text-gray-500 sm:text-base"
                 type="file"
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setCover(e.target.files[0]);
                 }}
               />
@@ -283,7 +285,7 @@ const ProfileEdit = () => {
             <input
               className="text-sm block w-full mb-6 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-base"
               type="text"
-              onChange={(e) => {
+              onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
                 setUsername(e.target.value);
               }}
               defaultValue={user.username}
@@ -294,7 +296,7 @@ const ProfileEdit = () => {
             <div className="mb-7">
               <textarea
                 className="text-sm block w-full h-40 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-base"
-                onChange={(e) => {
+                onChange={(e:React.ChangeEvent<HTMLTextAreaElement>) => {
                   setProfileText(e.target.value);
                 }}
                 defaultValue={user.profileText}

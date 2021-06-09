@@ -6,8 +6,6 @@ import { db } from "../../utils/firebase";
 import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
-import image from "next/image";
-import { PageTitle } from "../../components/atoms/Atoms";
 
 const draftList = () => {
   const { currentUser } = useContext(AuthContext);
@@ -34,7 +32,7 @@ const draftList = () => {
         <div className="pageTitle">下書き保存リスト</div>
         {currentUser &&
           posts &&
-          posts.map((post,index) => (
+          posts.map((post, index) => (
             <Link
               href={{
                 pathname: "/post/draft",
