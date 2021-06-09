@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "happyhorse-bc5f6"
+    "default": "happyhorse-bc5f6",
+    "dev": "happyhorse-bc5f6",
+    "prod": "happyhorse-prod"
   }
 }

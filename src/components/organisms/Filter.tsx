@@ -135,7 +135,13 @@ const Filter = (props) => {
             }}
           >
             <div className="relative mr-3">
-              <div className="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+              <div
+                className={
+                  showOnlyAvailable
+                    ? "w-10 h-4 bg-mainGreen bg-opacity-60 rounded-full shadow-inner ease-in-out transition-all duration-100"
+                    : "w-10 h-4 bg-gray-400 rounded-full shadow-inner ease-in-out transition-all duration-100"
+                }
+              ></div>
               <div
                 className={
                   showOnlyAvailable
