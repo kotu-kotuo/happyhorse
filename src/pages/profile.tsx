@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
-import { db } from "../utils/firebase";
+import { db } from "../firebase/firebase";
 import ProfileContent from "../components/organisms/ProfileContent";
 import { NextPage } from "next";
 import { userInitialValues } from "../utils/initialValues";

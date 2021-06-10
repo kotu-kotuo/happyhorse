@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { setReviewStates } from "../utils/states";
-import { db } from "../utils/firebase";
+import { db } from "../firebase/firebase";
 import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import ReviewListItem from "../components/molecules/reviewListItem";
 import { NextPage } from "next";

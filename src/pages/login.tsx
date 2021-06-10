@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Layout } from "../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth } from "../utils/firebase";
+import { auth } from "../firebase/firebase";
 import { NextPage } from "next";
 
 const Login: NextPage = () => {

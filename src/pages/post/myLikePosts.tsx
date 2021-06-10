@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
-import { db } from "../../utils/firebase";
+import { db } from "../../firebase/firebase";
 import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";

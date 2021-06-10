@@ -2,13 +2,13 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
-import { db } from "../../../utils/firebase";
+import { db } from "../../../firebase/firebase";
 import { IoChevronBackCircleOutline } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates, setUserState } from "../../../utils/states";
 import { Post } from "../../../types/types";
-import  clickHeart from "../../../functions/clickHeart";
+import clickHeart from "../../../functions/clickHeart";
 import TableListItem from "../../../components/molecules/TableListItem";
 import Category from "../../../components/atoms/Category";
 import SlickSlider from "../../../components/molecules/SlickSlider";
@@ -94,6 +94,7 @@ const Show: NextPage = () => {
 
   return (
     <Layout title="post.title">
+      {/* {console.log(firebaseTools.setup.web())} */}
       {post && postUser && (
         <>
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">

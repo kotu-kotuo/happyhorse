@@ -3,14 +3,14 @@ import { Layout } from "../components/organisms/Layout";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { auth, db } from "../utils/firebase";
+import { auth, db } from "../firebase/firebase";
 import { filterInitialValues } from "../utils/initialValues";
 
 const SignUp: NextPage = () => {
   const router = useRouter();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const createUser = async (e) => {
     e.preventDefault();

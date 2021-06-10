@@ -1,6 +1,6 @@
 import React from "react";
 import MenuListItem from "../molecules/MenuListItem";
-import { auth } from "../../utils/firebase";
+import { auth } from "../../firebase/firebase";
 import Link from "next/link";
 import StarRatings from "react-star-ratings";
 import { IoChevronForwardOutline } from "react-icons/io5";

@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, FormEventHandler } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { useRouter } from "next/router";
-import { db, storage } from "../../utils/firebase";
+import { db, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";

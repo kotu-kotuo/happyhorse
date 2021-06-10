@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
-import { db } from "../utils/firebase";
+import { db } from "../firebase/firebase";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { setPostStates } from "../utils/states";
 import { useRouter } from "next/router";

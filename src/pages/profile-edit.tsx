@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
-import { storage, db } from "../utils/firebase";
+import { storage, db } from "../firebase/firebase";
 import { NextPage } from "next";
 
 const ProfileEdit: NextPage = () => {
@@ -229,7 +229,6 @@ const ProfileEdit: NextPage = () => {
 
   return (
     <Layout title="profile-edit">
-      {console.log(typeof image)}
       {currentUser && user && (
         <div className="my-20 px-2">
           <form className="mx-auto max-w-2xl" onSubmit={editProfile}>

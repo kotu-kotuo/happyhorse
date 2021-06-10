@@ -65,7 +65,7 @@ const Posts = (props) => {
           </div>
 
           <div className="flex items-center md:ml-2">
-            <Category category={post.category}/>
+            <Category category={post.category} />
 
             <FaYenSign className="text-gray-400 text-xl ml-4 " />
             <div className="fontSize-base text-gray-900 ml-1">
@@ -125,7 +125,7 @@ const Posts = (props) => {
             )}
             <div
               className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
-              onClick={(e:React.MouseEvent<HTMLElement>) => {
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
                 clickHeart(
                   e,
                   currentUser,

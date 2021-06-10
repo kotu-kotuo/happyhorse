@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import React, { useState } from "react";
 import { Layout } from "../components/organisms/Layout";
-import { auth } from "../utils/firebase";
+import { auth } from "../firebase/firebase";
 
 const passwordReset: NextPage = () => {
   const [email, setEmail] = useState("");

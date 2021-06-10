@@ -4,7 +4,7 @@ import { Layout } from "../../components/organisms/Layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Router from "next/router";
-import { db, storage } from "../../utils/firebase";
+import { db, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import {
   chatroomInitialValues,

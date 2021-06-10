@@ -1,6 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import { auth, db } from "../utils/firebase";
-import { setNotificationStates } from "../utils/states";
+import { auth, db } from "../firebase/firebase";
+import { Notification, User } from "../types/types";
+import {
+  notificationInitialValues,
+  userInitialValues,
+} from "../utils/initialValues";
+import { setNotificationStates, setUserState } from "../utils/states";
 
 type AuthContextProps = {
   currentUser: any | null | undefined;
@@ -24,8 +29,8 @@ const AuthProvider: React.FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<any | null | undefined>(
     undefined
   );
-  const [user, setUser] = useState(null);
-  const [notifications, setNotifications] = useState([]);
+  const [user, setUser] = useState<User>(null);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -37,7 +42,7 @@ const AuthProvider: React.FC = ({ children }) => {
         .doc(`${user.uid}`)
         .get()
         .then((snapshot) => {
-          setUser(snapshot.data());
+          setUser(setUserState(snapshot.data()));
         });
 
       db.collection("users")

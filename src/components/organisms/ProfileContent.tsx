@@ -6,7 +6,7 @@ const ProfileContent = (props) => {
 
   return (
     <div>
-      {user &&  (
+      {user && (
         <div className="mb-32">
           <img
             className="sm:w-full sm:h-80 h-40 w-screen object-cover sm:rounded-b-3xl"

@@ -1,4 +1,4 @@
-import { db, auth } from "../utils/firebase";
+import { db, auth } from "../firebase/firebase";
 import firebase from "firebase/app";
 
 const deleteAccountData = async (currentUser, password, router) => {
