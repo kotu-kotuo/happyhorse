@@ -81,14 +81,14 @@ const setting: NextPage = () => {
         <div className="max-w-2xl mx-auto">
           <h2 className="pageTitle">設定</h2>
           <ul className="mt-2 px-4">
-            <div className="border-b cursor-pointer" onClick={deleteAccount}>
+            <li className="border-b cursor-pointer" onClick={deleteAccount}>
               <div className="px-4 py-4 hover:bg-gray-100 flex items-center">
                 <p className="font-medium text-red-600 leading-none">
                   退会する
                 </p>
                 <IoChevronForwardOutline className="text-red-600 text-lg ml-auto" />
               </div>
-            </div>
+            </li>
           </ul>
         </div>
       </Layout>

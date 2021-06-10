@@ -282,7 +282,7 @@ const ProfileEdit: NextPage = () => {
               ユーザネーム(20字以内)
             </div>
             <input
-              className="text-sm block w-full mb-6 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-base"
+              className="mb-6 rounded-md inputText"
               type="text"
               onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
                 setUsername(e.target.value);
@@ -294,7 +294,7 @@ const ProfileEdit: NextPage = () => {
             </div>
             <div className="mb-7">
               <textarea
-                className="text-sm block w-full h-40 appearance-none relative px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 md:text-base"
+                className="h-40 rounded-md inputText"
                 onChange={(e:React.ChangeEvent<HTMLTextAreaElement>) => {
                   setProfileText(e.target.value);
                 }}
@@ -307,7 +307,7 @@ const ProfileEdit: NextPage = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="focus:outline-none text-white text-base font-medium py-2.5 px-24 rounded-md bg-mainGreen  max-w-full hover:opacity-90 hover:shadow-lg"
+                className="buttonGreen"
               >
                 更新する
               </button>
