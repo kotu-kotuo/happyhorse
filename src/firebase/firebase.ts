@@ -3,7 +3,12 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import { firebaseConfig } from "./config";
-firebase.initializeApp(firebaseConfig);
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app();
+}
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();
