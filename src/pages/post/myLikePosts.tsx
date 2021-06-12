@@ -33,9 +33,9 @@ const myLikePosts: NextPage = () => {
 
         {posts[0]?.postID !== "" &&
           posts.map((post, index) => (
-            <>
-              <PostListItem index={index} post={post} />
-            </>
+            <div key={index}>
+              <PostListItem post={post} />
+            </div>
           ))}
         </div>
       </Layout>

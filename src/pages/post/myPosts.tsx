@@ -31,9 +31,9 @@ const myPostList: NextPage = () => {
         <div className="mb-10">
           {posts?.length !== 0 &&
             posts.map((post, index) => (
-              <>
-                <PostListItem index={index} post={post} />
-              </>
+              <div key={index}>
+                <PostListItem post={post} />
+              </div>
             ))}
         </div>
       </Layout>

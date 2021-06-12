@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { FaRegHeart } from 'react-icons/fa';
 
 const PostListItem = (props) => {
-  const { index, post } = props;
+  const {  post } = props;
   return (
-    <div key={index} className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto">
       <Link href={`postShow/${post.postID}`}>
         <div className="mx-2 my-4 rounded-md shadow border-gray-500">
           <div className="flex">
