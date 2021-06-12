@@ -227,55 +227,61 @@ const draft: NextPage = () => {
                 </div>
               ))}
           </div>
-          <label
-            htmlFor="file"
-            className="block w-40 mr-3 mb-8 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
-          >
-            <div className="flex items-center text-center">
-              <RiImageAddFill className="text-lg ml-1 sm:text-base" />
-              <p className="ml-2.5 fontSize-base">画像を選択</p>
+
+          <div className="formItemContainer">
+            <label
+              htmlFor="file"
+              className="block w-40 mr-3 mb-8 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
+            >
+              <div className="flex items-center text-center">
+                <RiImageAddFill className="text-lg ml-1 sm:text-base" />
+                <p className="ml-2.5 fontSize-base">画像を選択</p>
+              </div>
+            </label>
+            <input
+              id="file"
+              name="images"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              multiple
+              defaultValue={post?.images}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleImages(e);
+              }}
+            />
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              タイトル
+              <RequiredMark />
             </div>
-          </label>
-
-          <input
-            id="file"
-            name="images"
-            type="file"
-            accept="image/*"
-            className="mb-8 hidden"
-            multiple
-            defaultValue={post?.images}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              handleImages(e);
-            }}
-          />
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            タイトル
-            <RequiredMark />
+            <input
+              type="text"
+              name="title"
+              defaultValue={post?.title}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(e.target.value)
+              }
+              className="inputText rounded-md"
+            />
           </div>
-          <input
-            type="text"
-            name="title"
-            defaultValue={post?.title}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTitle(e.target.value)
-            }
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
-          />
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            本文
-            <RequiredMark />
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              本文
+              <RequiredMark />
+            </div>
+            <textarea
+              name="postText"
+              defaultValue={post?.postText}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setPostText(e.target.value)
+              }
+              className="h-36 rounded-md inputText whitespace-pre"
+            />
           </div>
-          <textarea
-            name="postText"
-            defaultValue={post?.postText}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setPostText(e.target.value)
-            }
-            className="mb-8 w-full h-36 appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm whitespace-pre"
-          />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             馬の名前
