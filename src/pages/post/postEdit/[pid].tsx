@@ -4,8 +4,7 @@ import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db, storage } from "../../../firebase/firebase";
 import firebase from "firebase/app";
-import { RiCloseCircleFill } from "react-icons/ri";
-import { RiImageAddFill } from "react-icons/ri";
+import { RiCloseCircleFill, RiImageAddFill } from "react-icons/ri";
 import fetch from "node-fetch";
 import {
   filterInitialValues,

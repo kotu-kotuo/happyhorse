@@ -1,6 +1,5 @@
 import React from "react";
-import { CgSmile } from "react-icons/cg";
-import { CgSmileNone } from "react-icons/cg";
+import { CgSmile, CgSmileNone } from "react-icons/cg";
 import Link from "next/link";
 
 const ReviewListItem = (props) => {

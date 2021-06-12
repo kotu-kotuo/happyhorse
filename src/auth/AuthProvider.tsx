@@ -1,10 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { Notification, User } from "../types/types";
-import {
-  notificationInitialValues,
-  userInitialValues,
-} from "../utils/initialValues";
 import { setNotificationStates, setUserState } from "../utils/states";
 
 type AuthContextProps = {

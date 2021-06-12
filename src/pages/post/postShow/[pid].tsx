@@ -3,8 +3,10 @@ import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
-import { IoChevronBackCircleOutline } from "react-icons/io5";
-import { IoChevronForwardCircleOutline } from "react-icons/io5";
+import {
+  IoChevronBackCircleOutline,
+  IoChevronForwardCircleOutline,
+} from "react-icons/io5";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates, setUserState } from "../../../utils/states";
 import { Post } from "../../../types/types";

@@ -15,8 +15,7 @@ import {
 import { Chatroom, Message, Post, Review } from "../../types/types";
 import { IoSend, IoChevronBack } from "react-icons/io5";
 import { BsFillImageFill } from "react-icons/bs";
-import { CgSmile } from "react-icons/cg";
-import { CgSmileNone } from "react-icons/cg";
+import { CgSmile, CgSmileNone } from "react-icons/cg";
 import TextareaAutosize from "react-textarea-autosize";
 import ImageModal from "../../components/molecules/ImageModal";
 import {

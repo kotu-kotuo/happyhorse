@@ -1,5 +1,3 @@
-import React from "react";
-
 //いいね機能
 import firebase from "firebase/app";
 

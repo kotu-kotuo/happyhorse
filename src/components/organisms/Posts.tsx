@@ -1,10 +1,12 @@
 import Link from "next/link";
 import React from "react";
-import { FaYenSign } from "react-icons/fa";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { FaHorse } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
+import {
+  FaYenSign,
+  FaMapMarkerAlt,
+  FaHorse,
+  FaRegHeart,
+  FaHeart,
+} from "react-icons/fa";
 import Category from "../atoms/Category";
 
 const Posts = (props) => {
