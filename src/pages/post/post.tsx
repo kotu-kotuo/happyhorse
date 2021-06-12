@@ -1,16 +1,15 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
-import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import { db, storage } from "../../firebase/firebase";
-import firebase from "firebase/app";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
 import { filterInitialValues } from "../../utils/initialValues";
 import { generateFileName } from "../../functions/generateFileName";
-import RequiredMark  from "../../components/atoms/RequiredMark";
+import RequiredMark from "../../components/atoms/RequiredMark";
 import { NextPage } from "next";
+import posting from "../../functions/post/posting";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Post: NextPage = () => {
@@ -34,7 +33,6 @@ const Post: NextPage = () => {
   const [area, setArea] = useState("");
   const [price, setPrice] = useState("");
   const [isDraft, setIsDraft] = useState(false);
-  const router = useRouter();
 
   //posiID設定
   useEffect(() => {
@@ -85,176 +83,6 @@ const Post: NextPage = () => {
     await setImagesURL([...urls]);
   };
 
-  const posting = async (e) => {
-    e.preventDefault();
-    if (isDraft) {
-      const setPost = async () => {
-        await db
-          .collection("users")
-          .doc(`${currentUser.uid}`)
-          .collection("drafts")
-          .doc(`${postId}`)
-          .set({
-            postID: postId,
-            userID: currentUser.uid,
-            username: user.username,
-            avatar: user.avatar,
-            images: [],
-            title: title,
-            postText: postText,
-            horseName: horseName,
-            category: category,
-            breed: breed,
-            color: color,
-            birth: {
-              year: year,
-              month: month,
-              day: day,
-            },
-            age: age,
-            height: height,
-            features: features,
-            area: area,
-            price: price,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: "",
-            likeUserIDs: [],
-            isAvairable: true,
-            pv: 0,
-            sendMessageUserIDs: [],
-            messageUpdatedAt: "",
-            latestMessage: "",
-            clientUserID: "",
-            ratingCompleted: false,
-            deletedAccount: false,
-          });
-      };
-
-      const processAll = async () => {
-        await setPost();
-        await uploadImages(images);
-      };
-
-      await processAll();
-
-      await router.push("/");
-    } else {
-      if (
-        images.length !== 0 &&
-        postText &&
-        horseName &&
-        horseName.length <= 20 &&
-        category &&
-        breed &&
-        color &&
-        year &&
-        month &&
-        day &&
-        age &&
-        height &&
-        area &&
-        price
-      ) {
-        const setPost = async () => {
-          await db
-            .collection("users")
-            .doc(`${currentUser.uid}`)
-            .collection("posts")
-            .doc(`${postId}`)
-            .set({
-              postID: postId,
-              userID: currentUser.uid,
-              username: user.username,
-              avatar: user.avatar,
-              images: [],
-              title: title,
-              postText: postText,
-              horseName: horseName,
-              category: category,
-              breed: breed,
-              color: color,
-              birth: {
-                year: year,
-                month: month,
-                day: day,
-              },
-              age: age,
-              height: height,
-              features: features,
-              area: area,
-              price: price,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              updatedAt: "",
-              likeUserIDs: [],
-              isAvairable: true,
-              pv: 0,
-              sendMessageUserIDs: [],
-              messageUpdatedAt: "",
-              latestMessage: "",
-              clientUserID: "",
-            });
-        };
-
-        const processAll = async () => {
-          await setPost();
-          await uploadImages(images);
-        };
-
-        await processAll();
-
-        await router.push("/");
-      } else {
-        alertMessage();
-      }
-    }
-  };
-
-  const alertMessage = () => {
-    if (images.length === 0) {
-      alert("画像を選択してください");
-    }
-    if (postText.length == 0) {
-      alert("本文を記入してください");
-    }
-    if (horseName.length === 0) {
-      ("馬の名前を記入してください");
-    }
-    if (horseName.length > 20) {
-      alert("馬の名前は20字まででお願いします");
-    }
-    if (category.length === 0) {
-      alert("カテゴリーを選択してください");
-    }
-    if (breed.length === 0) {
-      alert("品種を選択してください");
-    }
-    if (color.length === 0) {
-      alert("毛色を選択してください");
-    }
-    if (year.length === 0) {
-      alert("生年月日を記入してください");
-    }
-    if (month.length === 0) {
-      alert("生年月日を記入してください");
-    }
-    if (day.length === 0) {
-      alert("生年月日を記入してください");
-    }
-    if (age.length === 0) {
-      alert("年齢を記入してください");
-    }
-    if (height.length === 0) {
-      alert("身長を記入してください");
-    }
-    if (price.length === 0) {
-      alert("値段を記入してください");
-    }
-    if (area.length === 0) {
-      alert("地域を選択してください");
-    }
-    return;
-  };
-
   const handleImages = (e) => {
     const uploadImages = e.target.files;
     if ([...images, ...uploadImages].length <= 10) {
@@ -285,7 +113,34 @@ const Post: NextPage = () => {
   return (
     <>
       <Layout title="post">
-        <form className="max-w-2xl mx-auto mt-16 px-2" onSubmit={posting}>
+        <form
+          className="max-w-2xl mx-auto mt-16 px-2"
+          onSubmit={(e) => {
+            posting(
+              e,
+              isDraft,
+              currentUser,
+              user,
+              postId,
+              title,
+              postText,
+              horseName,
+              category,
+              breed,
+              color,
+              year,
+              month,
+              day,
+              age,
+              height,
+              features,
+              area,
+              price,
+              uploadImages,
+              images
+            );
+          }}
+        >
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-600 mb-3 ml-1">
               画像(10枚まで)
@@ -316,37 +171,39 @@ const Post: NextPage = () => {
             {/* </Droppable>
           </DragDropContext> */}
           </div>
-          <label
-            htmlFor="file"
-            className="block w-40 mr-3 mb-8 focus:outline-none text-white text-base font-medium py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
-          >
-            <div className="flex items-center text-center">
-              <RiImageAddFill className="text-lg ml-1 sm:text-base" />
-              <p className="ml-2.5 fontSize-base">画像を選択</p>
-            </div>
-          </label>
-          <input
-            id="file"
-            name="images"
-            type="file"
-            accept="image/*"
-            className="mb-8 hidden"
-            multiple
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              handleImages(e);
-            }}
-          />
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            タイトル
-            <RequiredMark />
+          <div className="formItemContainer">
+            <label
+              htmlFor="file"
+              className="block w-40 mr-3 mb-8 focus:outline-none text-white py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
+            >
+              <div className="flex items-center text-center">
+                <RiImageAddFill className="text-lg ml-2 sm:text-base" />
+                <p className="ml-2.5 fontSize-base">画像を選択</p>
+              </div>
+            </label>
+            <input
+              id="file"
+              name="images"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              multiple
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleImages(e);
+              }}
+            />
           </div>
-          <div className="mb-8">
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              タイトル
+              <RequiredMark />
+            </div>
             <input
               type="text"
               name="title"
               required
-              className="text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
+              className="inputText rounded-md"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setTitle(e.target.value);
               }}
@@ -356,14 +213,14 @@ const Post: NextPage = () => {
             </div>
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            本文
-            <RequiredMark />
-          </div>
-          <div className="mb-8">
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              本文
+              <RequiredMark />
+            </div>
             <textarea
               name="postText"
-              className="text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 h-36"
+              className="inputText rounded-md h-36"
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                 setPostText(e.target.value);
               }}
@@ -373,158 +230,174 @@ const Post: NextPage = () => {
             </div>
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            馬の名前
-            <RequiredMark />
-          </div>
-          <input
-            type="text"
-            name="horseName"
-            className="mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setHorseName(e.target.value);
-            }}
-          />
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            カテゴリー
-            <RequiredMark />
-          </div>
-          <select
-            name="category"
-            className="postSelect"
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setCategory(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.category.map((element, index) => (
-              <option value={`${element}`} key={index}>{`${element}`}</option>
-            ))}
-          </select>
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            品種
-            <RequiredMark />
-          </div>
-          <select
-            name="breed"
-            className="postSelect"
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setBreed(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.breed.map((element, index) => (
-              <option value={`${element}`} key={index}>{`${element}`}</option>
-            ))}
-          </select>
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            毛色
-            <RequiredMark />
-          </div>
-          <select
-            name="color"
-            className="postSelect"
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setColor(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.color.map((element, index) => (
-              <option value={`${element}`} key={index}>{`${element}`}</option>
-            ))}
-          </select>
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            生年月日
-            <RequiredMark />
-          </div>
-          <div className="flex items-center">
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              馬の名前
+              <RequiredMark />
+            </div>
             <input
-              type="number"
-              name="year"
-              placeholder="2010"
-              min="1970"
-              className="text-sm md:text-base mb-8 w-20 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10"
+              type="text"
+              name="horseName"
+              className="inputText rounded-md"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setYear(e.target.value);
+                setHorseName(e.target.value);
               }}
             />
-            <div className="mr-6 ml-2 mb-8 text-sm">年</div>
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              カテゴリー
+              <RequiredMark />
+            </div>
+            <select
+              name="category"
+              className="inputText rounded-md"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setCategory(e.target.value);
+              }}
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.category.map((element, index) => (
+                <option value={`${element}`} key={index}>{`${element}`}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              品種
+              <RequiredMark />
+            </div>
+            <select
+              name="breed"
+              className="inputText rounded-md"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setBreed(e.target.value);
+              }}
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.breed.map((element, index) => (
+                <option value={`${element}`} key={index}>{`${element}`}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              毛色
+              <RequiredMark />
+            </div>
+            <select
+              name="color"
+              className="inputText rounded-md"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setColor(e.target.value);
+              }}
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.color.map((element, index) => (
+                <option value={`${element}`} key={index}>{`${element}`}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              生年月日
+              <RequiredMark />
+            </div>
+            <div className="flex items-center">
+              <input
+                type="number"
+                name="year"
+                placeholder="2010"
+                min="1970"
+                className="inputFormNumber w-20"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setYear(e.target.value);
+                }}
+              />
+              <div className="mr-6 ml-2 text-sm">年</div>
+              <input
+                type="number"
+                name="month"
+                placeholder="1"
+                min="1"
+                max="12"
+                className="inputFormNumber w-16"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setMonth(e.target.value);
+                }}
+              />
+              <div className="mr-6 ml-2 text-sm">月</div>
+              <input
+                type="number"
+                name="day"
+                placeholder="10"
+                min="1"
+                max="31"
+                className="inputFormNumber w-16"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setDay(e.target.value);
+                }}
+              />
+              <div className="mr-6 ml-2 text-sm">日</div>
+            </div>
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              年齢
+              <RequiredMark />
+            </div>
             <input
               type="number"
-              name="month"
-              placeholder="1"
-              min="1"
-              max="12"
-              className="text-sm md:text-base appearance-none mb-8 w-16 rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setMonth(e.target.value);
+              name="age"
+              min="0"
+              max="100"
+              className="inputFormNumber w-full"
+              onChange={(e) => {
+                setAge(e.target.value);
               }}
             />
-            <div className="mr-6 ml-2 mb-8 text-sm">月</div>
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              身長（cm）
+              <RequiredMark />
+            </div>
             <input
               type="number"
-              name="day"
-              placeholder="10"
-              min="1"
-              max="31"
-              className="text-sm md:text-base mb-8 w-16 appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
+              name="height"
+              min="0"
+              max="1000"
+              className="inputFormNumber w-full"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setDay(e.target.value);
+                setHeight(e.target.value);
               }}
             />
-            <div className="mr-6 ml-2 mb-8 text-sm">日</div>
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            年齢
-            <RequiredMark />
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              地域
+              <RequiredMark />
+            </div>
+            <select
+              name="area"
+              className="inputText rounded-md"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setArea(e.target.value);
+              }}
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.area.map((element, index) => (
+                <option value={`${element}`} key={index}>{`${element}`}</option>
+              ))}
+            </select>
           </div>
-          <input
-            type="number"
-            name="age"
-            min="0"
-            max="100"
-            className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-            onChange={(e) => {
-              setAge(e.target.value);
-            }}
-          />
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            身長（cm）
-            <RequiredMark />
-          </div>
-          <input
-            type="number"
-            name="height"
-            min="0"
-            max="1000"
-            className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setHeight(e.target.value);
-            }}
-          />
-
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            地域
-            <RequiredMark />
-          </div>
-          <select
-            name="area"
-            className="postSelect"
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setArea(e.target.value);
-            }}
-          >
-            <option hidden>選択してください</option>
-            {filterInitialValues.area.map((element, index) => (
-              <option value={`${element}`} key={index}>{`${element}`}</option>
-            ))}
-          </select>
 
           <div className="text-xs text-gray-600 mb-1 ml-1">特徴</div>
           <div className="flex flex-wrap mb-4">
@@ -546,21 +419,23 @@ const Post: NextPage = () => {
             ))}
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-3">
-            値段
-            <RequiredMark />
-          </div>
-          <div className="flex">
-            <div className="text-gray-500 text-xl mt-1.5">￥</div>
-            <input
-              type="number"
-              name="price"
-              min="0"
-              className="text-sm md:text-base mb-8 w-full appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setPrice(e.target.value);
-              }}
-            />
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-3">
+              値段
+              <RequiredMark />
+            </div>
+            <div className="flex">
+              <div className="text-gray-500 text-xl mt-1.5">￥</div>
+              <input
+                type="number"
+                name="price"
+                min="0"
+                className="inputFormNumber w-full"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setPrice(e.target.value);
+                }}
+              />
+            </div>
           </div>
 
           <div className="text-center">

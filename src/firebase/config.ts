@@ -1,5 +1,5 @@
-export const firebaseConfig = ((nodeEnv: string) => {
-  if (nodeEnv === "production") {
+export const firebaseConfig = ((nodeEnv: string, projectId: string | undefined) => {
+  if (nodeEnv === "production" && projectId === "happyhorse-prod") {
     return {
       databeseURL: "https://happyhorse-prod.firebaseio.com",
       apiKey: "AIzaSyD0qa_ViUcEA1qCGBayDMBlhDqFkRLbaIM",
@@ -20,4 +20,4 @@ export const firebaseConfig = ((nodeEnv: string) => {
       appId: "1:362079704601:web:dfa9135a9d83bb38db3c88",
     };
   }
-})(process.env.NODE_ENV);
+})(process.env.NODE_ENV, process.env.FIREBASE_PROJECT_ID);

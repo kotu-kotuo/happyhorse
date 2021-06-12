@@ -135,56 +135,6 @@ const Index: NextPage = () => {
     }
   }, [handle]);
 
-  //filter条件が選択された後に空になった時、初期値をセットする
-
-  useEffect(() => {
-    if (!priceMin) {
-      setPriceMin(filterInitialValues.priceMin);
-    }
-  }, [priceMin]);
-
-  useEffect(() => {
-    if (!priceMax) {
-      setPriceMax(filterInitialValues.priceMax);
-    }
-  }, [priceMax]);
-
-  useEffect(() => {
-    if (!ageMin) {
-      setAgeMin(filterInitialValues.ageMin);
-    }
-  }, [ageMin]);
-
-  useEffect(() => {
-    if (!ageMax) {
-      setAgeMax(filterInitialValues.ageMax);
-    }
-  }, [ageMax]);
-
-  useEffect(() => {
-    if (!heightMin) {
-      setHeightMin(filterInitialValues.heightMin);
-    }
-  }, [heightMin]);
-
-  useEffect(() => {
-    if (!heightMax) {
-      setHeightMax(filterInitialValues.heightMax);
-    }
-  }, [heightMax]);
-
-  useEffect(() => {
-    if (area.length === 0) {
-      setArea(filterInitialValues.area);
-    }
-  }, [area]);
-
-  useEffect(() => {
-    if (feature[0] === "empty") {
-      setFeature(filterInitialValues.features);
-    }
-  }, [feature]);
-
   //詳細画面に遷移
   const clickPost = (e) => {
     const pid = e.currentTarget.getAttribute("data-id");

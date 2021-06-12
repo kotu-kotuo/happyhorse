@@ -30,7 +30,7 @@ import { generateFileName } from "../../functions/generateFileName";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import DealProgressButton from "../../components/atoms/DealProgressButton";
-import isFirstOnDate from "../../functions/messages/isFirstOnDate";
+import isFirstOnDate from "../../functions/message/isFirstOnDate";
 import { NextPage } from "next";
 
 const messages: NextPage = () => {

@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export default function Error() {
   const gradient = {
@@ -21,9 +21,9 @@ export default function Error() {
           <div className="text-lg mb-8">
             You may have mistyped the address or the page may have moved.
           </div>
-          <a href="#" className="border border-white rounded p-4">
-            <Link href="/">Go Home</Link>
-          </a>
+          <Link href="/">
+            <a className="border border-white rounded p-4">Go Home</a>
+          </Link>
         </div>
       </div>
     </div>

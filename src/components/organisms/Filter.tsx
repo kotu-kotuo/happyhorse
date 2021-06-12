@@ -188,10 +188,14 @@ const Filter = (props) => {
               name="price"
               placeholder="min"
               value={priceMin === filterInitialValues.priceMin ? "" : priceMin}
-              className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPriceMin(e.target.valueAsNumber)
-              }
+              className="w-1/2 inputNumber"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (!e.target.valueAsNumber) {
+                  setPriceMin(filterInitialValues.priceMin);
+                } else {
+                  setPriceMin(e.target.valueAsNumber);
+                }
+              }}
             />
             <div className="text-gray-700 text-sm mt-1 whitespace-nowrap">
               〜
@@ -201,10 +205,14 @@ const Filter = (props) => {
               name="price"
               placeholder="max"
               value={priceMax === filterInitialValues.priceMax ? "" : priceMax}
-              className="w-1/2 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPriceMax(e.target.valueAsNumber)
-              }
+              className="w-1/2 inputNumber"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (!e.target.valueAsNumber) {
+                  setPriceMax(filterInitialValues.priceMax);
+                } else {
+                  setPriceMax(e.target.valueAsNumber);
+                }
+              }}
             />
           </div>
 
@@ -217,10 +225,14 @@ const Filter = (props) => {
               name="age"
               placeholder="min"
               value={ageMin === filterInitialValues.ageMin ? "" : ageMin}
-              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAgeMin(e.target.valueAsNumber)
-              }
+              className="w-20 inputNumber"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (!e.target.valueAsNumber) {
+                  setAgeMin(filterInitialValues.ageMin);
+                } else {
+                  setAgeMin(e.target.valueAsNumber);
+                }
+              }}
             />
             <div className="text-gray-700 text-sm mt-1 whitespace-nowrap">
               〜
@@ -230,10 +242,14 @@ const Filter = (props) => {
               name="age"
               placeholder="max"
               value={ageMax === filterInitialValues.ageMax ? "" : ageMax}
-              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAgeMax(e.target.valueAsNumber)
-              }
+              className="w-20 inputNumber"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (!e.target.valueAsNumber) {
+                  setAgeMax(filterInitialValues.ageMax);
+                } else {
+                  setAgeMax(e.target.valueAsNumber);
+                }
+              }}
             />
           </div>
 
@@ -248,10 +264,14 @@ const Filter = (props) => {
               value={
                 heightMin === filterInitialValues.heightMin ? "" : heightMin
               }
-              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setHeightMin(e.target.valueAsNumber)
-              }
+              className="w-20 inputNumber"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (!e.target.valueAsNumber) {
+                  setHeightMin(filterInitialValues.heightMin);
+                } else {
+                  setHeightMin(e.target.valueAsNumber);
+                }
+              }}
             />
             <div className="text-gray-700 text-sm mt-1 whitespace-nowrap">
               〜
@@ -263,10 +283,14 @@ const Filter = (props) => {
               value={
                 heightMax === filterInitialValues.heightMax ? "" : heightMax
               }
-              className="w-20 appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-b border-gray-300 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 sm:text-sm"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setHeightMax(e.target.valueAsNumber)
-              }
+              className="w-20 inputNumber"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (!e.target.valueAsNumber) {
+                  setHeightMax(filterInitialValues.heightMax);
+                } else {
+                  setHeightMax(e.target.valueAsNumber);
+                }
+              }}
             />
           </div>
 

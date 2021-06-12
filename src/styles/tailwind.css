@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+/*==============================================
+# tailwind apply
+===============================================*/
+
+.fontSize-xl {
+  @apply text-lg md:text-xl;
+}
+
+.fontSize-base {
+  @apply text-sm md:text-base;
+}
+
+.fontSize-sm {
+  @apply text-xs md:text-sm;
+}
+
+.container-base {
+  @apply mx-auto px-2 md:px-3;
+}
+
+.button-round {
+  @apply mt-6 mb-6 focus:outline-none text-white font-semibold py-3 px-8 rounded-full hidden md:block;
+}
+
+.buttonGreen {
+  @apply focus:outline-none text-white py-2.5 px-24 rounded-md bg-mainGreen  max-w-full hover:opacity-90 hover:shadow-lg;
+}
+
+.header-height {
+  @apply h-12 sm:h-16;
+}
+
+.filterCheckText {
+  @apply font-normal text-sm text-gray-400 inline-block cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1 mr-3 lg:w-full lg:block;
+}
+
+.postSelect {
+  @apply text-sm w-full appearance-none relative block px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
+}
+
+.postInputText {
+  @apply mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
+}
+
+.pageTitle {
+  @apply fontSize-xl text-center mt-8 mb-7 text-gray-900 md:mt-10 md:mb-9;
+}
+
+.messageAnnounce {
+  @apply text-center text-sm text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2 sm:text-base;
+}
+
+.inputText {
+  @apply appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm !important;
+}
+
+.inputNumber {
+  @apply appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-gray-300 border-b-2 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm !important;
+}
+
+.inputFormNumber{
+  @apply text-sm appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 !important;
+}
+
+.formItemContainer{
+  @apply mb-10;
+}

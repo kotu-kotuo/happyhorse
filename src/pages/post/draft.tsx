@@ -1,18 +1,21 @@
-import { useState, useEffect, useContext, FormEventHandler } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db, storage } from "../../firebase/firebase";
-import firebase from "firebase/app";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { RiImageAddFill } from "react-icons/ri";
 import fetch from "node-fetch";
-import { filterInitialValues, postInitialValues } from "../../utils/initialValues";
+import {
+  filterInitialValues,
+  postInitialValues,
+} from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
-import  RequiredMark  from "../../components/atoms/RequiredMark";
+import RequiredMark from "../../components/atoms/RequiredMark";
 import { generateFileName } from "../../functions/generateFileName";
 import { NextPage } from "next";
 import { Post } from "../../types/types";
+import posting from "../../functions/post/posting";
 
 const draft: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -128,165 +131,6 @@ const draft: NextPage = () => {
     await setImagesURL([...urls]);
   };
 
-  const posting = async (e) => {
-    e.preventDefault();
-    if (isDraft) {
-      const setPost = async () => {
-        await db
-          .collection("users")
-          .doc(`${currentUser.uid}`)
-          .collection("drafts")
-          .doc(`${post.postID}`)
-          .update({
-            title: title,
-            postText: postText,
-            horseName: horseName,
-            category: category,
-            breed: breed,
-            color: color,
-            birth: {
-              year: year,
-              month: month,
-              day: day,
-            },
-            age: age,
-            height: height,
-            features: features,
-            area: area,
-            price: price,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-          });
-      };
-
-      const processAll = async () => {
-        await setPost();
-        await uploadImages(images);
-      };
-
-      await processAll();
-
-      await router.push("/");
-    } else {
-      if (
-        images &&
-        postText &&
-        horseName &&
-        category &&
-        breed &&
-        color &&
-        year &&
-        month &&
-        day &&
-        age &&
-        height &&
-        area &&
-        price
-      ) {
-        const setPost = async () => {
-          await db
-            .collection("users")
-            .doc(`${currentUser.uid}`)
-            .collection("posts")
-            .doc(`${post.postID}`)
-            .set({
-              postID: post.postID,
-              userID: currentUser.uid,
-              username: user.username,
-              avatar: user.avatar,
-              images: [],
-              title: title,
-              postText: postText,
-              horseName: horseName,
-              category: category,
-              breed: breed,
-              color: color,
-              birth: {
-                year: year,
-                month: month,
-                day: day,
-              },
-              age: age,
-              height: height,
-              features: features,
-              area: area,
-              price: price,
-              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-              updatedAt: "",
-              likeUserIDs: [],
-              isAvairable: true,
-              pv: 0,
-              sendMessageUserIDs: [],
-              messageUpdatedAt: "",
-              latestMessage: "",
-              clientUserID: "",
-              ratingCompleted: false,
-              deletedAccount: false,
-            });
-        };
-
-        const processAll = async () => {
-          await setPost();
-          await uploadImages(images);
-          await db
-            .collection("users")
-            .doc(`${currentUser.uid}`)
-            .collection("drafts")
-            .doc(`${post.postID}`)
-            .delete();
-        };
-
-        await processAll();
-
-        await router.push("/");
-      } else {
-        alertMessage();
-      }
-    }
-  };
-
-  const alertMessage = () => {
-    if (images.length === 0) {
-      alert("画像を選択してください");
-    }
-    if (postText.length == 0) {
-      alert("本文を記入してください");
-    }
-    if (horseName.length === 0) {
-      ("馬の名前を記入してください");
-    }
-    if (category.length === 0) {
-      alert("カテゴリーを選択してください");
-    }
-    if (breed.length === 0) {
-      alert("品種を選択してください");
-    }
-    if (color.length === 0) {
-      alert("毛色を選択してください");
-    }
-    if (year.length === 0) {
-      alert("生年月日を記入してください");
-    }
-    if (month.length === 0) {
-      alert("生年月日を記入してください");
-    }
-    if (day.length === 0) {
-      alert("生年月日を記入してください");
-    }
-    if (age.length === 0) {
-      alert("年齢を記入してください");
-    }
-    if (height.length === 0) {
-      alert("身長を記入してください");
-    }
-    if (price.length === 0) {
-      alert("値段を記入してください");
-    }
-    if (area.length === 0) {
-      alert("地域を選択してください");
-    }
-    return;
-  };
-
   const handleImages = (e) => {
     const uploadImages = e.target.files;
     if ([...images, ...uploadImages].length <= 10) {
@@ -332,7 +176,34 @@ const draft: NextPage = () => {
   return (
     <>
       <Layout title="draft">
-        <form className="max-w-2xl mx-auto mt-16 px-2" onSubmit={posting}>
+        <form
+          className="max-w-2xl mx-auto mt-16 px-2"
+          onSubmit={(e) => {
+            posting(
+              e,
+              isDraft,
+              currentUser,
+              user,
+              post.postID,
+              title,
+              postText,
+              horseName,
+              category,
+              breed,
+              color,
+              year,
+              month,
+              day,
+              age,
+              height,
+              features,
+              area,
+              price,
+              uploadImages,
+              images
+            );
+          }}
+        >
           <div className="flex items-center justify-between">
             <div className="text-xs text-gray-600 mb-3 ml-1">
               画像(10枚まで)
