@@ -11,7 +11,6 @@ import { setUserState } from "../utils/states";
 
 const Profile: NextPage = () => {
   const { currentUser, user } = useContext(AuthContext);
-
   const router = useRouter();
   const [queryUser, setQueryUser] = useState<User>(userInitialValues);
   useEffect(() => {

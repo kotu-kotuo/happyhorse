@@ -1,7 +1,6 @@
 import { storage, db } from "../firebase/firebase";
 import { useRouter } from "next/router";
 import { setUserState } from "../utils/states";
-const router = useRouter();
 
 const editProfile = async (
   e,
@@ -13,6 +12,7 @@ const editProfile = async (
   setUser
 ) => {
   e.preventDefault();
+  const router = useRouter();
   if (username.length > 20) {
     alert("ユーザーネームは20字以内でお願いします");
   } else if (profileText.length > 2000) {

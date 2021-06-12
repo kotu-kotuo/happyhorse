@@ -283,19 +283,21 @@ const draft: NextPage = () => {
             />
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">
-            馬の名前
-            <RequiredMark />
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              馬の名前
+              <RequiredMark />
+            </div>
+            <input
+              type="text"
+              name="horseName"
+              defaultValue={post?.horseName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setHorseName(e.target.value)
+              }
+              className="inputText rounded-md"
+            />
           </div>
-          <input
-            type="text"
-            name="horseName"
-            defaultValue={post?.horseName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setHorseName(e.target.value)
-            }
-            className="mb-8 w-full appearance-none relative block px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 text-sm"
-          />
 
           <div className="text-xs text-gray-600 mb-1 ml-1">
             カテゴリー
