@@ -1,5 +1,4 @@
 import { storage, db } from "../firebase/firebase";
-import { useRouter } from "next/router";
 import { setUserState } from "../utils/states";
 
 const editProfile = async (
@@ -9,7 +8,8 @@ const editProfile = async (
   image,
   currentUser,
   cover,
-  setUser
+  setUser,
+  useRouter
 ) => {
   e.preventDefault();
 

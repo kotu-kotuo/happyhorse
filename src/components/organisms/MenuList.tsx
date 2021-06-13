@@ -26,7 +26,7 @@ const MenuList = (props) => {
         <>
           <div className="text-center p-6 border-b">
             <img
-              className="h-24 w-24 rounded-full mx-auto object-cover mb-4"
+              className="h-24 w-24 rounded-full mx-auto object-cover mb-3"
               src={user?.avatar}
               alt="avatar"
             />

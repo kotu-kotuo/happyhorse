@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
+import { useRouter } from "next/router";
 import { NextPage } from "next";
 import editProfile from "../functions/editProfile";
 
@@ -31,7 +32,8 @@ const ProfileEdit: NextPage = () => {
                 image,
                 currentUser,
                 cover,
-                setUser
+                setUser,
+                useRouter
               );
             }}
           >
