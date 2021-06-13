@@ -12,7 +12,7 @@ const editProfile = async (
   setUser
 ) => {
   e.preventDefault();
-  const router = useRouter();
+
   if (username.length > 20) {
     alert("ユーザーネームは20字以内でお願いします");
   } else if (profileText.length > 2000) {
@@ -210,7 +210,7 @@ const editProfile = async (
         setUser(setUserState(snapshot.data()));
       });
 
-    await router.push({
+    await useRouter().push({
       pathname: "/profile",
       query: {
         uid: currentUser.uid,
