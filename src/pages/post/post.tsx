@@ -9,6 +9,7 @@ import { generateFileName } from "../../functions/generateFileName";
 import RequiredMark from "../../components/atoms/RequiredMark";
 import { NextPage } from "next";
 import posting from "../../functions/post/posting";
+import { useRouter } from "next/router";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Post: NextPage = () => {
@@ -32,6 +33,7 @@ const Post: NextPage = () => {
   const [area, setArea] = useState("");
   const [price, setPrice] = useState("");
   const [isDraft, setIsDraft] = useState(false);
+  const router = useRouter();
 
   //posiID設定
   useEffect(() => {
@@ -136,7 +138,8 @@ const Post: NextPage = () => {
               area,
               price,
               uploadImages,
-              images
+              images,
+              router
             );
           }}
         >

@@ -1,7 +1,7 @@
 import { db } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import alertMessage from "../../functions/post/alertMessage";
-import { useRouter } from "next/router";
+
 
 const posting = async (
   e,
@@ -24,10 +24,11 @@ const posting = async (
   area,
   price,
   uploadImages,
-  images
+  images,
+  router
 ) => {
   e.preventDefault();
-  const router = useRouter();
+
 
   if (isDraft) {
     const setPost = async () => {

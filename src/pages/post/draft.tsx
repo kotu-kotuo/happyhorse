@@ -168,7 +168,8 @@ const draft: NextPage = () => {
               area,
               price,
               uploadImages,
-              images
+              images,
+              router
             );
           }}
         >

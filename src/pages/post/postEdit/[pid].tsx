@@ -201,7 +201,7 @@ const postEdit: NextPage = () => {
               </button>
               <button
                 onClick={(e) => {
-                  deletePost(e, post, currentUser);
+                  deletePost(e, post, currentUser, router);
                 }}
                 className="cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 hover:text-white hover:bg-gray-500  ease-in-out duration-300"
               >

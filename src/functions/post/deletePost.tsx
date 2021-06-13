@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
 import { db } from "../../firebase/firebase";
 import firebase from "firebase/app";
 
-const deletePost = async (e, post, currentUser) => {
+const deletePost = async (e, post, currentUser,router) => {
   e.preventDefault();
-  const router = useRouter();
+
   if (post.clientUserID) {
     alert("取引の途中で記事は削除できません。");
     return;
