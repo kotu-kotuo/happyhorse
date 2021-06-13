@@ -11,6 +11,7 @@ const ProfileEdit: NextPage = () => {
   const [cover, setCover] = useState<any>("");
   const [username, setUsername] = useState<string>("");
   const [profileText, setProfileText] = useState<string>("");
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -33,7 +34,7 @@ const ProfileEdit: NextPage = () => {
                 currentUser,
                 cover,
                 setUser,
-                useRouter
+                router
               );
             }}
           >

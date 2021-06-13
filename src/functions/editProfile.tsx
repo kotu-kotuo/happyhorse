@@ -9,7 +9,7 @@ const editProfile = async (
   currentUser,
   cover,
   setUser,
-  useRouter
+  router
 ) => {
   e.preventDefault();
 
@@ -210,7 +210,7 @@ const editProfile = async (
         setUser(setUserState(snapshot.data()));
       });
 
-    await useRouter().push({
+    await router.push({
       pathname: "/profile",
       query: {
         uid: currentUser.uid,
