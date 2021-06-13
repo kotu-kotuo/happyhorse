@@ -3,10 +3,6 @@ import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
-import {
-  IoChevronBackCircleOutline,
-  IoChevronForwardCircleOutline,
-} from "react-icons/io5";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates, setUserState } from "../../../utils/states";
 import { Post } from "../../../types/types";
@@ -47,45 +43,6 @@ const Show: NextPage = () => {
         .then((snapshot) => setPostUser(setUserState(snapshot.data())));
     }
   }, [post]);
-
-  const setting1 = {
-    customPaging: function (i) {
-      return (
-        <a>
-          <img
-            className="max-w-1600 w-full max-h-900 h-full"
-            src={post.images[i]}
-          />
-        </a>
-      );
-    },
-    dotsClass: "slick-dots",
-    dots: true,
-    arrows: true,
-    fade: true,
-    speed: 250,
-    prevArrow: <IoChevronBackCircleOutline />,
-    nextArrow: <IoChevronForwardCircleOutline />,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    swipeToSlide: true,
-    adaptiveHeight: true,
-  };
-
-  const setting2 = {
-    dots: true,
-    arrows: true,
-    fade: true,
-    speed: 250,
-    prevArrow: <IoChevronBackCircleOutline />,
-    nextArrow: <IoChevronForwardCircleOutline />,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    swipeToSlide: true,
-    adaptiveHeight: true,
-  };
 
   const toPostEdit = (post) => {
     const pid = post.postID;
@@ -133,44 +90,44 @@ const Show: NextPage = () => {
                 </div>
               </div>
               <div className="mt-20 mb-10">
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem label={"名前"} value={post.horseName} />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem
                     label={"カテゴリー"}
                     value={<Category category={post.category} />}
                   />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem label={"値段"} value={`${post.price}円`} />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem label={"品種"} value={post.breed} />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem label={"毛色"} value={post.color} />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem label={"年齢"} value={`${post.age}歳`} />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem
                     label={"生年月日"}
                     value={`${post.birth.year} / ${post.birth.month} / ${post.birth.day}`}
                   />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem label={"身長"} value={`${post.height}cm`} />
                 </div>
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem
                     label={"特徴"}
                     value={
@@ -197,10 +154,10 @@ const Show: NextPage = () => {
                   />
                 </div>
 
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem label={"地域"} value={post.area} />
                 </div>
-                <div className="mb-4">
+                <div className="tableListItem-margin">
                   <TableListItem
                     label={"掲載者"}
                     value={<PublisherValue post={post} postUser={postUser} />}
