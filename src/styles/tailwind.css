@@ -55,7 +55,7 @@
 }
 
 .inputNumber {
-  @apply appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-gray-300 border-b-2 placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm !important;
+  @apply appearance-none text-center rounded-none relative block px-1 py-1 border-t-0 border-r-0 border-l-0 border-gray-300 border-b placeholder-gray-400 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 text-sm !important;
 }
 
 .inputFormNumber {
