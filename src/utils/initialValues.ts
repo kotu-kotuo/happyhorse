@@ -42,7 +42,7 @@ export const filterInitialValues: any = {
     "重種馬",
     "その他",
   ],
-  gender:["セン馬","牝馬","牡馬"],
+  gender: ["セン馬", "牝馬", "牡馬"],
   color: [
     "鹿毛",
     "黒鹿毛",
@@ -105,11 +105,11 @@ export const filterInitialValues: any = {
   ],
 
   features: [
-    "おとなしい",
-    "120cm以上飛べます",
-    "噛み癖なし",
-    "蹴り癖なし",
     "初心者OK",
+    "けが・病気なし",
+    "噛まない蹴らない",
+    "120cm以上飛べます",
+    "L1課目できます",
     "empty",
   ],
 };
@@ -221,4 +221,4 @@ export const notificationInitialValues = {
   toMessage: false,
   toProfile: false,
   noLink: false,
-}
+};
