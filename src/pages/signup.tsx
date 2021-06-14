@@ -50,6 +50,7 @@ const SignUp: NextPage = () => {
                 heightMin: filterInitialValues.heightMin,
                 heightMax: filterInitialValues.heightMax,
                 breed: filterInitialValues.breed,
+                gender: filterInitialValues.gender,
                 color: filterInitialValues.color,
                 area: filterInitialValues.area,
                 feature: filterInitialValues.features,

@@ -110,6 +110,10 @@ const Show: NextPage = () => {
                 </div>
 
                 <div className="tableListItem-margin">
+                  <TableListItem label={"性別"} value={post.gender} />
+                </div>
+
+                <div className="tableListItem-margin">
                   <TableListItem label={"毛色"} value={post.color} />
                 </div>
 

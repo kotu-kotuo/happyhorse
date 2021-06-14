@@ -22,6 +22,8 @@ const Filter = (props) => {
     heightMin,
     heightMax,
     breed,
+    gender,
+    setGender,
     color,
     area,
     setArea,
@@ -109,6 +111,13 @@ const Filter = (props) => {
       setBreed(filterInitialValues.breed);
     } else {
       setBreed([e.target.value]);
+    }
+  };
+  const handleGender = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (e.target.value === "allGender") {
+      setGender(filterInitialValues.gender);
+    } else {
+      setGender([e.target.value]);
     }
   };
 
@@ -300,7 +309,7 @@ const Filter = (props) => {
           <div className="mb-3">
             <select
               name="breed"
-              className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              className="inputText rounded-md"
               onChange={handleBreed}
             >
               <option hidden></option>
@@ -326,11 +335,42 @@ const Filter = (props) => {
           </div>
 
           <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+            性別
+          </div>
+          <div className="mb-3">
+            <select
+              name="gender"
+              className="inputText rounded-md"
+              onChange={handleGender}
+            >
+              <option hidden></option>
+              <option
+                value="allGender"
+                selected={gender?.length === filterInitialValues.gender.length}
+              ></option>
+              {filterInitialValues.gender.map((element, index) => (
+                <option
+                  key={index}
+                  value={`${element}`}
+                  selected={
+                    gender?.includes(`${element}`) &&
+                    !(gender?.length === filterInitialValues.gender.length)
+                      ? true
+                      : false
+                  }
+                >
+                  {`${element}`}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
             毛色
           </div>
           <select
             name="color"
-            className="text-sm text-gray-700 w-full appearance-none relative cursor-pointer block px-3 py-2 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            className="inputText rounded-md"
             onChange={handleColor}
           >
             <option hidden></option>

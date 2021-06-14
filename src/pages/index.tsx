@@ -33,6 +33,7 @@ const Index: NextPage = () => {
   const [heightMin, setHeightMin] = useState(filterInitialValues.heightMin);
   const [heightMax, setHeightMax] = useState(filterInitialValues.heightMax);
   const [breed, setBreed] = useState(filterInitialValues.breed);
+  const [gender, setGender] = useState(filterInitialValues.gender);
   const [color, setColor] = useState(filterInitialValues.color);
   const [handle, setHandle] = useState("OFF");
   const [width, setWidth] = useState(null);
@@ -72,6 +73,7 @@ const Index: NextPage = () => {
           setHeightMin(snapshot.data().heightMin);
           setHeightMax(snapshot.data().heightMax);
           setBreed(snapshot.data().breed);
+          setGender(snapshot.data().gender);
           setColor(snapshot.data().color);
           setArea(snapshot.data().area);
           setFeature(snapshot.data().feature);
@@ -95,23 +97,26 @@ const Index: NextPage = () => {
         ageMax === filterInitialValues.ageMax &&
         heightMin === filterInitialValues.heightMin &&
         heightMax === filterInitialValues.heightMax &&
+        breed === filterInitialValues.breed &&
+        gender === filterInitialValues.gender &&
+        color === filterInitialValues.color &&
         area === filterInitialValues.area &&
         feature === filterInitialValues.features
       )
     ) {
       const filteredArray = posts
-        .filter(
-          (post) =>
-            category.includes(post.category) &&
-            post.price >= priceMin &&
-            post.price <= priceMax &&
-            post.age >= ageMin &&
-            post.age <= ageMax &&
-            post.height >= heightMin &&
-            post.height <= heightMax &&
-            breed.includes(post.breed) &&
-            color.includes(post.color) &&
-            area.includes(post.area)
+        .filter((post) =>
+          category.includes(post.category) &&
+          post.price >= priceMin &&
+          post.price <= priceMax &&
+          post.age >= ageMin &&
+          post.age <= ageMax &&
+          post.height >= heightMin &&
+          post.height <= heightMax &&
+          breed.includes(post.breed) &&
+          gender
+            ? gender.includes(post.gender)
+            : true && color.includes(post.color) && area.includes(post.area)
         )
         .filter((post) =>
           showOnlyAvailable ? post.isAvairable === true : true
@@ -168,6 +173,7 @@ const Index: NextPage = () => {
           heightMin: heightMin,
           heightMax: heightMax,
           breed: breed,
+          gender: gender,
           color: color,
           area: area,
           feature: feature,
@@ -184,6 +190,7 @@ const Index: NextPage = () => {
             post.height >= heightMin &&
             post.height <= heightMax &&
             breed.includes(post.breed) &&
+            gender.includes(post.gender) &&
             color.includes(post.color) &&
             area.includes(post.area)
         )
@@ -220,6 +227,7 @@ const Index: NextPage = () => {
     setHeightMin(filterInitialValues.heightMin);
     setHeightMax(filterInitialValues.heightMax);
     setBreed(filterInitialValues.breed);
+    setGender(filterInitialValues.gender);
     setColor(filterInitialValues.color);
     setArea(filterInitialValues.area);
     setFeature(filterInitialValues.features);
@@ -251,6 +259,8 @@ const Index: NextPage = () => {
                 heightMin={heightMin}
                 heightMax={heightMax}
                 breed={breed}
+                gender={gender}
+                setGender={setGender}
                 color={color}
                 area={area}
                 setArea={setArea}
@@ -297,6 +307,8 @@ const Index: NextPage = () => {
                       heightMin={heightMin}
                       heightMax={heightMax}
                       breed={breed}
+                      gender={gender}
+                      setGender={setGender}
                       color={color}
                       area={area}
                       setArea={setArea}

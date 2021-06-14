@@ -42,6 +42,7 @@ export const filterInitialValues: any = {
     "重種馬",
     "その他",
   ],
+  gender:["セン馬","牝馬","牡馬"],
   color: [
     "鹿毛",
     "黒鹿毛",

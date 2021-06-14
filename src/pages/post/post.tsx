@@ -23,6 +23,7 @@ const Post: NextPage = () => {
   const [horseName, setHorseName] = useState("");
   const [category, setCategory] = useState("");
   const [breed, setBreed] = useState("");
+  const [gender, setGender] = useState("");
   const [color, setColor] = useState("");
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
@@ -128,6 +129,7 @@ const Post: NextPage = () => {
               horseName,
               category,
               breed,
+              gender,
               color,
               year,
               month,
@@ -280,6 +282,25 @@ const Post: NextPage = () => {
             >
               <option hidden>選択してください</option>
               {filterInitialValues.breed.map((element, index) => (
+                <option value={`${element}`} key={index}>{`${element}`}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              性別
+              <RequiredMark />
+            </div>
+            <select
+              name="gender"
+              className="inputText rounded-md"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setGender(e.target.value);
+              }}
+            >
+              <option hidden>選択してください</option>
+              {filterInitialValues.gender.map((element, index) => (
                 <option value={`${element}`} key={index}>{`${element}`}</option>
               ))}
             </select>

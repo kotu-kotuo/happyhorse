@@ -14,6 +14,7 @@ const posting = async (
   horseName,
   category,
   breed,
+  gender,
   color,
   year,
   month,
@@ -48,6 +49,7 @@ const posting = async (
           horseName: horseName,
           category: category,
           breed: breed,
+          gender:gender,
           color: color,
           birth: {
             year: year,
@@ -89,6 +91,7 @@ const posting = async (
       horseName.length <= 20 &&
       category &&
       breed &&
+      gender &&
       color &&
       year &&
       month &&
@@ -115,6 +118,7 @@ const posting = async (
             horseName: horseName,
             category: category,
             breed: breed,
+            gender,
             color: color,
             birth: {
               year: year,
@@ -153,6 +157,7 @@ const posting = async (
         horseName,
         category,
         breed,
+        gender,
         color,
         year,
         month,

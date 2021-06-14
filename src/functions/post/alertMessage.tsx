@@ -4,6 +4,7 @@ const alertMessage = (
   horseName,
   category,
   breed,
+  gender,
   color,
   year,
   month,
@@ -29,6 +30,9 @@ const alertMessage = (
     alert("カテゴリーを選択してください");
   }
   if (breed.length === 0) {
+    alert("品種を選択してください");
+  }
+  if (gender.length === 0) {
     alert("品種を選択してください");
   }
   if (color.length === 0) {

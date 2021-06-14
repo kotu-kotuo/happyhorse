@@ -129,6 +129,7 @@ const clickHeart = async (
                 horseName: doc.data().horseName,
                 category: doc.data().category,
                 breed: doc.data().breed,
+                gender: doc.data().gender,
                 color: doc.data().color,
                 birth: {
                   year: doc.data().birth.year,
@@ -149,8 +150,8 @@ const clickHeart = async (
                 messageUpdatedAt: doc.data().messageUpdatedAt,
                 latestMessage: doc.data().latestMessage,
                 clientUserID: doc.data().clientUserID,
-                // ratingCompleted: doc.data().ratingCompleted,  TODO: ratingCompleted
-                // deletedAccount: doc.data().deletedAccount,
+                ratingCompleted: doc.data().ratingCompleted,
+                deletedAccount: doc.data().deletedAccount,
                 likedAt: firebase.firestore.FieldValue.serverTimestamp(),
               });
 
