@@ -168,8 +168,11 @@ const PostEditForm = (props) => {
                 className="inputText rounded-md"
               >
                 <option hidden>選択してください</option>
-                {filterInitialValues.category.map((element) => (
-                  <option value={`${element}`}>{`${element}`}</option>
+                {filterInitialValues.category.map((element, index) => (
+                  <option
+                    key={index}
+                    value={`${element}`}
+                  >{`${element}`}</option>
                 ))}
               </select>
             )}
@@ -190,8 +193,11 @@ const PostEditForm = (props) => {
                 className="inputText rounded-md"
               >
                 <option hidden>選択してください</option>
-                {filterInitialValues.breed.map((element) => (
-                  <option value={`${element}`}>{`${element}`}</option>
+                {filterInitialValues.breed.map((element, index) => (
+                  <option
+                    key={index}
+                    value={`${element}`}
+                  >{`${element}`}</option>
                 ))}
               </select>
             )}
@@ -212,8 +218,11 @@ const PostEditForm = (props) => {
                 className="inputText rounded-md"
               >
                 <option hidden>選択してください</option>
-                {filterInitialValues.color.map((element) => (
-                  <option value={`${element}`}>{`${element}`}</option>
+                {filterInitialValues.color.map((element, index) => (
+                  <option
+                    key={index}
+                    value={`${element}`}
+                  >{`${element}`}</option>
                 ))}
               </select>
             )}
@@ -315,8 +324,8 @@ const PostEditForm = (props) => {
           <div className="text-xs text-gray-600 mb-1 ml-1">特徴</div>
           {post && (
             <div className="flex flex-wrap mb-6">
-              {filterInitialValues.features.map((element) => (
-                <>
+              {filterInitialValues.features.map((element, index) => (
+                <div key={index}>
                   <div className="mb-4 ml-4" hidden={element === "empty"}>
                     <label className="text-sm font-medium text-gray-800 cursor-pointer">
                       <input
@@ -332,7 +341,7 @@ const PostEditForm = (props) => {
                       {`${element}`}
                     </label>
                   </div>
-                </>
+                </div>
               ))}
             </div>
           )}
