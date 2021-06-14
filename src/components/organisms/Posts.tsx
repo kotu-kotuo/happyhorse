@@ -96,7 +96,7 @@ const Posts = (props) => {
           </p>
           <div className="flex justify-between items-center mt-4 md:mt-6">
             {post.deletedAccount === true ? (
-              <div className="flex items-center ml-1 cursor-pointer hover:opacity-80">
+              <div className="flex items-center cursor-pointer hover:opacity-80 ml-0 sm:ml-1">
                 <img
                   src={post.avatar}
                   className="object-cover rounded-full w-10 h-10 md:w-12 md:h-12"
@@ -114,7 +114,7 @@ const Posts = (props) => {
                   },
                 }}
               >
-                <div className="flex items-center ml-1 cursor-pointer hover:opacity-80">
+                <div className="flex items-center cursor-pointer hover:opacity-80 sm:ml-1">
                   <img
                     src={post.avatar}
                     className="object-cover rounded-full w-10 h-10 md:w-12 md:h-12"

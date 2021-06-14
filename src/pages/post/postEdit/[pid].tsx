@@ -24,6 +24,7 @@ const postEdit: NextPage = () => {
   const [horseName, setHorseName] = useState("");
   const [category, setCategory] = useState("");
   const [breed, setBreed] = useState("");
+  const [gender, setGender] = useState("");
   const [color, setColor] = useState("");
   const [year, setYear] = useState(null);
   const [month, setMonth] = useState(null);
@@ -63,6 +64,7 @@ const postEdit: NextPage = () => {
       setHorseName(post.horseName);
       setCategory(post.category);
       setBreed(post.breed);
+      setGender(post.gender);
       setColor(post.color);
       setYear(post.birth.year);
       setMonth(post.birth.month);
@@ -133,6 +135,7 @@ const postEdit: NextPage = () => {
         horseName: horseName,
         category: category,
         breed: breed,
+        gender: gender,
         color: color,
         birth: {
           year: year,
@@ -180,6 +183,7 @@ const postEdit: NextPage = () => {
               setHorseName={setHorseName}
               setCategory={setCategory}
               setBreed={setBreed}
+              setGender={setGender}
               setColor={setColor}
               setYear={setYear}
               setMonth={setMonth}

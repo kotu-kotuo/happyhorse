@@ -15,6 +15,7 @@ const PostEditForm = (props) => {
     setHorseName,
     setCategory,
     setBreed,
+    setGender,
     setColor,
     setYear,
     setMonth,
@@ -194,6 +195,31 @@ const PostEditForm = (props) => {
               >
                 <option hidden>選択してください</option>
                 {filterInitialValues.breed.map((element, index) => (
+                  <option
+                    key={index}
+                    value={`${element}`}
+                  >{`${element}`}</option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <div className="formItemContainer">
+            <div className="text-xs text-gray-600 mb-1 ml-1">
+              性別
+              <RequiredMark />
+            </div>
+            {post && (
+              <select
+                name="gender"
+                defaultValue={post?.gender}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setGender(e.target.value)
+                }
+                className="inputText rounded-md"
+              >
+                <option hidden>選択してください</option>
+                {filterInitialValues.gender.map((element, index) => (
                   <option
                     key={index}
                     value={`${element}`}

@@ -21,6 +21,7 @@ export type Post = {
   horseName: string;
   category: string;
   breed: string;
+  gender: string;
   color: string;
   birth: { year: number; month: number; day: number };
   age: number;
