@@ -136,6 +136,7 @@ export const postInitialValues = {
   horseName: "",
   category: "",
   breed: "",
+  gender: "",
   color: "",
   birth: { year: null, month: null, day: null },
   age: null,

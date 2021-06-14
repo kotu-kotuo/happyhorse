@@ -11,6 +11,7 @@ export const setPostStates = (data) => {
       horseName: data.horseName,
       category: data.category,
       breed: data.breed,
+      gender:data.gender,
       color: data.color,
       birth: {
         year: data.birth.year,
