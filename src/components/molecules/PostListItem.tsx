@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { FaRegHeart } from 'react-icons/fa';
+import Link from "next/link";
+import { FaRegHeart } from "react-icons/fa";
 
 const PostListItem = (props) => {
-  const {  post } = props;
+  const { post } = props;
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-2xl mx-auto cursor-pointer hover:opacity-80">
       <Link href={`postShow/${post.postID}`}>
         <div className="mx-2 my-4 rounded-md shadow border-gray-500">
           <div className="flex">
@@ -36,6 +36,6 @@ const PostListItem = (props) => {
       </Link>
     </div>
   );
-}
+};
 
-export default PostListItem
+export default PostListItem;

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext, useLayoutEffect } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { db } from "../../firebase/firebase";
@@ -12,7 +12,7 @@ const myPostList: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (currentUser) {
       db.collection("users")
         .doc(`${currentUser.uid}`)

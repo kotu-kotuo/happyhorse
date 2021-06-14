@@ -59,7 +59,7 @@ const Header = (props) => {
                   }}
                   className="relative"
                 >
-                  <FaBell className="mx-4 text-3xl text-gray-400 mt-0.5 cursor-pointer" />
+                  <FaBell className="mx-4 text-3xl text-gray-400 mt-0.5 cursor-pointer hover:opacity-80" />
                   <div
                     hidden={
                       !(
@@ -89,7 +89,7 @@ const Header = (props) => {
                 <img
                   onClick={() => setIsOpenMenu(!isOpenMenu)}
                   src={user?.avatar}
-                  className="object-cover rounded-full cursor-pointer h-10 w-10 mb-1"
+                  className="object-cover rounded-full cursor-pointer h-10 w-10 mb-1 hover:opacity-80"
                 />
                 <div hidden={!isOpenMenu}>
                   <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60">
