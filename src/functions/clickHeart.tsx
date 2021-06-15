@@ -162,7 +162,7 @@ const clickHeart = async (
                 //通知が重複しないように
                 (notification) =>
                   notification.postID === doc.data().postID &&
-                  notification.userID === currentUser.uid
+                  notification.sendUserID === currentUser.uid
               ).length === 0
             ) {
               db.collection("users")

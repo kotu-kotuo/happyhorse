@@ -139,6 +139,8 @@ const posting = async (
             messageUpdatedAt: "",
             latestMessage: "",
             clientUserID: "",
+            ratingCompleted: false,
+            deletedAccount: false,
           });
       };
 
