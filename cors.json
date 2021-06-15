@@ -1,6 +1,6 @@
 [
   {
-    "origin": ["http://localhost:3000"],
+    "origin": ["http://localhost:3000","https://www.happyhorse.xyz"],
     "responseHeader": ["*"],
     "method": ["GET"],
     "maxAgeSeconds": 86400
