@@ -124,7 +124,7 @@ const messages: NextPage = () => {
       }
     }
     if (user && chatroom === null) {
-      setMessageReceiver(user);
+      setMessageReceiver(setUserState(user));
     }
   }, [currentUser, chatroom, user]);
 
@@ -178,7 +178,7 @@ const messages: NextPage = () => {
 
       <div>
         <Layout title="messages">
-          {/* モバイルの取引進行ボタン =========================================*/}
+          {/* モバイルの取引進行ボタン、メッセージヘッダー =========================================*/}
           <div className="sm:hidden">
             <div className="absolute top-0 right-0 left-0">
               <div className="flex items-center bg-white h-10 align-middle border-b border-gray-500">
