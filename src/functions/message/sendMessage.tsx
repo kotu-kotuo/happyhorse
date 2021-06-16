@@ -53,18 +53,18 @@ const sendMessage = async (
         .then((snapshot) => setChatroom(setChatroomStates(snapshot.data())));
 
       //postにメッセージ送った人を記録
-      if (post.sendMessageUserIDs.length === 0) {
-        await db
-          .collection("users")
-          .doc(`${post.userID}`)
-          .collection("posts")
-          .doc(`${post.postID}`)
-          .update({
-            sendMessageUserIDs: [currentUser.uid],
-            messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            latestMessage: messageText,
-          });
-      } else {
+      // if (post.sendMessageUserIDs.length === 0) {
+      //   await db
+      //     .collection("users")
+      //     .doc(`${post.userID}`)
+      //     .collection("posts")
+      //     .doc(`${post.postID}`)
+      //     .update({
+      //       sendMessageUserIDs: [currentUser.uid],
+      //       messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      //       latestMessage: messageText,
+      //     });
+      // } else {
         await db
           .collection("users")
           .doc(`${post.userID}`)
@@ -75,7 +75,7 @@ const sendMessage = async (
             messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             latestMessage: messageText,
           });
-      }
+      // }
 
       //メッセージ保存
       await db

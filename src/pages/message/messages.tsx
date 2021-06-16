@@ -105,7 +105,7 @@ const messages: NextPage = () => {
   }, [router.query.uid, router.query.pid, router.query.cid]);
 
   useEffect(() => {
-    if (currentUser && chatroom !== null) {
+    if (currentUser && chatroom.messageCount) {
       if (currentUser.uid === chatroom.postUserID) {
         db.collection("users")
           .doc(`${chatroom.sendUserID}`)
@@ -122,8 +122,7 @@ const messages: NextPage = () => {
             setMessageReceiver(setUserState(snapshot.data()))
           );
       }
-    }
-    if (user && chatroom === null) {
+    } else {
       setMessageReceiver(setUserState(user));
     }
   }, [currentUser, chatroom, user]);
@@ -381,7 +380,7 @@ const messages: NextPage = () => {
                         ) : message.userID === currentUser?.uid ? (
                           <>
                             {message.firstOnDate && (
-                              <div className="text-center mx-auto text-gray-600 text-sm border border-gray-600 rounded-full py-0.5 w-36">
+                              <div className="text-center mx-auto text-gray-600 text-xs border border-gray-600 rounded-full w-36 my-5 sm:text-sm sm:py-0.5">
                                 {createdMessageDate(message)}
                               </div>
                             )}

@@ -91,5 +91,5 @@
 ===============================================*/
 
 .messageAnnounce {
-  @apply text-center text-sm text-gray-900 border-gray-200 border-b-2 border-t-2 my-5 py-2 sm:text-base;
+  @apply text-center text-sm text-gray-900 border-gray-200 border-b-2 border-t-2 my-6 py-2 sm:text-base;
 }
