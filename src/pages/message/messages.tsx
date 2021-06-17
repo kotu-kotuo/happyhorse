@@ -25,14 +25,13 @@ import {
 } from "../../utils/states";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import DealProgressButton from "../../components/atoms/DealProgressButton";
-import isFirstOnDate from "../../functions/message/isFirstOnDate";
 import { NextPage } from "next";
 import sendMessage from "../../functions/message/sendMessage";
 import sendImage from "../../functions/message/sendImage";
 import decideClient from "../../functions/message/decideClient";
 import interruptionDeal from "../../functions/message/interruptionDeal";
 import completedDeal from "../../functions/message/completedDeal";
-import rating from "../../functions/message/rating";
+import RatingModal from "../../components/molecules/RatingModal";
 
 const messages: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -49,9 +48,10 @@ const messages: NextPage = () => {
   const [isOpenMyModal, setIsOpenMyModal] = useState(false);
   const [isOpenYourModal, setIsOpenYourModal] = useState(false);
   const [messageText, setMessageText] = useState("");
+  const [messageReceiver, setMessageReceiver] = useState(null);
   const [rateValue, setRateValue] = useState("good");
   const [reviewText, setReviewText] = useState("");
-  const [messageReceiver, setMessageReceiver] = useState(null);
+  const [isOpenRatingModal, setIsOpenRatingModal] = useState(false);
   const ref = useRef(null);
 
   //初期値セット
@@ -173,8 +173,23 @@ const messages: NextPage = () => {
 
   return (
     <div>
-      {console.log(isFirstOnDate(messages))}
-
+      <RatingModal
+        isOpenRatingModal={isOpenRatingModal}
+        setIsOpenRatingModal={setIsOpenRatingModal}
+        setRateValue={setRateValue}
+        setReviewText={setReviewText}
+        post={post}
+        chatroom={chatroom}
+        messages={messages}
+        setMessages={setMessages}
+        currentUser={currentUser}
+        user={user}
+        rateValue={rateValue}
+        reviewText={reviewText}
+        reviewsOnHold={reviewsOnHold}
+        setReviewsOnHold={setReviewsOnHold}
+        messageReceiver={messageReceiver}
+      />
       <div>
         <Layout title="messages">
           {/* モバイルの取引進行ボタン、メッセージヘッダー =========================================*/}
@@ -352,21 +367,7 @@ const messages: NextPage = () => {
                               <div
                                 className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3 mb-5 mx-3"
                                 onClick={() => {
-                                  rating(
-                                    post,
-                                    chatroom,
-                                    messages,
-                                    setMessages,
-                                    currentUser,
-                                    user,
-                                    rateValue,
-                                    reviewText,
-                                    reviewsOnHold,
-                                    setReviewsOnHold,
-                                    messageReceiver,
-                                    setRateValue,
-                                    setReviewText
-                                  );
+                                  setIsOpenRatingModal(true);
                                 }}
                               >
                                 <p className="mt-1 text-mainGreen font-semibold">

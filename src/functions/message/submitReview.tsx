@@ -4,6 +4,7 @@ import { setMessageStates, setReviewStates } from "../../utils/states";
 import isFirstOnDate from "./isFirstOnDate";
 
 const submitReview = (
+  e,
   post,
   chatroom,
   messages,
@@ -15,8 +16,9 @@ const submitReview = (
   reviewsOnHold,
   setReviewsOnHold,
   messageReceiver,
-  onClose
+  setIsOpenRatingModal
 ) => {
+  e.preventDefault();
   if (!post || !chatroom || !currentUser || !user) return;
 
   if (reviewsOnHold.length === 0) {
@@ -239,7 +241,7 @@ const submitReview = (
       });
   }
 
-  onClose();
+  setIsOpenRatingModal(false);
 };
 
 export default submitReview;
