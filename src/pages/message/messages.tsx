@@ -379,6 +379,7 @@ const messages: NextPage = () => {
                         ) : message.rateCompleted ? (
                           <div className="messageAnnounce">評価完了です！</div>
                         ) : message.userID === currentUser?.uid ? (
+                          // 自分のメッセージ
                           <>
                             {message.firstOnDate && (
                               <div className="text-center mx-auto text-gray-600 text-xs border border-gray-600 rounded-full w-36 my-5 sm:text-sm sm:py-0.5">
@@ -440,6 +441,7 @@ const messages: NextPage = () => {
                             </div>
                           </>
                         ) : (
+                          //相手のメッセージ
                           <>
                             {message.firstOnDate && (
                               <div className="text-center mx-auto text-gray-600 text-sm border border-gray-600 rounded-full py-0.5 w-36">

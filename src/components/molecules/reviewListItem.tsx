@@ -61,7 +61,7 @@ const ReviewListItem = (props) => {
                 {createdTime(review.createdAt)}
               </div>
               <Link href={`/post/postShow/${review.postID}`}>
-                <div className="text-blue-700 reviewPostTitleText border-b border-blue-700 mr-auto inline-block -mt-10 cursor-pointer z-10">
+                <div className="text-blue-700 reviewPostTitleText border-b border-blue-700 mr-auto inline-block -mt-10 cursor-pointer z-10 line-clamp-1">
                   {review.postTitle}
                 </div>
               </Link>
@@ -120,7 +120,7 @@ const ReviewListItem = (props) => {
                   {createdTime(review.createdAt)}
                 </div>
                 <Link href={`/post/postShow/${review.postID}`}>
-                  <div className="text-blue-700 reviewPostTitleText border-b border-blue-700 mr-auto inline-block -mt-10 cursor-pointer z-10">
+                  <div className="text-blue-700 reviewPostTitleText border-b border-blue-700 mr-auto inline-block -mt-10 cursor-pointer line-clamp-1 z-10">
                     {review.postTitle}
                   </div>
                 </Link>
