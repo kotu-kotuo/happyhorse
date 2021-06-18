@@ -5,7 +5,7 @@ import { db } from "../firebase/firebase";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import { setPostStates } from "../utils/states";
 import { useRouter } from "next/router";
-import PasswordModal from "../components/molecules/PasswordModal";
+import PasswordModal from "../components/pages/setting/PasswordModal";
 import { NextPage } from "next";
 import { postInitialValues } from "../utils/initialValues";
 import { Post } from "../types/types";

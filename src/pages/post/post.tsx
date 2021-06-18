@@ -199,7 +199,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               タイトル
               <RequiredMark />
             </div>
@@ -218,7 +218,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               本文
               <RequiredMark />
             </div>
@@ -235,7 +235,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               馬の名前
               <RequiredMark />
             </div>
@@ -250,7 +250,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               カテゴリー
               <RequiredMark />
             </div>
@@ -269,7 +269,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               品種
               <RequiredMark />
             </div>
@@ -288,7 +288,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               性別
               <RequiredMark />
             </div>
@@ -307,7 +307,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               毛色
               <RequiredMark />
             </div>
@@ -326,7 +326,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               生年月日
               <RequiredMark />
             </div>
@@ -370,7 +370,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               年齢
               <RequiredMark />
             </div>
@@ -380,14 +380,14 @@ const Post: NextPage = () => {
               min="0"
               max="100"
               className="inputFormNumber w-full"
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setAge(e.target.value);
               }}
             />
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               身長（cm）
               <RequiredMark />
             </div>
@@ -404,7 +404,7 @@ const Post: NextPage = () => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               地域
               <RequiredMark />
             </div>
@@ -422,7 +422,7 @@ const Post: NextPage = () => {
             </select>
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">特徴</div>
+          <div className="postFormLabel">特徴</div>
           <div className="flex flex-wrap mb-4">
             {filterInitialValues.features.map((element, index) => (
               <div key={index}>
@@ -462,15 +462,12 @@ const Post: NextPage = () => {
           </div>
 
           <div className="text-center">
-            <button
-              type="submit"
-              className="cursor-pointer bg-mainGreen text-white py-3 px-6 rounded-md w-full mt-4"
-            >
+            <button type="submit" className="postFormMainButton">
               掲載する
             </button>
             <button
               type="submit"
-              className="cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 mb-20 hover:text-white hover:bg-gray-500  ease-in-out duration-300"
+              className="postFormSubButton"
               onClick={() => {
                 setIsDraft(true);
               }}

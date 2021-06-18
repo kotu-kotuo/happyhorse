@@ -1,7 +1,7 @@
 import React from "react";
-import completedDeal from "../../functions/message/completedDeal";
-import decideClient from "../../functions/message/decideClient";
-import interruptionDeal from "../../functions/message/interruptionDeal";
+import completedDeal from "../../../functions/message/completedDeal";
+import decideClient from "../../../functions/message/decideClient";
+import interruptionDeal from "../../../functions/message/interruptionDeal";
 
 const DealProgressButton = (props) => {
   const {

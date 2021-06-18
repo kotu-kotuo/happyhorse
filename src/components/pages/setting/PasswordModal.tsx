@@ -1,5 +1,5 @@
-import deleteAccountData from "../../functions/deleteAccountData";
-import ButtonIndigo from "../atoms/ButtonIndigo";
+import deleteAccountData from "../../../functions/deleteAccountData";
+import ButtonAuth from "../../atoms/ButtonAuth";
 
 const PasswordModal = (props) => {
   const { setPassword, password, currentUser, router } = props;
@@ -26,7 +26,7 @@ const PasswordModal = (props) => {
               deleteAccountData(currentUser, password, router);
             }}
           >
-            <ButtonIndigo label={"送信する"} />
+            <ButtonAuth label={"送信する"} />
           </div>
         </div>
       </form>

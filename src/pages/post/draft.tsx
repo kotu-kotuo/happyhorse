@@ -201,15 +201,12 @@ const draft: NextPage = () => {
           />
 
           <div className="text-center mb-20">
-            <button
-              type="submit"
-              className="cursor-pointer bg-mainGreen text-white py-3 px-6 rounded-md w-full mt-4"
-            >
+            <button type="submit" className="postFormMainButton">
               掲載する
             </button>
             <button
               type="submit"
-              className="cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 hover:text-white hover:bg-gray-500  ease-in-out duration-300"
+              className="postFormSubButton"
               onClick={() => {
                 setIsDraft(true);
               }}
@@ -217,7 +214,7 @@ const draft: NextPage = () => {
               下書き保存する
             </button>
             <button
-              className="cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 hover:text-white hover:bg-gray-500  ease-in-out duration-300"
+              className="postFormSubButton"
               onClick={(e) => {
                 deleteDraft(e);
               }}

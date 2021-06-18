@@ -47,6 +47,10 @@
   @apply text-xs md:text-sm;
 }
 
+.postFormLabel{
+  @apply text-xs text-gray-600 mb-1 ml-1;
+}
+
 /*==============================================
 # フォーム
 ===============================================*/
@@ -84,6 +88,14 @@
 
 .postInputText {
   @apply mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
+}
+
+.postFormSubButton{
+  @apply cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 hover:text-white hover:bg-gray-500  ease-in-out duration-300;
+}
+
+.postFormMainButton {
+  @apply cursor-pointer bg-mainGreen text-white py-3 px-6 rounded-md w-full mt-4;
 }
 
 /*==============================================

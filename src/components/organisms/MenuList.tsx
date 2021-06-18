@@ -2,8 +2,8 @@ import React from "react";
 import MenuListItem from "../molecules/MenuListItem";
 import { auth } from "../../firebase/firebase";
 import Link from "next/link";
-import StarRatings from "react-star-ratings";
 import { IoChevronForwardOutline } from "react-icons/io5";
+import StarRatings from "react-star-ratings";
 
 const MenuList = (props) => {
   const { currentUser, setCurrentUser, user, setIsOpenMenu } = props;

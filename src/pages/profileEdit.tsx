@@ -4,6 +4,7 @@ import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import editProfile from "../functions/editProfile";
+import ProfileImageUpload from "../components/pages/ProfileEdit/ProfileImageUpload";
 
 const ProfileEdit: NextPage = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -38,52 +39,20 @@ const ProfileEdit: NextPage = () => {
               );
             }}
           >
-            <div className="text-xs text-gray-500 mb-2 ml-1">アバター画像</div>
-            <div className="flex items-center mb-6">
-              {image ? (
-                <img
-                  className="w-20 h-20 mr-6 object-cover rounded-full"
-                  src={URL.createObjectURL(image)}
-                  alt="uploaded"
-                />
-              ) : (
-                <img
-                  className="w-20 h-20 mr-6 object-cover rounded-full"
-                  src={user.avatar}
-                  alt="uploaded"
-                />
-              )}
-              <input
-                className="text-sm inline w-full text-gray-500 sm:text-base"
-                type="file"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setImage(e.target.files[0]);
-                }}
-              />
-            </div>
-            <div className="text-xs text-gray-500 mb-2 ml-1">カバー画像</div>
-            <div className="flex items-center mb-6">
-              {cover ? (
-                <img
-                  className="w-20 h-20 mr-6 object-cover rounded"
-                  src={URL.createObjectURL(cover)}
-                  alt="uploaded"
-                />
-              ) : (
-                <img
-                  className="w-20 h-20 mr-6 object-cover rounded"
-                  src={user.cover}
-                  alt="uploaded"
-                />
-              )}
-              <input
-                className="text-sm inline w-full text-gray-500 sm:text-base"
-                type="file"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setCover(e.target.files[0]);
-                }}
-              />
-            </div>
+            <ProfileImageUpload
+              image={image}
+              setImage={setImage}
+              label={"アバター画像"}
+              src={user.avatar}
+              rounded={"rounded-full"}
+            />
+            <ProfileImageUpload
+              image={cover}
+              setImage={setCover}
+              label={"カバー画像"}
+              src={user.cover}
+              rounded={"rounded"}
+            />
             <div className="text-xs text-gray-500 mb-1 ml-1">
               ユーザネーム(20字以内)
             </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import MessageButton from "../atoms/MessageButton";
+import MessageButton from "./MessageButton";
 
 const MessageButtonHandle = (props) => {
   const { currentUser, post } = props;

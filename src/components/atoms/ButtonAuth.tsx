@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ButtonIndigo = (props) => {
+const ButtonAuth = (props) => {
   const { label } = props;
   return (
     <div
@@ -27,4 +27,4 @@ const ButtonIndigo = (props) => {
   );
 }
 
-export default ButtonIndigo
+export default ButtonAuth

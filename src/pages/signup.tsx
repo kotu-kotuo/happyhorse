@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { auth, db } from "../firebase/firebase";
 import { filterInitialValues } from "../utils/initialValues";
-import ButtonIndigo from "../components/atoms/ButtonIndigo";
+import ButtonAuth from "../components/atoms/ButtonAuth";
 
 const SignUp: NextPage = () => {
   const router = useRouter();
@@ -144,7 +144,7 @@ const SignUp: NextPage = () => {
 
             <div>
               <button type="submit" className="block w-full">
-                <ButtonIndigo label={"新規登録する"} />
+                <ButtonAuth label={"新規登録する"} />
               </button>
             </div>
             <div className="flex items-center justify-end">

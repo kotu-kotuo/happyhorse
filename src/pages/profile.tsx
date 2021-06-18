@@ -3,7 +3,7 @@ import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db } from "../firebase/firebase";
-import ProfileContent from "../components/organisms/ProfileContent";
+import ProfileContent from "../components/pages/profile/ProfileContent";
 import { NextPage } from "next";
 import { userInitialValues } from "../utils/initialValues";
 import { User } from "../types/types";

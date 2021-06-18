@@ -1,6 +1,6 @@
 import React from "react";
 import { CgSmile, CgSmileNone } from "react-icons/cg";
-import submitReview from "../../functions/message/submitReview";
+import submitReview from "../../../functions/message/submitReview";
 
 const RatingModal = (props) => {
   const {

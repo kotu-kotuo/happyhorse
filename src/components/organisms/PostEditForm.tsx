@@ -107,7 +107,7 @@ const PostEditForm = (props) => {
       {post.postID && (
         <>
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               タイトル
               <RequiredMark />
             </div>
@@ -123,7 +123,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               本文
               <RequiredMark />
             </div>
@@ -138,7 +138,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               馬の名前
               <RequiredMark />
             </div>
@@ -154,7 +154,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               カテゴリー
               <RequiredMark />
             </div>
@@ -180,7 +180,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               品種
               <RequiredMark />
             </div>
@@ -205,7 +205,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               性別
               <RequiredMark />
             </div>
@@ -230,7 +230,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               毛色
               <RequiredMark />
             </div>
@@ -255,7 +255,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               生年月日
               <RequiredMark />
             </div>
@@ -297,7 +297,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">年齢</div>
+            <div className="postFormLabel">年齢</div>
             <input
               type="number"
               name="age"
@@ -310,7 +310,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               身長（cm）
               <RequiredMark />
             </div>
@@ -326,7 +326,7 @@ const PostEditForm = (props) => {
           </div>
 
           <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-1">
+            <div className="postFormLabel">
               地域
               <RequiredMark />
             </div>
@@ -347,7 +347,7 @@ const PostEditForm = (props) => {
             )}
           </div>
 
-          <div className="text-xs text-gray-600 mb-1 ml-1">特徴</div>
+          <div className="postFormLabel">特徴</div>
           {post && (
             <div className="flex flex-wrap mb-6">
               {filterInitialValues.features.map((element, index) => (

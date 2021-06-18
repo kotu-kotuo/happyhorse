@@ -6,6 +6,7 @@ import { db } from "../../firebase/firebase";
 import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
+import createdTime from "../../functions/createdTime";
 
 const draftList = () => {
   const { currentUser } = useContext(AuthContext);
@@ -22,11 +23,7 @@ const draftList = () => {
     }
   }, [currentUser]);
 
-  //時間をUNIXから変換
-  const createdTime = (postTime) => {
-    const time = new Date(postTime?.seconds * 1000);
-    return time.toLocaleDateString();
-  };
+
 
   return (
     <div>
@@ -49,17 +46,14 @@ const draftList = () => {
                   <div className="mx-2 my-6 rounded-md shadow border-gray-500 cursor-pointer">
                     <div className="flex">
                       <div>
-                        {post.images.length !== 0 ? (
-                          <img
-                            src={post.images[0]}
-                            className="h-14 w-14 rounded-l-md mr-3 block object-cover md:h-16 md:w-28"
-                          />
-                        ) : (
-                          <img
-                            src="/no-image.png"
-                            className="h-14 w-14 rounded-l-md mr-3 block object-cover md:h-16 md:w-28"
-                          />
-                        )}
+                        <img
+                          src={
+                            post.images.length !== 0
+                              ? post.images[0]
+                              : "/no-image.png"
+                          }
+                          className="h-14 w-14 rounded-l-md mr-3 block object-cover md:h-16 md:w-28"
+                        />
                       </div>
                       <div className="px-3 py-1 max-w-3xl w-full">
                         <div className="text-gray-900 mr-2 line-clamp-1 mt-0.5 md:mt-1">
