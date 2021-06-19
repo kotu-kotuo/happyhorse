@@ -45,7 +45,6 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
     >
       <Head>
         <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {(isOpenBottomNotification || isOpenBottomMenu) && (
