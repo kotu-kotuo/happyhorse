@@ -75,6 +75,7 @@ const deleteAccountData = async (currentUser, password, router) => {
           )
         );
 
+      //取引中or売り切れではない投稿は削除
       await db
         .collection("users")
         .doc(`${currentUser.uid}`)
@@ -95,9 +96,20 @@ const deleteAccountData = async (currentUser, password, router) => {
               .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
 
             db.collectionGroup("likePosts")
-              .where("userID", "==", doc.data().userID)
+              .where("postID", "==", doc.data().postID)
               .get()
               .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+
+            doc
+              .data()
+              .likeUserIDs.map((likeUserID) =>
+                db.collection("users").doc(`${likeUserID}`)
+              )
+              .update({
+                likePostIDs: firebase.firestore.FieldValue.arrayRemove(
+                  `${doc.data().postID}`
+                ),
+              });
 
             doc.ref.delete();
           })
