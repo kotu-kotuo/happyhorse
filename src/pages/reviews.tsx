@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { setReviewStates } from "../utils/states";
@@ -7,9 +7,8 @@ import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import { NextPage } from "next";
 import { reviewInitialValues } from "../utils/initialValues";
 import { Review } from "../types/types";
-// import ReviewListItem from "../components/pages/review/ReviewListItem";
-import ReviewContent from "../components/pages/review/ReviewContent";
-import Link from "next/link";
+import ReviewListItem from "../components/pages/review/ReviewListItem";
+
 
 const reviews: NextPage = () => {
   const [goodReviews, setGoodReviews] = useState<Review[]>([
@@ -63,43 +62,9 @@ const reviews: NextPage = () => {
               textRight={`残念だった(${badReviews.length})`}
             />
             {isLeftHidden === false &&
-              goodReviews.map((review) => {
-                review.deletedAccount === true ? (
-                  <ReviewContent review={review} />
-                ) : (
-                  <Link
-                    href={{
-                      pathname: "/profile",
-                      query: {
-                        uid: review.reviewerID,
-                      },
-                    }}
-                  >
-                    <a>
-                      <ReviewContent review={review} />
-                    </a>
-                  </Link>
-                );
-              })}
+              goodReviews.map((review) => <ReviewListItem review={review} />)}
             {isRightHidden === false &&
-              badReviews.map((review) => {
-                review.deletedAccount === true ? (
-                  <ReviewContent review={review} />
-                ) : (
-                  <Link
-                    href={{
-                      pathname: "/profile",
-                      query: {
-                        uid: review.reviewerID,
-                      },
-                    }}
-                  >
-                    <a>
-                      <ReviewContent review={review} />
-                    </a>
-                  </Link>
-                );
-              })}
+              badReviews.map((review) => <ReviewListItem review={review} />)}
           </div>
         )}
       </Layout>
