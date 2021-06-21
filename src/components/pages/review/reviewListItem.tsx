@@ -4,14 +4,10 @@ import ReviewContent from "./ReviewContent";
 const ReviewListItem = (props) => {
   const { review } = props;
 
-  //時間をUNIXから変換
-
   return (
     <>
       {review.deletedAccount === true ? (
-        <>
-          <ReviewContent review={review} />
-        </>
+        <ReviewContent review={review} />
       ) : (
         <Link
           href={{

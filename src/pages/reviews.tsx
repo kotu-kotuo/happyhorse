@@ -7,7 +7,9 @@ import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import { NextPage } from "next";
 import { reviewInitialValues } from "../utils/initialValues";
 import { Review } from "../types/types";
-import ReviewListItem from "../components/pages/review/ReviewListItem";
+// import ReviewListItem from "../components/pages/review/ReviewListItem";
+import ReviewContent from "../components/pages/review/ReviewContent";
+import Link from "next/link";
 
 const reviews: NextPage = () => {
   const [goodReviews, setGoodReviews] = useState<Review[]>([
@@ -50,7 +52,7 @@ const reviews: NextPage = () => {
 
   return (
     <div>
-      <Layout title="reviews">
+      <Layout title="レビュー">
         {router.query.uid && (goodReviews || badReviews) && (
           <div className="max-w-2xl mx-auto px-2 pb-3">
             <SwitchDisplay
@@ -60,10 +62,44 @@ const reviews: NextPage = () => {
               textLeft={`良かった(${goodReviews.length})`}
               textRight={`残念だった(${badReviews.length})`}
             />
-            {/* {isLeftHidden === false &&
-              goodReviews.map((review) => <ReviewListItem review={review} />)}
+            {isLeftHidden === false &&
+              goodReviews.map((review) => {
+                review.deletedAccount === true ? (
+                  <ReviewContent review={review} />
+                ) : (
+                  <Link
+                    href={{
+                      pathname: "/profile",
+                      query: {
+                        uid: review.reviewerID,
+                      },
+                    }}
+                  >
+                    <a>
+                      <ReviewContent review={review} />
+                    </a>
+                  </Link>
+                );
+              })}
             {isRightHidden === false &&
-              badReviews.map((review) => <ReviewListItem review={review} />)} */}
+              badReviews.map((review) => {
+                review.deletedAccount === true ? (
+                  <ReviewContent review={review} />
+                ) : (
+                  <Link
+                    href={{
+                      pathname: "/profile",
+                      query: {
+                        uid: review.reviewerID,
+                      },
+                    }}
+                  >
+                    <a>
+                      <ReviewContent review={review} />
+                    </a>
+                  </Link>
+                );
+              })}
           </div>
         )}
       </Layout>
