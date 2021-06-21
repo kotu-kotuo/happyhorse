@@ -1,6 +1,3 @@
-import React from "react";
-import { CgSmile, CgSmileNone } from "react-icons/cg";
-import { FaRegClock } from "react-icons/fa";
 import Link from "next/link";
 import ReviewContent from "./ReviewContent";
 
@@ -8,7 +5,7 @@ const ReviewListItem = (props) => {
   const { review } = props;
 
   //時間をUNIXから変換
-  
+
   return (
     <>
       {review.deletedAccount === true ? (
