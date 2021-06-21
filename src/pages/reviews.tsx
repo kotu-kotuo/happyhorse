@@ -7,7 +7,7 @@ import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import { NextPage } from "next";
 import { reviewInitialValues } from "../utils/initialValues";
 import { Review } from "../types/types";
-import ReviewListItem from "../components/pages/review/ReviewListItem";
+// import ReviewListItem from "../components/pages/review/ReviewListItem";
 
 const reviews: NextPage = () => {
   const [goodReviews, setGoodReviews] = useState<Review[]>([
@@ -60,10 +60,10 @@ const reviews: NextPage = () => {
               textLeft={`良かった(${goodReviews.length})`}
               textRight={`残念だった(${badReviews.length})`}
             />
-            {isLeftHidden === false &&
+            {/* {isLeftHidden === false &&
               goodReviews.map((review) => <ReviewListItem review={review} />)}
             {isRightHidden === false &&
-              badReviews.map((review) => <ReviewListItem review={review} />)}
+              badReviews.map((review) => <ReviewListItem review={review} />)} */}
           </div>
         )}
       </Layout>
