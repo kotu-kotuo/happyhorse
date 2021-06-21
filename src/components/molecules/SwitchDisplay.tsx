@@ -12,7 +12,7 @@ const SwitchDisplay = (props) => {
 
   return (
     <>
-      <h2 className="fontSize-xl text-center mt-8 mb-7 text-gray-900 sm:mb-8 sm:mt-4">
+      <h2 className="fontSize-xl text-center mt-8 mb-7 text-gray-900 sm:mb-10 sm:mt-12">
         {title}
       </h2>
       <div className="message-switch flex justify-around max-w-2xl mx-auto text-center items-center px-1">

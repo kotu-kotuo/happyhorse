@@ -82,7 +82,7 @@ const management: NextPage = () => {
 
   return (
     <Layout title="management">
-      <div className="sm:mt-16">
+      <div>
         <SwitchDisplay
           setIsLeftHidden={setIsMyPostsBlockHidden}
           setIsRightHidden={setIsSendHidden}

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { setReviewStates } from "../utils/states";
 import { db } from "../firebase/firebase";
 import SwitchDisplay from "../components/molecules/SwitchDisplay";
-import ReviewListItem from "../components/pages/review/reviewListItem";
+import ReviewListItem from "../components/pages/review/ReviewListItem";
 import { NextPage } from "next";
 import { reviewInitialValues } from "../utils/initialValues";
 import { Review } from "../types/types";
