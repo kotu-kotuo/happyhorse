@@ -7,7 +7,7 @@ import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import { NextPage } from "next";
 import { reviewInitialValues } from "../utils/initialValues";
 import { Review } from "../types/types";
-// import ReviewListItem from "../components/pages/review/ReviewListItem";
+import ReviewListItem from "../components/pages/review/ReviewListItem";
 
 const reviews: NextPage = () => {
   const [goodReviews, setGoodReviews] = useState<Review[]>([
