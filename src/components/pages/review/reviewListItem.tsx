@@ -9,7 +9,9 @@ const ReviewListItem = (props) => {
   return (
     <>
       {review.deletedAccount === true ? (
-        <ReviewContent review={review} />
+        <>
+          <ReviewContent review={review} />
+        </>
       ) : (
         <Link
           href={{
