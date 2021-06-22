@@ -8,6 +8,7 @@ module.exports = {
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
+  webpack5: false,
   webpack: (config) => {
     config.node = {
       fs: "empty",
