@@ -61,7 +61,7 @@ const ReviewContent = (props) => {
                 {review.postTitle}
               </div>
             </Link>
-            <div className="flex items-center text-gray-500 mb-0.5 whitespace-nowrap ml-2">
+            <div className="flex items-center text-gray-500 whitespace-nowrap ml-2">
               <FaRegClock className="mr-0.5 text-xs" />
               <div className="reviewPostTitleText inline-block">
                 {createdTime(review.createdAt)}
