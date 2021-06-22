@@ -7,6 +7,7 @@ import editProfile from "../functions/editProfile";
 import ProfileImageUpload from "components/pages/profileEdit/ProfileImageUpload";
 
 
+
 const ProfileEdit: NextPage = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
   const [image, setImage] = useState<any>("");
@@ -22,7 +23,7 @@ const ProfileEdit: NextPage = () => {
   }, [user]);
 
   return (
-    <Layout title="profile-edit">
+    <Layout title="プロフィール編集">
       {currentUser && user && (
         <div className="my-20 px-2">
           <form
