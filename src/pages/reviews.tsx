@@ -7,8 +7,8 @@ import { NextPage } from "next";
 import { reviewInitialValues } from "../utils/initialValues";
 import { Review } from "../types/types";
 
-import SwitchDisplay from "../components/molecules/SwitchDisplay";
 import ReviewListItem from "components/pages/review/ReviewListItem";
+import SwitchDisplay from "components/molecules/SwitchDisplay";
 
 
 
