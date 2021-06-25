@@ -4,7 +4,7 @@ import { Layout } from "../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { NextPage } from "next";
 import editProfile from "../functions/editProfile";
-// import ProfileImageUpload from "components/pages/profileEdit/ProfileImageUpload";
+import ProfileImageUpload from "components/pages/profileEdit/ProfileImageUpload";
 
 const ProfileEdit: NextPage = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -39,7 +39,7 @@ const ProfileEdit: NextPage = () => {
               );
             }}
           >
-            {/* <ProfileImageUpload
+            <ProfileImageUpload
               image={image}
               setImage={setImage}
               label={"アバター画像"}
@@ -52,7 +52,7 @@ const ProfileEdit: NextPage = () => {
               label={"カバー画像"}
               src={user.cover}
               rounded={"rounded"}
-            /> */}
+            />
             <div className="text-xs text-gray-500 mb-1 ml-1">
               ユーザネーム(20字以内)
             </div>
