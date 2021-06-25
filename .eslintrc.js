@@ -8,6 +8,7 @@ module.exports = {
     sourceType: "module",
     ecmaVersion: 2015,
     requireConfigFile: false,
+    project: "./tsconfig.json",
   },
   plugins: ["react", "@typescript-eslint"],
   extends: [
