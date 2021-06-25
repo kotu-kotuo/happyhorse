@@ -21,7 +21,7 @@ const ProfileContent = (props) => {
                 alt="avatar"
               />
               {user.id === currentUser?.uid && (
-                <Link href="/profile-edit">
+                <Link href="/profileEdit">
                   <a className="absolute bottom-0 right-7 border border-mainGreen rounded-md px-3 py-1 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300 sm:px-4 sm:py-2 sm:right-10">
                     編集
                   </a>
