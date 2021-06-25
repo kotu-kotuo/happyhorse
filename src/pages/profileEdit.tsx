@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import editProfile from "../functions/editProfile";
 import ProfileImageUpload from "../components/pages/profileEdit/ProfileImageUpload";
 
-const ProfileEdit: NextPage = () => {
+const profileEdit: NextPage = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
   const [image, setImage] = useState<any>("");
   const [cover, setCover] = useState<any>("");
@@ -91,4 +91,4 @@ const ProfileEdit: NextPage = () => {
   );
 };
 
-export default ProfileEdit;
+export default profileEdit;
