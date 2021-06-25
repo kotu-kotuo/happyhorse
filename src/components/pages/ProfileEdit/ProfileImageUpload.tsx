@@ -1,6 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 
-const ProfileImageUpload = (props) => {
+type Props = {
+  image: string;
+  setImage: (file: File) => void;
+  label: string;
+  src: string;
+  rounded: string;
+};
+
+const ProfileImageUpload: FC<Props> = (props) => {
   const { image, setImage, label, src, rounded } = props;
   return (
     <div>
