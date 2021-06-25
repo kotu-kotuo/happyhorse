@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { FaRegHeart } from "react-icons/fa";
+import Link from "next/link";
 
 const PostListItem = (props) => {
   const { post } = props;
