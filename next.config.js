@@ -8,18 +8,23 @@ module.exports = {
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
-  webpack5: false,
-  webpack: (config) => {
-    config.node = {
-      fs: "empty",
-      child_process: "empty",
-      net: "empty",
-      dns: "empty",
-      tls: "empty",
-    };
-    return config;
+  node: {
+    global: false,
+    __filename: false,
+    __dirname: false,
   },
+  webpack5: true,
+  // webpack: (config) => {
+  //   config.node = {
+  //     fs: "empty",
+  //     child_process: "empty",
+  //     net: "empty",
+  //     dns: "empty",
+  //     tls: "empty",
+  //   };
+  //   return config;
+  // },
   eslint: {
-    ignoreDuringBuilds: true,
+    // ignoreDuringBuilds: true,
   },
 };
