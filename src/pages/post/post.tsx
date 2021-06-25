@@ -6,10 +6,10 @@ import { db, storage } from "../../firebase/firebase";
 import { RiCloseCircleFill, RiImageAddFill } from "react-icons/ri";
 import { filterInitialValues } from "../../utils/initialValues";
 import { generateFileName } from "../../functions/generateFileName";
-import RequiredMark from "../../components/atoms/RequiredMark";
 import { NextPage } from "next";
-import posting from "../../functions/post/posting";
 import { useRouter } from "next/router";
+import posting from "../../functions/post/posting";
+import RequiredMark from "../../components/atoms/RequiredMark";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Post: NextPage = () => {

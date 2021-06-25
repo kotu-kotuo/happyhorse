@@ -1,4 +1,4 @@
-import { useState, useContext, useLayoutEffect } from "react";
+import React, { useState, useContext, useLayoutEffect } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { db } from "../../firebase/firebase";
