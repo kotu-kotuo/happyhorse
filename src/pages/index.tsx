@@ -50,7 +50,7 @@ const Index: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (process.browser) {
+    if (typeof window !== "undefined") {
       setWidth(window.innerWidth);
     }
   }, []);

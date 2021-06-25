@@ -21,7 +21,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
     useContext(AuthContext);
 
   useEffect(() => {
-    if (process.browser) {
+    if (typeof window !== "undefined") {
       setWidth(window.innerWidth);
     }
   }, []);
