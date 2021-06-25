@@ -6,8 +6,9 @@ import { db } from "../firebase/firebase";
 import { NextPage } from "next";
 import { reviewInitialValues } from "../utils/initialValues";
 import { Review } from "../types/types";
-import ReviewListItem from "../components/pages/review/ReviewListItems";
+
 import SwitchDisplay from "../components/molecules/SwitchDisplay";
+import ReviewListItem from "../components/pages/review/reviewListItem";
 
 const reviews: NextPage = () => {
   const [goodReviews, setGoodReviews] = useState<Review[]>([
