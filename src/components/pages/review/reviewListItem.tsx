@@ -2,7 +2,6 @@ import Link from "next/link";
 import React from "react";
 import ReviewContent from "./ReviewContent";
 
-
 const ReviewListItem = (props) => {
   const { review } = props;
 

@@ -30,13 +30,12 @@ const myLikePosts: NextPage = () => {
       <Layout title="myPostList">
         <h2 className="pageTitle">お気に入りの馬</h2>
         <div className="mb-10">
-
-        {posts[0]?.postID !== "" &&
-          posts.map((post, index) => (
-            <div key={index}>
-              <PostListItem post={post} />
-            </div>
-          ))}
+          {posts[0]?.postID !== "" &&
+            posts.map((post, index) => (
+              <div key={index}>
+                <PostListItem post={post} />
+              </div>
+            ))}
         </div>
       </Layout>
     </div>

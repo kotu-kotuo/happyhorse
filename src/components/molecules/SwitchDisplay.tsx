@@ -2,13 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 
 const SwitchDisplay = (props) => {
-  const {
-    setIsLeftHidden,
-    setIsRightHidden,
-    title,
-    textLeft,
-    textRight,
-  } = props;
+  const { setIsLeftHidden, setIsRightHidden, title, textLeft, textRight } =
+    props;
 
   return (
     <>

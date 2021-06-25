@@ -22,26 +22,26 @@ const Footer = (props) => {
 
   const clickBell = () => {
     if (isOpenBottomNotification) {
-      setIsOpenBottomNotification(!isOpenBottomNotification);
+      setIsOpenBottomNotification(false);
       document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
     } else {
+      setIsOpenBottomNotification(true);
+      document
+        .getElementsByTagName("body")[0]
+        .classList.remove("overflow-hidden");
     }
-    setIsOpenBottomNotification(!isOpenBottomNotification);
-    document
-      .getElementsByTagName("body")[0]
-      .classList.remove("overflow-hidden");
   };
 
   const clickAvatar = () => {
     if (isOpenBottomMenu) {
-      setIsOpenBottomMenu(!isOpenBottomMenu);
+      setIsOpenBottomMenu(false);
       document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
     } else {
+      setIsOpenBottomMenu(true);
+      document
+        .getElementsByTagName("body")[0]
+        .classList.remove("overflow-hidden");
     }
-    setIsOpenBottomMenu(!isOpenBottomMenu);
-    document
-      .getElementsByTagName("body")[0]
-      .classList.remove("overflow-hidden");
   };
 
   return (

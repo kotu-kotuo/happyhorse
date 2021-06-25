@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";

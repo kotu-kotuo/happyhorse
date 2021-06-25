@@ -13,18 +13,12 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenNotification, setIsOpenNotification] = useState(false);
-  const [isOpenBottomNotification, setIsOpenBottomNotification] = useState(
-    false
-  );
+  const [isOpenBottomNotification, setIsOpenBottomNotification] =
+    useState(false);
   const [isOpenBottomMenu, setIsOpenBottomMenu] = useState(false);
   const [width, setWidth] = useState(null);
-  const {
-    currentUser,
-    setCurrentUser,
-    user,
-    notifications,
-    setNotifications,
-  } = useContext(AuthContext);
+  const { currentUser, setCurrentUser, user, notifications, setNotifications } =
+    useContext(AuthContext);
 
   useEffect(() => {
     if (process.browser) {

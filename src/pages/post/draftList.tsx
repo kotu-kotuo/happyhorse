@@ -23,8 +23,6 @@ const draftList = () => {
     }
   }, [currentUser]);
 
-
-
   return (
     <div>
       <Layout title="draftList">

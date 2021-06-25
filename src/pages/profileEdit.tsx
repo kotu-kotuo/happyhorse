@@ -6,7 +6,6 @@ import { NextPage } from "next";
 import editProfile from "../functions/editProfile";
 import ProfileImageUpload from "components/pages/profileEdit/ProfileImageUpload";
 
-
 const ProfileEdit: NextPage = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
   const [image, setImage] = useState<any>("");
