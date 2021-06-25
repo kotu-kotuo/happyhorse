@@ -23,7 +23,6 @@ const ReviewListItem = (props) => {
           </a>
         </Link>
       )}
-      <div></div>
     </>
   );
 };
