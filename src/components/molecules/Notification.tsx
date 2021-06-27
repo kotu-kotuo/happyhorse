@@ -23,7 +23,7 @@ const Notification = (props) => {
         <div className="flex mt-3 cursor-pointer hover:opacity-80">
           <img
             className="h-9 w-9 rounded object-cover mr-2"
-            src={notification.image}
+            src={notification.image || "/avatar(2).png"}
           />
           <div>
             <div className="text-sm text-gray-900">{notification.text}</div>
