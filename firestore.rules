@@ -85,6 +85,11 @@ service cloud.firestore {
       allow create, update: if isAuthenticated();
     }
 
+    match /{paths=**}/notifications/{notificationId} {
+      allow read;
+      allow create, update: if isAuthenticated();
+    }
+
   }
 }
 
