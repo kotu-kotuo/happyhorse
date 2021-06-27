@@ -8,17 +8,12 @@ const RatingModal = (props) => {
     setIsOpenRatingModal,
     setRateValue,
     setReviewText,
+    setReviewsOnHold,
     post,
-    chatroom,
-    messages,
-    setMessages,
     currentUser,
     user,
     rateValue,
     reviewText,
-    reviewsOnHold,
-    setReviewsOnHold,
-    messageReceiver,
   } = props;
   return (
     <div>
@@ -34,16 +29,11 @@ const RatingModal = (props) => {
                     submitReview(
                       e,
                       post,
-                      chatroom,
-                      messages,
-                      setMessages,
                       currentUser,
                       user,
                       rateValue,
                       reviewText,
-                      reviewsOnHold,
                       setReviewsOnHold,
-                      messageReceiver,
                       setIsOpenRatingModal
                     );
                   }}

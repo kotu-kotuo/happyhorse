@@ -31,6 +31,7 @@ import MobilePostInfo from "../../components/pages/messages/MobilePostInfo";
 import MyMessage from "../../components/pages/messages/MyMessage";
 import YourMessage from "../../components/pages/messages/YourMessage";
 import MessageSend from "../../components/pages/messages/MessageSend";
+import sendReviews from "../../functions/message/sendReviews";
 
 const messages: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -150,6 +151,21 @@ const messages: NextPage = () => {
     }
   }, [post]);
 
+  //レビューが2つ揃ったら送信
+  useEffect(() => {
+    if (post && chatroom && currentUser && user && reviewsOnHold.length === 2)
+      sendReviews(
+        reviewsOnHold,
+        user,
+        currentUser,
+        post,
+        messages,
+        chatroom,
+        messageReceiver,
+        setMessages
+      );
+  }, [reviewsOnHold]);
+
   //スクロール
   useEffect(() => {
     if (ref.current) {
@@ -167,20 +183,16 @@ const messages: NextPage = () => {
         setIsOpenRatingModal={setIsOpenRatingModal}
         setRateValue={setRateValue}
         setReviewText={setReviewText}
+        setReviewsOnHold={setReviewsOnHold}
         post={post}
-        chatroom={chatroom}
-        messages={messages}
-        setMessages={setMessages}
         currentUser={currentUser}
         user={user}
         rateValue={rateValue}
         reviewText={reviewText}
-        reviewsOnHold={reviewsOnHold}
-        setReviewsOnHold={setReviewsOnHold}
-        messageReceiver={messageReceiver}
       />
       <div>
         <Layout title="messages">
+          {console.log(reviewsOnHold)}
           {/* モバイルの取引進行ボタン、ヘッダー ================================*/}
           <div className="sm:hidden">
             <MobileMessageHeader
