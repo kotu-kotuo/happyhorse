@@ -116,7 +116,7 @@ const Post: NextPage = () => {
     <>
       <Layout title="post">
         <form
-          className="max-w-2xl mx-auto mt-16 px-2"
+          className="max-w-2xl mx-auto mt-16 px-2 mb-16"
           onSubmit={(e) => {
             posting(
               e,
