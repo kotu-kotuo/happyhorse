@@ -1,6 +1,7 @@
 import React from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BsHeart } from "react-icons/bs";
+import LoginModal from "../../molecules/LoginModal";
 
 const LikeButton = (props) => {
   const {
@@ -12,22 +13,30 @@ const LikeButton = (props) => {
     db,
     notifications,
     post,
+    isLoginModalOpen,
+    setIsLoginModalOpen,
   } = props;
   return (
     <>
+      <LoginModal
+        isLoginModalOpen={isLoginModalOpen}
+        setIsLoginModalOpen={setIsLoginModalOpen}
+      />
       <div className="hidden md:block">
         <div
           className="flex items-center mb-4 cursor-pointer hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
-            clickHeart(
-              e,
-              currentUser,
-              user,
-              setUser,
-              router,
-              db,
-              notifications
-            );
+            currentUser
+              ? clickHeart(
+                  e,
+                  currentUser,
+                  user,
+                  setUser,
+                  router,
+                  db,
+                  notifications
+                )
+              : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}
         >
@@ -48,15 +57,17 @@ const LikeButton = (props) => {
         <div
           className="cursor-pointer mb-0.5 hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
-            clickHeart(
-              e,
-              currentUser,
-              user,
-              setUser,
-              router,
-              db,
-              notifications
-            );
+            currentUser
+              ? clickHeart(
+                  e,
+                  currentUser,
+                  user,
+                  setUser,
+                  router,
+                  db,
+                  notifications
+                )
+              : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}
         >

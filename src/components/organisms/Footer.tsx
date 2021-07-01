@@ -18,6 +18,7 @@ const Footer = (props) => {
     setCurrentUser,
     notifications,
     setNotifications,
+    setIsLoginModalOpen,
   } = props;
 
   const clickBell = () => {
@@ -51,6 +52,7 @@ const Footer = (props) => {
       </footer>
       <footer className="fixed z-50 w-full text-center bottom-0 border-t  border-gray-100 shadow bg-white sm:hidden">
         <div className="flex justify-around items-center">
+          {/* ホームボタン */}
           <Link href="/">
             <div
               className="w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
@@ -67,6 +69,7 @@ const Footer = (props) => {
             </div>
           </Link>
 
+          {/* お知らせボタン */}
           <div
             className="-mr-0.5 w-1/4 pt-2.5 pb-3 cursor-pointer hover:opacity-80"
             onClick={() => {
@@ -109,14 +112,17 @@ const Footer = (props) => {
               />
             </div>
           ) : (
-            <Link href="/login">
-              <div className="w-1/4 pt-2 pb-3  cursor-pointer hover:opacity-80">
-                <img
-                  src="/avatar(2).png"
-                  className="h-9 w-9 rounded-full object-cover mx-auto"
-                />
-              </div>
-            </Link>
+            <div
+              className="w-1/4 pt-2 pb-3  cursor-pointer hover:opacity-80"
+              onClick={() => {
+                setIsLoginModalOpen(true);
+              }}
+            >
+              <img
+                src="/avatar(2).png"
+                className="h-9 w-9 rounded-full object-cover mx-auto"
+              />
+            </div>
           )}
         </div>
       </footer>

@@ -20,6 +20,7 @@ const Show: NextPage = () => {
   const { user, setUser, currentUser, notifications } = useContext(AuthContext);
   const [post, setPost] = useState<Post>(postInitialValues);
   const [postUser, setPostUser] = useState(null);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
     if (router.query.pid) {
@@ -52,7 +53,6 @@ const Show: NextPage = () => {
 
   return (
     <Layout title="post.title">
-      {/* {console.log(firebaseTools.setup.web())} */}
       {post && postUser && (
         <>
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">
@@ -62,6 +62,8 @@ const Show: NextPage = () => {
               toPostEdit={toPostEdit}
             />
           </div>
+
+          {/* モバイル */}
           <div className="flex justify-end items-center mr-4 mt-1 md:hidden">
             <div className="mr-4">
               <LikeButton
@@ -73,9 +75,15 @@ const Show: NextPage = () => {
                 db={db}
                 notifications={notifications}
                 post={post}
+                isLoginModalOpen={isLoginModalOpen}
+                setIsLoginModalOpen={setIsLoginModalOpen}
               />
             </div>
-            <MessageButtonHandle currentUser={currentUser} post={post} />
+            <MessageButtonHandle
+              currentUser={currentUser}
+              post={post}
+              setIsLoginModalOpen={setIsLoginModalOpen}
+            />
           </div>
 
           <div className="flex justify-between md:mt-10">
@@ -93,9 +101,14 @@ const Show: NextPage = () => {
               </div>
             </div>
 
+            {/* PC */}
             <div className="hidden md:block md:w-1/3">
               <div className="pl-10 pr-4">
-                <MessageButtonHandle currentUser={currentUser} post={post} />
+                <MessageButtonHandle
+                  currentUser={currentUser}
+                  post={post}
+                  setIsLoginModalOpen={setIsLoginModalOpen}
+                />
                 <LikeButton
                   clickHeart={clickHeart}
                   currentUser={currentUser}
@@ -105,6 +118,8 @@ const Show: NextPage = () => {
                   db={db}
                   notifications={notifications}
                   post={post}
+                  isLoginModalOpen={isLoginModalOpen}
+                  setIsLoginModalOpen={setIsLoginModalOpen}
                 />
                 <div className="border-b shadow-xs"></div>
                 <p className="mt-4 mb-3 text-gray-900">掲載者</p>
