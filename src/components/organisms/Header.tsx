@@ -16,6 +16,7 @@ const Header = (props) => {
     setNotifications,
     isOpenNotification,
     setIsOpenNotification,
+    setIsLoginModalOpen,
   } = props;
 
   return (
@@ -123,17 +124,18 @@ const Header = (props) => {
                 </button>
               </Link>
             ) : (
-              <Link href="/login">
-                <button
-                  type="button"
-                  className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
-                >
-                  <div className="flex items-center text-sm sm:text-base">
-                    <FaHorse className="mr-1.5" />
-                    掲載
-                  </div>
-                </button>
-              </Link>
+              <button
+                type="button"
+                className="mr-3 focus:outline-none text-white text-base font-medium py-2 px-4 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                onClick={() => {
+                  setIsLoginModalOpen(true);
+                }}
+              >
+                <div className="flex items-center text-sm sm:text-base">
+                  <FaHorse className="mr-1.5" />
+                  掲載
+                </div>
+              </button>
             )}
           </div>
         </div>

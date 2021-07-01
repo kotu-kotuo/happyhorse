@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Header from "./Header";
 import Footer from "./Footer";
+import LoginModal from "../molecules/LoginModal";
 
 interface TITLE {
   title: string;
@@ -19,6 +20,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
   const [width, setWidth] = useState(null);
   const { currentUser, setCurrentUser, user, notifications, setNotifications } =
     useContext(AuthContext);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -59,6 +61,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
           setNotifications={setNotifications}
           isOpenNotification={isOpenNotification}
           setIsOpenNotification={setIsOpenNotification}
+          setIsLoginModalOpen={setIsLoginModalOpen}
         />
       )}
 
@@ -76,7 +79,10 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
           </div>
         </>
       )}
-
+      <LoginModal
+        isLoginModalOpen={isLoginModalOpen}
+        setIsLoginModalOpen={setIsLoginModalOpen}
+      />
       <main className={"max-w-5xl mx-auto"}>{children}</main>
       {router.pathname !== "/message/messages" && (
         <>
@@ -91,6 +97,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
             user={user}
             notifications={notifications}
             setNotifications={setNotifications}
+            setIsLoginModalOpen={setIsLoginModalOpen}
           />
         </>
       )}

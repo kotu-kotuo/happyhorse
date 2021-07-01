@@ -10,8 +10,10 @@ import { filterInitialValues, postInitialValues } from "../utils/initialValues";
 import { setPostStates } from "../utils/states";
 import clickHeart from "../functions/clickHeart";
 import { BsFilterRight } from "react-icons/bs";
+import { RiCloseCircleFill } from "react-icons/ri";
 import { NextPage } from "next";
 import { Post } from "../types/types";
+import LoginModal from "../components/molecules/LoginModal";
 
 const Index: NextPage = () => {
   const { currentUser, user, setUser, notifications } = useContext(AuthContext);
@@ -38,6 +40,7 @@ const Index: NextPage = () => {
   const [handle, setHandle] = useState("OFF");
   const [width, setWidth] = useState(null);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   //postsをセット
   useEffect(() => {
@@ -157,7 +160,7 @@ const Index: NextPage = () => {
     }
 
     if (!currentUser) {
-      router.push("login");
+      setIsLoginModalOpen(true);
     } else {
       await db
         .collection("users")
@@ -235,8 +238,11 @@ const Index: NextPage = () => {
 
   return (
     <div>
-      {console.log(area)}
       <Layout title="index">
+        <LoginModal
+          isLoginModalOpen={isLoginModalOpen}
+          setIsLoginModalOpen={setIsLoginModalOpen}
+        />
         <div className="flex px-2 my-4 md:px-3 md:mt-10 lg:mt-24 lg:mb-20">
           {width >= 1024 && (
             <div className="w-1/3 pr-8">
@@ -338,6 +344,7 @@ const Index: NextPage = () => {
                 db={db}
                 notifications={notifications}
                 width={width}
+                setIsLoginModalOpen={setIsLoginModalOpen}
               />
             )}
 

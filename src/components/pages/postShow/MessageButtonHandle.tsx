@@ -2,7 +2,7 @@ import Link from "next/link";
 import MessageButton from "./MessageButton";
 
 const MessageButtonHandle = (props) => {
-  const { currentUser, post } = props;
+  const { currentUser, post, setIsLoginModalOpen } = props;
   return (
     <div>
       {!post.isAvairable &&
@@ -39,6 +39,17 @@ const MessageButtonHandle = (props) => {
         </Link>
       ) : post.deletedAccount === true ? (
         <div></div>
+      ) : !currentUser ? (
+        <div
+          onClick={() => {
+            setIsLoginModalOpen(true);
+          }}
+        >
+          <MessageButton
+            bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
+            label={"メッセージを送る"}
+          />
+        </div>
       ) : (
         <Link
           href={

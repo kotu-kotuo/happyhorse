@@ -49,7 +49,9 @@ const ReviewContent = (props) => {
             </div>
           )}
 
-          <div className="text-gray-900 fontSize-sm mt-1">{review.reviewerName}</div>
+          <div className="text-gray-900 fontSize-sm mt-1">
+            {review.reviewerName}
+          </div>
           <div className="fontSize-sm text-gray-800 mb-2.5 mt-1.5 whitespace-pre-wrap">
             {review.reviewText}
           </div>
