@@ -18,7 +18,7 @@ const profileEdit: NextPage = () => {
     if (user) {
       setProfileText(user.profileText);
     } else {
-      router.push("/login")
+      router.push("/login");
     }
   }, [user]);
 
