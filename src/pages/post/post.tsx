@@ -36,6 +36,13 @@ const Post: NextPage = () => {
   const [isDraft, setIsDraft] = useState(false);
   const router = useRouter();
 
+  //ログインしてなかったらリダイレクト
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/login");
+    }
+  }, [currentUser]);
+
   //posiID設定
   useEffect(() => {
     setPostId(uuidv4());
@@ -115,367 +122,384 @@ const Post: NextPage = () => {
   return (
     <>
       <Layout title="post">
-        <form
-          className="max-w-2xl mx-auto mt-16 px-2 mb-16"
-          onSubmit={(e) => {
-            posting(
-              e,
-              isDraft,
-              currentUser,
-              user,
-              postId,
-              title,
-              postText,
-              horseName,
-              category,
-              breed,
-              gender,
-              color,
-              year,
-              month,
-              day,
-              age,
-              height,
-              features,
-              area,
-              price,
-              uploadImages,
-              images,
-              router
-            );
-          }}
-        >
-          <div className="flex items-center justify-between">
-            <div className="text-xs text-gray-600 mb-3 ml-1">
-              画像(10枚まで)
-              <RequiredMark />
+        {currentUser && (
+          <form
+            className="max-w-2xl mx-auto mt-16 px-2 mb-16"
+            onSubmit={(e) => {
+              posting(
+                e,
+                isDraft,
+                currentUser,
+                user,
+                postId,
+                title,
+                postText,
+                horseName,
+                category,
+                breed,
+                gender,
+                color,
+                year,
+                month,
+                day,
+                age,
+                height,
+                features,
+                area,
+                price,
+                uploadImages,
+                images,
+                router
+              );
+            }}
+          >
+            <div className="flex items-center justify-between">
+              <div className="text-xs text-gray-600 mb-3 ml-1">
+                画像(10枚まで)
+                <RequiredMark />
+              </div>
+              <div className="text-xs text-gray-600 mb-3 mr-1">
+                <RequiredMark />
+                は必須項目です
+              </div>
             </div>
-            <div className="text-xs text-gray-600 mb-3 mr-1">
-              <RequiredMark />
-              は必須項目です
-            </div>
-          </div>
-          <div className="flex flex-wrap mb-2">
-            {/* <DragDropContext onDragEnd={onDragEnd}>
+            <div className="flex flex-wrap mb-2">
+              {/* <DragDropContext onDragEnd={onDragEnd}>
             <Droppable> */}
-            {previewsURL &&
-              previewsURL.map((previewURL, index) => (
-                // <Draggable>
-                <div key={index} className="mr-6">
-                  <img
-                    src={previewURL}
-                    className="h-12 w-20 mb-4  object-cover sm:h-20 sm:w-32"
-                  />
-                  <div onClick={() => deletePreview(index)}>
-                    <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
-                  </div>
-                </div>
-                // </Draggable>
-              ))}
-            {/* </Droppable>
-          </DragDropContext> */}
-          </div>
-          <div className="formItemContainer">
-            <label
-              htmlFor="file"
-              className="block w-40 mr-3 mb-8 focus:outline-none text-white py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
-            >
-              <div className="flex items-center text-center">
-                <RiImageAddFill className="text-lg ml-2 sm:text-base" />
-                <p className="ml-2.5 fontSize-base">画像を選択</p>
-              </div>
-            </label>
-            <input
-              id="file"
-              name="images"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              multiple
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleImages(e);
-              }}
-            />
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              タイトル
-              <RequiredMark />
-            </div>
-            <input
-              type="text"
-              name="title"
-              required
-              className="inputText rounded-md"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setTitle(e.target.value);
-              }}
-            />
-            <div className="text-xs text-gray-500 text-right">
-              {`${title.length}` + "/40"}
-            </div>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              本文
-              <RequiredMark />
-            </div>
-            <textarea
-              name="postText"
-              className="inputText rounded-md h-36"
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                setPostText(e.target.value);
-              }}
-            />
-            <div className="text-xs text-gray-500 text-right">
-              {`${postText.length}` + "/2000"}
-            </div>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              馬の名前
-              <RequiredMark />
-            </div>
-            <input
-              type="text"
-              name="horseName"
-              className="inputText rounded-md"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setHorseName(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              カテゴリー
-              <RequiredMark />
-            </div>
-            <select
-              name="category"
-              className="inputText rounded-md"
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                setCategory(e.target.value);
-              }}
-            >
-              <option hidden>選択してください</option>
-              {filterInitialValues.category.map((element, index) => (
-                <option value={`${element}`} key={index}>{`${element}`}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              品種
-              <RequiredMark />
-            </div>
-            <select
-              name="breed"
-              className="inputText rounded-md"
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                setBreed(e.target.value);
-              }}
-            >
-              <option hidden>選択してください</option>
-              {filterInitialValues.breed.map((element, index) => (
-                <option value={`${element}`} key={index}>{`${element}`}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              性別
-              <RequiredMark />
-            </div>
-            <select
-              name="gender"
-              className="inputText rounded-md"
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                setGender(e.target.value);
-              }}
-            >
-              <option hidden>選択してください</option>
-              {filterInitialValues.gender.map((element, index) => (
-                <option value={`${element}`} key={index}>{`${element}`}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              毛色
-              <RequiredMark />
-            </div>
-            <select
-              name="color"
-              className="inputText rounded-md"
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                setColor(e.target.value);
-              }}
-            >
-              <option hidden>選択してください</option>
-              {filterInitialValues.color.map((element, index) => (
-                <option value={`${element}`} key={index}>{`${element}`}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              生年月日
-              <RequiredMark />
-            </div>
-            <div className="flex items-center">
-              <input
-                type="number"
-                name="year"
-                placeholder="2010"
-                min="1970"
-                className="inputFormNumber w-20"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setYear(e.target.value);
-                }}
-              />
-              <div className="mr-6 ml-2 text-sm">年</div>
-              <input
-                type="number"
-                name="month"
-                placeholder="1"
-                min="1"
-                max="12"
-                className="inputFormNumber w-16"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setMonth(e.target.value);
-                }}
-              />
-              <div className="mr-6 ml-2 text-sm">月</div>
-              <input
-                type="number"
-                name="day"
-                placeholder="10"
-                min="1"
-                max="31"
-                className="inputFormNumber w-16"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setDay(e.target.value);
-                }}
-              />
-              <div className="mr-6 ml-2 text-sm">日</div>
-            </div>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              年齢
-              <RequiredMark />
-            </div>
-            <input
-              type="number"
-              name="age"
-              min="0"
-              max="100"
-              className="inputFormNumber w-full"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setAge(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              身長（cm）
-              <RequiredMark />
-            </div>
-            <input
-              type="number"
-              name="height"
-              min="0"
-              max="1000"
-              className="inputFormNumber w-full"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setHeight(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">
-              地域
-              <RequiredMark />
-            </div>
-            <select
-              name="area"
-              className="inputText rounded-md"
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                setArea(e.target.value);
-              }}
-            >
-              <option hidden>選択してください</option>
-              {filterInitialValues.area.map((element, index) => (
-                <option value={`${element}`} key={index}>{`${element}`}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="postFormLabel">特徴</div>
-          <div className="flex flex-wrap mb-4">
-            {filterInitialValues.features.map((element, index) => (
-              <div key={index}>
-                <div className="mb-4 ml-4" hidden={element === "empty"}>
-                  <label className="text-sm font-medium text-gray-800 cursor-pointer">
-                    <input
-                      name="features"
-                      value={`${element}`}
-                      type="checkbox"
-                      className="mr-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
-                      onChange={handleFeature}
+              {previewsURL &&
+                previewsURL.map((previewURL, index) => (
+                  // <Draggable>
+                  <div key={index} className="mr-6">
+                    <img
+                      src={previewURL}
+                      className="h-12 w-20 mb-4  object-cover sm:h-20 sm:w-32"
                     />
-                    {`${element}`}
-                  </label>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="formItemContainer">
-            <div className="text-xs text-gray-600 mb-1 ml-3">
-              値段
-              <RequiredMark />
+                    <div onClick={() => deletePreview(index)}>
+                      <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
+                    </div>
+                  </div>
+                  // </Draggable>
+                ))}
+              {/* </Droppable>
+          </DragDropContext> */}
             </div>
-            <div className="flex">
-              <div className="text-gray-500 text-xl mt-1.5">￥</div>
+            <div className="formItemContainer">
+              <label
+                htmlFor="file"
+                className="block w-40 mr-3 mb-8 focus:outline-none text-white py-2.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg cursor-pointer"
+              >
+                <div className="flex items-center text-center">
+                  <RiImageAddFill className="text-lg ml-2 sm:text-base" />
+                  <p className="ml-2.5 fontSize-base">画像を選択</p>
+                </div>
+              </label>
+              <input
+                id="file"
+                name="images"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                multiple
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleImages(e);
+                }}
+              />
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                タイトル
+                <RequiredMark />
+              </div>
+              <input
+                type="text"
+                name="title"
+                required
+                className="inputText rounded-md"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setTitle(e.target.value);
+                }}
+              />
+              <div className="text-xs text-gray-500 text-right">
+                {`${title.length}` + "/40"}
+              </div>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                本文
+                <RequiredMark />
+              </div>
+              <textarea
+                name="postText"
+                className="inputText rounded-md h-36"
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                  setPostText(e.target.value);
+                }}
+              />
+              <div className="text-xs text-gray-500 text-right">
+                {`${postText.length}` + "/2000"}
+              </div>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                馬の名前
+                <RequiredMark />
+              </div>
+              <input
+                type="text"
+                name="horseName"
+                className="inputText rounded-md"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setHorseName(e.target.value);
+                }}
+              />
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                カテゴリー
+                <RequiredMark />
+              </div>
+              <select
+                name="category"
+                className="inputText rounded-md"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setCategory(e.target.value);
+                }}
+              >
+                <option hidden>選択してください</option>
+                {filterInitialValues.category.map((element, index) => (
+                  <option
+                    value={`${element}`}
+                    key={index}
+                  >{`${element}`}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                品種
+                <RequiredMark />
+              </div>
+              <select
+                name="breed"
+                className="inputText rounded-md"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setBreed(e.target.value);
+                }}
+              >
+                <option hidden>選択してください</option>
+                {filterInitialValues.breed.map((element, index) => (
+                  <option
+                    value={`${element}`}
+                    key={index}
+                  >{`${element}`}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                性別
+                <RequiredMark />
+              </div>
+              <select
+                name="gender"
+                className="inputText rounded-md"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setGender(e.target.value);
+                }}
+              >
+                <option hidden>選択してください</option>
+                {filterInitialValues.gender.map((element, index) => (
+                  <option
+                    value={`${element}`}
+                    key={index}
+                  >{`${element}`}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                毛色
+                <RequiredMark />
+              </div>
+              <select
+                name="color"
+                className="inputText rounded-md"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setColor(e.target.value);
+                }}
+              >
+                <option hidden>選択してください</option>
+                {filterInitialValues.color.map((element, index) => (
+                  <option
+                    value={`${element}`}
+                    key={index}
+                  >{`${element}`}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                生年月日
+                <RequiredMark />
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="number"
+                  name="year"
+                  placeholder="2010"
+                  min="1970"
+                  className="inputFormNumber w-20"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setYear(e.target.value);
+                  }}
+                />
+                <div className="mr-6 ml-2 text-sm">年</div>
+                <input
+                  type="number"
+                  name="month"
+                  placeholder="1"
+                  min="1"
+                  max="12"
+                  className="inputFormNumber w-16"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setMonth(e.target.value);
+                  }}
+                />
+                <div className="mr-6 ml-2 text-sm">月</div>
+                <input
+                  type="number"
+                  name="day"
+                  placeholder="10"
+                  min="1"
+                  max="31"
+                  className="inputFormNumber w-16"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setDay(e.target.value);
+                  }}
+                />
+                <div className="mr-6 ml-2 text-sm">日</div>
+              </div>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                年齢
+                <RequiredMark />
+              </div>
               <input
                 type="number"
-                name="price"
+                name="age"
                 min="0"
+                max="100"
                 className="inputFormNumber w-full"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setPrice(e.target.value);
+                  setAge(e.target.value);
                 }}
               />
             </div>
-          </div>
 
-          <div className="text-center">
-            <button type="submit" className="postFormMainButton">
-              掲載する
-            </button>
-            <button
-              type="submit"
-              className="postFormSubButton"
-              onClick={() => {
-                setIsDraft(true);
-              }}
-            >
-              下書き保存する
-            </button>
-          </div>
-        </form>
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                身長（cm）
+                <RequiredMark />
+              </div>
+              <input
+                type="number"
+                name="height"
+                min="0"
+                max="1000"
+                className="inputFormNumber w-full"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setHeight(e.target.value);
+                }}
+              />
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel">
+                地域
+                <RequiredMark />
+              </div>
+              <select
+                name="area"
+                className="inputText rounded-md"
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setArea(e.target.value);
+                }}
+              >
+                <option hidden>選択してください</option>
+                {filterInitialValues.area.map((element, index) => (
+                  <option
+                    value={`${element}`}
+                    key={index}
+                  >{`${element}`}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="postFormLabel">特徴</div>
+            <div className="flex flex-wrap mb-4">
+              {filterInitialValues.features.map((element, index) => (
+                <div key={index}>
+                  <div className="mb-4 ml-4" hidden={element === "empty"}>
+                    <label className="text-sm font-medium text-gray-800 cursor-pointer">
+                      <input
+                        name="features"
+                        value={`${element}`}
+                        type="checkbox"
+                        className="mr-2 focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
+                        onChange={handleFeature}
+                      />
+                      {`${element}`}
+                    </label>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="formItemContainer">
+              <div className="text-xs text-gray-600 mb-1 ml-3">
+                値段
+                <RequiredMark />
+              </div>
+              <div className="flex">
+                <div className="text-gray-500 text-xl mt-1.5">￥</div>
+                <input
+                  type="number"
+                  name="price"
+                  min="0"
+                  className="inputFormNumber w-full"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setPrice(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button type="submit" className="postFormMainButton">
+                掲載する
+              </button>
+              <button
+                type="submit"
+                className="postFormSubButton"
+                onClick={() => {
+                  setIsDraft(true);
+                }}
+              >
+                下書き保存する
+              </button>
+            </div>
+          </form>
+        )}
       </Layout>
     </>
   );

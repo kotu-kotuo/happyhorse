@@ -54,6 +54,13 @@ const messages: NextPage = () => {
   const [isOpenRatingModal, setIsOpenRatingModal] = useState(false);
   const ref = useRef(null);
 
+  //ログインしていなかったらリダイレクト
+  useEffect(() => {
+    if (!currentUser) {
+      router.push("/login");
+    }
+  }, [currentUser]);
+
   //初期値セット
   useEffect(() => {
     if (router.query.pid) {
@@ -192,120 +199,124 @@ const messages: NextPage = () => {
       />
       <div>
         <Layout title="messages">
-          {console.log(reviewsOnHold)}
-          {/* モバイルの取引進行ボタン、ヘッダー ================================*/}
-          <div className="sm:hidden">
-            <MobileMessageHeader
-              messageReceiver={messageReceiver}
-              router={router}
-            />
-            <MobileProgressButton
-              currentUser={currentUser}
-              user={user}
-              post={post}
-              chatroom={chatroom}
-              messages={messages}
-              setMessages={setMessages}
-              messageReceiver={messageReceiver}
-              decideClient={decideClient}
-              completedDeal={completedDeal}
-              interruptionDeal={interruptionDeal}
-            />
-          </div>
-          <div className="mx-auto flex flex-row-reverse p-0 sm:px-2 sm:mt-10">
-            {/* webのサイドメニュー =========================================*/}
-            <MessageSidemenu
-              user={user}
-              currentUser={currentUser}
-              post={post}
-              chatroom={chatroom}
-              messages={messages}
-              setMessages={setMessages}
-              messageReceiver={messageReceiver}
-            />
-            {/* メッセージリスト =========================================*/}
-            <div className="shadow-xl w-full">
-              <div className="w-full bg-white rounded-lg overflow-y-scroll z-10 chatScreenHeight pb-6 px-2 sm:px-0">
-                <div className="pt-20 sm:pt-0">
-                  <MobilePostInfo
-                    currentUser={currentUser}
-                    post={post}
-                    chatroom={chatroom}
-                  />
-                  {messages &&
-                    messages.map((message, index) => (
-                      <div key={index}>
-                        {message.clientDecision ? (
-                          <MessageAnnounce value={"取引者を決定しました"} />
-                        ) : message.dealInterruption ? (
-                          <div className="messageAnnounce">
-                            <MessageAnnounce value={"取引を中断しました"} />
-                          </div>
-                        ) : message.dealCompleted ? (
-                          <MessageAnnounce value={"取引完了です！"} />
-                        ) : message.pleaseRate ? (
-                          //レビューしたか判定
-                          reviewsOnHold &&
-                          reviewsOnHold.filter(
-                            (review) => review.reviewerID === currentUser?.uid
-                          ).length === 1 ? (
-                            postReviews.length !== 2 && (
-                              <MessageAnnounce value={"評価完了です！"} />
-                            )
-                          ) : (
-                            postReviews.length !== 2 && (
-                              <div
-                                className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3 mb-5 mx-3"
-                                onClick={() => {
-                                  setIsOpenRatingModal(true);
-                                }}
-                              >
-                                <p className="mt-1 text-mainGreen font-semibold">
-                                  評価をお願いします
-                                </p>
+          {currentUser && (
+            <>
+              {/* モバイルの取引進行ボタン、ヘッダー ================================*/}
+              <div className="sm:hidden">
+                <MobileMessageHeader
+                  messageReceiver={messageReceiver}
+                  router={router}
+                />
+                <MobileProgressButton
+                  currentUser={currentUser}
+                  user={user}
+                  post={post}
+                  chatroom={chatroom}
+                  messages={messages}
+                  setMessages={setMessages}
+                  messageReceiver={messageReceiver}
+                  decideClient={decideClient}
+                  completedDeal={completedDeal}
+                  interruptionDeal={interruptionDeal}
+                />
+              </div>
+              <div className="mx-auto flex flex-row-reverse p-0 sm:px-2 sm:mt-10">
+                {/* webのサイドメニュー =========================================*/}
+                <MessageSidemenu
+                  user={user}
+                  currentUser={currentUser}
+                  post={post}
+                  chatroom={chatroom}
+                  messages={messages}
+                  setMessages={setMessages}
+                  messageReceiver={messageReceiver}
+                />
+                {/* メッセージリスト =========================================*/}
+                <div className="shadow-xl w-full">
+                  <div className="w-full bg-white rounded-lg overflow-y-scroll z-10 chatScreenHeight pb-6 px-2 sm:px-0">
+                    <div className="pt-20 sm:pt-0">
+                      <MobilePostInfo
+                        currentUser={currentUser}
+                        post={post}
+                        chatroom={chatroom}
+                      />
+                      {messages &&
+                        messages.map((message, index) => (
+                          <div key={index}>
+                            {message.clientDecision ? (
+                              <MessageAnnounce value={"取引者を決定しました"} />
+                            ) : message.dealInterruption ? (
+                              <div className="messageAnnounce">
+                                <MessageAnnounce value={"取引を中断しました"} />
                               </div>
-                            )
-                          )
-                        ) : message.rateCompleted ? (
-                          <MessageAnnounce value={"評価完了です！"} />
-                        ) : message.userID === currentUser?.uid ? (
-                          // 自分のメッセージ
-                          <MyMessage
-                            message={message}
-                            setIsOpenModal={setIsOpenModal}
-                            isOpenModal={isOpenModal}
-                            imageSrc={imageSrc}
-                            setImageSrc={setImageSrc}
-                          />
-                        ) : (
-                          //相手のメッセージ
-                          <YourMessage
-                            message={message}
-                            setIsOpenModal={setIsOpenModal}
-                            isOpenModal={isOpenModal}
-                            imageSrc={imageSrc}
-                            setImageSrc={setImageSrc}
-                          />
-                        )}
-                      </div>
-                    ))}
-                  <div ref={ref} className="h-20" />
+                            ) : message.dealCompleted ? (
+                              <MessageAnnounce value={"取引完了です！"} />
+                            ) : message.pleaseRate ? (
+                              //レビューしたか判定
+                              reviewsOnHold &&
+                              reviewsOnHold.filter(
+                                (review) =>
+                                  review.reviewerID === currentUser?.uid
+                              ).length === 1 ? (
+                                postReviews.length !== 2 && (
+                                  <MessageAnnounce value={"評価完了です！"} />
+                                )
+                              ) : (
+                                postReviews.length !== 2 && (
+                                  <div
+                                    className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80 p-2 text-center mt-3 mb-5 mx-3"
+                                    onClick={() => {
+                                      setIsOpenRatingModal(true);
+                                    }}
+                                  >
+                                    <p className="mt-1 text-mainGreen font-semibold">
+                                      評価をお願いします
+                                    </p>
+                                  </div>
+                                )
+                              )
+                            ) : message.rateCompleted ? (
+                              <MessageAnnounce value={"評価完了です！"} />
+                            ) : message.userID === currentUser?.uid ? (
+                              // 自分のメッセージ
+                              <MyMessage
+                                message={message}
+                                setIsOpenModal={setIsOpenModal}
+                                isOpenModal={isOpenModal}
+                                imageSrc={imageSrc}
+                                setImageSrc={setImageSrc}
+                              />
+                            ) : (
+                              //相手のメッセージ
+                              <YourMessage
+                                message={message}
+                                setIsOpenModal={setIsOpenModal}
+                                isOpenModal={isOpenModal}
+                                imageSrc={imageSrc}
+                                setImageSrc={setImageSrc}
+                              />
+                            )}
+                          </div>
+                        ))}
+                      <div ref={ref} className="h-20" />
+                    </div>
+                  </div>
+                  <MessageSend
+                    currentUser={currentUser}
+                    user={user}
+                    post={post}
+                    messages={messages}
+                    setMessages={setMessages}
+                    messageText={messageText}
+                    setMessageText={setMessageText}
+                    messageReceiver={messageReceiver}
+                    chatroom={chatroom}
+                    setChatroom={setChatroom}
+                  />
                 </div>
               </div>
-              <MessageSend
-                currentUser={currentUser}
-                user={user}
-                post={post}
-                messages={messages}
-                setMessages={setMessages}
-                messageText={messageText}
-                setMessageText={setMessageText}
-                messageReceiver={messageReceiver}
-                chatroom={chatroom}
-                setChatroom={setChatroom}
-              />
-            </div>
-          </div>
+            </>
+          )}
         </Layout>
       </div>
     </div>

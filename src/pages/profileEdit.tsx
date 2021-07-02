@@ -17,6 +17,8 @@ const profileEdit: NextPage = () => {
   useEffect(() => {
     if (user) {
       setProfileText(user.profileText);
+    } else {
+      router.push("/login")
     }
   }, [user]);
 

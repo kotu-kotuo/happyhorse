@@ -7,10 +7,12 @@ import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
 import { NextPage } from "next";
 import PostListItem from "../../components/molecules/PostListItem";
+import { useRouter } from "next/router";
 
 const myPostList: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
+  const router = useRouter();
 
   useLayoutEffect(() => {
     if (currentUser) {
@@ -21,21 +23,27 @@ const myPostList: NextPage = () => {
         .onSnapshot((snapshot) => {
           setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
         });
+    } else {
+      router.push("/login");
     }
   }, [currentUser]);
 
   return (
     <div>
       <Layout title="myPostList">
-        <h2 className="pageTitle">掲載した馬</h2>
-        <div className="mb-10">
-          {posts?.length !== 0 &&
-            posts.map((post, index) => (
-              <div key={index}>
-                <PostListItem post={post} />
-              </div>
-            ))}
-        </div>
+        {currentUser && (
+          <>
+            <h2 className="pageTitle">掲載した馬</h2>
+            <div className="mb-10">
+              {posts?.length !== 0 &&
+                posts.map((post, index) => (
+                  <div key={index}>
+                    <PostListItem post={post} />
+                  </div>
+                ))}
+            </div>
+          </>
+        )}
       </Layout>
     </div>
   );

@@ -18,6 +18,7 @@ import { NextPage } from "next";
 import MyPostList from "../../components/pages/management/MyPostList";
 import MyChatroomList from "../../components/pages/management/MyChatroomList";
 import SendMessageChatroomList from "../../components/pages/management/SendMessageChatroomList";
+import { useRouter } from "next/router";
 
 const management: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
@@ -36,6 +37,7 @@ const management: NextPage = () => {
   const [reviewsOnHold, setReviewsOnHold] = useState<Review[]>([
     reviewInitialValues,
   ]);
+  const router = useRouter();
 
   useEffect(() => {
     if (currentUser) {
@@ -68,6 +70,8 @@ const management: NextPage = () => {
             snapshot.docs.map((doc) => setChatroomStates(doc.data()))
           )
         );
+    } else {
+      router.push("/login");
     }
 
     db.collection("reviewsOnHold")
@@ -82,51 +86,50 @@ const management: NextPage = () => {
 
   return (
     <Layout title="management">
-      <div>
-        <SwitchDisplay
-          setIsLeftHidden={setIsMyPostsBlockHidden}
-          setIsRightHidden={setIsSendHidden}
-          title={"メッセージ管理"}
-          textLeft={"自分の投稿"}
-          textRight={"メッセージを送った投稿"}
-        />
-        <div className="max-w-3xl w-full mx-auto mt-4 pb-4 sm:mt-8">
-          {myPosts && sendMessageChatrooms && currentUser && (
-            <>
-              <div hidden={isMyPostsBlockHidden}>
-                <div hidden={isMyPostsHidden}>
-                  <MyPostList
-                    myPosts={myPosts}
-                    setIsMyPostsHidden={setIsMyPostsHidden}
-                    setIsMyPostChatroomsHidden={setIsMyPostChatroomsHidden}
-                    setClickPid={setClickPid}
-                    reviewsOnHold={reviewsOnHold}
-                  />
-                </div>
+      {currentUser && (
+        <div>
+          <SwitchDisplay
+            setIsLeftHidden={setIsMyPostsBlockHidden}
+            setIsRightHidden={setIsSendHidden}
+            title={"メッセージ管理"}
+            textLeft={"自分の投稿"}
+            textRight={"メッセージを送った投稿"}
+          />
+          <div className="max-w-3xl w-full mx-auto mt-4 pb-4 sm:mt-8">
+            {myPosts && sendMessageChatrooms && currentUser && (
+              <>
+                <div hidden={isMyPostsBlockHidden}>
+                  <div hidden={isMyPostsHidden}>
+                    <MyPostList
+                      myPosts={myPosts}
+                      setIsMyPostsHidden={setIsMyPostsHidden}
+                      setIsMyPostChatroomsHidden={setIsMyPostChatroomsHidden}
+                      setClickPid={setClickPid}
+                      reviewsOnHold={reviewsOnHold}
+                    />
+                  </div>
 
-                <div hidden={isMyPostChatroomsHidden}>
-                  <MyChatroomList
-                    myPostChatrooms={myPostChatrooms}
-                    clickPid={clickPid}
+                  <div hidden={isMyPostChatroomsHidden}>
+                    <MyChatroomList
+                      myPostChatrooms={myPostChatrooms}
+                      clickPid={clickPid}
+                      reviewsOnHold={reviewsOnHold}
+                      setIsMyPostsHidden={setIsMyPostsHidden}
+                      setIsMyPostChatroomsHidden={setIsMyPostChatroomsHidden}
+                    />
+                  </div>
+                </div>
+                <div hidden={isSendHidden}>
+                  <SendMessageChatroomList
+                    sendMessageChatrooms={sendMessageChatrooms}
                     reviewsOnHold={reviewsOnHold}
-                    setIsMyPostsHidden={setIsMyPostsHidden}
-                    setIsMyPostChatroomsHidden={setIsMyPostChatroomsHidden}
                   />
                 </div>
-              </div>
-              <div hidden={isSendHidden}>
-                <SendMessageChatroomList
-                  sendMessageChatrooms={sendMessageChatrooms}
-                  reviewsOnHold={reviewsOnHold}
-                />
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
-
-        {console.log(myPosts)}
-        {console.log(sendMessageChatrooms)}
-      </div>
+      )}
     </Layout>
   );
 };

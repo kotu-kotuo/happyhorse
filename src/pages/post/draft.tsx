@@ -52,6 +52,12 @@ const draft: NextPage = () => {
   }, [currentUser]);
 
   useEffect(() => {
+    if (!currentUser) {
+      router.push("/login");
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
     if (post) {
       setTitle(post.title);
       setPostText(post.postText);
@@ -146,83 +152,85 @@ const draft: NextPage = () => {
   return (
     <>
       <Layout title="draft">
-        <form
-          className="max-w-2xl mx-auto mt-16 px-2"
-          onSubmit={(e) => {
-            posting(
-              e,
-              isDraft,
-              currentUser,
-              user,
-              post.postID,
-              title,
-              postText,
-              horseName,
-              category,
-              breed,
-              gender,
-              color,
-              year,
-              month,
-              day,
-              age,
-              height,
-              features,
-              area,
-              price,
-              uploadImages,
-              images,
-              router
-            );
-          }}
-        >
-          <PostEditForm
-            previewsURL={previewsURL}
-            setPreviewsURL={setPreviewsURL}
-            post={post}
-            images={images}
-            setImages={setImages}
-            setTitle={setTitle}
-            setPostText={setPostText}
-            setHorseName={setHorseName}
-            setCategory={setCategory}
-            setBreed={setBreed}
-            setGender={setGender}
-            setColor={setColor}
-            setYear={setYear}
-            setMonth={setMonth}
-            setDay={setDay}
-            setHeight={setHeight}
-            setAge={setAge}
-            setArea={setArea}
-            setPrice={setPrice}
-            features={features}
-            setFeatures={setFeatures}
-          />
+        {currentUser && (
+          <form
+            className="max-w-2xl mx-auto mt-16 px-2"
+            onSubmit={(e) => {
+              posting(
+                e,
+                isDraft,
+                currentUser,
+                user,
+                post.postID,
+                title,
+                postText,
+                horseName,
+                category,
+                breed,
+                gender,
+                color,
+                year,
+                month,
+                day,
+                age,
+                height,
+                features,
+                area,
+                price,
+                uploadImages,
+                images,
+                router
+              );
+            }}
+          >
+            <PostEditForm
+              previewsURL={previewsURL}
+              setPreviewsURL={setPreviewsURL}
+              post={post}
+              images={images}
+              setImages={setImages}
+              setTitle={setTitle}
+              setPostText={setPostText}
+              setHorseName={setHorseName}
+              setCategory={setCategory}
+              setBreed={setBreed}
+              setGender={setGender}
+              setColor={setColor}
+              setYear={setYear}
+              setMonth={setMonth}
+              setDay={setDay}
+              setHeight={setHeight}
+              setAge={setAge}
+              setArea={setArea}
+              setPrice={setPrice}
+              features={features}
+              setFeatures={setFeatures}
+            />
 
-          <div className="text-center mb-20">
-            <button type="submit" className="postFormMainButton">
-              掲載する
-            </button>
-            <button
-              type="submit"
-              className="postFormSubButton"
-              onClick={() => {
-                setIsDraft(true);
-              }}
-            >
-              下書き保存する
-            </button>
-            <button
-              className="postFormSubButton"
-              onClick={(e) => {
-                deleteDraft(e);
-              }}
-            >
-              削除する
-            </button>
-          </div>
-        </form>
+            <div className="text-center mb-20">
+              <button type="submit" className="postFormMainButton">
+                掲載する
+              </button>
+              <button
+                type="submit"
+                className="postFormSubButton"
+                onClick={() => {
+                  setIsDraft(true);
+                }}
+              >
+                下書き保存する
+              </button>
+              <button
+                className="postFormSubButton"
+                onClick={(e) => {
+                  deleteDraft(e);
+                }}
+              >
+                削除する
+              </button>
+            </div>
+          </form>
+        )}
       </Layout>
     </>
   );

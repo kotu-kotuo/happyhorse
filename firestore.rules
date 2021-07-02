@@ -1,6 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
     match /users/{userID} {
       allow read;
       allow create;
@@ -58,12 +59,17 @@ service cloud.firestore {
       allow write: if isAuthenticated();
     }
 
+    match /{paths=**}/reviewsOnHold/{reviewsOnHoldId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+
     match /{paths=**}/posts/{postID} {
       allow read;
       allow write: if isAuthenticated();
     }
 
-    match /{paths=**}/chatrooms/{sendUserID} {
+    match /{paths=**}/chatrooms/{chatroomID} {
       allow read, write: if isAuthenticated();
       // allow read: if isUserAuthenticated(existingData().sendUserID) || isUserAuthenticated(existingData().postUserID);
       // allow write: if isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID);

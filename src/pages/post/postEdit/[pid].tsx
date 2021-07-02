@@ -39,6 +39,8 @@ const postEdit: NextPage = () => {
   useEffect(() => {
     if (currentUser) {
       setData();
+    } else {
+      router.push("/login");
     }
   }, [currentUser]);
 
@@ -169,8 +171,7 @@ const postEdit: NextPage = () => {
   return (
     <div>
       <Layout title="postEdit">
-        <>
-          {console.log(images)}
+        {currentUser && (
           <form onSubmit={updatePost} className="max-w-2xl mx-auto mt-16 px-2">
             <PostEditForm
               previewsURL={previewsURL}
@@ -213,7 +214,7 @@ const postEdit: NextPage = () => {
               </button>
             </div>
           </form>
-        </>
+        )}
       </Layout>
     </div>
   );
