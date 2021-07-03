@@ -1,11 +1,10 @@
 import React from "react";
 import Link from "next/link";
 import { FaRegClock } from "react-icons/fa";
-import { Notification } from "../../types/types";
 import { FC } from "react";
 
 type Props = {
-  notification: Notification;
+  notification;
   href: {
     pathname: string;
     query: { uid?: string; pid?: string; cid?: string };
