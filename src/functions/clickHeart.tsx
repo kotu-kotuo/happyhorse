@@ -1,7 +1,16 @@
 //いいね機能
 import firebase from "firebase/app";
+import { Dispatch, SetStateAction } from "react";
+import { Notification, User } from "../types/types";
 
-const clickHeart = async (e, currentUser, user, setUser, db, notifications) => {
+const clickHeart = async (
+  e: React.MouseEvent<HTMLElement>,
+  currentUser,
+  user: User,
+  setUser: Dispatch<SetStateAction<User>>,
+  db,
+  notifications: Notification[]
+) => {
   const pid = e.currentTarget.getAttribute("data-id");
 
   if (user.likePostIDs.includes(`${pid}`)) {

@@ -1,11 +1,27 @@
 import Link from "next/link";
-import React from "react";
+import React, { SetStateAction } from "react";
 import { FaBell, FaHorse } from "react-icons/fa";
 import NotificationList from "./NotificationList";
 import MenuList from "./MenuList";
 import notificationChecked from "../../functions/notificationChecked";
+import { Notification, User } from "../../types/types";
+import { Dispatch } from "react";
+import { FC } from "react";
 
-const Header = (props) => {
+type Props = {
+  user: User;
+  currentUser;
+  setCurrentUser;
+  isOpenMenu: boolean;
+  setIsOpenMenu: Dispatch<SetStateAction<boolean>>;
+  notifications: Notification[];
+  setNotifications: Dispatch<SetStateAction<Notification[]>>;
+  isOpenNotification: boolean;
+  setIsOpenNotification: Dispatch<SetStateAction<boolean>>;
+  setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const Header: FC<Props> = (props) => {
   const {
     user,
     currentUser,

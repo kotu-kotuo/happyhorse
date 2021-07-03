@@ -3,17 +3,20 @@ import { db, storage } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import { setChatroomStates, setMessageStates } from "../../utils/states";
 import isFirstOnDate from "./isFirstOnDate";
+import { ChangeEvent, SetStateAction } from "react";
+import { Chatroom, Message, Post, User } from "../../types/types";
+import { Dispatch } from "react";
 
 const sendImage = async (
-  e,
+  e: ChangeEvent<HTMLInputElement>,
   currentUser,
-  user,
-  post,
-  messages,
-  setMessages,
-  messageReceiver,
-  chatroom,
-  setChatroom
+  user: User,
+  post: Post,
+  messages: Message[],
+  setMessages: Dispatch<SetStateAction<Message[]>>,
+  messageReceiver: User,
+  chatroom: Chatroom,
+  setChatroom: Dispatch<SetStateAction<Chatroom>>
 ) => {
   if (currentUser && post.postID && e.target.files[0]) {
     const fileName = await generateFileName(e.target.files[0]);

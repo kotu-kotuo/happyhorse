@@ -1,8 +1,20 @@
 import Link from "next/link";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
+import { FC } from "react";
+import { Chatroom, Message, Post, User } from "../../../types/types";
 import DealProgressButton from "./DealProgressButton";
 
-const MessageSidemenu = (props) => {
+type Props = {
+  user: User;
+  currentUser;
+  post: Post;
+  chatroom: Chatroom;
+  messages: Message[];
+  setMessages: Dispatch<SetStateAction<Message[]>>;
+  messageReceiver: User;
+};
+
+const MessageSidemenu: FC<Props> = (props) => {
   const {
     user,
     currentUser,

@@ -1,8 +1,41 @@
-import React from "react";
+import React, { SetStateAction } from "react";
+import { FC } from "react";
+import { Dispatch } from "react";
 import { filterInitialValues } from "../../utils/initialValues";
 import FilterAreaSelect from "../atoms/FilterAreaSelect";
 
-const Filter = (props) => {
+type Props = {
+  filterPost;
+  setPriceMin;
+  setPriceMax;
+  setAgeMin;
+  setAgeMax;
+  setHeightMin;
+  setHeightMax;
+  setBreed: Dispatch<SetStateAction<string[]>>;
+  setColor: Dispatch<SetStateAction<string[]>>;
+  category: string[];
+  setCategory: Dispatch<SetStateAction<string[]>>;
+  priceMin: number;
+  priceMax: number;
+  ageMin: number;
+  ageMax: number;
+  heightMin: number;
+  heightMax: number;
+  breed: string[];
+  gender: string[];
+  setGender: Dispatch<SetStateAction<string[]>>;
+  color: string[];
+  area: string[];
+  setArea: Dispatch<SetStateAction<string[]>>;
+  feature: string[];
+  setFeature: Dispatch<SetStateAction<string[]>>;
+  showOnlyAvailable: boolean;
+  setShowOnlyAvailable: Dispatch<SetStateAction<boolean>>;
+  filterClear;
+};
+
+const Filter: FC<Props> = (props) => {
   const {
     filterPost,
     setPriceMin,

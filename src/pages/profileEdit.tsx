@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { NextPage } from "next";
 import editProfile from "../functions/editProfile";
 import ProfileImageUpload from "../components/pages/ProfileEdit/ProfileImageUpload";
@@ -12,7 +12,7 @@ const profileEdit: NextPage = () => {
   const [cover, setCover] = useState<any>("");
   const [username, setUsername] = useState<string>("");
   const [profileText, setProfileText] = useState<string>("");
-  const router = useRouter();
+  const router: NextRouter = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -28,7 +28,7 @@ const profileEdit: NextPage = () => {
         <div className="my-20 px-2">
           <form
             className="mx-auto max-w-2xl"
-            onSubmit={(e) => {
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
               editProfile(
                 e,
                 username,

@@ -3,15 +3,17 @@ import firebase from "firebase/app";
 import { setMessageStates } from "../../utils/states";
 import isFirstOnDate from "./isFirstOnDate";
 import { confirmAlert } from "react-confirm-alert";
+import { Chatroom, Message, Post, User } from "../../types/types";
+import { Dispatch, SetStateAction } from "react";
 
 const decideClient = (
-  user,
+  user: User,
   currentUser,
-  post,
-  chatroom,
-  messages,
-  setMessages,
-  messageReceiver
+  post: Post,
+  chatroom: Chatroom,
+  messages: Message[],
+  setMessages: Dispatch<SetStateAction<Message[]>>,
+  messageReceiver: User
 ) => {
   confirmAlert({
     customUI: ({ onClose }) => {
@@ -27,7 +29,8 @@ const decideClient = (
                   .collection("posts")
                   .doc(`${post.postID}`)
                   .update({
-                    messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    messageUpdatedAt:
+                      firebase.firestore.FieldValue.serverTimestamp(),
                     latestMessage: "取引者を決定しました",
                     clientUserID: chatroom.sendUserID,
                   });
@@ -40,7 +43,8 @@ const decideClient = (
                   .collection("chatrooms")
                   .doc(`${chatroom.sendUserID}`)
                   .update({
-                    messageUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    messageUpdatedAt:
+                      firebase.firestore.FieldValue.serverTimestamp(),
                     latestMessage: "取引者を決定しました",
                     messageCount: chatroom.messageCount + 1,
                   });

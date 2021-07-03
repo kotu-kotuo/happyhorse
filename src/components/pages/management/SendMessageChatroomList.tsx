@@ -1,8 +1,15 @@
 import Link from "next/link";
 import React from "react";
+import { FC } from "react";
 import createdTime from "../../../functions/createdTime";
+import { Chatroom, Review } from "../../../types/types";
 
-const SendMessageChatroomList = (props) => {
+type Props = {
+  sendMessageChatrooms: Chatroom[];
+  reviewsOnHold: Review[];
+};
+
+const SendMessageChatroomList: FC<Props> = (props) => {
   const { sendMessageChatrooms, reviewsOnHold } = props;
   return (
     <div>

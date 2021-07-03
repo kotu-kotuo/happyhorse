@@ -1,7 +1,17 @@
+import { NextRouter } from "next/router";
+import { FC } from "react";
+import { Dispatch, SetStateAction } from "react";
 import deleteAccountData from "../../../functions/deleteAccountData";
 import ButtonAuth from "../../atoms/ButtonAuth";
 
-const PasswordModal = (props) => {
+type Props = {
+  setPassword: Dispatch<SetStateAction<string>>;
+  password: string;
+  currentUser;
+  router: NextRouter;
+};
+
+const PasswordModal: FC<Props> = (props) => {
   const { setPassword, password, currentUser, router } = props;
 
   return (

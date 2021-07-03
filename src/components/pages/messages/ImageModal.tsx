@@ -1,4 +1,12 @@
-const ImageModal = (props) => {
+import { FC } from "react";
+import { Dispatch, SetStateAction } from "react";
+
+type Props = {
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>;
+  image: string;
+};
+
+const ImageModal: FC<Props> = (props) => {
   const { setIsOpenModal, image } = props;
 
   return (

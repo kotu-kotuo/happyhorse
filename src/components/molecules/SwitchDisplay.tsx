@@ -1,7 +1,17 @@
-import React from "react";
+import React, { SetStateAction } from "react";
 import { useRouter } from "next/router";
+import { Dispatch } from "react";
+import { FC } from "react";
 
-const SwitchDisplay = (props) => {
+type Props = {
+  setIsLeftHidden: Dispatch<SetStateAction<boolean>>;
+  setIsRightHidden: Dispatch<SetStateAction<boolean>>;
+  title: string;
+  textLeft: string;
+  textRight: string;
+};
+
+const SwitchDisplay: FC<Props> = (props) => {
   const { setIsLeftHidden, setIsRightHidden, title, textLeft, textRight } =
     props;
 

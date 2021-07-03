@@ -32,7 +32,7 @@ const setting: NextPage = () => {
 
       db.collectionGroup("posts")
         .where("clientUserID", "==", currentUser.uid)
-        .where("isAvairable", "==", true) //TODO:ratingCompleted
+        .where("ratingCompleted", "==", true)
         .get()
         .then((snapshot) =>
           setDuringDealingPosts(
@@ -46,7 +46,7 @@ const setting: NextPage = () => {
 
   const deleteAccount = async () => {
     const filterResult = myPosts.filter(
-      (post) => post.clientUserID && post.isAvairable === true //TODO:ratingCompleted
+      (post) => post.clientUserID && post.ratingCompleted === false
     );
     console.log(filterResult.length !== 0);
     console.log(duringDealingPosts.length !== 0);

@@ -1,6 +1,11 @@
 import React from "react";
+import { FC } from "react";
 
-const ButtonAuth = (props) => {
+type Props = {
+  label: string;
+};
+
+const ButtonAuth: FC<Props> = (props) => {
   const { label } = props;
   return (
     <div className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

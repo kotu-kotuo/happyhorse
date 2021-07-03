@@ -1,7 +1,14 @@
 import Link from "next/link";
+import { FC } from "react";
 import StarRatings from "react-star-ratings";
+import { Post, User } from "../../types/types";
 
-const PublisherValue = (props) => {
+type Props = {
+  post: Post;
+  postUser: User;
+};
+
+const PublisherValue: FC<Props> = (props) => {
   const { post, postUser } = props;
   return post.deletedAccount === true ? (
     <div className="flex items-center">

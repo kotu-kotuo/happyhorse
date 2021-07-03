@@ -1,9 +1,34 @@
-import React from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import { RiCloseCircleFill, RiImageAddFill } from "react-icons/ri";
+import { Post } from "../../types/types";
 import { filterInitialValues } from "../../utils/initialValues";
 import RequiredMark from "../atoms/RequiredMark";
 
-const PostEditForm = (props) => {
+type Props = {
+  previewsURL: string[];
+  setPreviewsURL: Dispatch<SetStateAction<string[]>>;
+  post: Post;
+  images: string[];
+  setImages: Dispatch<SetStateAction<string[]>>;
+  setTitle: Dispatch<SetStateAction<string>>;
+  setPostText: Dispatch<SetStateAction<string>>;
+  setHorseName: Dispatch<SetStateAction<string>>;
+  setCategory: Dispatch<SetStateAction<string>>;
+  setBreed: Dispatch<SetStateAction<string>>;
+  setGender: Dispatch<SetStateAction<string>>;
+  setColor: Dispatch<SetStateAction<string>>;
+  setYear;
+  setMonth;
+  setDay;
+  setHeight;
+  setAge;
+  setArea: Dispatch<SetStateAction<string>>;
+  setPrice;
+  features: string[];
+  setFeatures: Dispatch<SetStateAction<string[]>>;
+};
+
+const PostEditForm: FC<Props> = (props) => {
   const {
     previewsURL,
     setPreviewsURL,

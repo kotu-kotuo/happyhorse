@@ -95,7 +95,7 @@
 }
 
 .postFormMainButton {
-  @apply cursor-pointer bg-mainGreen text-white py-3 px-6 rounded-md w-full mt-4;
+  @apply cursor-pointer bg-mainGreen text-white py-3 px-6 rounded-md w-full mt-4 hover:opacity-80 hover:shadow-md;
 }
 
 /*==============================================

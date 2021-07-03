@@ -1,8 +1,14 @@
 import { CgSmile, CgSmileNone } from "react-icons/cg";
 import { FaRegClock } from "react-icons/fa";
 import Link from "next/link";
+import { Review } from "../../../types/types";
+import { FC } from "react";
 
-const ReviewContent = (props) => {
+type Props = {
+  review: Review;
+};
+
+const ReviewContent: FC<Props> = (props) => {
   const { review } = props;
 
   const createdTime = (reviewTime) => {

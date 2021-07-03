@@ -1,4 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { auth, db } from "../firebase/firebase";
 import { Notification, User } from "../types/types";
 import { setNotificationStates, setUserState } from "../utils/states";
@@ -6,10 +12,10 @@ import { setNotificationStates, setUserState } from "../utils/states";
 type AuthContextProps = {
   currentUser: any | null | undefined;
   setCurrentUser: any;
-  user: any;
-  setUser: any;
-  notifications: any;
-  setNotifications: any;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+  notifications: Notification[];
+  setNotifications: Dispatch<SetStateAction<Notification[]>>;
 };
 
 const AuthContext = createContext<AuthContextProps>({

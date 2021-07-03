@@ -1,8 +1,13 @@
 import Link from "next/link";
-import React from "react";
+import React, { FC } from "react";
+import { Review } from "../../../types/types";
 import ReviewContent from "./ReviewContent";
 
-const ReviewListItem = (props) => {
+type Props = {
+  review: Review;
+};
+
+const ReviewListItem: FC<Props> = (props) => {
   const { review } = props;
 
   return (

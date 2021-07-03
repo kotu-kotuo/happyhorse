@@ -1,15 +1,19 @@
+import { NextRouter } from "next/router";
+import { SetStateAction } from "react";
+import { Dispatch } from "react";
 import { storage, db } from "../firebase/firebase";
+import { User } from "../types/types";
 import { setUserState } from "../utils/states";
 
 const editProfile = async (
-  e,
-  username,
-  profileText,
+  e: React.FormEvent<HTMLFormElement>,
+  username: string,
+  profileText: string,
   image,
   currentUser,
   cover,
-  setUser,
-  router
+  setUser: Dispatch<SetStateAction<User>>,
+  router: NextRouter
 ) => {
   e.preventDefault();
 

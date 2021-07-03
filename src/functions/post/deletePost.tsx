@@ -1,7 +1,15 @@
 import { db } from "../../firebase/firebase";
 import firebase from "firebase/app";
+import { MouseEvent } from "react";
+import { NextRouter } from "next/router";
+import { Post } from "../../types/types";
 
-const deletePost = async (e, post, currentUser,router) => {
+const deletePost = async (
+  e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+  post: Post,
+  currentUser,
+  router: NextRouter
+) => {
   e.preventDefault();
 
   if (post.clientUserID) {

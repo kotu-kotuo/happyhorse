@@ -1,8 +1,18 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
+import { FC } from "react";
 import { FaRegClock, FaRegHeart, FaRegUser } from "react-icons/fa";
 import createdTime from "../../../functions/createdTime";
+import { Post, Review } from "../../../types/types";
 
-const MyPostList = (props) => {
+type Props = {
+  myPosts: Post[];
+  setIsMyPostsHidden: Dispatch<SetStateAction<boolean>>;
+  setIsMyPostChatroomsHidden: Dispatch<SetStateAction<boolean>>;
+  setClickPid: Dispatch<SetStateAction<string>>;
+  reviewsOnHold: Review[];
+};
+
+const MyPostList: FC<Props> = (props) => {
   const {
     myPosts,
     setIsMyPostsHidden,

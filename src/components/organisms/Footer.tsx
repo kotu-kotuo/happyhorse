@@ -1,12 +1,29 @@
 import Link from "next/link";
-import React from "react";
+import React, { SetStateAction } from "react";
+import { FC } from "react";
+import { Dispatch } from "react";
 import { FaBell } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import notificationChecked from "../../functions/notificationChecked";
+import { Notification, User } from "../../types/types";
 import MenuList from "./MenuList";
 import NotificationList from "./NotificationList";
 
-const Footer = (props) => {
+type Props = {
+  isOpenBottomNotification: boolean;
+  setIsOpenBottomNotification: Dispatch<SetStateAction<boolean>>;
+  isOpenBottomMenu: boolean;
+  setIsOpenBottomMenu: Dispatch<SetStateAction<boolean>>;
+  setIsOpenMenu: Dispatch<SetStateAction<boolean>>;
+  user: User;
+  currentUser;
+  setCurrentUser;
+  notifications: Notification[];
+  setNotifications: Dispatch<SetStateAction<Notification[]>>;
+  setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const Footer: FC<Props> = (props) => {
   const {
     isOpenBottomNotification,
     setIsOpenBottomNotification,

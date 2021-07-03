@@ -1,7 +1,12 @@
 import { db, auth } from "../firebase/firebase";
 import firebase from "firebase/app";
+import { NextRouter } from "next/router";
 
-const deleteAccountData = async (currentUser, password, router) => {
+const deleteAccountData = async (
+  currentUser,
+  password: string,
+  router: NextRouter
+) => {
   const authuser = auth.currentUser;
   const credential = firebase.auth.EmailAuthProvider.credential(
     authuser.email,

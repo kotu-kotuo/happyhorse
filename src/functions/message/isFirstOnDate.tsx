@@ -1,4 +1,6 @@
-const isFirstOnDate = (messages) => {
+import { Message } from "../../types/types";
+
+const isFirstOnDate = (messages:Message[]) => {
   return !(
     messages &&
     messages

@@ -1,9 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
+import { Post, User } from "../../../types/types";
 import Category from "../../atoms/Category";
 import PublisherValue from "../../molecules/PublisherValue";
 import TableListItem from "./TableListItem";
 
-const PostShowTable = (props) => {
+type Props = {
+  post: Post;
+  postUser: User;
+};
+
+const PostShowTable: FC<Props> = (props) => {
   const { post, postUser } = props;
   return (
     <div>

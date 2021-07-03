@@ -1,11 +1,26 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import sendMessage from "../../../functions/message/sendMessage";
 import TextareaAutosize from "react-textarea-autosize";
 import { BsFillImageFill } from "react-icons/bs";
 import sendImage from "../../../functions/message/sendImage";
 import { IoSend } from "react-icons/io5";
+import { Chatroom, Message, Post, User } from "../../../types/types";
+import { FC } from "react";
 
-const MessageSend = (props) => {
+type Props = {
+  currentUser;
+  user: User;
+  post: Post;
+  messages: Message[];
+  setMessages: Dispatch<SetStateAction<Message[]>>;
+  messageText: string;
+  setMessageText: Dispatch<SetStateAction<string>>;
+  messageReceiver: User;
+  chatroom: Chatroom;
+  setChatroom: Dispatch<SetStateAction<Chatroom>>;
+};
+
+const MessageSend: FC<Props> = (props) => {
   const {
     currentUser,
     user,
@@ -56,7 +71,7 @@ const MessageSend = (props) => {
                 id="image"
                 type="file"
                 className="hidden"
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   sendImage(
                     e,
                     currentUser,

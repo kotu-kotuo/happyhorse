@@ -1,7 +1,13 @@
 import { FaRegHeart } from "react-icons/fa";
 import Link from "next/link";
+import { Post } from "../../types/types";
+import { FC } from "react";
 
-const PostListItem = (props) => {
+type Props = {
+  post: Post;
+};
+
+const PostListItem: FC<Props> = (props) => {
   const { post } = props;
   return (
     <div className="max-w-2xl mx-auto cursor-pointer hover:opacity-80">

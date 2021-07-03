@@ -1,18 +1,18 @@
 const alertMessage = (
-  images,
-  postText,
-  horseName,
-  category,
-  breed,
-  gender,
-  color,
-  year,
-  month,
-  day,
-  age,
-  height,
-  price,
-  area
+  images: string[],
+  postText: string,
+  horseName: string,
+  category: string,
+  breed: string,
+  gender: string,
+  color: string,
+  year: number,
+  month: number,
+  day: number,
+  age: number,
+  height: number,
+  price: number,
+  area: string
 ) => {
   if (images.length === 0) {
     alert("画像を選択してください");
@@ -38,22 +38,22 @@ const alertMessage = (
   if (color.length === 0) {
     alert("毛色を選択してください");
   }
-  if (year.length === 0) {
+  if (!year) {
     alert("生年月日を記入してください");
   }
-  if (month.length === 0) {
+  if (!month) {
     alert("生年月日を記入してください");
   }
-  if (day.length === 0) {
+  if (!day) {
     alert("生年月日を記入してください");
   }
-  if (age.length === 0) {
+  if (!age) {
     alert("年齢を記入してください");
   }
-  if (height.length === 0) {
+  if (!height) {
     alert("身長を記入してください");
   }
-  if (price.length === 0) {
+  if (!price) {
     alert("値段を記入してください");
   }
   if (area.length === 0) {

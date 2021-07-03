@@ -2,16 +2,18 @@ import { db } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import isFirstOnDate from "./isFirstOnDate";
 import { setMessageStates } from "../../utils/states";
+import { Chatroom, Message, Post, Review, User } from "../../types/types";
+import { Dispatch, SetStateAction } from "react";
 
 const sendReviews = (
-  reviewsOnHold,
-  user,
+  reviewsOnHold: Review[],
+  user: User,
   currentUser,
-  post,
-  messages,
-  chatroom,
-  messageReceiver,
-  setMessages
+  post: Post,
+  messages: Message[],
+  chatroom: Chatroom,
+  messageReceiver: User,
+  setMessages: Dispatch<SetStateAction<Message[]>>
 ) => {
   reviewsOnHold.map((review) => {
     console.log(review.reviewText);

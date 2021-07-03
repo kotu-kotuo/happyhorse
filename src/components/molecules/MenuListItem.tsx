@@ -1,8 +1,14 @@
 import Link from "next/link";
 import React from "react";
+import { FC } from "react";
 import { IoChevronForwardOutline } from "react-icons/io5";
 
-const MenuListItem = (props) => {
+type Props = {
+  label: string;
+  link;
+};
+
+const MenuListItem: FC<Props> = (props) => {
   const { label, link } = props;
   return (
     <div className="border-b">

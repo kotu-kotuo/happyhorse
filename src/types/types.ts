@@ -4,9 +4,9 @@ export type User = {
   avatar: string;
   cover: string;
   profileText: string;
-  good: number;
-  bad: number;
-  likePostIDs: string[];
+  good?: number;
+  bad?: number;
+  likePostIDs?: string[];
   deletedAccount: boolean;
 };
 
@@ -29,15 +29,15 @@ export type Post = {
   area: string;
   features: Array<string>;
   price: number;
-  createdAt: string | object;
-  updatedAt: string | object;
+  createdAt: string | any;
+  updatedAt?: string | any;
   likeUserIDs: Array<string>;
   isAvairable: boolean;
   pv: number;
-  sendMessageUserIDs: Array<string>;
-  messageUpdatedAt: string;
-  latestMessage: string;
-  clientUserID: string;
+  sendMessageUserIDs?: Array<string>;
+  messageUpdatedAt?: string;
+  latestMessage?: string;
+  clientUserID?: string;
   ratingCompleted: boolean;
   deletedAccount: boolean;
 };
@@ -52,8 +52,8 @@ export type Chatroom = {
   postTitle: string;
   latestMessage: string;
   messageCount: number;
-  createdAt: string | object;
-  messageUpdatedAt: string | object;
+  createdAt: string | any;
+  messageUpdatedAt: string | any;
   deletedAccount: boolean;
 };
 
@@ -67,7 +67,7 @@ export type Message = {
   postTitle: string;
   image: string;
   messageText: string;
-  createdAt: string | object;
+  createdAt: string | any;
   firstOnDate: boolean;
   clientDecision: boolean;
   dealInterruption: boolean;
@@ -87,7 +87,7 @@ export type Review = {
   reviewerAvatar: string;
   rating: string;
   reviewText: string;
-  createdAt: string | object;
+  createdAt: string | any;
   deletedAccount: boolean;
 };
 
@@ -100,7 +100,7 @@ export type Notification = {
   image: string;
   avatar: string;
   text: string;
-  createdAt: string | object;
+  createdAt: string | any;
   checked: boolean;
   toMessage: boolean;
   toProfile: boolean;

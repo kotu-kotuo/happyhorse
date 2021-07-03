@@ -1,8 +1,23 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
+import { FC } from "react";
 import { CgSmile, CgSmileNone } from "react-icons/cg";
 import submitReview from "../../../functions/message/submitReview";
+import { Post, Review, User } from "../../../types/types";
 
-const RatingModal = (props) => {
+type Props = {
+  isOpenRatingModal: boolean;
+  setIsOpenRatingModal: Dispatch<SetStateAction<boolean>>;
+  setRateValue: Dispatch<SetStateAction<string>>;
+  setReviewText: Dispatch<SetStateAction<string>>;
+  setReviewsOnHold: Dispatch<SetStateAction<Review[]>>;
+  post: Post;
+  currentUser;
+  user: User;
+  rateValue: string;
+  reviewText: string;
+};
+
+const RatingModal: FC<Props> = (props) => {
   const {
     isOpenRatingModal,
     setIsOpenRatingModal,
@@ -25,7 +40,7 @@ const RatingModal = (props) => {
                 {/*content*/}
                 <form
                   className="mx-auto py-5 px-2 w-full sm:px-8"
-                  onSubmit={(e) => {
+                  onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     submitReview(
                       e,
                       post,

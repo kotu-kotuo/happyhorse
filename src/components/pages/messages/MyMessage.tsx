@@ -1,8 +1,18 @@
 import Link from "next/link";
+import { Dispatch, FC, SetStateAction } from "react";
 import createdTime from "../../../functions/createdTime";
+import { Message } from "../../../types/types";
 import ImageModal from "./ImageModal";
 
-const MyMessage = (props) => {
+type Props = {
+  message: Message;
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>;
+  isOpenModal: boolean;
+  imageSrc: string;
+  setImageSrc: Dispatch<SetStateAction<string>>;
+};
+
+const MyMessage: FC<Props> = (props) => {
   const { message, setIsOpenModal, isOpenModal, imageSrc, setImageSrc } = props;
 
   //時間をUNIXから変換

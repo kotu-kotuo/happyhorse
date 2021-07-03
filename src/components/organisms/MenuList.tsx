@@ -1,11 +1,20 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import MenuListItem from "../molecules/MenuListItem";
 import { auth } from "../../firebase/firebase";
 import Link from "next/link";
 import { IoChevronForwardOutline } from "react-icons/io5";
 import StarRatings from "react-star-ratings";
+import { User } from "../../types/types";
+import { FC } from "react";
 
-const MenuList = (props) => {
+type Props = {
+  currentUser;
+  setCurrentUser;
+  user: User;
+  setIsOpenMenu: Dispatch<SetStateAction<boolean>>;
+};
+
+const MenuList: FC<Props> = (props) => {
   const { currentUser, setCurrentUser, user, setIsOpenMenu } = props;
 
   const logout = async (e) => {

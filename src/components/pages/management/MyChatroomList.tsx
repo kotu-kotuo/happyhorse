@@ -1,8 +1,18 @@
 import Link from "next/link";
-import React from "react";
+import React, { FC, SetStateAction } from "react";
+import { Dispatch } from "react";
 import createdTime from "../../../functions/createdTime";
+import { Chatroom, Review } from "../../../types/types";
 
-const MyChatroomList = (props) => {
+type Props = {
+  myPostChatrooms: Chatroom[];
+  clickPid: string;
+  reviewsOnHold: Review[];
+  setIsMyPostsHidden: Dispatch<SetStateAction<boolean>>;
+  setIsMyPostChatroomsHidden: Dispatch<SetStateAction<boolean>>;
+};
+
+const MyChatroomList: FC<Props> = (props) => {
   const {
     myPostChatrooms,
     clickPid,

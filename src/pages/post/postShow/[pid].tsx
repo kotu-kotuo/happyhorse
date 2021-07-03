@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates, setUserState } from "../../../utils/states";
@@ -16,7 +16,7 @@ import "slick-carousel/slick/slick.css";
 import PostShowTable from "../../../components/pages/postShow/PostShowTable";
 
 const Show: NextPage = () => {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const { user, setUser, currentUser, notifications } = useContext(AuthContext);
   const [post, setPost] = useState<Post>(postInitialValues);
   const [postUser, setPostUser] = useState(null);
@@ -71,7 +71,6 @@ const Show: NextPage = () => {
                 currentUser={currentUser}
                 user={user}
                 setUser={setUser}
-                router={router}
                 db={db}
                 notifications={notifications}
                 post={post}
@@ -114,7 +113,6 @@ const Show: NextPage = () => {
                   currentUser={currentUser}
                   user={user}
                   setUser={setUser}
-                  router={router}
                   db={db}
                   notifications={notifications}
                   post={post}

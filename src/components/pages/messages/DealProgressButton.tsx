@@ -1,9 +1,22 @@
-import React from "react";
+import React, { SetStateAction } from "react";
+import { FC } from "react";
+import { Dispatch } from "react";
 import completedDeal from "../../../functions/message/completedDeal";
 import decideClient from "../../../functions/message/decideClient";
 import interruptionDeal from "../../../functions/message/interruptionDeal";
+import { Chatroom, Message, Post, User } from "../../../types/types";
 
-const DealProgressButton = (props) => {
+type Props = {
+  user: User;
+  currentUser;
+  chatroom: Chatroom;
+  post: Post;
+  messages: Message[];
+  setMessages: Dispatch<SetStateAction<Message[]>>;
+  messageReceiver: User;
+};
+
+const DealProgressButton: FC<Props> = (props) => {
   const {
     user,
     currentUser,

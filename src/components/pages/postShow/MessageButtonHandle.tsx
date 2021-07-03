@@ -1,7 +1,16 @@
 import Link from "next/link";
+import { FC } from "react";
+import { Dispatch, SetStateAction } from "react";
+import { Post } from "../../../types/types";
 import MessageButton from "./MessageButton";
 
-const MessageButtonHandle = (props) => {
+type Props = {
+  currentUser;
+  post: Post;
+  setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const MessageButtonHandle: FC<Props> = (props) => {
   const { currentUser, post, setIsLoginModalOpen } = props;
   return (
     <div>

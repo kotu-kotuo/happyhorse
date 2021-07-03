@@ -1,9 +1,14 @@
+import { Dispatch, SetStateAction } from "react";
 import { db } from "../firebase/firebase";
+import { Notification } from "../types/types";
 import { setNotificationStates } from "../utils/states";
 
-const notificationChecked = async (currentUser, setNotifications) => {
+const notificationChecked = async (
+  currentUser: any,
+  setNotifications: Dispatch<SetStateAction<Notification[]>>
+) => {
   if (!currentUser) return;
-  { console.log(typeof(currentUser.uid))}
+
   await db
     .collection("users")
     .doc(`${currentUser.uid}`)

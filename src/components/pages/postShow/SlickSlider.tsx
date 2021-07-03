@@ -3,8 +3,16 @@ import {
   IoChevronBackCircleOutline,
   IoChevronForwardCircleOutline,
 } from "react-icons/io5";
+import { Post } from "../../../types/types";
+import { FC } from "react";
 
-const SlickSlider = (props) => {
+type Props = {
+  currentUser;
+  post: Post;
+  toPostEdit: (post: Post) => void;
+};
+
+const SlickSlider: FC<Props> = (props) => {
   const { currentUser, post, toPostEdit } = props;
 
   const setting1 = {

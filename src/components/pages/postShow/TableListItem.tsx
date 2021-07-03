@@ -1,6 +1,12 @@
-import React from "react";
+import React, { JSXElementConstructor } from "react";
+import { FC } from "react";
 
-const TableListItem = (props) => {
+type Props = {
+  label: string;
+  value;
+};
+
+const TableListItem: FC<Props> = (props) => {
   const { label, value } = props;
   return (
     <div>

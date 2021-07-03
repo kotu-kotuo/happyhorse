@@ -9,7 +9,7 @@ import {
   postInitialValues,
   reviewInitialValues,
 } from "../../utils/initialValues";
-import { Chatroom, Message, Post, Review } from "../../types/types";
+import { Chatroom, Message, Post, Review, User } from "../../types/types";
 import {
   setChatroomStates,
   setMessageStates,
@@ -48,7 +48,7 @@ const messages: NextPage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
   const [messageText, setMessageText] = useState("");
-  const [messageReceiver, setMessageReceiver] = useState(null);
+  const [messageReceiver, setMessageReceiver] = useState<User>(null);
   const [rateValue, setRateValue] = useState("good");
   const [reviewText, setReviewText] = useState("");
   const [isOpenRatingModal, setIsOpenRatingModal] = useState(false);

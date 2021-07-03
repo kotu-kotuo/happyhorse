@@ -1,4 +1,4 @@
-export const generateFileName = (file) => {
+export const generateFileName = (file: any) => {
   const S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const N = 16;
   const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
@@ -6,5 +6,3 @@ export const generateFileName = (file) => {
     .join("");
   return randomChar + "_" + file.size;
 };
-
-

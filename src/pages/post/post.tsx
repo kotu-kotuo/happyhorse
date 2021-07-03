@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, FormEvent } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { v4 as uuidv4 } from "uuid";
@@ -25,14 +25,14 @@ const Post: NextPage = () => {
   const [breed, setBreed] = useState("");
   const [gender, setGender] = useState("");
   const [color, setColor] = useState("");
-  const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [day, setDay] = useState("");
-  const [age, setAge] = useState("");
-  const [height, setHeight] = useState("");
+  const [year, setYear] = useState(null);
+  const [month, setMonth] = useState(null);
+  const [day, setDay] = useState(null);
+  const [age, setAge] = useState(null);
+  const [height, setHeight] = useState(null);
   const [features, setFeatures] = useState(["empty"]);
   const [area, setArea] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(null);
   const [isDraft, setIsDraft] = useState(false);
   const router = useRouter();
 
@@ -125,7 +125,7 @@ const Post: NextPage = () => {
         {currentUser && (
           <form
             className="max-w-2xl mx-auto mt-16 px-2 mb-16"
-            onSubmit={(e) => {
+            onSubmit={(e: FormEvent<HTMLFormElement>) => {
               posting(
                 e,
                 isDraft,

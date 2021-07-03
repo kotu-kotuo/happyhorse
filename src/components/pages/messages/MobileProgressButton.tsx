@@ -1,6 +1,22 @@
-import React from "react";
+import React, { SetStateAction } from "react";
+import { FC } from "react";
+import { Dispatch } from "react";
+import { Chatroom, Message, Post, User } from "../../../types/types";
 
-const MobileProgressButton = (props) => {
+type Props = {
+  currentUser;
+  user: User;
+  post: Post;
+  chatroom: Chatroom;
+  messages: Message[];
+  setMessages: Dispatch<SetStateAction<Message[]>>;
+  messageReceiver: User;
+  decideClient;
+  completedDeal;
+  interruptionDeal;
+};
+
+const MobileProgressButton: FC<Props> = (props) => {
   const {
     currentUser,
     user,

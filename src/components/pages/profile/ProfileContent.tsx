@@ -1,7 +1,14 @@
 import StarRatings from "react-star-ratings";
 import Link from "next/link";
+import { User } from "../../../types/types";
+import { FC } from "react";
 
-const ProfileContent = (props) => {
+type Props = {
+  user: User;
+  currentUser;
+};
+
+const ProfileContent: FC<Props> = (props) => {
   const { user, currentUser } = props;
 
   return (

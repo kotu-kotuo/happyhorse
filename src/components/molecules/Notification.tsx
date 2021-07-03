@@ -1,6 +1,16 @@
 import React from "react";
 import Link from "next/link";
 import { FaRegClock } from "react-icons/fa";
+import { Notification } from "../../types/types";
+import { FC } from "react";
+
+type Props = {
+  notification: Notification;
+  href: {
+    pathname: string;
+    query: { uid?: string; pid?: string; cid?: string };
+  };
+};
 
 //時間をUNIXから変換
 const createdTime = (notification) => {
@@ -15,7 +25,7 @@ const createdTime = (notification) => {
   }
 };
 
-const Notification = (props) => {
+const Notification: FC<Props> = (props) => {
   const { notification, href } = props;
   return (
     <>

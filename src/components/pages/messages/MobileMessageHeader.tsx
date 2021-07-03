@@ -1,6 +1,14 @@
+import { NextRouter } from "next/router";
+import { FC } from "react";
 import { IoChevronBack } from "react-icons/io5";
+import { User } from "../../../types/types";
 
-const MobileMessageHeader = (props) => {
+type Props = {
+  messageReceiver: User;
+  router: NextRouter;
+};
+
+const MobileMessageHeader: FC<Props> = (props) => {
   const { messageReceiver, router } = props;
   return (
     <div className="absolute top-0 right-0 left-0">

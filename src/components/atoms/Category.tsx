@@ -1,6 +1,11 @@
 import React from "react";
+import { FC } from "react";
 
-const Category = (props) => {
+type Props = {
+  category: string;
+};
+
+const Category: FC<Props> = (props) => {
   const { category } = props;
   return (
     <div>

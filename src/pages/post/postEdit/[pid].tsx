@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, MouseEvent } from "react";
 import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
@@ -205,7 +205,9 @@ const postEdit: NextPage = () => {
                 更新する
               </button>
               <button
-                onClick={(e) => {
+                onClick={(
+                  e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+                ) => {
                   deletePost(e, post, currentUser, router);
                 }}
                 className="postFormSubButton"

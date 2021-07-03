@@ -1,16 +1,18 @@
 import { db } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import { setReviewStates } from "../../utils/states";
+import { Post, Review, User } from "../../types/types";
+import { Dispatch, SetStateAction } from "react";
 
 const submitReview = (
-  e,
-  post,
+  e: React.FormEvent<HTMLFormElement>,
+  post: Post,
   currentUser,
-  user,
-  rateValue,
-  reviewText,
-  setReviewsOnHold,
-  setIsOpenRatingModal
+  user: User,
+  rateValue: string,
+  reviewText: string,
+  setReviewsOnHold: Dispatch<SetStateAction<Review[]>>,
+  setIsOpenRatingModal: Dispatch<SetStateAction<boolean>>
 ) => {
   e.preventDefault();
 

@@ -1,15 +1,28 @@
-import React from "react";
+import React, { FC, SetStateAction } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BsHeart } from "react-icons/bs";
 import LoginModal from "../../molecules/LoginModal";
+import { Notification, Post, User } from "../../../types/types";
+import { Dispatch } from "react";
 
-const LikeButton = (props) => {
+type Props = {
+  clickHeart;
+  currentUser;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+  db;
+  notifications: Notification[];
+  post: Post;
+  isLoginModalOpen: boolean;
+  setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const LikeButton: FC<Props> = (props) => {
   const {
     clickHeart,
     currentUser,
     user,
     setUser,
-    router,
     db,
     notifications,
     post,
@@ -27,15 +40,7 @@ const LikeButton = (props) => {
           className="flex items-center mb-4 cursor-pointer hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
             currentUser
-              ? clickHeart(
-                  e,
-                  currentUser,
-                  user,
-                  setUser,
-                  router,
-                  db,
-                  notifications
-                )
+              ? clickHeart(e, currentUser, user, setUser, db, notifications)
               : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}
@@ -58,15 +63,7 @@ const LikeButton = (props) => {
           className="cursor-pointer mb-0.5 hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
             currentUser
-              ? clickHeart(
-                  e,
-                  currentUser,
-                  user,
-                  setUser,
-                  router,
-                  db,
-                  notifications
-                )
+              ? clickHeart(e, currentUser, user, setUser, db, notifications)
               : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}

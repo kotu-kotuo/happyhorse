@@ -1,6 +1,12 @@
+import { FC } from "react";
 import { BsChatDots } from "react-icons/bs";
 
-const MessageButton = (props) => {
+type Props = {
+  bgStyle: string;
+  label: string;
+};
+
+const MessageButton: FC<Props> = (props) => {
   const { bgStyle, label } = props;
   return (
     <>

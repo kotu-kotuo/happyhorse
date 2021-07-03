@@ -1,8 +1,14 @@
 import Link from "next/link";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
+import { FC } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 
-const LoginModal = (props) => {
+type Props = {
+  isLoginModalOpen: boolean;
+  setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const LoginModal: FC<Props> = (props) => {
   const { isLoginModalOpen, setIsLoginModalOpen } = props;
   return (
     <div>
@@ -15,12 +21,12 @@ const LoginModal = (props) => {
         >
           <div className="w-screen h-screen px-2">
             <div
-              className="bg-white px-2 py-8 mt-24 max-w-md mx-auto rounded-lg shadow-md relative md:mt-40 lg:mt-60"
+              className="bg-white px-2 py-8 mt-24 max-w-md mx-auto rounded-lg shadow-md relative md:mt-40 lg:mt-60 md:px-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="absolute -top-2 -right-2">
                 <RiCloseCircleFill
-                  className="text-gray-300 text-4xl"
+                  className="text-gray-300 text-4xl cursor-pointer"
                   onClick={() => {
                     setIsLoginModalOpen(false);
                   }}
@@ -33,12 +39,12 @@ const LoginModal = (props) => {
               <div>
                 <div className="flex items-center justify-between">
                   <Link href="/login">
-                    <button className="postFormMainButton mr-1">
+                    <button className="postFormMainButton mr-1 md:mr-2">
                       ログイン
                     </button>
                   </Link>
                   <Link href="/signup">
-                    <button className="postFormMainButton ml-1">
+                    <button className="postFormMainButton ml-1 md:ml-2">
                       新規登録
                     </button>
                   </Link>

@@ -1,6 +1,14 @@
 import Link from "next/link";
+import { FC } from "react";
+import { Chatroom, Post } from "../../../types/types";
 
-const MobilePostInfo = (props) => {
+type Props = {
+  currentUser;
+  post: Post;
+  chatroom: Chatroom;
+};
+
+const MobilePostInfo: FC<Props> = (props) => {
   const { currentUser, post, chatroom } = props;
   return (
     <div className="sm:hidden">

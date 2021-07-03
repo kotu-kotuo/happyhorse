@@ -1,35 +1,40 @@
 import { db } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import alertMessage from "../../functions/post/alertMessage";
-
+import { NextRouter } from "next/router";
+import { FormEvent } from "react";
+import { User } from "../../types/types";
 
 const posting = async (
-  e,
-  isDraft,
-  currentUser,
-  user,
-  postId,
-  title,
-  postText,
-  horseName,
-  category,
-  breed,
-  gender,
-  color,
-  year,
-  month,
-  day,
-  age,
-  height,
-  features,
-  area,
-  price,
-  uploadImages,
-  images,
-  router
+  e: FormEvent<HTMLFormElement>,
+  isDraft: boolean,
+  currentUser: { uid: any },
+  user: User,
+  postId: string,
+  title: string,
+  postText: string,
+  horseName: string,
+  category: string,
+  breed: string,
+  gender: string,
+  color: string,
+  year: number,
+  month: number,
+  day: number,
+  age: number,
+  height: number,
+  features: string[],
+  area: string,
+  price: number,
+  uploadImages: {
+    (images: any): Promise<void>;
+    (images: any): Promise<void>;
+    (arg0: any): any;
+  },
+  images: string[] | any[],
+  router: NextRouter
 ) => {
   e.preventDefault();
-
 
   if (isDraft) {
     const setPost = async () => {
@@ -49,7 +54,7 @@ const posting = async (
           horseName: horseName,
           category: category,
           breed: breed,
-          gender:gender,
+          gender: gender,
           color: color,
           birth: {
             year: year,

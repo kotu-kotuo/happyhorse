@@ -1,7 +1,15 @@
 import React from "react";
+import { FC } from "react";
 import { filterInitialValues } from "../../utils/initialValues";
 
-const FilterAreaSelect = (props) => {
+type Props = {
+  handleArea;
+  area: string[];
+  dataValue: string[];
+  label: string;
+};
+
+const FilterAreaSelect: FC<Props> = (props) => {
   const { handleArea, area, dataValue, label } = props;
   return (
     <div

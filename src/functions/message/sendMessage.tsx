@@ -2,20 +2,22 @@ import { db } from "../../firebase/firebase";
 import firebase from "firebase/app";
 import { setChatroomStates, setMessageStates } from "../../utils/states";
 import isFirstOnDate from "./isFirstOnDate";
+import { Chatroom, Message, Post, User } from "../../types/types";
+import { Dispatch, SetStateAction } from "react";
 
 //メッセージ送信
 const sendMessage = async (
-  e,
+  e: React.FormEvent<HTMLFormElement>,
   currentUser,
-  user,
-  post,
-  messages,
-  setMessages,
-  messageText,
-  setMessageText,
-  messageReceiver,
-  chatroom,
-  setChatroom
+  user: User,
+  post: Post,
+  messages: Message[],
+  setMessages: Dispatch<SetStateAction<Message[]>>,
+  messageText: string,
+  setMessageText: Dispatch<SetStateAction<string>>,
+  messageReceiver: User,
+  chatroom: Chatroom,
+  setChatroom: Dispatch<SetStateAction<Chatroom>>
 ) => {
   e.preventDefault();
   if (currentUser && post.postID) {

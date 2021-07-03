@@ -1,5 +1,8 @@
 import Link from "next/link";
-import React from "react";
+import { NextRouter } from "next/router";
+import React, { SetStateAction } from "react";
+import { FC } from "react";
+import { Dispatch } from "react";
 import {
   FaYenSign,
   FaMapMarkerAlt,
@@ -7,9 +10,24 @@ import {
   FaRegHeart,
   FaHeart,
 } from "react-icons/fa";
+import { Notification, Post, User } from "../../types/types";
 import Category from "../atoms/Category";
 
-const Posts = (props) => {
+type Props = {
+  posts: Post[];
+  clickPost;
+  clickHeart;
+  currentUser;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+  router: NextRouter;
+  db;
+  notifications: Notification[];
+  width: number;
+  setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const Posts: FC<Props> = (props) => {
   const {
     posts,
     clickPost,
