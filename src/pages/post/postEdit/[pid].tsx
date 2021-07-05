@@ -170,7 +170,7 @@ const postEdit: NextPage = () => {
 
   return (
     <div>
-      <Layout title="postEdit">
+      <Layout title="掲載編集フォーム">
         {currentUser && (
           <form onSubmit={updatePost} className="max-w-2xl mx-auto mt-16 px-2">
             <PostEditForm

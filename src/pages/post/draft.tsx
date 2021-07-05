@@ -151,7 +151,7 @@ const draft: NextPage = () => {
 
   return (
     <>
-      <Layout title="draft">
+      <Layout title="下書き編集画面">
         {currentUser && (
           <form
             className="max-w-2xl mx-auto mt-16 px-2"

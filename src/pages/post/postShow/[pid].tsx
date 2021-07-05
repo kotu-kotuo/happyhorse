@@ -52,7 +52,7 @@ const Show: NextPage = () => {
   };
 
   return (
-    <Layout title="post.title">
+    <Layout title={`${post.title}` || ""}>
       {post && postUser && (
         <>
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">

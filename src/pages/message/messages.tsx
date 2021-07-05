@@ -198,7 +198,7 @@ const messages: NextPage = () => {
         reviewText={reviewText}
       />
       <div>
-        <Layout title="messages">
+        <Layout title={`メッセージ | ${messageReceiver?.username}さん` || ""}>
           {currentUser && (
             <>
               {/* モバイルの取引進行ボタン、ヘッダー ================================*/}

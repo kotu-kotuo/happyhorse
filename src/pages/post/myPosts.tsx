@@ -30,7 +30,7 @@ const myPostList: NextPage = () => {
 
   return (
     <div>
-      <Layout title="myPostList">
+      <Layout title="掲載した馬">
         {currentUser && (
           <>
             <h2 className="pageTitle">掲載した馬</h2>

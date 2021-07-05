@@ -85,7 +85,7 @@ const management: NextPage = () => {
   }, [currentUser]);
 
   return (
-    <Layout title="management">
+    <Layout title="メッセージ管理画面">
       {currentUser && (
         <div>
           <SwitchDisplay

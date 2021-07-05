@@ -22,12 +22,10 @@ const Profile: NextPage = () => {
     }
   }, [router.query.uid]);
   return (
-    <Layout title="profile">
+    <Layout title={`${queryUser.username}さん` || ""}>
       <div>
         {currentUser && router.query.uid && queryUser && (
           <div>
-            {console.log(queryUser)}
-            {console.log(user)}
             {currentUser.uid === router.query.uid ? (
               <ProfileContent user={user} currentUser={currentUser} />
             ) : (

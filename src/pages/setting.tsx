@@ -64,7 +64,7 @@ const setting: NextPage = () => {
 
   return (
     <div>
-      <Layout title="setting">
+      <Layout title="設定">
         {isModalOpen && (
           <div className="bg-gray-500 bg-opacity-70 z-30 fixed top-0 bottom-0 left-0 right-0">
             <div className="w-screen h-screen px-2">

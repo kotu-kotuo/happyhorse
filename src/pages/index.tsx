@@ -238,7 +238,7 @@ const Index: NextPage = () => {
 
   return (
     <div>
-      <Layout title="index">
+      <Layout title="happy horse">
         <LoginModal
           isLoginModalOpen={isLoginModalOpen}
           setIsLoginModalOpen={setIsLoginModalOpen}

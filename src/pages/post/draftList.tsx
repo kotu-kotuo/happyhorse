@@ -30,7 +30,7 @@ const draftList = () => {
 
   return (
     <div>
-      <Layout title="draftList">
+      <Layout title="下書き保存リスト">
         {currentUser && (
           <>
             <div className="pageTitle">下書き保存リスト</div>
