@@ -13,6 +13,9 @@ module.exports = {
     __filename: false,
     __dirname: false,
   },
+  experimental: {
+    scrollRestoration: false,
+  },
   webpack5: true,
   // webpack: (config) => {
   //   config.node = {
@@ -24,7 +27,4 @@ module.exports = {
   //   };
   //   return config;
   // },
-  eslint: {
-    // ignoreDuringBuilds: true,
-  },
 };

@@ -93,13 +93,10 @@ const Filter: FC<Props> = (props) => {
 
   const handleArea = async (e: React.MouseEvent<HTMLElement>) => {
     const value = e.currentTarget.getAttribute("data-value").split(",");
-    console.log(1, area, value);
     if (area.length === filterInitialValues.area.length) {
-      console.log(2, area, value);
       await setArea(value);
     } else {
       if (area.includes(value[0])) {
-        console.log(4, area, value);
         if (area.length < 10) {
           setArea(filterInitialValues.area);
         } else {
@@ -109,7 +106,6 @@ const Filter: FC<Props> = (props) => {
           await setArea([...filterArray]);
         }
       } else {
-        console.log(3, area, value);
         await setArea([...value, ...area]);
       }
     }

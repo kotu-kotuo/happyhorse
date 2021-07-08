@@ -105,7 +105,7 @@ const Posts: FC<Props> = (props) => {
               {post.area}
             </div>
           </div>
-          <Link href={`/post/postShow/${post.postID}`}>
+          <Link href={`/post/postShow/${post.postID}`} scroll={false}>
             <div className="cursor-pointer hover:opacity-80">
               <h2 className="font-semibold text-gray-800 mt-3 mb-2 line-clamp-2 md:my-3 md:text-xl">
                 {post.title}
@@ -134,6 +134,7 @@ const Posts: FC<Props> = (props) => {
                     uid: post.userID,
                   },
                 }}
+                scroll={false}
               >
                 <div className="flex items-center cursor-pointer hover:opacity-80 sm:ml-1">
                   <img
