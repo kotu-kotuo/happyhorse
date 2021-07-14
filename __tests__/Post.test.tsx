@@ -9,43 +9,43 @@ initTestHelpers();
 jest.mock("next/router", () => require("next-router-mock"));
 
 // ローカルファイル操作用Nodeモジュール
-const fs = require("fs");
+// const fs = require("fs");
 
 // Firebase SDK テストユーティリティ
-const firebase = require("@firebase/rules-unit-testing");
+// const firebase = require("@firebase/rules-unit-testing");
 
 // FirebaseのProject ID
-const PROJECT_ID = "happyhorse-bc5f6";
+// const PROJECT_ID = "happyhorse-bc5f6";
 
 // 認証付きFirestoreクライアントの取得
-function getFirestoreWithAuth() {
-  const app = firebase.initializeTestApp({
-    projectId: PROJECT_ID,
-    auth: { uid: "test_user", email: "test_user@example.com" },
-  });
+// function getFirestoreWithAuth() {
+//   const app = firebase.initializeTestApp({
+//     projectId: PROJECT_ID,
+//     auth: { uid: "test_user", email: "test_user@example.com" },
+//   });
 
-  return app.firestore();
-}
+//   return app.firestore();
+// }
 
 // テスト開始時に1回だけ実行される
-beforeAll(async () => {
-  // ローカルにあるRulesファイルを読み込む
-  const rules = fs.readFileSync("firestore.rules", "utf8");
-  await firebase.loadFirestoreRules({ projectId: PROJECT_ID, rules });
-});
+// beforeAll(async () => {
+// ローカルにあるRulesファイルを読み込む
+//   const rules = fs.readFileSync("firestore.rules", "utf8");
+//   await firebase.loadFirestoreRules({ projectId: PROJECT_ID, rules });
+// });
 
 // テスト終了前に1回だけ実行される
-afterAll(async () => {
-  // エミュレーター上に作られたアプリ情報を全て消去する
-  await Promise.all(firebase.apps().map((app) => app.delete()));
-});
+// afterAll(async () => {
+// エミュレーター上に作られたアプリ情報を全て消去する
+//   await Promise.all(firebase.apps().map((app) => app.delete()));
+// });
 
 describe("Post", () => {
-  afterEach(async () => {
-    await firebase.clearFirestoreData({ projectId: PROJECT_ID });
-  });
+  // afterEach(async () => {
+  //   await firebase.clearFirestoreData({ projectId: PROJECT_ID });
+  // });
   it("post success", async () => {
-    const db = getFirestoreWithAuth();
+    // const db = getFirestoreWithAuth();
 
     const { page } = await getPage({
       route: "/index",
