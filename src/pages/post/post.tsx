@@ -37,6 +37,7 @@ const Post: NextPage = () => {
   const router = useRouter();
 
   //ログインしてなかったらリダイレクト
+  //TODO: ログインしてても遷移してしまう
   useEffect(() => {
     if (!currentUser) {
       router.push("/login");

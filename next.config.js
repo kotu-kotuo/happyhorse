@@ -1,5 +1,13 @@
-const environment = process.env.NODE_ENV || "development";
-const env = require(`./${environment}.env.js`);
+const environment = () => {
+  if (process.env.NODE_ENV === "test") {
+    return "development";
+  } else if (process.env.NODE_ENV) {
+    return process.env.NODE_ENV;
+  } else {
+    return "development";
+  }
+};
+const env = require(`./${environment()}.env.js`);
 
 module.exports = {
   env: {
@@ -13,9 +21,9 @@ module.exports = {
     __filename: false,
     __dirname: false,
   },
-  experimental: {
-    scrollRestoration: false,
-  },
+  // experimental: {
+  //   scrollRestoration: false,
+  // },
   webpack5: true,
   // webpack: (config) => {
   //   config.node = {
