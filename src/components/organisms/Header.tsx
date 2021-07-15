@@ -48,7 +48,6 @@ const Header: FC<Props> = (props) => {
             </a>
           </Link>
         </div>
-        {console.log(notifications)}
 
         <div className="ml-auto flex items-center text-xs sm:text-base">
           {!currentUser && (

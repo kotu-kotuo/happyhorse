@@ -4,7 +4,7 @@ const NotificationList = (props) => {
   const { notifications, currentUser } = props;
   return (
     <div>
-      {notifications.map((notification, index) => (
+      {notifications?.map((notification, index) => (
         <div key={index}>
           {notification.toMessage ? (
             <Notification

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, ReactNode } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { db } from "../firebase/firebase";
@@ -10,18 +10,19 @@ import { filterInitialValues, postInitialValues } from "../utils/initialValues";
 import { setPostStates } from "../utils/states";
 import clickHeart from "../functions/clickHeart";
 import { BsFilterRight } from "react-icons/bs";
-import { RiCloseCircleFill } from "react-icons/ri";
 import { NextPage } from "next";
 import { Post } from "../types/types";
 import LoginModal from "../components/molecules/LoginModal";
+import { firebaseConfig } from "../firebase/config";
+import firebase from "firebase/app";
 
-const Index: NextPage = () => {
+const Index: NextPage = ({ posts }: any) => {
   const { currentUser, user, setUser, notifications } = useContext(AuthContext);
   const router = useRouter();
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([
     postInitialValues,
   ]);
-  const [posts, setPosts] = useState<Post[]>([postInitialValues]);
+  // const [posts, setPosts] = useState<Post[]>([postInitialValues]);
   const [showOnlyAvailable, setShowOnlyAvailable] = useState(
     filterInitialValues.showOnlyAvailable
   );
@@ -44,12 +45,7 @@ const Index: NextPage = () => {
 
   //postsをセット
   useEffect(() => {
-    db.collectionGroup("posts")
-      .orderBy("createdAt", "desc")
-      .onSnapshot((snapshot) => {
-        setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
-        setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
-      });
+    setFilteredPosts(posts);
   }, []);
 
   useEffect(() => {
@@ -239,6 +235,7 @@ const Index: NextPage = () => {
   return (
     <div>
       <Layout title="happy horse">
+        {console.log(posts)}
         <LoginModal
           isLoginModalOpen={isLoginModalOpen}
           setIsLoginModalOpen={setIsLoginModalOpen}
@@ -334,7 +331,7 @@ const Index: NextPage = () => {
               </div>
             ) : (
               <Posts
-                posts={filteredPosts}
+                posts={currentUser ? filteredPosts : posts}
                 clickPost={clickPost}
                 clickHeart={clickHeart}
                 currentUser={currentUser}
@@ -357,3 +354,27 @@ const Index: NextPage = () => {
 };
 
 export default Index;
+
+export async function getStaticProps() {
+  !firebase.apps.length
+    ? firebase.initializeApp(firebaseConfig)
+    : firebase.app();
+  const db = firebase.firestore();
+  console.log("おおお");
+  const posts: Post[] = [];
+  await db
+    .collectionGroup("posts")
+    .orderBy("createdAt", "desc")
+    .onSnapshot(async (snapshot) => {
+      await Promise.all(
+        snapshot.docs.map((doc) => posts.push(setPostStates(doc.data())))
+      );
+      console.log("おおお");
+    });
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}

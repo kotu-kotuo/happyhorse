@@ -57,9 +57,6 @@ const SignUp: NextPage = () => {
               });
 
             router.push("/");
-          })
-          .catch((error) => {
-            alert(error.message);
           });
       } catch (error) {
         alert(error.message);
@@ -159,7 +156,6 @@ const SignUp: NextPage = () => {
           </form>
         </div>
       </div>
-      {console.log(process.env.FIREBASE_PROJECT_ID)}
     </Layout>
   );
 };
