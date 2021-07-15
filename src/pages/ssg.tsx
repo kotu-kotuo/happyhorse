@@ -1,7 +1,5 @@
 import { Layout } from "../components/organisms/Layout";
-import fetch from "node-fetch";
 import React from "react";
-import { db } from "../firebase/firebase";
 import admin from "../firebase/admin";
 import { NextPage } from "next";
 
@@ -9,9 +7,7 @@ const Ssg: NextPage = ({ users }: any) => {
   return (
     <Layout title="エスエスじー">
       {/* <div>{posts && posts.map((post) => <div>{post.id}</div>)}</div> */}
-      {users.map((user) => (
-        <div>{user.username}</div>
-      ))}
+      {users && users.map((user) => <div>{user.username}</div>)}
     </Layout>
   );
 };
@@ -31,7 +27,6 @@ export async function getStaticProps() {
 
   return {
     props: {
-      // posts,
       users,
     },
   };
