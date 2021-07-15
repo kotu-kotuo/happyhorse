@@ -1,6 +1,7 @@
 import { Layout } from "../components/organisms/Layout";
 import React from "react";
 import admin from "../firebase/admin";
+import { User } from "../types/types";
 
 const Ssg = ({ users }) => {
   return (
@@ -15,9 +16,9 @@ export default Ssg;
 export async function getStaticProps() {
   const db = admin.firestore();
 
-  const users = (await db.collection("users").get()).docs.map((doc) =>
-    doc.data()
-  );
+  const users: FirebaseFirestore.DocumentData[] = (
+    await db.collection("users").get()
+  ).docs.map((doc) => doc.data());
 
   return {
     props: {
