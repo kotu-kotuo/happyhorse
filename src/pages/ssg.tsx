@@ -3,8 +3,9 @@ import fetch from "node-fetch";
 import React from "react";
 import { db } from "../firebase/firebase";
 import admin from "../firebase/admin";
+import { NextPage } from "next";
 
-const Ssg = ({ users }) => {
+const Ssg: NextPage = ({ users }: any) => {
   return (
     <Layout title="エスエスじー">
       {/* <div>{posts && posts.map((post) => <div>{post.id}</div>)}</div> */}
