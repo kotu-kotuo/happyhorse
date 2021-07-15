@@ -1,8 +1,7 @@
 import * as admin from "firebase-admin";
 
 if (
-  process.env.NODE_ENV === "production" &&
-  process.env.FIREBASE_PROJECT_ID === "happyhorse-prod"
+  process.env.NODE_ENV === "production" 
 ) {
   if (!admin.apps.length) {
     admin.initializeApp({
