@@ -7,7 +7,6 @@ import Posts from "../components/organisms/Posts";
 import Pagination from "../components/molecules/Pagination";
 import Filter from "../components/organisms/Filter";
 import { filterInitialValues, postInitialValues } from "../utils/initialValues";
-import { setPostStates } from "../utils/states";
 import clickHeart from "../functions/clickHeart";
 import { BsFilterRight } from "react-icons/bs";
 import { NextPage } from "next";

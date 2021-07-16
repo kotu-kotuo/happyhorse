@@ -35,6 +35,8 @@ const LikeButton: FC<Props> = (props) => {
         isLoginModalOpen={isLoginModalOpen}
         setIsLoginModalOpen={setIsLoginModalOpen}
       />
+
+      {/* ----- PC ----- */}
       <div className="hidden md:block">
         <div
           className="flex items-center mb-4 cursor-pointer hover:opacity-80"
@@ -45,7 +47,7 @@ const LikeButton: FC<Props> = (props) => {
           }}
           data-id={post.postID}
         >
-          {currentUser && post.likeUserIDs.includes(currentUser?.uid) ? (
+          {currentUser && post.likeUserIDs?.includes(currentUser?.uid) ? (
             <FaHeart className="text-3xl text-red-400" />
           ) : (
             <FaRegHeart className="text-3xl text-gray-900" />
@@ -53,11 +55,13 @@ const LikeButton: FC<Props> = (props) => {
           <p className="text-gray-900 ml-3 mr-1">
             お気に入り
             <span className="ml-3 text-gray-900 font-semibold">
-              {post.likeUserIDs.length}
+              {post.likeUserIDs?.length}
             </span>
           </p>
         </div>
       </div>
+
+      {/* ----- モバイル ----- */}
       <div className="md:hidden text-center">
         <div
           className="cursor-pointer mb-0.5 hover:opacity-80"
@@ -68,7 +72,7 @@ const LikeButton: FC<Props> = (props) => {
           }}
           data-id={post.postID}
         >
-          {currentUser && post.likeUserIDs.includes(currentUser?.uid) ? (
+          {currentUser && post.likeUserIDs?.includes(currentUser?.uid) ? (
             <div className="bg-red-400 px-2 pt-2.5 pb-1.5 rounded-full inline-block shadow-md">
               <BsHeart className="text-2xl text-white" />
             </div>
@@ -80,7 +84,7 @@ const LikeButton: FC<Props> = (props) => {
           <div className="flex items-center text-gray-500 text-xs">
             <div className="text-gray-500">お気に入り</div>
             <div className="ml-0.5 font-semibold">
-              {post.likeUserIDs.length}
+              {post.likeUserIDs?.length}
             </div>
           </div>
         </div>

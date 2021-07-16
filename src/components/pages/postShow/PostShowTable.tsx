@@ -47,7 +47,7 @@ const PostShowTable: FC<Props> = (props) => {
       <div className="tableListItem-margin">
         <TableListItem
           label={"生年月日"}
-          value={`${post.birth.year} / ${post.birth.month} / ${post.birth.day}`}
+          value={`${post.birth?.year} / ${post.birth?.month} / ${post.birth?.day}`}
         />
       </div>
 
@@ -60,7 +60,7 @@ const PostShowTable: FC<Props> = (props) => {
           value={
             <div className="flex flex-wrap">
               {post.features
-                .sort((a, b) => {
+                ?.sort((a, b) => {
                   //逆順に並べ替え
                   if (a < b) {
                     return 1;

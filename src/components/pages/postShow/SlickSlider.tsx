@@ -58,7 +58,7 @@ const SlickSlider: FC<Props> = (props) => {
     <>
       <div className="hidden md:block">
         <Slider {...setting1}>
-          {post.images.map((image, index) => (
+          {post.images?.map((image, index) => (
             <div
               key={index}
               className="mt-10 outline-none pb-image w-full h-0 relative"
@@ -83,7 +83,7 @@ const SlickSlider: FC<Props> = (props) => {
       </div>
       <div className="block md:hidden">
         <Slider {...setting2}>
-          {post.images.map((image, index) => (
+          {post.images?.map((image, index) => (
             <div
               key={index}
               className="mt-10 outline-none pb-image w-full h-0 relative"
