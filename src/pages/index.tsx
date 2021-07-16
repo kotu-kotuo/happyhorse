@@ -7,14 +7,12 @@ import Posts from "../components/organisms/Posts";
 import Pagination from "../components/molecules/Pagination";
 import Filter from "../components/organisms/Filter";
 import { filterInitialValues, postInitialValues } from "../utils/initialValues";
-import { setPostStates } from "../utils/states";
 import clickHeart from "../functions/clickHeart";
 import { BsFilterRight } from "react-icons/bs";
 import { NextPage } from "next";
 import { Post } from "../types/types";
 import LoginModal from "../components/molecules/LoginModal";
-import { firebaseConfig } from "../firebase/config";
-import firebase from "firebase/app";
+import admin from "../firebase/admin";
 
 const Index: NextPage = ({ posts }: any) => {
   const { currentUser, user, setUser, notifications } = useContext(AuthContext);
@@ -22,7 +20,6 @@ const Index: NextPage = ({ posts }: any) => {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([
     postInitialValues,
   ]);
-  // const [posts, setPosts] = useState<Post[]>([postInitialValues]);
   const [showOnlyAvailable, setShowOnlyAvailable] = useState(
     filterInitialValues.showOnlyAvailable
   );
@@ -236,6 +233,7 @@ const Index: NextPage = ({ posts }: any) => {
     <div>
       <Layout title="happy horse">
         {console.log(posts)}
+        {console.log(filteredPosts)}
         <LoginModal
           isLoginModalOpen={isLoginModalOpen}
           setIsLoginModalOpen={setIsLoginModalOpen}
@@ -356,25 +354,18 @@ const Index: NextPage = ({ posts }: any) => {
 export default Index;
 
 export async function getStaticProps() {
-  !firebase.apps.length
-    ? firebase.initializeApp(firebaseConfig)
-    : firebase.app();
-  const db = firebase.firestore();
-  console.log("おおお");
-  const posts: Post[] = [];
-  await db
-    .collectionGroup("posts")
-    .orderBy("createdAt", "desc")
-    .onSnapshot(async (snapshot) => {
-      await Promise.all(
-        snapshot.docs.map((doc) => posts.push(setPostStates(doc.data())))
-      );
-      console.log("おおお");
-    });
+  const db = admin.firestore();
+
+  const data: FirebaseFirestore.DocumentData[] = (
+    await db.collectionGroup("posts").orderBy("createdAt", "desc").get()
+  ).docs.map((doc) => doc.data());
+
+  const posts = JSON.parse(JSON.stringify(data));
 
   return {
     props: {
       posts,
     },
+    revalidate: 10,
   };
 }

@@ -3,7 +3,6 @@ import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { NextRouter, useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
-import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates, setUserState } from "../../../utils/states";
 import { Post } from "../../../types/types";
 import clickHeart from "../../../functions/clickHeart";
@@ -14,25 +13,26 @@ import LikeButton from "../../../components/pages/postShow/LikeButton";
 import { NextPage } from "next";
 import "slick-carousel/slick/slick.css";
 import PostShowTable from "../../../components/pages/postShow/PostShowTable";
+import admin from "../../../firebase/admin";
 
-const Show: NextPage = () => {
+const Show: NextPage = ({ post }: any) => {
   const router: NextRouter = useRouter();
   const { user, setUser, currentUser, notifications } = useContext(AuthContext);
-  const [post, setPost] = useState<Post>(postInitialValues);
+  // const [post, setPost] = useState<Post>(postInitialValues);
   const [postUser, setPostUser] = useState(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (router.query.pid) {
-      db.collectionGroup("posts")
-        .where("postID", "==", router.query.pid)
-        .onSnapshot((snapshot) => {
-          snapshot.docs.map((doc) => {
-            setPost(setPostStates(doc.data()));
-          });
-        });
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   if (router.query.pid) {
+  //     db.collectionGroup("posts")
+  //       .where("postID", "==", router.query.pid)
+  //       .onSnapshot((snapshot) => {
+  //         snapshot.docs.map((doc) => {
+  //           setPost(setPostStates(doc.data()));
+  //         });
+  //       });
+  //   }
+  // }, [router]);
 
   useEffect(() => {
     if (post.userID) {
@@ -53,7 +53,9 @@ const Show: NextPage = () => {
 
   return (
     <Layout title={`${post.title}` || ""}>
-      {post && postUser && (
+      {console.log(post)}
+      {console.log(post.images)}
+      {post && (
         <>
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">
             <SlickSlider
@@ -132,3 +134,38 @@ const Show: NextPage = () => {
 };
 
 export default Show;
+
+export async function getStaticPaths() {
+  const db = admin.firestore();
+
+  const paths = await db
+    .collectionGroup("posts")
+    .get()
+    .then((snapshot) =>
+      snapshot.docs.map((doc) => ({ params: { pid: doc.data().postID } }))
+    );
+
+  console.log(paths);
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const db = admin.firestore();
+
+  const data: FirebaseFirestore.DocumentData = (
+    await db.collectionGroup("posts").where("postID", "==", params.pid).get()
+  ).docs[0].data();
+
+  const post = JSON.parse(JSON.stringify(data));
+
+  return {
+    props: {
+      post,
+    },
+    revalidate: 10,
+  };
+}
