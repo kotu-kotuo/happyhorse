@@ -11,7 +11,7 @@ const Footer = (props) => {
       >
         <img
           src="/hh-logo2.png"
-          className="mx-auto object-cover h-10 w-auto pr-4 sm:h-14"
+          className="mx-auto object-cover h-10 w-auto pr-8 sm:h-14"
         />
         <div className="sm:flex sm:justify-center py-4 text-gray-900 space-y-2 sm:space-y-0">
           <Link href="/terms">
