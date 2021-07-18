@@ -104,7 +104,9 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
         </>
       )}
 
-      {(router.pathname === "/setting" || "/terms" || "/privacyPolicy") && (
+      {(router.pathname === "/setting" ||
+        router.pathname === "/terms" ||
+        router.pathname === "/privacyPolicy") && (
         <Footer footerHeight={footerHeight} />
       )}
     </div>
