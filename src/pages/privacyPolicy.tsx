@@ -182,9 +182,7 @@ const privacyPolicy = () => {
           <p className="termsText">
             本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。
           </p>
-          <div className="termsText">
-            Eメールアドレス：ttn022300@gmail.com
-          </div>
+          <div className="termsText">Eメールアドレス：ttn022300@gmail.com</div>
         </div>
         <p className="termsText text-right">以上</p>
       </div>
