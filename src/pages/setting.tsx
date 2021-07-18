@@ -39,9 +39,10 @@ const setting: NextPage = () => {
             snapshot.docs.map((doc) => setPostStates(doc.data()))
           )
         );
-    } else {
-      router.push("/login");
     }
+    // else {
+    //   router.push("/login");
+    // }
   }, [currentUser]);
 
   const deleteAccount = async () => {
@@ -81,7 +82,7 @@ const setting: NextPage = () => {
           </div>
         )}
         {currentUser && (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto mb-16 sm:mb-0">
             <h2 className="pageTitle">設定</h2>
             <ul className="mt-2 px-4">
               <li className="border-b cursor-pointer" onClick={deleteAccount}>

@@ -338,7 +338,7 @@ const Filter: FC<Props> = (props) => {
           <div className="mb-3">
             <select
               name="breed"
-              className="inputText rounded-md"
+              className="inputText rounded-md cursor-pointer"
               onChange={handleBreed}
             >
               <option hidden></option>
@@ -369,7 +369,7 @@ const Filter: FC<Props> = (props) => {
           <div className="mb-3">
             <select
               name="gender"
-              className="inputText rounded-md"
+              className="inputText rounded-md cursor-pointer"
               onChange={handleGender}
             >
               <option hidden></option>
@@ -399,7 +399,7 @@ const Filter: FC<Props> = (props) => {
           </div>
           <select
             name="color"
-            className="inputText rounded-md"
+            className="inputText rounded-md cursor-pointer"
             onChange={handleColor}
           >
             <option hidden></option>
