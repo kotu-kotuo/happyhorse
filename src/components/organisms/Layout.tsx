@@ -1,10 +1,11 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Header from "./Header";
-import Footer from "./Footer";
 import LoginModal from "../molecules/LoginModal";
+import MobileMenuBar from "./MobileMenuBar";
+import Footer from "./Footer";
 
 interface TITLE {
   title: string;
@@ -21,6 +22,8 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
   const { currentUser, setCurrentUser, user, notifications, setNotifications } =
     useContext(AuthContext);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isDropdownMenuList, setIsDropdownMenuList] = useState(false);
+  const footerHeight = useRef(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -86,7 +89,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
       <main className={"max-w-5xl mx-auto"}>{children}</main>
       {router.pathname !== "/message/messages" && (
         <>
-          <Footer
+          <MobileMenuBar
             isOpenBottomNotification={isOpenBottomNotification}
             setIsOpenBottomNotification={setIsOpenBottomNotification}
             isOpenBottomMenu={isOpenBottomMenu}
@@ -98,8 +101,14 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
             notifications={notifications}
             setNotifications={setNotifications}
             setIsLoginModalOpen={setIsLoginModalOpen}
+            isDropdownMenuList={isDropdownMenuList}
+            setIsDropdownMenuList={setIsDropdownMenuList}
           />
         </>
+      )}
+
+      {(router.pathname === "/setting" || "/terms" || "/privacyPolicy") && (
+        <Footer footerHeight={footerHeight} />
       )}
     </div>
   );

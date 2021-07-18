@@ -27,7 +27,7 @@
   @apply mb-10;
 }
 
-.tableListItem-margin{
+.tableListItem-margin {
   @apply mb-4;
 }
 
@@ -47,7 +47,7 @@
   @apply text-xs md:text-sm;
 }
 
-.postFormLabel{
+.postFormLabel {
   @apply text-xs text-gray-600 mb-1 ml-1;
 }
 
@@ -65,7 +65,6 @@
 .inputFormNumber {
   @apply text-sm appearance-none rounded-none relative block px-3 py-2 border-t-0 border-r-0 border-l-0 border-b-2 border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:border-indigo-500 focus:ring-0 focus:z-10 !important;
 }
-
 
 .filterCheckText {
   @apply font-normal text-sm text-gray-400 inline-block cursor-pointer  hover:bg-gray-50 hover:opacity-95 rounded-full p-1 mr-3 lg:w-full lg:block;
@@ -90,12 +89,39 @@
   @apply mb-8 text-sm md:text-base w-full appearance-none relative block px-3 py-2 placeholder-gray-500 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10;
 }
 
-.postFormSubButton{
+.postFormSubButton {
   @apply cursor-pointer bg-white text-gray-500 border border-gray-500 py-3 px-6 rounded-md w-full mt-4 hover:text-white hover:bg-gray-500  ease-in-out duration-300;
 }
 
 .postFormMainButton {
   @apply cursor-pointer bg-mainGreen text-white py-3 px-6 rounded-md w-full mt-4 hover:opacity-80 hover:shadow-md;
+}
+
+/*==============================================
+# 利用規約
+===============================================*/
+.termsContainer {
+  @apply max-w-2xl mx-auto my-20 text-gray-900 px-3;
+}
+
+.termsTitle {
+  @apply font-semibold my-8 text-xl sm:text-2xl;
+}
+
+.termsLabel {
+  @apply font-semibold mb-4 fontSize-xl;
+}
+
+.termsText {
+  @apply text-sm mb-2;
+}
+
+.termsList {
+  @apply ml-8 list-decimal;
+}
+
+.termsSpace {
+  @apply mb-8;
 }
 
 /*==============================================

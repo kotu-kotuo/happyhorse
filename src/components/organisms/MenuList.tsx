@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import MenuListItem from "../molecules/MenuListItem";
 import { auth } from "../../firebase/firebase";
 import Link from "next/link";
-import { IoChevronForwardOutline } from "react-icons/io5";
+import { IoChevronForwardOutline, IoChevronDownOutline } from "react-icons/io5";
 import StarRatings from "react-star-ratings";
 import { User } from "../../types/types";
 import { FC } from "react";
@@ -12,10 +12,19 @@ type Props = {
   setCurrentUser;
   user: User;
   setIsOpenMenu: Dispatch<SetStateAction<boolean>>;
+  isDropdownMenuList: boolean;
+  setIsDropdownMenuList: Dispatch<SetStateAction<boolean>>;
 };
 
 const MenuList: FC<Props> = (props) => {
-  const { currentUser, setCurrentUser, user, setIsOpenMenu } = props;
+  const {
+    currentUser,
+    setCurrentUser,
+    user,
+    setIsOpenMenu,
+    isDropdownMenuList,
+    setIsDropdownMenuList,
+  } = props;
 
   const logout = async (e) => {
     e.preventDefault();
@@ -87,6 +96,30 @@ const MenuList: FC<Props> = (props) => {
           <MenuListItem label={"掲載した馬"} link={"/post/myPosts"} />
           <MenuListItem label={"下書き保存リスト"} link={"/post/draftList"} />
           <MenuListItem label={"設定"} link={"/setting"} />
+          <div className="block sm:hidden">
+            <div
+              className="border-b px-4 py-3.5 hover:bg-gray-100 flex items-center sm:py-4"
+              onClick={() => {
+                setIsDropdownMenuList(!isDropdownMenuList);
+              }}
+            >
+              <p className="text-sm font-medium text-gray-800 leading-none">
+                その他メニュー
+              </p>
+              <IoChevronDownOutline
+                className={
+                  isDropdownMenuList === false
+                    ? "text-gray-400 text-lg ml-auto"
+                    : "text-gray-400 text-lg ml-auto transform rotate-180"
+                }
+              />
+            </div>
+          </div>
+
+          {isDropdownMenuList &&
+            <div>
+            
+            </div>}
 
           <a
             onClick={logout}
