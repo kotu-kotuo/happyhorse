@@ -22,7 +22,6 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
   const { currentUser, setCurrentUser, user, notifications, setNotifications } =
     useContext(AuthContext);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [isDropdownMenuList, setIsDropdownMenuList] = useState(false);
   const footerHeight = useRef(null);
 
   useEffect(() => {
@@ -101,8 +100,6 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
             notifications={notifications}
             setNotifications={setNotifications}
             setIsLoginModalOpen={setIsLoginModalOpen}
-            isDropdownMenuList={isDropdownMenuList}
-            setIsDropdownMenuList={setIsDropdownMenuList}
           />
         </>
       )}

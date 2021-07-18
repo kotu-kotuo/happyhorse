@@ -21,8 +21,6 @@ type Props = {
   notifications: Notification[];
   setNotifications: Dispatch<SetStateAction<Notification[]>>;
   setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
-  isDropdownMenuList: boolean;
-  setIsDropdownMenuList: Dispatch<SetStateAction<boolean>>;
 };
 
 const MobileMenuBar: FC<Props> = (props) => {
@@ -38,8 +36,6 @@ const MobileMenuBar: FC<Props> = (props) => {
     notifications,
     setNotifications,
     setIsLoginModalOpen,
-    isDropdownMenuList,
-    setIsDropdownMenuList,
   } = props;
 
   const clickBell = () => {
@@ -195,8 +191,6 @@ const MobileMenuBar: FC<Props> = (props) => {
               setCurrentUser={setCurrentUser}
               user={user}
               setIsOpenMenu={setIsOpenMenu}
-              isDropdownMenuList={isDropdownMenuList}
-              setIsDropdownMenuList={setIsDropdownMenuList}
             />
           </div>
         </div>
