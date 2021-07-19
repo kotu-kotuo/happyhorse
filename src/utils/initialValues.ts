@@ -148,7 +148,7 @@ export const postInitialValues = {
   createdAt: "",
   updatedAt: "",
   likeUserIDs: [],
-  isAvairable: false,
+  isAvairable: true,
   pv: null,
   sendMessageUserIDs: [],
   messageUpdatedAt: "",

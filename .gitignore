@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# firebase
+firestore.rules
+
 # next.js
 /.next/
 /out/

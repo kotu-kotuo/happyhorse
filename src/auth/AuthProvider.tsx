@@ -10,7 +10,7 @@ import { Notification, User } from "../types/types";
 import { setNotificationStates, setUserState } from "../utils/states";
 
 type AuthContextProps = {
-  currentUser: any | null | undefined;
+  currentUser: undefined | null | any;
   setCurrentUser: any;
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
@@ -28,7 +28,7 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<any | null | undefined>(
+  const [currentUser, setCurrentUser] = useState<undefined | null | any>(
     undefined
   );
   const [user, setUser] = useState<User>(null);

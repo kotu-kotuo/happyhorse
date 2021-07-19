@@ -21,6 +21,12 @@ const setting: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
+    if (!currentUser) {
+      router.push("/login");
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
     if (currentUser) {
       db.collection("users")
         .doc(`${currentUser.uid}`)
@@ -66,6 +72,7 @@ const setting: NextPage = () => {
   return (
     <div>
       <Layout title="設定">
+        {console.log(currentUser)}
         {isModalOpen && (
           <div className="bg-gray-500 bg-opacity-70 z-30 fixed top-0 bottom-0 left-0 right-0">
             <div className="w-screen h-screen px-2">
