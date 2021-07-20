@@ -15,9 +15,10 @@ service cloud.firestore {
         allow delete: if isUserAuthenticated(incomingData().userID);
 
         match /chatrooms/{sendUserID} {
-          allow read: if isAuthenticated();
-          allow create: if isUserAuthenticated(incomingData().sendUserID);
-          allow update, delete: if isAuthenticated();
+          allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
+          allow create: if isUserAuthenticated(incomingData().sendUserID) && incomingData().messageCount == 1;
+          allow update: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
+          allow delete: if isUserAuthenticated(incomingData().postUserID);
 
           match /messages/{messageId} {
             allow read: if isAuthenticated();
@@ -72,9 +73,7 @@ service cloud.firestore {
     }
 
     match /{paths=**}/chatrooms/{chatroomID} {
-      allow read, write: if isAuthenticated();
-      // allow read: if isUserAuthenticated(existingData().sendUserID) || isUserAuthenticated(existingData().postUserID);
-      // allow write: if isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID);
+      allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
     }
 
     match /{paths=**}/messages/{messageId} {
