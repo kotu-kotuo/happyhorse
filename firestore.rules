@@ -5,11 +5,14 @@ service cloud.firestore {
     match /users/{userID} {
       allow read;
       allow create;
-      allow update, delete: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if isUserAuthenticated(incomingData().userID) && incomingData().deletedAccount == false;
 
       match /posts/{postID} {
         allow read;
-        allow write: if isAuthenticated();
+        allow create: if isUserAuthenticated(incomingData().userID);
+        allow update: if isUserAuthenticated(incomingData().userID) || request.auth.uid in incomingData().sendMessageUserIDs || request.auth.uid in getAfterData(documentPath(["users",incomingData().userID,"posts",incomingData().postID])).sendMessageUserIDs;
+        allow delete: if isUserAuthenticated(incomingData().userID);
 
         match /chatrooms/{sendUserID} {
           allow read: if isAuthenticated();
@@ -66,7 +69,6 @@ service cloud.firestore {
 
     match /{paths=**}/posts/{postID} {
       allow read;
-      allow write;
     }
 
     match /{paths=**}/chatrooms/{chatroomID} {
