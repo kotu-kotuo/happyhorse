@@ -21,10 +21,9 @@ service cloud.firestore {
           allow delete: if isUserAuthenticated(incomingData().postUserID);
 
           match /messages/{messageId} {
-            allow read: if isAuthenticated();
-            allow create: if isUserAuthenticated(incomingData().userID);
-            allow update: if isAuthenticated() && (incomingData().userID == userID || incomingData().messageReceiverID == userID);
-            allow delete: if isAuthenticated();
+            allow read: if isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID);
+            allow create: if isAuthenticated() && isUserAuthenticated(incomingData().userID) && incomingData().postID == postID;
+            allow delete: if (isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID)) && incomingData().postID == postID;
           }
         }
       }
