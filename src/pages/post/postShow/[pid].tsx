@@ -3,7 +3,7 @@ import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { NextRouter, useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
-import { setPostStates, setUserState } from "../../../utils/states";
+import { setUserState } from "../../../utils/states";
 import { Post } from "../../../types/types";
 import clickHeart from "../../../functions/clickHeart";
 import SlickSlider from "../../../components/pages/postShow/SlickSlider";
@@ -18,21 +18,8 @@ import admin from "../../../firebase/admin";
 const Show: NextPage = ({ post }: any) => {
   const router: NextRouter = useRouter();
   const { user, setUser, currentUser, notifications } = useContext(AuthContext);
-  // const [post, setPost] = useState<Post>(postInitialValues);
   const [postUser, setPostUser] = useState(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-  // useEffect(() => {
-  //   if (router.query.pid) {
-  //     db.collectionGroup("posts")
-  //       .where("postID", "==", router.query.pid)
-  //       .onSnapshot((snapshot) => {
-  //         snapshot.docs.map((doc) => {
-  //           setPost(setPostStates(doc.data()));
-  //         });
-  //       });
-  //   }
-  // }, [router]);
 
   useEffect(() => {
     if (post.userID) {

@@ -4,9 +4,8 @@ service cloud.firestore {
 
     match /users/{userID} {
       allow read;
-      allow create;
+      allow create: if isUserAuthenticated(incomingData().id);
       allow update: if isAuthenticated();
-      allow delete: if isUserAuthenticated(incomingData().userID) && incomingData().deletedAccount == false;
 
       match /posts/{postID} {
         allow read;
@@ -30,19 +29,19 @@ service cloud.firestore {
 
       match /reviews/{postID} {
         allow read;
-        allow create, update: if isAuthenticated();
+        allow create: if isUserAuthenticated(incomingData().postUserID) || isUserAuthenticated(incomingData().reviewerID);
       }
 
       match /filters/{userID} {
-        allow read;
-        allow write: if isAuthenticated();
+        allow read: if isAuthenticated();
+        allow create: if isAuthenticated();
+        allow update: if isAuthenticated();
       }
 
       match /likePosts/{likePostId} {
         allow read: if isAuthenticated();
         allow create: if isUserAuthenticated(incomingData().likePostUserID);
-        allow update: if isAuthenticated();
-        allow delete: if isAuthenticated();
+        allow delete: if isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().likePostUserID);
       }
 
       match /drafts/{postID} {
@@ -67,18 +66,16 @@ service cloud.firestore {
       allow write: if isAuthenticated();
     }
 
-    match /{paths=**}/posts/{postID} {
+    match /{paths=**}/posts/{postId} {
       allow read;
     }
 
-    match /{paths=**}/chatrooms/{chatroomID} {
+    match /{paths=**}/chatrooms/{chatroomId} {
       allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
     }
 
     match /{paths=**}/messages/{messageId} {
-      allow read, write: if isAuthenticated();
-      // allow read: if isUserAuthenticated(existingData().userID) || isUserAuthenticated(existingData().messageReceiverID);
-      // allow write: if isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID);
+      allow read: if isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID);
     }
 
     match /{paths=**}/likePosts/{likePostId} {
