@@ -8,9 +8,10 @@ import {
 import { auth, db } from "../firebase/firebase";
 import { Notification, User } from "../types/types";
 import { setNotificationStates, setUserState } from "../utils/states";
+import firebase from "firebase/app";
 
 type AuthContextProps = {
-  currentUser: undefined | null | any;
+  currentUser: firebase.User | null | undefined;
   setCurrentUser: any;
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
@@ -28,37 +29,37 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<undefined | null | any>(
-    undefined
-  );
+  const [currentUser, setCurrentUser] = useState<
+    firebase.User | null | undefined
+  >(undefined);
   const [user, setUser] = useState<User>(null);
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      if (!user) return;
-
       setCurrentUser(user);
 
-      db.collection("users")
-        .doc(`${user.uid}`)
-        .get()
-        .then((snapshot) => {
-          setUser(setUserState(snapshot.data()));
-        });
+      if (user) {
+        db.collection("users")
+          .doc(`${user.uid}`)
+          .get()
+          .then((snapshot) => {
+            setUser(setUserState(snapshot.data()));
+          });
 
-      db.collection("users")
-        .doc(`${user.uid}`)
-        .collection("notifications")
-        .orderBy("createdAt", "desc")
-        .limit(30)
-        .get()
-        .then(async (snapshot) => {
-          if (!snapshot.docs) return;
-          setNotifications(
-            snapshot.docs.map((doc) => setNotificationStates(doc.data()))
-          );
-        });
+        db.collection("users")
+          .doc(`${user.uid}`)
+          .collection("notifications")
+          .orderBy("createdAt", "desc")
+          .limit(30)
+          .get()
+          .then(async (snapshot) => {
+            if (!snapshot.docs) return;
+            setNotifications(
+              snapshot.docs.map((doc) => setNotificationStates(doc.data()))
+            );
+          });
+      }
     });
   }, []);
 

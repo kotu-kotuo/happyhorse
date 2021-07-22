@@ -21,9 +21,8 @@ const setting: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!currentUser) {
-      router.push("/login");
-    }
+    if (currentUser === undefined) return;
+    if (currentUser === null) router.push("/login");
   }, [currentUser]);
 
   useEffect(() => {
