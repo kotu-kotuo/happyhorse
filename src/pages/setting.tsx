@@ -45,9 +45,6 @@ const setting: NextPage = () => {
           )
         );
     }
-    // else {
-    //   router.push("/login");
-    // }
   }, [currentUser]);
 
   const deleteAccount = async () => {

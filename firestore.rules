@@ -27,12 +27,12 @@ service cloud.firestore {
         }
       }
 
-      match /reviews/{postID} {
+      match /reviews/{reviewId} {
         allow read;
         allow create: if isUserAuthenticated(incomingData().postUserID) || isUserAuthenticated(incomingData().reviewerID);
       }
 
-      match /filters/{userID} {
+      match /filters/{filterId} {
         allow read: if isAuthenticated();
         allow create: if isAuthenticated();
         allow update: if isAuthenticated();
@@ -44,16 +44,17 @@ service cloud.firestore {
         allow delete: if isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().likePostUserID);
       }
 
-      match /drafts/{postID} {
+      match /drafts/{draftId} {
         allow read: if isUserAuthenticated(userID);
         allow create, update: if isUserAuthenticated(incomingData().userID);
         allow delete: if isUserAuthenticated(userID);
       }
 
       match /notifications/{notificationId} {
-        allow read: if isAuthenticated();
-        allow write: if isAuthenticated();
-        // allow write: if isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID) || isUserAuthenticated(incomingData().receiveUserID);
+        allow read: if isUserAuthenticated(userID);
+        allow create: if isUserAuthenticated(incomingData().sendUserID);
+        allow update: if isUserAuthenticated(userID);
+        allow delete: if isUserAuthenticated(userID);
       }
     }
 
@@ -80,7 +81,7 @@ service cloud.firestore {
     }
 
     match /{paths=**}/likePosts/{likePostId} {
-      allow read;
+      allow read: if isAuthenticated();
       allow write: if isAuthenticated();
     }
 
@@ -88,12 +89,6 @@ service cloud.firestore {
       allow read;
       allow create, update: if isAuthenticated();
     }
-
-    match /{paths=**}/notifications/{notificationId} {
-      allow read;
-      allow create, update: if isAuthenticated();
-    }
-
   }
 }
 

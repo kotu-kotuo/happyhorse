@@ -41,6 +41,7 @@ const clickHeart = async (
         ],
       })
     );
+    
     await db
       .collectionGroup("likePosts")
       .where("postID", "==", pid)
