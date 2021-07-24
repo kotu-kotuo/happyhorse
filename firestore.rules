@@ -33,9 +33,9 @@ service cloud.firestore {
       }
 
       match /filters/{filterId} {
-        allow read: if isAuthenticated();
-        allow create: if isAuthenticated();
-        allow update: if isAuthenticated();
+        allow read: if isUserAuthenticated(userID);
+        allow create: if isUserAuthenticated(userID);
+        allow update: if isUserAuthenticated(userID);
       }
 
       match /likePosts/{likePostId} {
