@@ -336,7 +336,6 @@ const Index: NextPage = ({ posts }: any) => {
                 user={user}
                 setUser={setUser}
                 router={router}
-                db={db}
                 notifications={notifications}
                 width={width}
                 setIsLoginModalOpen={setIsLoginModalOpen}

@@ -129,7 +129,7 @@ const PostEditForm: FC<Props> = (props) => {
         }}
       />
 
-      {post.postID && (
+      {post?.postID && (
         <>
           <div className="formItemContainer">
             <div className="postFormLabel">

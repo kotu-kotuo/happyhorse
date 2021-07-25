@@ -10,7 +10,6 @@ type Props = {
   currentUser;
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
-  db;
   notifications: Notification[];
   post: Post;
   isLoginModalOpen: boolean;
@@ -23,7 +22,6 @@ const LikeButton: FC<Props> = (props) => {
     currentUser,
     user,
     setUser,
-    db,
     notifications,
     post,
     isLoginModalOpen,

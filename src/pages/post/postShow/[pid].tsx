@@ -4,7 +4,6 @@ import { Layout } from "../../../components/organisms/Layout";
 import { NextRouter, useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
 import { setUserState } from "../../../utils/states";
-import { Post } from "../../../types/types";
 import clickHeart from "../../../functions/clickHeart";
 import SlickSlider from "../../../components/pages/postShow/SlickSlider";
 import MessageButtonHandle from "../../../components/pages/postShow/MessageButtonHandle";
@@ -60,7 +59,6 @@ const Show: NextPage = ({ post }: any) => {
                 currentUser={currentUser}
                 user={user}
                 setUser={setUser}
-                db={db}
                 notifications={notifications}
                 post={post}
                 isLoginModalOpen={isLoginModalOpen}
@@ -102,7 +100,6 @@ const Show: NextPage = ({ post }: any) => {
                   currentUser={currentUser}
                   user={user}
                   setUser={setUser}
-                  db={db}
                   notifications={notifications}
                   post={post}
                   isLoginModalOpen={isLoginModalOpen}

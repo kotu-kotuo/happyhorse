@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { Notification, Post, User } from "../../types/types";
 import Category from "../atoms/Category";
+import { db } from "../../firebase/firebase";
 
 type Props = {
   posts: Post[];
@@ -21,7 +22,6 @@ type Props = {
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
   router: NextRouter;
-  db;
   notifications: Notification[];
   width: number;
   setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -36,7 +36,6 @@ const Posts: FC<Props> = (props) => {
     user,
     setUser,
     router,
-    db,
     notifications,
     width,
     setIsLoginModalOpen,
