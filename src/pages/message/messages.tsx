@@ -32,6 +32,7 @@ import MyMessage from "../../components/pages/messages/MyMessage";
 import YourMessage from "../../components/pages/messages/YourMessage";
 import MessageSend from "../../components/pages/messages/MessageSend";
 import sendReviews from "../../functions/message/sendReviews";
+import useRedirectLogin from "../../hooks/useRedirectLogin";
 
 const messages: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -54,12 +55,7 @@ const messages: NextPage = () => {
   const [isOpenRatingModal, setIsOpenRatingModal] = useState(false);
   const ref = useRef(null);
 
-  //ログインしていなかったらリダイレクト
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/login");
-    }
-  }, [currentUser]);
+  useRedirectLogin(currentUser);
 
   //初期値セット
   useEffect(() => {

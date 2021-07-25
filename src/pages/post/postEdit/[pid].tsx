@@ -12,6 +12,7 @@ import { NextPage } from "next";
 import { Post } from "../../../types/types";
 import deletePost from "../../../functions/post/deletePost";
 import PostEditForm from "../../../components/organisms/PostEditForm";
+import useRedirectLogin from "../../../hooks/useRedirectLogin";
 
 const postEdit: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
@@ -36,11 +37,11 @@ const postEdit: NextPage = () => {
   const [price, setPrice] = useState(null);
   const router = useRouter();
 
+  useRedirectLogin(currentUser)
+
   useEffect(() => {
     if (currentUser) {
       setData();
-    } else {
-      router.push("/login");
     }
   }, [currentUser]);
 

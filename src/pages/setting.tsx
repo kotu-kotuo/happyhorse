@@ -9,6 +9,7 @@ import PasswordModal from "../components/pages/setting/PasswordModal";
 import { NextPage } from "next";
 import { postInitialValues } from "../utils/initialValues";
 import { Post } from "../types/types";
+import useRedirectLogin from "../hooks/useRedirectLogin";
 
 const setting: NextPage = () => {
   const [myPosts, setMyPosts] = useState<Post[]>([postInitialValues]);
@@ -19,6 +20,8 @@ const setting: NextPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const router = useRouter();
+
+  useRedirectLogin(currentUser);
 
   useEffect(() => {
     if (currentUser === undefined) return;

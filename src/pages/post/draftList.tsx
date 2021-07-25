@@ -7,12 +7,13 @@ import { Post } from "../../types/types";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
 import createdTime from "../../functions/createdTime";
-import { useRouter } from "next/router";
+import useRedirectLogin from "../../hooks/useRedirectLogin";
 
 const draftList = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
-  const router = useRouter();
+
+  useRedirectLogin(currentUser);
 
   useEffect(() => {
     if (currentUser) {
@@ -23,8 +24,6 @@ const draftList = () => {
         .onSnapshot((snapshot) => {
           setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
         });
-    } else {
-      router.push("/login");
     }
   }, [currentUser]);
 

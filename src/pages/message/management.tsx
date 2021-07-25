@@ -18,7 +18,7 @@ import { NextPage } from "next";
 import MyPostList from "../../components/pages/management/MyPostList";
 import MyChatroomList from "../../components/pages/management/MyChatroomList";
 import SendMessageChatroomList from "../../components/pages/management/SendMessageChatroomList";
-import { useRouter } from "next/router";
+import useRedirectLogin from "../../hooks/useRedirectLogin";
 
 const management: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
@@ -37,7 +37,8 @@ const management: NextPage = () => {
   const [reviewsOnHold, setReviewsOnHold] = useState<Review[]>([
     reviewInitialValues,
   ]);
-  const router = useRouter();
+
+  useRedirectLogin(currentUser);
 
   useEffect(() => {
     if (currentUser) {
@@ -70,8 +71,6 @@ const management: NextPage = () => {
             snapshot.docs.map((doc) => setChatroomStates(doc.data()))
           )
         );
-    } else {
-      router.push("/login");
     }
 
     db.collection("reviewsOnHold")

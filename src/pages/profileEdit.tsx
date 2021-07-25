@@ -5,6 +5,7 @@ import { NextRouter, useRouter } from "next/router";
 import { NextPage } from "next";
 import editProfile from "../functions/editProfile";
 import ProfileImageUpload from "../components/pages/ProfileEdit/ProfileImageUpload";
+import useRedirectLogin from "../hooks/useRedirectLogin";
 
 const profileEdit: NextPage = () => {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -14,11 +15,11 @@ const profileEdit: NextPage = () => {
   const [profileText, setProfileText] = useState<string>("");
   const router: NextRouter = useRouter();
 
+  useRedirectLogin(currentUser);
+
   useEffect(() => {
     if (user) {
       setProfileText(user.profileText);
-    } else {
-      router.push("/login");
     }
   }, [user]);
 

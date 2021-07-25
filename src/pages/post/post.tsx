@@ -10,6 +10,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import posting from "../../functions/post/posting";
 import RequiredMark from "../../components/atoms/RequiredMark";
+import useRedirectLogin from "../../hooks/useRedirectLogin";
 // import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const Post: NextPage = () => {
@@ -36,13 +37,7 @@ const Post: NextPage = () => {
   const [isDraft, setIsDraft] = useState(false);
   const router = useRouter();
 
-  //ログインしてなかったらリダイレクト
-  //TODO: ログインしてても遷移してしまう
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/login");
-    }
-  }, [currentUser]);
+  useRedirectLogin(currentUser);
 
   //posiID設定
   useEffect(() => {

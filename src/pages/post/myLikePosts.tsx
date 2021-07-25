@@ -7,12 +7,13 @@ import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
 import { NextPage } from "next";
 import PostListItem from "../../components/molecules/PostListItem";
-import { useRouter } from "next/router";
+import useRedirectLogin from "../../hooks/useRedirectLogin";
 
 const myLikePosts: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
-  const router = useRouter();
+
+  useRedirectLogin(currentUser);
 
   useEffect(() => {
     if (currentUser) {
@@ -24,8 +25,6 @@ const myLikePosts: NextPage = () => {
         .then((snapshot) => {
           setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
         });
-    } else {
-      router.push("/login");
     }
   }, [currentUser]);
 

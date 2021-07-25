@@ -8,11 +8,14 @@ import { setPostStates } from "../../utils/states";
 import { NextPage } from "next";
 import PostListItem from "../../components/molecules/PostListItem";
 import { useRouter } from "next/router";
+import useRedirectLogin from "../../hooks/useRedirectLogin";
 
 const myPostList: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState<Post[]>([postInitialValues]);
   const router = useRouter();
+
+  useRedirectLogin(currentUser);
 
   useLayoutEffect(() => {
     if (currentUser) {
@@ -23,8 +26,6 @@ const myPostList: NextPage = () => {
         .onSnapshot((snapshot) => {
           setPosts(snapshot.docs.map((doc) => setPostStates(doc.data())));
         });
-    } else {
-      router.push("/login");
     }
   }, [currentUser]);
 

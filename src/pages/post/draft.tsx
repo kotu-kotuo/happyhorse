@@ -11,6 +11,7 @@ import { NextPage } from "next";
 import { Post } from "../../types/types";
 import posting from "../../functions/post/posting";
 import PostEditForm from "../../components/organisms/PostEditForm";
+import useRedirectLogin from "../../hooks/useRedirectLogin";
 
 const draft: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -36,6 +37,8 @@ const draft: NextPage = () => {
   const [isDraft, setIsDraft] = useState(false);
   const router = useRouter();
 
+  useRedirectLogin(currentUser);
+
   useEffect(() => {
     if (currentUser && router.query.pid) {
       db.collection("users")
@@ -48,12 +51,6 @@ const draft: NextPage = () => {
           await setPost(setPostStates(snapshot.data()));
           await setPreviewsURL(snapshot.data().images);
         });
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (!currentUser) {
-      router.push("/login");
     }
   }, [currentUser]);
 
