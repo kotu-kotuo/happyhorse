@@ -90,33 +90,32 @@ const deleteAccountData = async (
         .get()
         .then((snapshot) =>
           snapshot.docs.map((doc) => {
-            db.collectionGroup("chatrooms")
-              .where("postID", "==", doc.data().postID)
-              .get()
-              .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
-            db.collectionGroup("messages")
-              .where("postID", "==", doc.data().postID)
-              .get()
-              .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
-            db.collectionGroup("likePosts")
-              .where("postID", "==", doc.data().postID)
-              .get()
-              .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
-            doc
-              .data()
-              .likeUserIDs.map((likeUserID) =>
-                db.collection("users").doc(`${likeUserID}`)
-              )
-              .update({
-                likePostIDs: firebase.firestore.FieldValue.arrayRemove(
-                  `${doc.data().postID}`
-                ),
-              });
-
             doc.ref.delete();
+            // db.collectionGroup("chatrooms")
+            //   .where("postID", "==", doc.data().postID)
+            //   .get()
+            //   .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+
+            // db.collectionGroup("messages")
+            //   .where("postID", "==", doc.data().postID)
+            //   .get()
+            //   .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+
+            // db.collectionGroup("likePosts")
+            //   .where("postID", "==", doc.data().postID)
+            //   .get()
+            //   .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
+
+            // doc
+            //   .data()
+            //   .likeUserIDs.map((likeUserID) =>
+            //     db.collection("users").doc(`${likeUserID}`)
+            //   )
+            //   .update({
+            //     likePostIDs: firebase.firestore.FieldValue.arrayRemove(
+            //       `${doc.data().postID}`
+            //     ),
+            //   });
           })
         );
 

@@ -42,7 +42,7 @@ const LikeButton: FC<Props> = (props) => {
           className="flex items-center mb-4 cursor-pointer hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
             currentUser
-              ? clickHeart(e, currentUser, user, setUser, db, notifications)
+              ? clickHeart(e, currentUser, user, setUser, notifications)
               : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}
@@ -67,7 +67,7 @@ const LikeButton: FC<Props> = (props) => {
           className="cursor-pointer mb-0.5 hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
             currentUser
-              ? clickHeart(e, currentUser, user, setUser, db, notifications)
+              ? clickHeart(e, currentUser, user, setUser, notifications)
               : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}

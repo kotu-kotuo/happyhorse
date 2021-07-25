@@ -157,7 +157,6 @@ const Posts: FC<Props> = (props) => {
                       user,
                       setUser,
                       router,
-                      db,
                       notifications
                     )
                   : setIsLoginModalOpen(true);

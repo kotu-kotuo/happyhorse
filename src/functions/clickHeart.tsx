@@ -2,13 +2,14 @@
 import firebase from "firebase/app";
 import { Dispatch, SetStateAction } from "react";
 import { Notification, User } from "../types/types";
+import { db } from "../firebase/firebase";
+import { setUserState } from "../utils/states";
 
 const clickHeart = async (
   e: React.MouseEvent<HTMLElement>,
-  currentUser,
+  currentUser: { uid: string },
   user: User,
   setUser: Dispatch<SetStateAction<User>>,
-  db,
   notifications: Notification[]
 ) => {
   const pid = e.currentTarget.getAttribute("data-id");
@@ -26,7 +27,7 @@ const clickHeart = async (
       .doc(`${currentUser.uid}`)
       .get()
       .then((snapshot) => {
-        setUser(snapshot.data());
+        setUser(setUserState(snapshot.data()));
       });
 
     const posts = await db
@@ -41,7 +42,7 @@ const clickHeart = async (
         ],
       })
     );
-    
+
     await db
       .collectionGroup("likePosts")
       .where("postID", "==", pid)
@@ -84,7 +85,7 @@ const clickHeart = async (
       .doc(`${currentUser.uid}`)
       .get()
       .then((snapshot) => {
-        setUser(snapshot.data());
+        setUser(setUserState(snapshot.data()));
       });
 
     await db

@@ -14,15 +14,15 @@ service cloud.firestore {
         allow delete: if isUserAuthenticated(incomingData().userID);
 
         match /chatrooms/{sendUserID} {
-          allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID);
+          allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
           allow create: if isUserAuthenticated(incomingData().sendUserID) && incomingData().messageCount == 1;
-          allow update: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID);
+          allow update: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
           allow delete: if isUserAuthenticated(incomingData().postUserID);
 
           match /messages/{messageId} {
             allow read: if isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID);
             allow create: if isAuthenticated() && isUserAuthenticated(incomingData().userID) && incomingData().postID == postID;
-            allow delete: if (isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID) && incomingData().postID == postID;
+            allow delete: if (isUserAuthenticated(incomingData().userID) || isUserAuthenticated(incomingData().messageReceiverID)) && incomingData().postID == postID;
           }
         }
       }
@@ -74,7 +74,7 @@ service cloud.firestore {
     }
 
     match /{paths=**}/chatrooms/{chatroomId} {
-      allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID);
+      allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
     }
 
     match /{paths=**}/messages/{messageId} {
