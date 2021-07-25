@@ -85,6 +85,7 @@ export type Review = {
   reviewerID: string;
   reviewerName: string;
   reviewerAvatar: string;
+  receiverID: string;
   rating: string;
   reviewText: string;
   createdAt: string | any;

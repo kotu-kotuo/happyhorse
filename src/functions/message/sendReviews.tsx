@@ -16,8 +16,6 @@ const sendReviews = (
   setMessages: Dispatch<SetStateAction<Message[]>>
 ) => {
   reviewsOnHold.map((review) => {
-    console.log(review.reviewText);
-
     if (review.postUserID === review.reviewerID) {
       db.collection("users")
         .doc(`${post.clientUserID}`)
@@ -31,24 +29,25 @@ const sendReviews = (
           reviewerID: review.reviewerID,
           reviewerName: review.reviewerName,
           reviewerAvatar: review.reviewerAvatar,
+          receiverID: post.clientUserID,
           rating: review.rating,
           reviewText: review.reviewText,
           createdAt: review.createdAt,
         });
 
-      if (review.rating === "good") {
-        db.collection("users")
-          .doc(`${post.clientUserID}`)
-          .update({
-            good: firebase.firestore.FieldValue.increment(1),
-          });
-      } else {
-        db.collection("users")
-          .doc(`${post.clientUserID}`)
-          .update({
-            bad: firebase.firestore.FieldValue.increment(1),
-          });
-      }
+      // if (review.rating === "good") {
+      //   db.collection("users")
+      //     .doc(`${post.clientUserID}`)
+      //     .update({
+      //       good: firebase.firestore.FieldValue.increment(1),
+      //     });
+      // } else {
+      //   db.collection("users")
+      //     .doc(`${post.clientUserID}`)
+      //     .update({
+      //       bad: firebase.firestore.FieldValue.increment(1),
+      //     });
+      // }
     } else {
       db.collection("users")
         .doc(`${post.userID}`)
@@ -62,31 +61,27 @@ const sendReviews = (
           reviewerID: review.reviewerID,
           reviewerName: review.reviewerName,
           reviewerAvatar: review.reviewerAvatar,
+          receiverID: post.userID,
           rating: review.rating,
           reviewText: review.reviewText,
           createdAt: review.createdAt,
         });
 
-      if (review.rating === "good") {
-        db.collection("users")
-          .doc(`${post.userID}`)
-          .update({
-            good: firebase.firestore.FieldValue.increment(1),
-          });
-      } else {
-        db.collection("users")
-          .doc(`${post.userID}`)
-          .update({
-            bad: firebase.firestore.FieldValue.increment(1),
-          });
-      }
+      // if (review.rating === "good") {
+      //   db.collection("users")
+      //     .doc(`${post.userID}`)
+      //     .update({
+      //       good: firebase.firestore.FieldValue.increment(1),
+      //     });
+      // } else {
+      //   db.collection("users")
+      //     .doc(`${post.userID}`)
+      //     .update({
+      //       bad: firebase.firestore.FieldValue.increment(1),
+      //     });
+      // }
     }
   });
-
-  db.collection("reviewsOnHold")
-    .where("postID", "==", post.postID)
-    .get()
-    .then((snapshot) => snapshot.docs.forEach((doc) => doc.ref.delete()));
 
   db.collection("users")
     .doc(`${post.userID}`)

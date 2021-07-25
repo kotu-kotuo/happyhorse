@@ -15,6 +15,8 @@ const submitReview = (
   setIsOpenRatingModal: Dispatch<SetStateAction<boolean>>
 ) => {
   e.preventDefault();
+  const receiverID =
+    currentUser.uid === post.userID ? post.clientUserID : post.userID;
 
   db.collection("reviewsOnHold").add({
     postID: post.postID,
@@ -24,6 +26,7 @@ const submitReview = (
     reviewerID: currentUser.uid,
     reviewerName: user.username,
     reviewerAvatar: user.avatar,
+    receiverID: receiverID,
     rating: rateValue,
     reviewText: reviewText,
     createdAt: firebase.firestore.FieldValue.serverTimestamp(),

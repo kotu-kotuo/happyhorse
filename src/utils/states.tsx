@@ -80,6 +80,7 @@ export const setReviewStates = (data) => ({
   reviewerID: data.reviewerID,
   reviewerName: data.reviewerName,
   reviewerAvatar: data.reviewerAvatar,
+  receiverID: data.receiverID,
   rating: data.rating,
   reviewText: data.reviewText,
   createdAt: data.createdAt,

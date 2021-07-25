@@ -61,7 +61,7 @@ service cloud.firestore {
     match /reviewsOnHold/{reviewsOnHoldId} {
       allow read: if isAuthenticated();
       allow create: if isUserAuthenticated(incomingData().reviewerID);
-      allow delete: if isUserAuthenticated(incomingData().reviewerID) || isUserAuthenticated(incomingData().postUserID);
+      // allow delete: if isUserAuthenticated(incomingData().reviewerID) || isUserAuthenticated(incomingData().postUserID);
     }
 
     match /{paths=**}/reviewsOnHold/{reviewsOnHoldId} {

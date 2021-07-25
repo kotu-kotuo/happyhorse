@@ -201,6 +201,7 @@ export const reviewInitialValues = {
   reviewerID: "",
   reviewerName: "",
   reviewerAvatar: "",
+  receiverID: "",
   rating: "",
   reviewText: "",
   createdAt: "",
