@@ -18,6 +18,12 @@ export type Post = {
   images: Array<string>;
   title: string;
   postText: string;
+  video1URL?: string;
+  video1title?: string;
+  video2URL?: string;
+  video2Title?: string;
+  video3URL?: string;
+  video3Title?: string;
   horseName: string;
   category: string;
   breed: string;
