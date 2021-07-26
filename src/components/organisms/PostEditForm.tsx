@@ -3,6 +3,7 @@ import { RiCloseCircleFill, RiImageAddFill } from "react-icons/ri";
 import { Post } from "../../types/types";
 import { filterInitialValues } from "../../utils/initialValues";
 import RequiredMark from "../atoms/RequiredMark";
+import AttachVideo from "./AttachVideo";
 
 type Props = {
   previewsURL: string[];
@@ -12,6 +13,12 @@ type Props = {
   setImages: Dispatch<SetStateAction<string[]>>;
   setTitle: Dispatch<SetStateAction<string>>;
   setPostText: Dispatch<SetStateAction<string>>;
+  setVideo1URL: Dispatch<SetStateAction<string>>;
+  setVideo1Title: Dispatch<SetStateAction<string>>;
+  setVideo2URL: Dispatch<SetStateAction<string>>;
+  setVideo2Title: Dispatch<SetStateAction<string>>;
+  setVideo3URL: Dispatch<SetStateAction<string>>;
+  setVideo3Title: Dispatch<SetStateAction<string>>;
   setHorseName: Dispatch<SetStateAction<string>>;
   setCategory: Dispatch<SetStateAction<string>>;
   setBreed: Dispatch<SetStateAction<string>>;
@@ -37,6 +44,12 @@ const PostEditForm: FC<Props> = (props) => {
     setImages,
     setTitle,
     setPostText,
+    setVideo1URL,
+    setVideo1Title,
+    setVideo2URL,
+    setVideo2Title,
+    setVideo3URL,
+    setVideo3Title,
     setHorseName,
     setCategory,
     setBreed,
@@ -159,6 +172,19 @@ const PostEditForm: FC<Props> = (props) => {
                 setPostText(e.target.value)
               }
               className="h-36 rounded-md inputText whitespace-pre"
+            />
+          </div>
+
+          <div className="formItemContainer">
+            <div className="postFormLabel mb-3">YouTube動画</div>
+            <AttachVideo
+              post={post}
+              setVideo1URL={setVideo1URL}
+              setVideo1Title={setVideo1Title}
+              setVideo2URL={setVideo2URL}
+              setVideo2Title={setVideo2Title}
+              setVideo3URL={setVideo3URL}
+              setVideo3Title={setVideo3Title}
             />
           </div>
 

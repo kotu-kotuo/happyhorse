@@ -19,7 +19,7 @@ export type Post = {
   title: string;
   postText: string;
   video1URL?: string;
-  video1title?: string;
+  video1Title?: string;
   video2URL?: string;
   video2Title?: string;
   video3URL?: string;

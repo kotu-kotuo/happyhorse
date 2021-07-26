@@ -1,6 +1,10 @@
 const alertMessage = (
   images: string[],
+  title: string,
   postText: string,
+  video1Title: string,
+  video2Title: string,
+  video3Title: string,
   horseName: string,
   category: string,
   breed: string,
@@ -17,11 +21,26 @@ const alertMessage = (
   if (images.length === 0) {
     alert("画像を選択してください");
   }
+  if (postText.length > 2000) {
+    alert("本文は2000字以内でお願いします");
+  }
+  if (title.length > 20) {
+    alert("タイトルは20字以内でお願いします");
+  }
   if (postText.length == 0) {
     alert("本文を記入してください");
   }
+  if (video1Title.length > 40) {
+    alert("動画のタイトルは40字以内でお願いします");
+  }
+  if (video2Title.length > 40) {
+    alert("動画のタイトルは40字以内でお願いします");
+  }
+  if (video3Title.length > 40) {
+    alert("動画のタイトルは40字以内でお願いします");
+  }
   if (horseName.length === 0) {
-    ("馬の名前を記入してください");
+    alert("馬の名前を記入してください");
   }
   if (horseName.length > 20) {
     alert("馬の名前は20字まででお願いします");

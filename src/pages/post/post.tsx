@@ -136,6 +136,12 @@ const Post: NextPage = () => {
                 postId,
                 title,
                 postText,
+                video1URL,
+                video1Title,
+                video2URL,
+                video2Title,
+                video3URL,
+                video3Title,
                 horseName,
                 category,
                 breed,
@@ -241,6 +247,7 @@ const Post: NextPage = () => {
             <div className="formItemContainer">
               <div className="postFormLabel mb-3">YouTube動画</div>
               <AttachVideo
+                post={null}
                 setVideo1URL={setVideo1URL}
                 setVideo1Title={setVideo1Title}
                 setVideo2URL={setVideo2URL}

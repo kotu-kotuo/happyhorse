@@ -2,8 +2,10 @@ import React, { Dispatch, FC, SetStateAction } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { RiYoutubeLine } from "react-icons/ri";
+import { Post } from "../../types/types";
 
 type Props = {
+  post: Post;
   setVideo1URL: Dispatch<SetStateAction<string>>;
   setVideo1Title: Dispatch<SetStateAction<string>>;
   setVideo2URL: Dispatch<SetStateAction<string>>;
@@ -14,6 +16,7 @@ type Props = {
 
 const AttachVideo: FC<Props> = (props) => {
   const {
+    post,
     setVideo1URL,
     setVideo1Title,
     setVideo2URL,
@@ -61,6 +64,7 @@ const AttachVideo: FC<Props> = (props) => {
                       type="text"
                       name="url"
                       className="inputText rounded-md mb-2"
+                      defaultValue={post?.video1URL}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setVideo1URL(e.target.value);
                       }}
@@ -70,6 +74,7 @@ const AttachVideo: FC<Props> = (props) => {
                       type="text"
                       name="videoTitle"
                       className="inputText rounded-md"
+                      defaultValue={post?.video1Title}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setVideo1Title(e.target.value);
                       }}
@@ -86,6 +91,7 @@ const AttachVideo: FC<Props> = (props) => {
                       type="text"
                       name="url"
                       className="inputText rounded-md mb-2"
+                      defaultValue={post?.video2URL}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setVideo2URL(e.target.value);
                       }}
@@ -95,6 +101,7 @@ const AttachVideo: FC<Props> = (props) => {
                       type="text"
                       name="videoTitle"
                       className="inputText rounded-md"
+                      defaultValue={post?.video2Title}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setVideo2Title(e.target.value);
                       }}
@@ -111,6 +118,7 @@ const AttachVideo: FC<Props> = (props) => {
                       type="text"
                       name="url"
                       className="inputText rounded-md mb-2"
+                      defaultValue={post?.video3URL}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setVideo3URL(e.target.value);
                       }}
@@ -120,6 +128,7 @@ const AttachVideo: FC<Props> = (props) => {
                       type="text"
                       name="videoTitle"
                       className="inputText rounded-md"
+                      defaultValue={post?.video3Title}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setVideo3Title(e.target.value);
                       }}
