@@ -11,7 +11,7 @@ service cloud.firestore {
         allow read;
         allow create: if isUserAuthenticated(incomingData().userID);
         allow update: if isUserAuthenticated(incomingData().userID) || request.auth.uid in incomingData().sendMessageUserIDs || request.auth.uid in getAfterData(documentPath(["users",incomingData().userID,"posts",incomingData().postID])).sendMessageUserIDs;
-        allow delete: if isUserAuthenticated(incomingData().userID);
+        allow delete: if isUserAuthenticated(userID);
 
         match /chatrooms/{sendUserID} {
           allow read: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));

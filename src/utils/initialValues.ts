@@ -135,7 +135,7 @@ export const postInitialValues = {
   title: "",
   postText: "",
   video1URL: "",
-  video1title: "",
+  video1Title: "",
   video2URL: "",
   video2Title: "",
   video3URL: "",

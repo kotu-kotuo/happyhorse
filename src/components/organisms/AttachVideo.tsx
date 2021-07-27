@@ -61,7 +61,7 @@ const AttachVideo: FC<Props> = (props) => {
                   <div className="w-full">
                     <div className="postFormLabel">URL</div>
                     <input
-                      type="text"
+                      type="url"
                       name="url"
                       className="inputText rounded-md mb-2"
                       defaultValue={post?.video1URL}
@@ -88,7 +88,7 @@ const AttachVideo: FC<Props> = (props) => {
                   <div className="w-full">
                     <div className="postFormLabel">URL</div>
                     <input
-                      type="text"
+                      type="url"
                       name="url"
                       className="inputText rounded-md mb-2"
                       defaultValue={post?.video2URL}
@@ -115,7 +115,7 @@ const AttachVideo: FC<Props> = (props) => {
                   <div className="w-full">
                     <div className="postFormLabel">URL</div>
                     <input
-                      type="text"
+                      type="url"
                       name="url"
                       className="inputText rounded-md mb-2"
                       defaultValue={post?.video3URL}

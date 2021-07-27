@@ -9,7 +9,7 @@ export const setPostStates = (data) => {
       title: data.title,
       postText: data.postText,
       video1URL: data.video1URL,
-      video1title: data.video1Title,
+      video1Title: data.video1Title,
       video2URL: data.video2URL,
       video2Title: data.video2Title,
       video3URL: data.video3URL,

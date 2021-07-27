@@ -13,6 +13,7 @@ import { NextPage } from "next";
 import "slick-carousel/slick/slick.css";
 import PostShowTable from "../../../components/pages/postShow/PostShowTable";
 import admin from "../../../firebase/admin";
+import VideoList from "../../../components/pages/postShow/VideoList";
 
 const Show: NextPage = ({ post }: any) => {
   const router: NextRouter = useRouter();
@@ -40,7 +41,6 @@ const Show: NextPage = ({ post }: any) => {
   return (
     <Layout title={`${post.title}` || ""}>
       {console.log(post)}
-      {console.log(post.images)}
       {post && (
         <>
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">
@@ -75,13 +75,21 @@ const Show: NextPage = ({ post }: any) => {
           <div className="flex justify-between md:mt-10">
             <div className="w-full md:w-2/3 mb-20 px-4 pl-4 md:pr-0">
               <div className="max-w-2xl xl:ml-6 lg:ml-10 md:ml-6">
-                <div className="fontSize-xl mt-2 mb-4 text-gray-900 font-semibold md:mt-6">
+                <div className="fontSize-xl mt-2 mb-6 text-gray-900 font-semibold md:mt-6">
                   {post.title}
                 </div>
                 <div className="fontSize-base text-gray-700 whitespace-pre-wrap">
                   {post.postText}
                 </div>
               </div>
+              <VideoList
+                video1URL={post.video1URL}
+                video1Title={post.video1Title}
+                video2URL={post.video2URL}
+                video2Title={post.video2Title}
+                video3URL={post.video3URL}
+                video3Title={post.video3Title}
+              />
               <div className="mt-20 mb-10">
                 <PostShowTable post={post} postUser={postUser} />
               </div>
