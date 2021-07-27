@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import posting from "../../functions/post/posting";
 import RequiredMark from "../../components/atoms/RequiredMark";
 import useRedirectLogin from "../../hooks/useRedirectLogin";
-// import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import AttachVideo from "../../components/organisms/AttachVideo";
 
 const Post: NextPage = () => {
   const { user, currentUser } = useContext(AuthContext);
@@ -21,6 +21,12 @@ const Post: NextPage = () => {
   const [postId, setPostId] = useState("");
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
+  const [video1URL, setVideo1URL] = useState("");
+  const [video1Title, setVideo1Title] = useState("");
+  const [video2URL, setVideo2URL] = useState("");
+  const [video2Title, setVideo2Title] = useState("");
+  const [video3URL, setVideo3URL] = useState("");
+  const [video3Title, setVideo3Title] = useState("");
   const [horseName, setHorseName] = useState("");
   const [category, setCategory] = useState("");
   const [breed, setBreed] = useState("");
@@ -130,6 +136,12 @@ const Post: NextPage = () => {
                 postId,
                 title,
                 postText,
+                video1URL,
+                video1Title,
+                video2URL,
+                video2Title,
+                video3URL,
+                video3Title,
                 horseName,
                 category,
                 breed,
@@ -160,11 +172,8 @@ const Post: NextPage = () => {
               </div>
             </div>
             <div className="flex flex-wrap mb-2">
-              {/* <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable> */}
               {previewsURL &&
                 previewsURL.map((previewURL, index) => (
-                  // <Draggable>
                   <div key={index} className="mr-6">
                     <img
                       src={previewURL}
@@ -174,10 +183,7 @@ const Post: NextPage = () => {
                       <RiCloseCircleFill className="text-gray-500 text-2xl opacity-80 ml-auto -mt-3 cursor-pointer mb-4" />
                     </div>
                   </div>
-                  // </Draggable>
                 ))}
-              {/* </Droppable>
-          </DragDropContext> */}
             </div>
             <div className="formItemContainer">
               <label
@@ -236,6 +242,19 @@ const Post: NextPage = () => {
               <div className="text-xs text-gray-500 text-right">
                 {`${postText.length}` + "/2000"}
               </div>
+            </div>
+
+            <div className="formItemContainer">
+              <div className="postFormLabel mb-3">YouTube動画</div>
+              <AttachVideo
+                post={null}
+                setVideo1URL={setVideo1URL}
+                setVideo1Title={setVideo1Title}
+                setVideo2URL={setVideo2URL}
+                setVideo2Title={setVideo2Title}
+                setVideo3URL={setVideo3URL}
+                setVideo3Title={setVideo3Title}
+              />
             </div>
 
             <div className="formItemContainer">

@@ -21,6 +21,12 @@ const draft: NextPage = () => {
   const [post, setPost] = useState<Post>(postInitialValues);
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
+  const [video1URL, setVideo1URL] = useState("");
+  const [video1Title, setVideo1Title] = useState("");
+  const [video2URL, setVideo2URL] = useState("");
+  const [video2Title, setVideo2Title] = useState("");
+  const [video3URL, setVideo3URL] = useState("");
+  const [video3Title, setVideo3Title] = useState("");
   const [horseName, setHorseName] = useState("");
   const [category, setCategory] = useState("");
   const [breed, setBreed] = useState("");
@@ -58,6 +64,12 @@ const draft: NextPage = () => {
     if (post) {
       setTitle(post.title);
       setPostText(post.postText);
+      setVideo1URL(post.video1URL);
+      setVideo1Title(post.video1Title);
+      setVideo2URL(post.video2URL);
+      setVideo2Title(post.video2Title);
+      setVideo3URL(post.video3URL);
+      setVideo3Title(post.video3Title);
       setHorseName(post.horseName);
       setCategory(post.category);
       setBreed(post.breed);
@@ -161,6 +173,12 @@ const draft: NextPage = () => {
                 post.postID,
                 title,
                 postText,
+                video1URL,
+                video1Title,
+                video2URL,
+                video2Title,
+                video3URL,
+                video3Title,
                 horseName,
                 category,
                 breed,
@@ -188,6 +206,12 @@ const draft: NextPage = () => {
               setImages={setImages}
               setTitle={setTitle}
               setPostText={setPostText}
+              setVideo1URL={setVideo1URL}
+              setVideo1Title={setVideo1Title}
+              setVideo2URL={setVideo2URL}
+              setVideo2Title={setVideo2Title}
+              setVideo3URL={setVideo3URL}
+              setVideo3Title={setVideo3Title}
               setHorseName={setHorseName}
               setCategory={setCategory}
               setBreed={setBreed}

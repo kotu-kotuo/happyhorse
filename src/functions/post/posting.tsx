@@ -13,6 +13,12 @@ const posting = async (
   postId: string,
   title: string,
   postText: string,
+  video1URL: string,
+  video1Title: string,
+  video2URL: string,
+  video2Title: string,
+  video3URL: string,
+  video3Title: string,
   horseName: string,
   category: string,
   breed: string,
@@ -51,6 +57,12 @@ const posting = async (
           images: [],
           title: title,
           postText: postText,
+          video1URL: video1URL,
+          video1Title: video1Title,
+          video2URL: video2URL,
+          video2Title: video2Title,
+          video3URL: video3URL,
+          video3Title: video3Title,
           horseName: horseName,
           category: category,
           breed: breed,
@@ -91,7 +103,12 @@ const posting = async (
   } else {
     if (
       images.length !== 0 &&
+      title.length <= 40 &&
       postText &&
+      postText.length <= 2000 &&
+      video1Title.length <= 40 &&
+      video2Title.length <= 40 &&
+      video3Title.length <= 40 &&
       horseName &&
       horseName.length <= 20 &&
       category &&
@@ -120,6 +137,12 @@ const posting = async (
             images: [],
             title: title,
             postText: postText,
+            video1URL: video1URL,
+            video1Title: video1Title,
+            video2URL: video2URL,
+            video2Title: video2Title,
+            video3URL: video3URL,
+            video3Title: video3Title,
             horseName: horseName,
             category: category,
             breed: breed,
@@ -160,7 +183,11 @@ const posting = async (
     } else {
       alertMessage(
         images,
+        title,
         postText,
+        video1Title,
+        video2Title,
+        video3Title,
         horseName,
         category,
         breed,
