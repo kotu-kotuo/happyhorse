@@ -1,24 +1,31 @@
 import Link from "next/link";
 
 const Footer = (props) => {
-  const { footerHeight } = props;
+  const { footerHeight, heightFooter } = props;
 
   return (
     <div>
       <footer
-        className="w-full text-center bottom-0 shadow-md absolute py-4 bg-gray-50 mb-14 sm:mb-0"
+        className="w-full text-center bottom-0 shadow-md absolute py-4 bg-gray-50 sm:mb-0 mb-14"
         ref={footerHeight}
       >
-        <img
-          src="/hh-logo2.png"
-          className="mx-auto object-cover h-10 w-auto pr-8 sm:h-14"
-        />
-        <div className="sm:flex sm:justify-center py-4 text-gray-900 space-y-2 sm:space-y-0">
+        <Link href="/">
+          <img
+            src="/hh-logo2.png"
+            className="mx-auto object-cover h-10 w-auto pr-8 sm:h-14"
+          />
+        </Link>
+        <div className="sm:flex sm:justify-center py-4 text-gray-900">
+          <Link href="/about">
+            <p className="mx-4 cursor-pointer fontSize-base mb-2">
+              happy horseについて
+            </p>
+          </Link>
           <Link href="/terms">
-            <p className="mx-4 cursor-pointer fontSize-base">利用規約</p>
+            <p className="mx-4 cursor-pointer fontSize-base mb-2">利用規約</p>
           </Link>
           <Link href="/privacyPolicy">
-            <p className="mx-4 cursor-pointer fontSize-base">
+            <p className="mx-4 cursor-pointer fontSize-base mb-2">
               プライバシーポリシー
             </p>
           </Link>
@@ -32,12 +39,13 @@ const Footer = (props) => {
         </div>
         <div className="pb-2 pt-1.5">©︎ happy horse</div>
       </footer>
-      <div
-        style={{
-          height: footerHeight.current?.getBoundingClientRect().height + 40,
-        }}
-      ></div>
-      {console.log(footerHeight.current?.getBoundingClientRect().height)}
+      {heightFooter && (
+        <div
+          style={{
+            height: heightFooter + 40,
+          }}
+        ></div>
+      )}
     </div>
   );
 };

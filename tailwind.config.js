@@ -1,11 +1,15 @@
 module.exports = {
   purge: ["./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
+  mode: "jit",
   theme: {
     extend: {
       colors: {
         mainGreen: "#77c649",
         subBlue: "#49ADF7",
+      },
+      backgroundImage: {
+        "hero-image": "url('/hero-image1.jpg')",
       },
       width: {
         18: "4.5rem",
