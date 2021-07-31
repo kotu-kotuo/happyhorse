@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import Footer from "../components/organisms/Footer";
+import Link from "next/link";
 
 const about = () => {
   const footerHeight = useRef(null);
@@ -33,16 +34,20 @@ const about = () => {
 
       <div className="my-10 sm:my-20">
         <div className="flex flex-col sm:flex-row justify-center text-center">
-          <div className="mx-auto my-3 sm:my-0 sm:mx-0">
-            <div className="font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
-              新規登録
+          <Link href="/signup">
+            <div className="mx-auto my-3 sm:my-0 sm:mx-0">
+              <div className="font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
+                新規登録
+              </div>
             </div>
-          </div>
-          <div className="mx-auto my-3 sm:my-0 sm:mx-0">
-            <div className="font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
-              ログイン
+          </Link>
+          <Link href="/login">
+            <div className="mx-auto my-3 sm:my-0 sm:mx-0">
+              <div className="font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
+                ログイン
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
 
