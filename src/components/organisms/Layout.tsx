@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./Header";
 import LoginModal from "../molecules/LoginModal";
@@ -23,12 +24,19 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
     useContext(AuthContext);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const footerHeight = useRef(null);
+  const [heightFooter, setHeightFooter] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       setWidth(window.innerWidth);
     }
   }, []);
+
+  useEffect(() => {
+    if (footerHeight) {
+      setHeightFooter(footerHeight.current?.clientHeight);
+    }
+  }, [footerHeight]);
 
   return (
     <div
@@ -71,12 +79,18 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
         <>
           <div className="hidden sm:block">
             <div className="h-12 pt-3.5 bg-mainGreen text-gray-50 text-center text-sm block">
-              happy horseは、馬の売買が無料で簡単にできるプラットフォームです
+              <span className="border-b">
+                <Link href="/about">happy horse</Link>
+              </span>
+              は、馬の売買が無料で簡単にできるプラットフォームです
             </div>
           </div>
           <div className="sm:hidden">
             <div className="h-10 pt-3.5 bg-mainGreen text-gray-50 text-center text-xs block">
-              happy horseでは、馬の売買が無料で簡単にできます
+              <span className="border-b">
+                <Link href="/about">happy horse</Link>
+              </span>
+              では、馬の売買が無料で簡単にできます
             </div>
           </div>
         </>
@@ -107,7 +121,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
       {(router.pathname === "/setting" ||
         router.pathname === "/terms" ||
         router.pathname === "/privacyPolicy") && (
-        <Footer footerHeight={footerHeight} />
+        <Footer footerHeight={footerHeight} heightFooter={heightFooter} />
       )}
     </div>
   );
