@@ -1,12 +1,16 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Footer = (props) => {
   const { footerHeight, heightFooter } = props;
+  const router = useRouter();
 
   return (
     <div>
       <footer
-        className="w-full text-center bottom-0 shadow-md absolute py-4 bg-gray-50 sm:mb-0 mb-14"
+        className={`w-full text-center bottom-0 shadow-md absolute py-4 bg-gray-50 sm:mb-0 ${
+          router.pathname === "/about" ? "mb-0" : "mb-14"
+        }`}
         ref={footerHeight}
       >
         <Link href="/">
