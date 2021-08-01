@@ -40,6 +40,7 @@ const Index: NextPage = ({ posts }: any) => {
   const [width, setWidth] = useState(null);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const metaImage = "/ogp-hh.png";
 
   //postsをセット
   useEffect(() => {
@@ -237,7 +238,7 @@ const Index: NextPage = ({ posts }: any) => {
           metaTitle="happy horse"
           metaURL="https://www.happyhorse.xyz/"
           description="馬の売買プラットフォーム"
-          metaImage="https://d.kuku.lu/245738b55"
+          metaImage={metaImage}
         />
         {console.log(posts)}
         {console.log(filteredPosts)}
