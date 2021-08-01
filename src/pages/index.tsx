@@ -237,7 +237,7 @@ const Index: NextPage = ({ posts }: any) => {
           metaTitle="happy horse"
           metaURL="https://www.happyhorse.xyz/"
           description="馬の売買プラットフォーム"
-          metaImage="/ogp-hh.png"
+          metaImage="https://d.kuku.lu/245738b55"
         />
         {console.log(posts)}
         {console.log(filteredPosts)}
