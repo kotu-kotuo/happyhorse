@@ -286,7 +286,7 @@ const about = () => {
         </div>
       </section>
 
-      <div className="mb-10 mt-0 md:mb-16 md:mt-2">
+      <div className="mb-12 mt-0 md:mb-16 md:mt-2">
         <img src="/phrase.png" className="md:max-w-[400px] md:mx-auto px-4" />
       </div>
       <Footer footerHeight={footerHeight} heightFooter={heightFooter} />
