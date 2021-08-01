@@ -44,11 +44,20 @@ const Footer = (props) => {
         <div className="pb-2 pt-1.5">©︎ happy horse</div>
       </footer>
       {heightFooter && (
-        <div
-          style={{
-            height: heightFooter + 40,
-          }}
-        ></div>
+        <>
+          <div
+            style={{
+              height: heightFooter + 40,
+            }}
+            className="hidden sm:block"
+          ></div>
+          <div
+            style={{
+              height: heightFooter + 100,
+            }}
+            className="sm:hidden"
+          ></div>
+        </>
       )}
     </div>
   );

@@ -118,11 +118,17 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
         </>
       )}
 
-      {(router.pathname === "/setting" ||
-        router.pathname === "/terms" ||
-        router.pathname === "/privacyPolicy") && (
-        <Footer footerHeight={footerHeight} heightFooter={heightFooter} />
-      )}
+      {router.pathname !== "/" &&
+        router.pathname !== "/login" &&
+        router.pathname !== "/signup" &&
+        router.pathname !== "/post/post" &&
+        router.pathname !== "/post/draft" &&
+        router.pathname !== "/post/postEdit/[pid]" &&
+        router.pathname !== "/message/messages" &&
+        router.pathname !== "/404" && (
+          <Footer footerHeight={footerHeight} heightFooter={heightFooter} />
+        )}
+      {console.log(router.pathname)}
     </div>
   );
 };
