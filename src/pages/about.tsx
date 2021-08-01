@@ -53,7 +53,7 @@ const about = () => {
 
       <section className="max-w-xl mx-auto px-2 md:max-w-4xl">
         <div className="md:flex md:justify-between">
-          <div>
+          <div className="md:px-2">
             <div className="text-gray-900 mb-6 text-3xl leading-10 md:text-4xl">
               より便利に、
               <span className="whitespace-nowrap">より手軽に。</span>
