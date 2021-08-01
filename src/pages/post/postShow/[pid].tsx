@@ -39,7 +39,12 @@ const Show: NextPage = ({ post }: any) => {
   };
 
   return (
-    <Layout title={`${post.title}` || ""}>
+    <Layout
+      title={`${post.title}` || ""}
+      metaURL={"https://www.happyhorse.xyz" + router?.asPath}
+      description={post.postText}
+      metaImage={post.images[0]}
+    >
       {console.log(post)}
       {post && (
         <>

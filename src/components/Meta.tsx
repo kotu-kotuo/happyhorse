@@ -13,6 +13,7 @@ const Meta = (props) => {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={metaImage} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
     </div>
   );

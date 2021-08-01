@@ -13,7 +13,6 @@ import { NextPage } from "next";
 import { Post } from "../types/types";
 import LoginModal from "../components/molecules/LoginModal";
 import admin from "../firebase/admin";
-import Meta from "../components/Meta";
 
 const Index: NextPage = ({ posts }: any) => {
   const { currentUser, user, setUser, notifications } = useContext(AuthContext);
@@ -234,12 +233,6 @@ const Index: NextPage = ({ posts }: any) => {
   return (
     <div>
       <Layout title="happy horse">
-        <Meta
-          metaTitle="happy horse"
-          metaURL="https://www.happyhorse.xyz/"
-          description="馬の売買プラットフォーム"
-          metaImage="https://firebasestorage.googleapis.com/v0/b/happyhorse-prod.appspot.com/o/ogp-hh.png?alt=media&token=6a8c8771-2193-40a4-8f6b-920544654e05"
-        />
         {console.log(posts)}
         {console.log(filteredPosts)}
         <LoginModal

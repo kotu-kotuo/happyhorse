@@ -7,12 +7,23 @@ import Header from "./Header";
 import LoginModal from "../molecules/LoginModal";
 import MobileMenuBar from "./MobileMenuBar";
 import Footer from "./Footer";
+import Meta from "../Meta";
 
-interface TITLE {
+type Props = {
   title: string;
-}
+  metaURL?: string;
+  description?: string;
+  metaImage?: string;
+};
 
-export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
+export const Layout: React.FC<Props> = (props) => {
+  const {
+    children,
+    title = "happy horse",
+    metaURL = "https://www.happyhorse.xyz/",
+    description = "馬の売買プラットフォーム",
+    metaImage = "https://firebasestorage.googleapis.com/v0/b/happyhorse-prod.appspot.com/o/ogp-hh.png?alt=media&token=6a8c8771-2193-40a4-8f6b-920544654e05",
+  } = props;
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -49,9 +60,12 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
         setIsOpenMenu(false), setIsOpenNotification(false);
       }}
     >
-      <Head>
-        <title>{title}</title>
-      </Head>
+      <Meta
+        metaTitle={title}
+        metaURL={metaURL}
+        description={description}
+        metaImage={metaImage}
+      />
 
       {(isOpenBottomNotification || isOpenBottomMenu) && (
         <style jsx global>{`
@@ -128,7 +142,7 @@ export const Layout: React.FC<TITLE> = ({ children, title = "happyhorse" }) => {
         router.pathname !== "/404" && (
           <Footer footerHeight={footerHeight} heightFooter={heightFooter} />
         )}
-      {console.log(router.pathname)}
+      {console.log(router)}
     </div>
   );
 };
