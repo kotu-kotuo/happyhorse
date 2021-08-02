@@ -15,9 +15,9 @@ const MessageButton: FC<Props> = (props) => {
       </button>
       <div className="md:hidden inline-block text-center cursor-pointer">
         <div className={`inline-block rounded-full p-2 shadow-md ${bgStyle}`}>
-          <BsChatDots className="text-2xl text-white" />
+          <BsChatDots className="text-[22px] text-white" />
         </div>
-        <p className="text-xs text-gray-500">{label}</p>
+        <p className="text-[11px] text-gray-500">{label}</p>
       </div>
     </>
   );

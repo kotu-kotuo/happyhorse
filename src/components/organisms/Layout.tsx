@@ -144,7 +144,6 @@ export const Layout: React.FC<Props> = (props) => {
         router.pathname !== "/404" && (
           <Footer footerHeight={footerHeight} heightFooter={heightFooter} />
         )}
-      {console.log(router)}
     </div>
   );
 };

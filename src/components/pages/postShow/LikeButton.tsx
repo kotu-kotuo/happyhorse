@@ -46,9 +46,9 @@ const LikeButton: FC<Props> = (props) => {
           data-id={post.postID}
         >
           {currentUser && post.likeUserIDs?.includes(currentUser?.uid) ? (
-            <FaHeart className="text-3xl text-red-400" />
+            <FaHeart className="text-[22px] text-red-400" />
           ) : (
-            <FaRegHeart className="text-3xl text-gray-900" />
+            <FaRegHeart className="text-[22px] text-gray-900" />
           )}
           <p className="text-gray-900 ml-3 mr-1">
             お気に入り
@@ -79,7 +79,7 @@ const LikeButton: FC<Props> = (props) => {
               <BsHeart className="text-2xl text-white" />
             </div>
           )}
-          <div className="flex items-center text-gray-500 text-xs">
+          <div className="flex items-center text-gray-500 text-[11px]">
             <div className="text-gray-500">お気に入り</div>
             <div className="ml-0.5 font-semibold">
               {post.likeUserIDs?.length}

@@ -57,7 +57,7 @@ const Show: NextPage = ({ post }: any) => {
           </div>
 
           {/* モバイル */}
-          <div className="flex justify-end items-center mr-4 mt-1 md:hidden">
+          <div className="flex justify-end items-center mr-4 mt-4 mb-1 md:hidden">
             <div className="mr-4">
               <LikeButton
                 clickHeart={clickHeart}
