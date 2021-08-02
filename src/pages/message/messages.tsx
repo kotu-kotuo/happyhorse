@@ -195,7 +195,9 @@ const messages: NextPage = () => {
       />
       <div>
         <Layout
-          title={`メッセージ | ${messageReceiver?.username}さん | happy horse` || ""}
+          title={
+            `メッセージ | ${messageReceiver?.username}さん | happy horse` || ""
+          }
           index="noindex"
         >
           {currentUser && (
