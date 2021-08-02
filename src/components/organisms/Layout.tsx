@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../auth/AuthProvider";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./Header";
@@ -11,18 +10,20 @@ import Meta from "../Meta";
 
 type Props = {
   title: string;
-  metaURL?: string;
+  ogpURL?: string;
   description?: string;
-  metaImage?: string;
+  ogpImage?: string;
+  index?: string;
 };
 
 export const Layout: React.FC<Props> = (props) => {
   const {
     children,
-    title = "happy horse",
-    metaURL = "https://www.happyhorse.xyz/",
-    description = "馬の売買プラットフォーム",
-    metaImage = "https://firebasestorage.googleapis.com/v0/b/happyhorse-prod.appspot.com/o/ogp-hh.png?alt=media&token=6a8c8771-2193-40a4-8f6b-920544654e05",
+    title = "happy horse | 馬の売買プラットフォーム",
+    ogpURL = "https://www.happyhorse.xyz/",
+    description = "happyhorseでは、主に乗馬・馬術、レクレーションの馬の売買ができます。馬の販売・購入をより便利に、より手軽に。サラブレッドなどの品種や競技別に絞り込み検索。チャットで気軽にメッセージ。素敵な出会いがありますように。HAPPY UMA LIFE!",
+    ogpImage = "https://firebasestorage.googleapis.com/v0/b/happyhorse-prod.appspot.com/o/ogp-hh.png?alt=media&token=6a8c8771-2193-40a4-8f6b-920544654e05",
+    index = "all",
   } = props;
   const router = useRouter();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -61,10 +62,11 @@ export const Layout: React.FC<Props> = (props) => {
       }}
     >
       <Meta
-        metaTitle={title}
-        metaURL={metaURL}
+        title={title}
+        ogpURL={ogpURL}
         description={description}
-        metaImage={metaImage}
+        ogpImage={ogpImage}
+        index={index}
       />
 
       {(isOpenBottomNotification || isOpenBottomMenu) && (

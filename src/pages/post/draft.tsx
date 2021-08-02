@@ -160,7 +160,7 @@ const draft: NextPage = () => {
 
   return (
     <>
-      <Layout title="下書き編集画面">
+      <Layout title="下書き編集画面 | happy horse" index="noindex">
         {currentUser && (
           <form
             className="max-w-2xl mx-auto mt-16 px-2"

@@ -24,7 +24,7 @@ const profileEdit: NextPage = () => {
   }, [user]);
 
   return (
-    <Layout title="プロフィール編集">
+    <Layout title="プロフィール編集 | happy horse" index="noindex">
       {currentUser && user && (
         <div className="my-20 px-2">
           <form

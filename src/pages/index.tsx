@@ -232,7 +232,7 @@ const Index: NextPage = ({ posts }: any) => {
 
   return (
     <div>
-      <Layout title="happy horse">
+      <Layout title="happy horse | 馬の売買プラットフォーム">
         {console.log(posts)}
         {console.log(filteredPosts)}
         <LoginModal

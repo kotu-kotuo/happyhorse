@@ -123,7 +123,7 @@ const Post: NextPage = () => {
 
   return (
     <>
-      <Layout title="掲載フォーム">
+      <Layout title="掲載フォーム | happy horse" index="noindex">
         {currentUser && (
           <form
             className="max-w-2xl mx-auto mt-16 px-2 mb-16"

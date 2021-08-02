@@ -51,7 +51,7 @@ const reviews: NextPage = () => {
 
   return (
     <div>
-      <Layout title="レビュー">
+      <Layout title="レビュー | happy horse" index="noindex">
         {router.query.uid && (goodReviews || badReviews) && (
           <div className="max-w-2xl mx-auto px-2 pb-3">
             <SwitchDisplay

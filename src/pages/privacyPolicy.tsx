@@ -2,7 +2,7 @@ import { Layout } from "../components/organisms/Layout";
 
 const privacyPolicy = () => {
   return (
-    <Layout title="プライバシーポリシー">
+    <Layout title="プライバシーポリシー | happy horse" index="noindex">
       <div className="termsContainer">
         <div className="termsSpace">
           <h2 className="termsTitle">プライバシーポリシー</h2>

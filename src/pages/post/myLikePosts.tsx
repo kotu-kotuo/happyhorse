@@ -30,7 +30,7 @@ const myLikePosts: NextPage = () => {
 
   return (
     <div>
-      <Layout title="お気に入りの馬">
+      <Layout title="お気に入りの馬 | happy horse" index="noindex">
         {currentUser && (
           <>
             <h2 className="pageTitle">お気に入りの馬</h2>

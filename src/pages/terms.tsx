@@ -2,7 +2,7 @@ import { Layout } from "../components/organisms/Layout";
 
 const terms = () => {
   return (
-    <Layout title="利用規約">
+    <Layout title="利用規約 | happy horse" index="noindex">
       <div className="termsContainer">
         <div className="termsSpace">
           <h2 className="termsTitle">利用規約</h2>

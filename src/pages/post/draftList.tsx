@@ -29,7 +29,7 @@ const draftList = () => {
 
   return (
     <div>
-      <Layout title="下書き保存リスト">
+      <Layout title="下書き保存リスト | happy horse" index="noindex">
         {currentUser && (
           <>
             <div className="pageTitle">下書き保存リスト</div>
