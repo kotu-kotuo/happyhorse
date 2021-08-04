@@ -3,7 +3,7 @@ import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { NextRouter, useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
-import { setUserState } from "../../../utils/states";
+import { setPostStates, setUserState } from "../../../utils/states";
 import clickHeartShow from "../../../functions/clickHeartShow";
 import SlickSlider from "../../../components/pages/postShow/SlickSlider";
 import MessageButtonHandle from "../../../components/pages/postShow/MessageButtonHandle";
@@ -14,11 +14,12 @@ import "slick-carousel/slick/slick.css";
 import PostShowTable from "../../../components/pages/postShow/PostShowTable";
 import admin from "../../../firebase/admin";
 import VideoList from "../../../components/pages/postShow/VideoList";
+import { postInitialValues } from "../../../utils/initialValues";
 
 const Show: NextPage = ({ post }: any) => {
   const router: NextRouter = useRouter();
   const { user, setUser, currentUser } = useContext(AuthContext);
-  const [postState, setPostState] = useState(post);
+  const [postState, setPostState] = useState(postInitialValues);
   const [postUser, setPostUser] = useState(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -30,6 +31,15 @@ const Show: NextPage = ({ post }: any) => {
         .get()
         .then((snapshot) => setPostUser(setUserState(snapshot.data())));
     }
+  }, []);
+
+  useEffect(() => {
+    db.collection("users")
+      .doc(post.userID)
+      .collection("posts")
+      .doc(post.postID)
+      .get()
+      .then((snapshot) => setPostState(setPostStates(snapshot.data())));
   }, []);
 
   const toPostEdit = (post) => {
@@ -91,7 +101,7 @@ const Show: NextPage = ({ post }: any) => {
               <VideoList
                 video1URL={currentUser ? postState.video1URL : post.video1URL}
                 video1Title={
-                  currentUser ? postState.videoTitle : post.video1Title
+                  currentUser ? postState.video1Title : post.video1Title
                 }
                 video2URL={currentUser ? postState.video2URL : post.video2URL}
                 video2Title={

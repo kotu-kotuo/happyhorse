@@ -13,6 +13,7 @@ import { NextPage } from "next";
 import { Post } from "../types/types";
 import LoginModal from "../components/molecules/LoginModal";
 import admin from "../firebase/admin";
+import { setPostStates } from "../utils/states";
 
 const Index: NextPage = ({ posts }: any) => {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -42,7 +43,12 @@ const Index: NextPage = ({ posts }: any) => {
 
   //postsをセット
   useEffect(() => {
-    setFilteredPosts(posts);
+    db.collectionGroup("posts")
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((snapshot) =>
+        setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())))
+      );
   }, []);
 
   useEffect(() => {
