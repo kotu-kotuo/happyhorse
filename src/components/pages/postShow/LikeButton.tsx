@@ -2,28 +2,28 @@ import React, { FC, SetStateAction } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { BsHeart } from "react-icons/bs";
 import LoginModal from "../../molecules/LoginModal";
-import { Notification, Post, User } from "../../../types/types";
+import { Post, User } from "../../../types/types";
 import { Dispatch } from "react";
 
 type Props = {
-  clickHeart;
+  clickHeartShow;
   currentUser;
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
-  notifications: Notification[];
   post: Post;
+  setPostState: Dispatch<SetStateAction<Post>>;
   isLoginModalOpen: boolean;
   setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 const LikeButton: FC<Props> = (props) => {
   const {
-    clickHeart,
+    clickHeartShow,
     currentUser,
     user,
     setUser,
-    notifications,
     post,
+    setPostState,
     isLoginModalOpen,
     setIsLoginModalOpen,
   } = props;
@@ -40,7 +40,7 @@ const LikeButton: FC<Props> = (props) => {
           className="flex items-center mb-4 cursor-pointer hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
             currentUser
-              ? clickHeart(e, currentUser, user, setUser, notifications)
+              ? clickHeartShow(e, currentUser, user, setUser, setPostState)
               : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}
@@ -65,7 +65,7 @@ const LikeButton: FC<Props> = (props) => {
           className="cursor-pointer mb-0.5 hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
             currentUser
-              ? clickHeart(e, currentUser, user, setUser, notifications)
+              ? clickHeartShow(e, currentUser, user, setUser, setPostState)
               : setIsLoginModalOpen(true);
           }}
           data-id={post.postID}

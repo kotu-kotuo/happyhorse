@@ -1,16 +1,15 @@
-//いいね機能
 import firebase from "firebase/app";
 import { Dispatch, SetStateAction } from "react";
-import { Notification, User } from "../types/types";
+import { Post, User } from "../types/types";
 import { db } from "../firebase/firebase";
-import { setUserState } from "../utils/states";
+import { setPostStates, setUserState } from "../utils/states";
 
-const clickHeart = async (
+const clickHeartShow = async (
   e: React.MouseEvent<HTMLElement>,
   currentUser: { uid: string },
   user: User,
   setUser: Dispatch<SetStateAction<User>>,
-  notifications: Notification[]
+  setPostState: Dispatch<SetStateAction<Post>>
 ) => {
   const pid = e.currentTarget.getAttribute("data-id");
 
@@ -72,6 +71,14 @@ const clickHeart = async (
         async (snapshot) =>
           await Promise.all(snapshot.docs.map((doc) => doc.ref.delete()))
       );
+
+    await db
+      .collectionGroup("posts")
+      .where("postID", "==", pid)
+      .get()
+      .then((snapshot) =>
+        snapshot.docs.map((doc) => setPostState(setPostStates(doc.data())))
+      );
   } else {
     await db
       .collection("users")
@@ -100,7 +107,7 @@ const clickHeart = async (
         )
       );
 
-    const posts = await db
+    await db
       .collectionGroup("posts")
       .where("postID", "==", pid)
       .get()
@@ -111,6 +118,16 @@ const clickHeart = async (
           });
 
           console.log([currentUser.uid, ...doc.data().likeUserIDs]);
+
+          await db
+            .collectionGroup("posts")
+            .where("postID", "==", pid)
+            .get()
+            .then((snapshot) =>
+              snapshot.docs.map((doc) =>
+                setPostState(setPostStates(doc.data()))
+              )
+            );
 
           //likedAtを追加
           await db
@@ -155,51 +172,50 @@ const clickHeart = async (
               likedAt: firebase.firestore.FieldValue.serverTimestamp(),
             });
 
-          //通知
-          if (
-            currentUser.uid !== doc.data().userID && //自分の投稿へのいいねは通知されない
-            notifications.filter(
-              //通知が重複しないように
-              (notification) =>
-                notification.postID === doc.data().postID &&
-                notification.sendUserID === currentUser.uid
-            ).length === 0
-          ) {
-            db.collection("users")
-              .doc(`${doc.data().userID}`)
-              .collection("notifications")
-              .add({
-                postID: doc.data().postID,
-                postUserID: doc.data().userID,
-                sendUserID: currentUser.uid,
-                receiveUserID: doc.data().userID,
-                sendMessageUserID: "",
-                image: doc.data().images[0],
-                avatar: doc.data().avatar,
-                text: `${user.username}さんが「${
-                  doc.data().title
-                }」にいいねしました。`,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                checked: false,
-                toMessage: false,
-                toProfile: false,
-                noLink: false,
-              });
-
-            // db.collection("users") TODO:他のユーザーのnotificationsのリアルタイムの更新は可能か？
-            //   .doc(`${snapshot.data().userID}`)
-            //   .collection("notifications")
-            //   .orderBy("createdAt", "desc")
-            //   .get()
-            //   .then(async (snapshot) =>
-            //     setNotifications(
-            //       snapshot.docs.map((doc) => setNotificationStates(doc.data()))
-            //     )
-            //   );
-          }
+          db.collection("users")
+            .doc(`${doc.data().userID}`)
+            .collection("notifications")
+            .orderBy("createdAt", "desc")
+            .limit(30)
+            .get()
+            .then((snapshot) => {
+              //通知
+              if (
+                currentUser.uid !== doc.data().userID && //自分の投稿へのいいねは通知されない
+                snapshot.docs
+                  .map((document) => document.data())
+                  .filter(
+                    //通知が重複しないように
+                    (notification) =>
+                      notification.postID === doc.data().postID &&
+                      notification.sendUserID === currentUser.uid
+                  ).length === 0
+              ) {
+                db.collection("users")
+                  .doc(`${doc.data().userID}`)
+                  .collection("notifications")
+                  .add({
+                    postID: doc.data().postID,
+                    postUserID: doc.data().userID,
+                    sendUserID: currentUser.uid,
+                    receiveUserID: doc.data().userID,
+                    sendMessageUserID: "",
+                    image: doc.data().images[0],
+                    avatar: doc.data().avatar,
+                    text: `${user.username}さんが「${
+                      doc.data().title
+                    }」にいいねしました。`,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    checked: false,
+                    toMessage: false,
+                    toProfile: false,
+                    noLink: false,
+                  });
+              }
+            });
         })
       );
   }
 };
 
-export default clickHeart;
+export default clickHeartShow;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, ReactNode } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import { Layout } from "../components/organisms/Layout";
 import { db } from "../firebase/firebase";
@@ -7,7 +7,7 @@ import Posts from "../components/organisms/Posts";
 import Pagination from "../components/molecules/Pagination";
 import Filter from "../components/organisms/Filter";
 import { filterInitialValues, postInitialValues } from "../utils/initialValues";
-import clickHeart from "../functions/clickHeart";
+import clickHeartIndex from "../functions/clickHeartIndex";
 import { BsFilterRight } from "react-icons/bs";
 import { NextPage } from "next";
 import { Post } from "../types/types";
@@ -15,7 +15,7 @@ import LoginModal from "../components/molecules/LoginModal";
 import admin from "../firebase/admin";
 
 const Index: NextPage = ({ posts }: any) => {
-  const { currentUser, user, setUser, notifications } = useContext(AuthContext);
+  const { currentUser, user, setUser } = useContext(AuthContext);
   const router = useRouter();
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([
     postInitialValues,
@@ -39,7 +39,6 @@ const Index: NextPage = ({ posts }: any) => {
   const [width, setWidth] = useState(null);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const metaImage = "/ogp-hh.png";
 
   //postsをセット
   useEffect(() => {
@@ -289,7 +288,7 @@ const Index: NextPage = ({ posts }: any) => {
                   </div>
                 </div>
                 {isOpenFilter && (
-                  <div className="mb-4 ">
+                  <div className="mb-4">
                     <Filter
                       filterPost={filterPost}
                       setPriceMin={setPriceMin}
@@ -331,13 +330,12 @@ const Index: NextPage = ({ posts }: any) => {
             ) : (
               <Posts
                 posts={currentUser ? filteredPosts : posts}
+                setFilteredPosts={setFilteredPosts}
                 clickPost={clickPost}
-                clickHeart={clickHeart}
+                clickHeartIndex={clickHeartIndex}
                 currentUser={currentUser}
                 user={user}
                 setUser={setUser}
-                router={router}
-                notifications={notifications}
                 width={width}
                 setIsLoginModalOpen={setIsLoginModalOpen}
               />

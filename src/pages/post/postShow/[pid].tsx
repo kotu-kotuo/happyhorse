@@ -4,7 +4,7 @@ import { Layout } from "../../../components/organisms/Layout";
 import { NextRouter, useRouter } from "next/router";
 import { db } from "../../../firebase/firebase";
 import { setUserState } from "../../../utils/states";
-import clickHeart from "../../../functions/clickHeart";
+import clickHeartShow from "../../../functions/clickHeartShow";
 import SlickSlider from "../../../components/pages/postShow/SlickSlider";
 import MessageButtonHandle from "../../../components/pages/postShow/MessageButtonHandle";
 import PublisherValue from "../../../components/molecules/PublisherValue";
@@ -17,7 +17,8 @@ import VideoList from "../../../components/pages/postShow/VideoList";
 
 const Show: NextPage = ({ post }: any) => {
   const router: NextRouter = useRouter();
-  const { user, setUser, currentUser, notifications } = useContext(AuthContext);
+  const { user, setUser, currentUser } = useContext(AuthContext);
+  const [postState, setPostState] = useState(post);
   const [postUser, setPostUser] = useState(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
@@ -29,7 +30,7 @@ const Show: NextPage = ({ post }: any) => {
         .get()
         .then((snapshot) => setPostUser(setUserState(snapshot.data())));
     }
-  }, [post]);
+  }, []);
 
   const toPostEdit = (post) => {
     const pid = post.postID;
@@ -51,7 +52,7 @@ const Show: NextPage = ({ post }: any) => {
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">
             <SlickSlider
               currentUser={currentUser}
-              post={post}
+              post={currentUser ? postState : post}
               toPostEdit={toPostEdit}
             />
           </div>
@@ -60,19 +61,19 @@ const Show: NextPage = ({ post }: any) => {
           <div className="flex justify-end items-center mr-4 mt-4 mb-1 md:hidden">
             <div className="mr-4">
               <LikeButton
-                clickHeart={clickHeart}
+                clickHeartShow={clickHeartShow}
                 currentUser={currentUser}
                 user={user}
                 setUser={setUser}
-                notifications={notifications}
-                post={post}
+                post={currentUser ? postState : post}
+                setPostState={setPostState}
                 isLoginModalOpen={isLoginModalOpen}
                 setIsLoginModalOpen={setIsLoginModalOpen}
               />
             </div>
             <MessageButtonHandle
               currentUser={currentUser}
-              post={post}
+              post={currentUser ? postState : post}
               setIsLoginModalOpen={setIsLoginModalOpen}
             />
           </div>
@@ -81,22 +82,31 @@ const Show: NextPage = ({ post }: any) => {
             <div className="w-full md:w-2/3 mb-20 px-4 pl-4 md:pr-0">
               <div className="max-w-2xl xl:ml-6 lg:ml-10 md:ml-6">
                 <div className="fontSize-xl mt-2 mb-6 text-gray-900 font-semibold md:mt-6">
-                  {post.title}
+                  {currentUser ? postState.title : post.title}
                 </div>
                 <div className="fontSize-base text-gray-700 whitespace-pre-wrap">
-                  {post.postText}
+                  {currentUser ? postState.postText : post.postText}
                 </div>
               </div>
               <VideoList
-                video1URL={post.video1URL}
-                video1Title={post.video1Title}
-                video2URL={post.video2URL}
-                video2Title={post.video2Title}
-                video3URL={post.video3URL}
-                video3Title={post.video3Title}
+                video1URL={currentUser ? postState.video1URL : post.video1URL}
+                video1Title={
+                  currentUser ? postState.videoTitle : post.video1Title
+                }
+                video2URL={currentUser ? postState.video2URL : post.video2URL}
+                video2Title={
+                  currentUser ? postState.video2Title : post.video2Title
+                }
+                video3URL={currentUser ? postState.video3URL : post.video3URL}
+                video3Title={
+                  currentUser ? postState.video3Title : post.video3Title
+                }
               />
               <div className="mt-20 mb-10">
-                <PostShowTable post={post} postUser={postUser} />
+                <PostShowTable
+                  post={currentUser ? postState : post}
+                  postUser={postUser}
+                />
               </div>
             </div>
 
@@ -105,22 +115,25 @@ const Show: NextPage = ({ post }: any) => {
               <div className="pl-10 pr-4">
                 <MessageButtonHandle
                   currentUser={currentUser}
-                  post={post}
+                  post={currentUser ? postState : post}
                   setIsLoginModalOpen={setIsLoginModalOpen}
                 />
                 <LikeButton
-                  clickHeart={clickHeart}
+                  clickHeartShow={clickHeartShow}
                   currentUser={currentUser}
                   user={user}
                   setUser={setUser}
-                  notifications={notifications}
-                  post={post}
+                  post={currentUser ? postState : post}
+                  setPostState={setPostState}
                   isLoginModalOpen={isLoginModalOpen}
                   setIsLoginModalOpen={setIsLoginModalOpen}
                 />
                 <div className="border-b shadow-xs"></div>
                 <p className="mt-4 mb-3 text-gray-900">掲載者</p>
-                <PublisherValue post={post} postUser={postUser} />
+                <PublisherValue
+                  post={currentUser ? postState : post}
+                  postUser={postUser}
+                />
               </div>
             </div>
           </div>

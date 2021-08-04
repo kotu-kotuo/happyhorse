@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { NextRouter } from "next/router";
 import React, { SetStateAction } from "react";
 import { FC } from "react";
 import { Dispatch } from "react";
@@ -10,19 +9,17 @@ import {
   FaRegHeart,
   FaHeart,
 } from "react-icons/fa";
-import { Notification, Post, User } from "../../types/types";
+import { Post, User } from "../../types/types";
 import Category from "../atoms/Category";
-import { db } from "../../firebase/firebase";
 
 type Props = {
   posts: Post[];
+  setFilteredPosts: Dispatch<SetStateAction<Post[]>>;
   clickPost;
-  clickHeart;
+  clickHeartIndex;
   currentUser;
   user: User;
   setUser: Dispatch<SetStateAction<User>>;
-  router: NextRouter;
-  notifications: Notification[];
   width: number;
   setIsLoginModalOpen: Dispatch<SetStateAction<boolean>>;
 };
@@ -30,13 +27,12 @@ type Props = {
 const Posts: FC<Props> = (props) => {
   const {
     posts,
+    setFilteredPosts,
     clickPost,
-    clickHeart,
+    clickHeartIndex,
     currentUser,
     user,
     setUser,
-    router,
-    notifications,
     width,
     setIsLoginModalOpen,
   } = props;
@@ -146,17 +142,17 @@ const Posts: FC<Props> = (props) => {
                 </div>
               </Link>
             )}
+
             <div
               className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
               onClick={(e: React.MouseEvent<HTMLElement>) => {
                 currentUser
-                  ? clickHeart(
+                  ? clickHeartIndex(
                       e,
                       currentUser,
                       user,
                       setUser,
-                      router,
-                      notifications
+                      setFilteredPosts
                     )
                   : setIsLoginModalOpen(true);
               }}
