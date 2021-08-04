@@ -57,7 +57,7 @@ const Show: NextPage = ({ post }: any) => {
       ogpImage={post.images[0]}
     >
       {console.log(post)}
-      {post && (
+      {currentUser !== undefined && (
         <>
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">
             <SlickSlider

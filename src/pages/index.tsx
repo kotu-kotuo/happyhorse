@@ -329,22 +329,26 @@ const Index: NextPage = ({ posts }: any) => {
                 )}
               </>
             )}
-            {currentUser && filteredPosts.length === 0 ? (
-              <div className="delay-1000 animate-fade-in-down">
-                ご希望の馬は掲載されていませんでした。。
-              </div>
-            ) : (
-              <Posts
-                posts={currentUser ? filteredPosts : posts}
-                setFilteredPosts={setFilteredPosts}
-                clickPost={clickPost}
-                clickHeartIndex={clickHeartIndex}
-                currentUser={currentUser}
-                user={user}
-                setUser={setUser}
-                width={width}
-                setIsLoginModalOpen={setIsLoginModalOpen}
-              />
+            {currentUser !== undefined && (
+              <>
+                {currentUser && filteredPosts.length === 0 ? (
+                  <div className="delay-1000 animate-fade-in-down">
+                    ご希望の馬は掲載されていませんでした。。
+                  </div>
+                ) : (
+                  <Posts
+                    posts={currentUser ? filteredPosts : posts}
+                    setFilteredPosts={setFilteredPosts}
+                    clickPost={clickPost}
+                    clickHeartIndex={clickHeartIndex}
+                    currentUser={currentUser}
+                    user={user}
+                    setUser={setUser}
+                    width={width}
+                    setIsLoginModalOpen={setIsLoginModalOpen}
+                  />
+                )}
+              </>
             )}
 
             {/* <Pagination /> */}
