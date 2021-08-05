@@ -14,7 +14,7 @@ import Category from "../atoms/Category";
 
 type Props = {
   posts: Post[];
-  filteredPosts: Post[];
+  // filteredPosts: Post[];
   setFilteredPosts: Dispatch<SetStateAction<Post[]>>;
   clickPost;
   clickHeartIndex;
@@ -28,7 +28,7 @@ type Props = {
 const Posts: FC<Props> = (props) => {
   const {
     posts,
-    filteredPosts,
+    // filteredPosts,
     setFilteredPosts,
     clickPost,
     clickHeartIndex,
@@ -160,17 +160,23 @@ const Posts: FC<Props> = (props) => {
               }}
               data-id={post.postID}
             >
-              {filteredPosts && (
+              {/* {filteredPosts[0].postID !== "" && (
                 <>
                   {filteredPosts
                     .find((filteredPost) => filteredPost.postID === post.postID)
-                    .likeUserIDs.includes(currentUser?.uid) ? (
+                    ?.likeUserIDs.includes(currentUser?.uid) ? (
                     <FaHeart className="text-3xl text-red-400" />
                   ) : (
                     <FaRegHeart className="text-3xl text-gray-900" />
                   )}
                 </>
+              )} */}
+              {post.likeUserIDs.includes(currentUser?.uid) ? (
+                <FaHeart className="text-3xl text-red-400" />
+              ) : (
+                <FaRegHeart className="text-3xl text-gray-900" />
               )}
+              {console.log(post)}
               <p className="text-gray-900 ml-2 hidden md:inline-block">
                 お気に入り
               </p>

@@ -18,9 +18,7 @@ import { setPostStates } from "../utils/states";
 const Index: NextPage = ({ posts }: any) => {
   const { currentUser, user, setUser } = useContext(AuthContext);
   const router = useRouter();
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([
-    postInitialValues,
-  ]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts);
   const [showOnlyAvailable, setShowOnlyAvailable] = useState(
     filterInitialValues.showOnlyAvailable
   );
@@ -42,14 +40,14 @@ const Index: NextPage = ({ posts }: any) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   //postsをセット
-  useEffect(() => {
-    db.collectionGroup("posts")
-      .orderBy("createdAt", "desc")
-      .get()
-      .then((snapshot) =>
-        setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())))
-      );
-  }, []);
+  // useEffect(() => {
+  //   db.collectionGroup("posts")
+  //     .orderBy("createdAt", "desc")
+  //     .get()
+  //     .then((snapshot) =>
+  //       setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())))
+  //     );
+  // }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -337,8 +335,8 @@ const Index: NextPage = ({ posts }: any) => {
                   </div>
                 ) : (
                   <Posts
-                    posts={currentUser ? filteredPosts : posts}
-                    filteredPosts={filteredPosts}
+                    posts={filteredPosts}
+                    // filteredPosts={filteredPosts}
                     setFilteredPosts={setFilteredPosts}
                     clickPost={clickPost}
                     clickHeartIndex={clickHeartIndex}
@@ -362,7 +360,7 @@ const Index: NextPage = ({ posts }: any) => {
 
 export default Index;
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const db = admin.firestore();
 
   const data: FirebaseFirestore.DocumentData[] = (
@@ -375,6 +373,6 @@ export async function getStaticProps() {
     props: {
       posts,
     },
-    revalidate: 10,
+    // revalidate: 10,
   };
 }
