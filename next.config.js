@@ -21,9 +21,9 @@ module.exports = {
     __filename: false,
     __dirname: false,
   },
-  // experimental: {
-  //   scrollRestoration: false,
-  // },
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack5: true,
   // webpack: (config) => {
   //   config.node = {
