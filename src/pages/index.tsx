@@ -331,7 +331,6 @@ const Index: NextPage = ({ posts }: any) => {
                 )}
               </>
             )}
-
             {/* <Pagination /> */}
           </div>
         </div>

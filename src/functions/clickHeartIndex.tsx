@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Post, User } from "../types/types";
 import { db } from "../firebase/firebase";
 import { setPostStates, setUserState } from "../utils/states";
+import filtering from "./filtering";
 
 const clickHeartIndex = async (
   e: React.MouseEvent<HTMLElement>,
@@ -77,8 +78,13 @@ const clickHeartIndex = async (
       .collectionGroup("posts")
       .orderBy("createdAt", "desc")
       .get()
-      .then((snapshot) =>
-        setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())))
+      .then(async (snapshot) =>
+        setFilteredPosts(
+          await filtering(
+            currentUser,
+            snapshot.docs.map((doc) => setPostStates(doc.data()))
+          )
+        )
       );
   } else {
     await db
@@ -122,10 +128,12 @@ const clickHeartIndex = async (
             .collectionGroup("posts")
             .orderBy("createdAt", "desc")
             .get()
-            .then((snapshot) => {
-              console.log(snapshot.docs.map((doc) => doc.data()));
+            .then(async (snapshot) => {
               setFilteredPosts(
-                snapshot.docs.map((doc) => setPostStates(doc.data()))
+                await filtering(
+                  currentUser,
+                  snapshot.docs.map((doc) => setPostStates(doc.data()))
+                )
               );
             });
 
