@@ -129,8 +129,6 @@ const clickHeartIndex = async (
               );
             });
 
-          console.log([currentUser.uid, ...doc.data().likeUserIDs]);
-
           //likedAtを追加
           await db
             .collection("users")

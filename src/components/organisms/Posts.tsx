@@ -160,9 +160,10 @@ const Posts: FC<Props> = (props) => {
               }}
               data-id={post.postID}
             >
-              {filteredPosts
-                ?.find((filteredPost) => filteredPost.postID === post.postID)
-                ?.likeUserIDs.includes(currentUser?.uid) ? (
+              {filteredPosts &&
+              filteredPosts
+                .find((filteredPost) => filteredPost.postID === post.postID)
+                .likeUserIDs.includes(currentUser?.uid) ? (
                 <FaHeart className="text-3xl text-red-400" />
               ) : (
                 <FaRegHeart className="text-3xl text-gray-900" />
