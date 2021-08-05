@@ -6,14 +6,13 @@ import { useRouter } from "next/router";
 import Posts from "../components/organisms/Posts";
 import Pagination from "../components/molecules/Pagination";
 import Filter from "../components/organisms/Filter";
-import { filterInitialValues, postInitialValues } from "../utils/initialValues";
+import { filterInitialValues } from "../utils/initialValues";
 import clickHeartIndex from "../functions/clickHeartIndex";
 import { BsFilterRight } from "react-icons/bs";
 import { NextPage } from "next";
 import { Post } from "../types/types";
 import LoginModal from "../components/molecules/LoginModal";
 import admin from "../firebase/admin";
-import { setPostStates } from "../utils/states";
 
 const Index: NextPage = ({ posts }: any) => {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -34,20 +33,9 @@ const Index: NextPage = ({ posts }: any) => {
   const [breed, setBreed] = useState(filterInitialValues.breed);
   const [gender, setGender] = useState(filterInitialValues.gender);
   const [color, setColor] = useState(filterInitialValues.color);
-  const [handle, setHandle] = useState("OFF");
   const [width, setWidth] = useState(null);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-  //postsをセット
-  // useEffect(() => {
-  //   db.collectionGroup("posts")
-  //     .orderBy("createdAt", "desc")
-  //     .get()
-  //     .then((snapshot) =>
-  //       setFilteredPosts(snapshot.docs.map((doc) => setPostStates(doc.data())))
-  //     );
-  // }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -64,81 +52,75 @@ const Index: NextPage = ({ posts }: any) => {
         .doc(`${currentUser.uid}`)
         .get()
         .then((snapshot) => {
-          setShowOnlyAvailable(snapshot.data()?.showOnlyAvailable);
-          setCategory(snapshot.data().category);
-          setPriceMin(snapshot.data().priceMin);
-          setPriceMax(snapshot.data().priceMax);
-          setAgeMin(snapshot.data().ageMin);
-          setAgeMax(snapshot.data().ageMax);
-          setHeightMin(snapshot.data().heightMin);
-          setHeightMax(snapshot.data().heightMax);
-          setBreed(snapshot.data().breed);
-          setGender(snapshot.data().gender);
-          setColor(snapshot.data().color);
-          setArea(snapshot.data().area);
-          setFeature(snapshot.data().feature);
+          const {
+            showOnlyAvailable,
+            category,
+            priceMin,
+            priceMax,
+            ageMin,
+            ageMax,
+            heightMin,
+            heightMax,
+            breed,
+            gender,
+            color,
+            area,
+            feature,
+          } = snapshot.data();
 
-          setHandle("0N");
+          setShowOnlyAvailable(showOnlyAvailable);
+          setCategory(category);
+          setPriceMin(priceMin);
+          setPriceMax(priceMax);
+          setAgeMin(ageMin);
+          setAgeMax(ageMax);
+          setHeightMin(heightMin);
+          setHeightMax(heightMax);
+          setBreed(breed);
+          setGender(gender);
+          setColor(color);
+          setArea(area);
+          setFeature(feature);
+
+          const filteredArray = posts
+            .filter(
+              (post) =>
+                category.includes(post.category) &&
+                post.price >= priceMin &&
+                post.price <= priceMax &&
+                post.age >= ageMin &&
+                post.age <= ageMax &&
+                post.height >= heightMin &&
+                post.height <= heightMax &&
+                breed.includes(post.breed) &&
+                gender.includes(post.gender) &&
+                color.includes(post.color) &&
+                area.includes(post.area)
+            )
+            .filter((post) =>
+              showOnlyAvailable ? post.isAvairable === true : true
+            );
+
+          const filteredFeaturesPosts = feature.map((element) =>
+            posts.filter((post) => post.features.includes(element))
+          );
+          const filteredDouble = []
+            .concat(...filteredFeaturesPosts)
+            .filter((value, index, self) => self.indexOf(value) === index);
+
+          const filteredPostsToSet = filteredArray
+            .concat(filteredDouble)
+            .filter(
+              (value, index, self) =>
+                self.indexOf(value) === index &&
+                self.lastIndexOf(value) !== index
+            );
+
+          setFilteredPosts(filteredPostsToSet);
+          console.log("おおお", area, filteredPostsToSet);
         });
     }
   }, [currentUser]);
-
-  //filteredPostsをセットして表示
-  useEffect(() => {
-    if (
-      posts &&
-      currentUser &&
-      !(
-        showOnlyAvailable === filterInitialValues.showOnlyAvailable &&
-        category === filterInitialValues.category &&
-        priceMin === filterInitialValues.priceMin &&
-        priceMax === filterInitialValues.priceMax &&
-        ageMin === filterInitialValues.ageMin &&
-        ageMax === filterInitialValues.ageMax &&
-        heightMin === filterInitialValues.heightMin &&
-        heightMax === filterInitialValues.heightMax &&
-        breed === filterInitialValues.breed &&
-        gender === filterInitialValues.gender &&
-        color === filterInitialValues.color &&
-        area === filterInitialValues.area &&
-        feature === filterInitialValues.features
-      )
-    ) {
-      const filteredArray = posts
-        .filter((post) =>
-          category.includes(post.category) &&
-          post.price >= priceMin &&
-          post.price <= priceMax &&
-          post.age >= ageMin &&
-          post.age <= ageMax &&
-          post.height >= heightMin &&
-          post.height <= heightMax &&
-          breed.includes(post.breed) &&
-          gender
-            ? gender.includes(post.gender)
-            : true && color.includes(post.color) && area.includes(post.area)
-        )
-        .filter((post) =>
-          showOnlyAvailable ? post.isAvairable === true : true
-        );
-
-      const filteredFeaturesPosts = feature.map((element) =>
-        posts.filter((post) => post.features.includes(element))
-      );
-      const filteredDouble = []
-        .concat(...filteredFeaturesPosts)
-        .filter((value, index, self) => self.indexOf(value) === index);
-
-      const filteredPostsToSet = filteredArray
-        .concat(filteredDouble)
-        .filter(
-          (value, index, self) =>
-            self.indexOf(value) === index && self.lastIndexOf(value) !== index
-        );
-
-      setFilteredPosts(filteredPostsToSet);
-    }
-  }, [handle]);
 
   //詳細画面に遷移
   const clickPost = (e) => {
@@ -238,6 +220,7 @@ const Index: NextPage = ({ posts }: any) => {
       <Layout title="happy horse | 馬の売買プラットフォーム">
         {console.log(posts)}
         {console.log(filteredPosts)}
+        {console.log(area, showOnlyAvailable, category)}
         <LoginModal
           isLoginModalOpen={isLoginModalOpen}
           setIsLoginModalOpen={setIsLoginModalOpen}
@@ -336,7 +319,6 @@ const Index: NextPage = ({ posts }: any) => {
                 ) : (
                   <Posts
                     posts={filteredPosts}
-                    // filteredPosts={filteredPosts}
                     setFilteredPosts={setFilteredPosts}
                     clickPost={clickPost}
                     clickHeartIndex={clickHeartIndex}
@@ -373,6 +355,5 @@ export async function getServerSideProps() {
     props: {
       posts,
     },
-    // revalidate: 10,
   };
 }
