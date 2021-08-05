@@ -338,6 +338,7 @@ const Index: NextPage = ({ posts }: any) => {
                 ) : (
                   <Posts
                     posts={currentUser ? filteredPosts : posts}
+                    filteredPosts={filteredPosts}
                     setFilteredPosts={setFilteredPosts}
                     clickPost={clickPost}
                     clickHeartIndex={clickHeartIndex}

@@ -75,7 +75,7 @@ const Show: NextPage = ({ post }: any) => {
                 currentUser={currentUser}
                 user={user}
                 setUser={setUser}
-                post={currentUser ? postState : post}
+                post={postState}
                 setPostState={setPostState}
                 isLoginModalOpen={isLoginModalOpen}
                 setIsLoginModalOpen={setIsLoginModalOpen}
@@ -133,7 +133,7 @@ const Show: NextPage = ({ post }: any) => {
                   currentUser={currentUser}
                   user={user}
                   setUser={setUser}
-                  post={currentUser ? postState : post}
+                  post={postState}
                   setPostState={setPostState}
                   isLoginModalOpen={isLoginModalOpen}
                   setIsLoginModalOpen={setIsLoginModalOpen}
