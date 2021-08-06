@@ -34,20 +34,6 @@ const sendReviews = (
           reviewText: review.reviewText,
           createdAt: review.createdAt,
         });
-
-      // if (review.rating === "good") {
-      //   db.collection("users")
-      //     .doc(`${post.clientUserID}`)
-      //     .update({
-      //       good: firebase.firestore.FieldValue.increment(1),
-      //     });
-      // } else {
-      //   db.collection("users")
-      //     .doc(`${post.clientUserID}`)
-      //     .update({
-      //       bad: firebase.firestore.FieldValue.increment(1),
-      //     });
-      // }
     } else {
       db.collection("users")
         .doc(`${post.userID}`)
@@ -66,20 +52,6 @@ const sendReviews = (
           reviewText: review.reviewText,
           createdAt: review.createdAt,
         });
-
-      // if (review.rating === "good") {
-      //   db.collection("users")
-      //     .doc(`${post.userID}`)
-      //     .update({
-      //       good: firebase.firestore.FieldValue.increment(1),
-      //     });
-      // } else {
-      //   db.collection("users")
-      //     .doc(`${post.userID}`)
-      //     .update({
-      //       bad: firebase.firestore.FieldValue.increment(1),
-      //     });
-      // }
     }
   });
 

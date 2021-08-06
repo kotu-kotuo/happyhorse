@@ -68,32 +68,20 @@ const messages: NextPage = () => {
           });
         });
     }
-    if (router.query.uid && router.query.pid && router.query.cid) {
-      db.collection("users")
-        .doc(`${router.query.uid}`)
-        .collection("posts")
-        .doc(`${router.query.pid}`)
-        .collection("chatrooms")
-        .doc(`${router.query.cid}`)
-        .get()
-        .then((snapshot) => {
-          if (!snapshot.data()) return;
-          setChatroom(setChatroomStates(snapshot.data()));
-        });
-    }
-    if (router.query.uid && router.query.pid && router.query.cid) {
-      db.collection("users")
-        .doc(`${router.query.uid}`)
-        .collection("posts")
-        .doc(`${router.query.pid}`)
-        .collection("chatrooms")
-        .doc(`${router.query.cid}`)
-        .collection("messages")
-        .orderBy("createdAt")
-        .onSnapshot((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
-        );
-    }
+    // if (router.query.uid && router.query.pid && router.query.cid) {
+    //   db.collection("users")
+    //     .doc(`${router.query.uid}`)
+    //     .collection("posts")
+    //     .doc(`${router.query.pid}`)
+    //     .collection("chatrooms")
+    //     .doc(`${router.query.cid}`)
+    //     .get()
+    //     .then((snapshot) => {
+    //       if (!snapshot.data()) return;
+    //       setChatroom(setChatroomStates(snapshot.data()));
+    //     });
+    // }
+
     if (router.query.pid) {
       db.collection("reviewsOnHold")
         .where("postID", "==", router.query.pid)
@@ -106,29 +94,6 @@ const messages: NextPage = () => {
         });
     }
   }, [router.query.uid, router.query.pid, router.query.cid]);
-
-  useEffect(() => {
-    if (currentUser && chatroom.messageCount) {
-      if (currentUser.uid === chatroom.postUserID) {
-        db.collection("users")
-          .doc(`${chatroom.sendUserID}`)
-          .get()
-          .then((snapshot) =>
-            setMessageReceiver(setUserState(snapshot.data()))
-          );
-      }
-      if (currentUser.uid === chatroom.sendUserID) {
-        db.collection("users")
-          .doc(`${chatroom.postUserID}`)
-          .get()
-          .then((snapshot) =>
-            setMessageReceiver(setUserState(snapshot.data()))
-          );
-      }
-    } else {
-      setMessageReceiver(setUserState(user));
-    }
-  }, [currentUser, chatroom, user]);
 
   useEffect(() => {
     if (post.userID && post.postID && router.query.cid) {
@@ -153,6 +118,52 @@ const messages: NextPage = () => {
         );
     }
   }, [post]);
+
+  useEffect(() => {
+    if (chatroom.postID !== "") {
+      db.collection("users")
+        .doc(`${chatroom.postUserID}`)
+        .collection("posts")
+        .doc(`${chatroom.postID}`)
+        .collection("chatrooms")
+        .doc(`${chatroom.sendUserID}`)
+        .collection("messages")
+        .orderBy("createdAt")
+        .onSnapshot((snapshot) =>
+          setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
+        );
+    }
+  }, [chatroom]);
+
+  useEffect(() => {
+    if (currentUser && chatroom && post && chatroom.postID !== "") {
+      if (currentUser.uid === chatroom.postUserID) {
+        db.collection("users")
+          .doc(`${chatroom.sendUserID}`)
+          .get()
+          .then((snapshot) =>
+            setMessageReceiver(setUserState(snapshot.data()))
+          );
+      }
+      if (currentUser.uid === chatroom.sendUserID) {
+        db.collection("users")
+          .doc(`${chatroom.postUserID}`)
+          .get()
+          .then((snapshot) =>
+            setMessageReceiver(setUserState(snapshot.data()))
+          );
+      }
+    } else {
+      if (post.userID) {
+        db.collection("users")
+          .doc(`${post.userID}`)
+          .get()
+          .then((snapshot) =>
+            setMessageReceiver(setUserState(snapshot.data()))
+          );
+      }
+    }
+  }, [currentUser, chatroom, post]);
 
   //レビューが2つ揃ったら送信
   useEffect(() => {
@@ -194,6 +205,7 @@ const messages: NextPage = () => {
         reviewText={reviewText}
       />
       <div>
+        {console.log(chatroom, messages, messageReceiver, post)}
         <Layout
           title={
             `メッセージ | ${messageReceiver?.username}さん | happy horse` || ""
@@ -247,9 +259,7 @@ const messages: NextPage = () => {
                             {message.clientDecision ? (
                               <MessageAnnounce value={"取引者を決定しました"} />
                             ) : message.dealInterruption ? (
-                              <div className="messageAnnounce">
-                                <MessageAnnounce value={"取引を中断しました"} />
-                              </div>
+                              <MessageAnnounce value={"取引を中断しました"} />
                             ) : message.dealCompleted ? (
                               <MessageAnnounce value={"取引完了です！"} />
                             ) : message.pleaseRate ? (
@@ -280,22 +290,30 @@ const messages: NextPage = () => {
                               <MessageAnnounce value={"評価完了です！"} />
                             ) : message.userID === currentUser?.uid ? (
                               // 自分のメッセージ
-                              <MyMessage
-                                message={message}
-                                setIsOpenModal={setIsOpenModal}
-                                isOpenModal={isOpenModal}
-                                imageSrc={imageSrc}
-                                setImageSrc={setImageSrc}
-                              />
+                              <>
+                                {(message.messageText || message.image) && (
+                                  <MyMessage
+                                    message={message}
+                                    setIsOpenModal={setIsOpenModal}
+                                    isOpenModal={isOpenModal}
+                                    imageSrc={imageSrc}
+                                    setImageSrc={setImageSrc}
+                                  />
+                                )}
+                              </>
                             ) : (
                               //相手のメッセージ
-                              <YourMessage
-                                message={message}
-                                setIsOpenModal={setIsOpenModal}
-                                isOpenModal={isOpenModal}
-                                imageSrc={imageSrc}
-                                setImageSrc={setImageSrc}
-                              />
+                              <>
+                                {(message.messageText || message.image) && (
+                                  <YourMessage
+                                    message={message}
+                                    setIsOpenModal={setIsOpenModal}
+                                    isOpenModal={isOpenModal}
+                                    imageSrc={imageSrc}
+                                    setImageSrc={setImageSrc}
+                                  />
+                                )}
+                              </>
                             )}
                           </div>
                         ))}

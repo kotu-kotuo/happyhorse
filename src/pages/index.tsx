@@ -93,7 +93,7 @@ const Index: NextPage = ({ posts }: any) => {
                 post.height >= heightMin &&
                 post.height <= heightMax &&
                 breed.includes(post.breed) &&
-                gender.includes(post.gender) &&
+                gender?.includes(post.gender) &&
                 color.includes(post.color) &&
                 area.includes(post.area)
             )
@@ -172,7 +172,7 @@ const Index: NextPage = ({ posts }: any) => {
             post.height >= heightMin &&
             post.height <= heightMax &&
             breed.includes(post.breed) &&
-            gender.includes(post.gender) &&
+            gender?.includes(post.gender) &&
             color.includes(post.color) &&
             area.includes(post.area)
         )

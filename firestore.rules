@@ -10,18 +10,19 @@ service cloud.firestore {
       match /posts/{postID} {
         allow read;
         allow create: if isUserAuthenticated(incomingData().userID);
-        allow update: if isUserAuthenticated(incomingData().userID) || request.auth.uid in incomingData().sendMessageUserIDs || request.auth.uid in getAfterData(documentPath(["users",incomingData().userID,"posts",incomingData().postID])).sendMessageUserIDs || (!(request.auth.uid in incomingData().likeUserIDs) && (request.auth.uid in existingData().likeUserIDs)) || ((request.auth.uid in incomingData().likeUserIDs) && !(request.auth.uid in existingData().likeUserIDs));
+        allow update: if isUserAuthenticated(incomingData().userID) || (request.auth.uid in incomingData().sendMessageUserIDs) || (!(request.auth.uid in incomingData().likeUserIDs) && (request.auth.uid in existingData().likeUserIDs)) || ((request.auth.uid in incomingData().likeUserIDs) && !(request.auth.uid in existingData().likeUserIDs));
         allow delete: if isUserAuthenticated(userID);
 
         match /chatrooms/{sendUserID} {
-          allow read: if isAuthenticated() && (isUserAuthenticated(existingData().sendUserID) || isUserAuthenticated(existingData().postUserID));
+          allow read: if isAuthenticated();
           allow create: if isUserAuthenticated(incomingData().sendUserID) && incomingData().messageCount == 1;
-          allow update: if isAuthenticated() && (isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID));
+          allow update: if isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().postUserID);
           allow delete: if isUserAuthenticated(existingData().postUserID);
 
           match /messages/{messageId} {
-            allow read: if isUserAuthenticated(existingData().userID) || isUserAuthenticated(existingData().messageReceiverID);
+            allow read: if isAuthenticated();
             allow create: if isAuthenticated() && isUserAuthenticated(incomingData().userID) && incomingData().postID == postID;
+            allow update: if isUserAuthenticated(incomingData().userID);
             allow delete: if (isUserAuthenticated(existingData().userID) || isUserAuthenticated(existingData().messageReceiverID)) && existingData().postID == postID;
           }
         }
@@ -29,6 +30,7 @@ service cloud.firestore {
 
       match /reviews/{reviewId} {
         allow read;
+        allow update: if isUserAuthenticated(incomingData().reviewerID);
         allow create: if isUserAuthenticated(incomingData().postUserID) || isUserAuthenticated(incomingData().reviewerID);
       }
 
@@ -53,7 +55,7 @@ service cloud.firestore {
 
       match /notifications/{notificationId} {
         allow read: if isAuthenticated();
-        allow create: if isUserAuthenticated(incomingData().sendUserID);
+        allow create: if isUserAuthenticated(incomingData().sendUserID) || isUserAuthenticated(incomingData().receiveUserID);
         allow update: if isUserAuthenticated(userID);
         allow delete: if isUserAuthenticated(userID);
       }
@@ -62,6 +64,7 @@ service cloud.firestore {
     match /reviewsOnHold/{reviewsOnHoldId} {
       allow read: if isAuthenticated();
       allow create: if isUserAuthenticated(incomingData().reviewerID);
+      allow update: if isUserAuthenticated(incomingData().reviewerID);
       allow delete: if isUserAuthenticated(existingData().reviewerID) || isUserAuthenticated(existingData().postUserID);
     }
 

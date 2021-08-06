@@ -21,7 +21,7 @@ const sendImage = async (
   if (currentUser && post.postID && e.target.files[0]) {
     const fileName = await generateFileName(e.target.files[0]);
 
-    if (currentUser.uid !== post.userID && messages.length === 0) {
+    if (currentUser.uid !== post.userID && messages[0].userID === "") {
       //最初にメッセージ送る時チャットルーム作成
       await db
         .collection("users")

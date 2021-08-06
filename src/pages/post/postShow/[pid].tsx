@@ -89,7 +89,7 @@ const Show: NextPage = ({ post }: any) => {
           </div>
 
           <div className="flex justify-between md:mt-10">
-            <div className="w-full md:w-2/3 mb-20 px-4 pl-4 md:pr-0">
+            <div className="w-full md:w-2/3 mb-8 px-4 pl-4 md:pr-0">
               <div className="max-w-2xl xl:ml-6 lg:ml-10 md:ml-6">
                 <div className="fontSize-xl mt-2 mb-6 text-gray-900 font-semibold md:mt-6">
                   {currentUser ? postState.title : post.title}
@@ -98,21 +98,23 @@ const Show: NextPage = ({ post }: any) => {
                   {currentUser ? postState.postText : post.postText}
                 </div>
               </div>
-              <VideoList
-                video1URL={currentUser ? postState.video1URL : post.video1URL}
-                video1Title={
-                  currentUser ? postState.video1Title : post.video1Title
-                }
-                video2URL={currentUser ? postState.video2URL : post.video2URL}
-                video2Title={
-                  currentUser ? postState.video2Title : post.video2Title
-                }
-                video3URL={currentUser ? postState.video3URL : post.video3URL}
-                video3Title={
-                  currentUser ? postState.video3Title : post.video3Title
-                }
-              />
-              <div className="mt-20 mb-10">
+              <div className="md:pl-6">
+                <VideoList
+                  video1URL={currentUser ? postState.video1URL : post.video1URL}
+                  video1Title={
+                    currentUser ? postState.video1Title : post.video1Title
+                  }
+                  video2URL={currentUser ? postState.video2URL : post.video2URL}
+                  video2Title={
+                    currentUser ? postState.video2Title : post.video2Title
+                  }
+                  video3URL={currentUser ? postState.video3URL : post.video3URL}
+                  video3Title={
+                    currentUser ? postState.video3Title : post.video3Title
+                  }
+                />
+              </div>
+              <div className="mt-20 mb-10 md:mt-24">
                 <PostShowTable
                   post={currentUser ? postState : post}
                   postUser={postUser}

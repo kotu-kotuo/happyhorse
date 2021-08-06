@@ -95,13 +95,6 @@ const deleteAccountData = async (
           })
         );
 
-      await db
-        .collection("users")
-        .doc(`${currentUser.uid}`)
-        .collection("likePosts")
-        .get()
-        .then((snapshot) => snapshot.docs.map((doc) => doc.ref.delete()));
-
       // await db                messages.tsxの評価表示切り替えでで不具合が出るため
       //   .collection("users")
       //   .doc(`${currentUser.uid}`)

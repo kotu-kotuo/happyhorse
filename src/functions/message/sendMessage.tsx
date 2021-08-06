@@ -21,7 +21,7 @@ const sendMessage = async (
 ) => {
   e.preventDefault();
   if (currentUser && post.postID) {
-    if (currentUser.uid !== post.userID && messages.length === 0) {
+    if (currentUser.uid !== post.userID && messages[0].userID === "") {
       //最初にメッセージ送る時チャットルーム作成
       await db
         .collection("users")
@@ -94,6 +94,7 @@ const sendMessage = async (
           dealCompleted: false,
           pleaseRate: false,
           rateCompleted: false,
+          deletedAccount: false,
         });
 
       await db
@@ -107,7 +108,11 @@ const sendMessage = async (
         .orderBy("createdAt")
         .get()
         .then((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
+          setMessages(
+            snapshot.docs.map((doc) =>
+              setMessageStates(doc.data({ serverTimestamps: "estimate" }))
+            )
+          )
         );
       await setMessageText("");
 
@@ -193,7 +198,11 @@ const sendMessage = async (
         .orderBy("createdAt")
         .get()
         .then((snapshot) =>
-          setMessages(snapshot.docs.map((doc) => setMessageStates(doc.data())))
+          setMessages(
+            snapshot.docs.map((doc) =>
+              setMessageStates(doc.data({ serverTimestamps: "estimate" }))
+            )
+          )
         );
       await setMessageText("");
 
