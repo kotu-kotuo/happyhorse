@@ -19,7 +19,7 @@ const PostShowTable: FC<Props> = (props) => {
 
       <div className="tableListItem-margin">
         <TableListItem
-          label={"カテゴリー"}
+          label={"カテゴリ"}
           value={<Category category={post.category} />}
         />
       </div>
