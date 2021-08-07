@@ -76,6 +76,8 @@ const about = () => {
               </span>
               <br />
               <span className="whitespace-nowrap">是非あなたも！</span>
+              <br />
+              <span className="whitespace-nowrap">もちろん無料です^^</span>
             </div>
           </div>
           <div className="mt-4 sm:mt-0">
