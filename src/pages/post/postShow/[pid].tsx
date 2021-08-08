@@ -16,12 +16,13 @@ import admin from "../../../firebase/admin";
 import VideoList from "../../../components/pages/postShow/VideoList";
 import { postInitialValues } from "../../../utils/initialValues";
 
-const Show: NextPage = ({ post }: any) => {
+const Show: NextPage = ({ posts }: any) => {
   const router: NextRouter = useRouter();
   const { user, setUser, currentUser } = useContext(AuthContext);
   const [postState, setPostState] = useState(postInitialValues);
   const [postUser, setPostUser] = useState(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const post = posts.find((post) => post.postID === router.query.pid);
 
   useEffect(() => {
     if (post.userID) {
@@ -157,37 +158,52 @@ const Show: NextPage = ({ post }: any) => {
 
 export default Show;
 
-export async function getStaticPaths() {
+export async function getServerSideProps() {
   const db = admin.firestore();
 
-  const paths = await db
-    .collectionGroup("posts")
-    .get()
-    .then((snapshot) =>
-      snapshot.docs.map((doc) => ({ params: { pid: doc.data().postID } }))
-    );
+  const data: FirebaseFirestore.DocumentData[] = (
+    await db.collectionGroup("posts").get()
+  ).docs.map((doc) => doc.data());
 
-  console.log(paths);
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const db = admin.firestore();
-
-  const data: FirebaseFirestore.DocumentData = (
-    await db.collectionGroup("posts").where("postID", "==", params.pid).get()
-  ).docs[0].data();
-
-  const post = JSON.parse(JSON.stringify(data));
+  const posts = JSON.parse(JSON.stringify(data));
 
   return {
     props: {
-      post,
+      posts,
     },
-    revalidate: 10,
   };
+
+  // export async function getStaticPaths() {
+  //   const db = admin.firestore();
+
+  //   const paths = await db
+  //     .collectionGroup("posts")
+  //     .get()
+  //     .then((snapshot) =>
+  //       snapshot.docs.map((doc) => ({ params: { pid: doc.data().postID } }))
+  //     );
+
+  //   console.log(paths);
+
+  //   return {
+  //     paths,
+  //     fallback: false,
+  //   };
+  // }
+
+  // export async function getStaticProps({ params }) {
+  //   const db = admin.firestore();
+
+  //   const data: FirebaseFirestore.DocumentData = (
+  //     await db.collectionGroup("posts").where("postID", "==", params.pid).get()
+  //   ).docs[0].data();
+
+  //   const post = JSON.parse(JSON.stringify(data));
+
+  //   return {
+  //     props: {
+  //       post,
+  //     },
+  //     revalidate: 10,
+  //   };
 }

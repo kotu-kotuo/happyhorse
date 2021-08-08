@@ -345,7 +345,7 @@ export async function getServerSideProps() {
   const data: FirebaseFirestore.DocumentData[] = (
     await db.collectionGroup("posts").orderBy("createdAt", "desc").get()
   ).docs.map((doc) => doc.data());
-  console.log(data);
+
   const posts = JSON.parse(JSON.stringify(data));
 
   return {
