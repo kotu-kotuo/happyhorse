@@ -117,7 +117,6 @@ const Index: NextPage = ({ posts }: any) => {
             );
 
           setFilteredPosts(filteredPostsToSet);
-          console.log("おおお", area, filteredPostsToSet);
         });
     }
   }, [currentUser]);
@@ -220,7 +219,6 @@ const Index: NextPage = ({ posts }: any) => {
       <Layout title="happy horse | 馬の売買プラットフォーム">
         {console.log(posts)}
         {console.log(filteredPosts)}
-        {console.log(area, showOnlyAvailable, category)}
         <LoginModal
           isLoginModalOpen={isLoginModalOpen}
           setIsLoginModalOpen={setIsLoginModalOpen}
@@ -347,7 +345,7 @@ export async function getServerSideProps() {
   const data: FirebaseFirestore.DocumentData[] = (
     await db.collectionGroup("posts").orderBy("createdAt", "desc").get()
   ).docs.map((doc) => doc.data());
-
+  console.log(data);
   const posts = JSON.parse(JSON.stringify(data));
 
   return {
