@@ -90,7 +90,7 @@ const MenuList: FC<Props> = (props) => {
 
           <a
             onClick={logout}
-            className="px-4 py-4 hover:bg-gray-100 flex items-center"
+            className="px-4 py-4 hover:bg-gray-100 flex items-center cursor-pointer"
           >
             <p className="text-sm font-medium text-gray-800 leading-none">
               ログアウト
