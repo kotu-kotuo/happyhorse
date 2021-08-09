@@ -40,7 +40,7 @@ const setting: NextPage = () => {
 
       db.collectionGroup("posts")
         .where("clientUserID", "==", currentUser.uid)
-        .where("ratingCompleted", "==", true)
+        .where("ratingCompleted", "==", false)
         .get()
         .then((snapshot) =>
           setDuringDealingPosts(
