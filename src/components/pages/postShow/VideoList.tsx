@@ -20,7 +20,7 @@ const VideoList: FC<Props> = (props) => {
     video3Title,
   } = props;
   return (
-    <div className="pt-4">
+    <div className="pt-4 -mx-4 sm:mx-0">
       <VideoListItem videoURL={video1URL} videoTitle={video1Title} />
       <VideoListItem videoURL={video2URL} videoTitle={video2Title} />
       <VideoListItem videoURL={video3URL} videoTitle={video3Title} />

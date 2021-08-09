@@ -42,10 +42,10 @@ const Posts: FC<Props> = (props) => {
       {posts.map((post) => (
         <div
           key={post.postID}
-          className="border-b border-gray-300 pb-6 mb-10 sm:mb-16"
+          className="border-b border-gray-300 pb-5 mb-10 sm:mb-16 sm:pb-6"
         >
           <div
-            className="flex mb-5 z-0"
+            className="flex mb-5 z-0 -mx-2 sm:mx-0"
             data-id={post.postID}
             onClick={clickPost}
           >

@@ -262,7 +262,7 @@ const Index: NextPage = ({ posts }: any) => {
             {width < 1024 && (
               <>
                 <div
-                  className="ml-auto mb-3 shadow-md border border-gray-50 rounded-lg w-28"
+                  className="ml-auto mb-3.5 shadow-md border border-gray-50 rounded-lg w-28"
                   onClick={() => {
                     setIsOpenFilter(!isOpenFilter);
                   }}

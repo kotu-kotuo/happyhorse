@@ -25,10 +25,12 @@ const VideoListItem: FC<Props> = (props) => {
               className="absolute top-0 left-0 h-full w-full"
             ></iframe>
           </div>
-          <div className="fontSize-base text-gray-700 mt-4 font-semibold">
-            {videoTitle}
+          <div className="mx-4 sm:mx-0">
+            <div className="fontSize-base text-gray-700 mt-4 font-semibold">
+              {videoTitle}
+            </div>
+            <div className="border-b shadow-xs my-6"></div>
           </div>
-          <div className="border-b shadow-xs my-6"></div>
         </>
       )}
     </div>
