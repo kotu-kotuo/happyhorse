@@ -7,7 +7,7 @@ import { setPostStates } from "../utils/states";
 import { useRouter } from "next/router";
 import PasswordModal from "../components/pages/setting/PasswordModal";
 import { NextPage } from "next";
-import { postInitialValues } from "../utils/initialValues";
+import { filterInitialValues, postInitialValues } from "../utils/initialValues";
 import { Post } from "../types/types";
 import useRedirectLogin from "../hooks/useRedirectLogin";
 
@@ -54,8 +54,15 @@ const setting: NextPage = () => {
     const filterResult = myPosts.filter(
       (post) => post.clientUserID && post.ratingCompleted === false
     );
-    console.log(filterResult.length !== 0);
-    console.log(duringDealingPosts.length !== 0);
+    console.log(filterResult.length !== 0, "1");
+    console.log(duringDealingPosts.length !== 0, "2");
+    console.log(duringDealingPosts, "3");
+    console.log(
+      myPosts.filter(
+        (post) => post.clientUserID && post.ratingCompleted === false
+      ),
+      "4"
+    );
     if (filterResult.length !== 0 || duringDealingPosts.length !== 0) {
       alert("取引の途中で退会はできません。");
       return;
@@ -71,7 +78,6 @@ const setting: NextPage = () => {
   return (
     <div>
       <Layout title="設定 | happy horse" index="noindex">
-        {console.log(currentUser)}
         {isModalOpen && (
           <div className="bg-gray-500 bg-opacity-70 z-30 fixed top-0 bottom-0 left-0 right-0">
             <div className="w-screen h-screen px-2">
