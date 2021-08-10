@@ -21,7 +21,7 @@ export const Layout: React.FC<Props> = (props) => {
     children,
     title = "happy horse | 馬の売買プラットフォーム",
     ogpURL = "https://www.happyhorse.xyz/",
-    description = "happyhorse（ハッピーホース）では、主に乗馬・馬術、レクレーションの馬の売買ができます。馬の販売・購入をより便利に、より手軽に。素敵な出会いがありますように。HAPPY UMA LIFE! サラブレッド",
+    description = "happy horse（ハッピーホース）では、主に乗馬・馬術、レクレーションの馬の売買ができます。馬の販売・購入をより便利に、より手軽に。素敵な出会いがありますように。HAPPY UMA LIFE! サラブレッド",
     ogpImage = "https://firebasestorage.googleapis.com/v0/b/happyhorse-prod.appspot.com/o/ogp-hh.png?alt=media&token=6a8c8771-2193-40a4-8f6b-920544654e05",
     index = "all",
   } = props;
