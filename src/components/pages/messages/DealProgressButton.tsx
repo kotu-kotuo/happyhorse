@@ -46,7 +46,9 @@ const DealProgressButton: FC<Props> = (props) => {
               )
             }
           >
-            <p className="mt-1 text-mainGreen font-bold sm:font-semibold">取引者に決定</p>
+            <p className="mt-1 text-mainGreen font-bold sm:font-semibold">
+              取引者に決定
+            </p>
           </div>
         )}
       {currentUser &&
@@ -87,7 +89,9 @@ const DealProgressButton: FC<Props> = (props) => {
                 );
               }}
             >
-              <p className="mt-1 text-gray-300 font-bold sm:font-semibold">取引を中断する</p>
+              <p className="mt-1 text-gray-300 font-bold sm:font-semibold">
+                取引を中断する
+              </p>
             </div>
           </>
         )}
