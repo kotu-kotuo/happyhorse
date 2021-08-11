@@ -92,7 +92,7 @@ const Show: NextPage = ({ posts }: any) => {
           <div className="flex justify-between md:mt-10">
             <div className="w-full md:w-2/3 mb-8 px-4 pl-4 md:pr-0">
               <div className="max-w-2xl xl:ml-6 lg:ml-10 md:ml-6">
-                <div className="fontSize-xl mt-2 mb-6 text-gray-900 font-bold sm:font-semibold md:mt-6">
+                <div className="fontSize-xl my-4 text-gray-900 font-bold sm:font-semibold md:my-6">
                   {currentUser ? postState.title : post.title}
                 </div>
                 <div className="fontSize-base text-gray-700 whitespace-pre-wrap">
