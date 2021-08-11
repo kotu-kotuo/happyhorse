@@ -75,7 +75,7 @@
 # ボタン
 ===============================================*/
 .button-round {
-  @apply mt-6 mb-6 focus:outline-none text-white font-semibold py-3 px-8 rounded-full hidden md:block;
+  @apply mt-6 mb-6 focus:outline-none text-white font-bold sm:font-semibold py-3 px-8 rounded-full hidden md:block;
 }
 
 .buttonGreen {
@@ -106,11 +106,11 @@
 }
 
 .termsTitle {
-  @apply font-semibold my-8 text-xl sm:text-2xl;
+  @apply font-bold sm:font-semibold my-8 text-xl sm:text-2xl;
 }
 
 .termsLabel {
-  @apply font-semibold mb-4 fontSize-xl;
+  @apply font-bold sm:font-semibold mb-4 fontSize-xl;
 }
 
 .termsText {

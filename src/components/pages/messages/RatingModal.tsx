@@ -103,7 +103,7 @@ const RatingModal: FC<Props> = (props) => {
                   <div className="flex justify-around mt-8">
                     <button
                       type="submit"
-                      className="fontSize-base focus:outline-none text-white font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+                      className="fontSize-base focus:outline-none text-white font-bold sm:font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
                     >
                       評価を送信
                     </button>
@@ -112,7 +112,7 @@ const RatingModal: FC<Props> = (props) => {
                         setIsOpenRatingModal(false);
                       }}
                       type="button"
-                      className="fontSize-base focus:outline-none text-gray-500 border border-gray-400 font-semibold py-1.5 px-5 rounded-md bg-white hover:opacity-90 hover:shadow-lg"
+                      className="fontSize-base focus:outline-none text-gray-500 border border-gray-400 font-bold sm:font-semibold py-1.5 px-5 rounded-md bg-white hover:opacity-90 hover:shadow-lg"
                     >
                       キャンセル
                     </button>

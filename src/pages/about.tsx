@@ -45,14 +45,14 @@ const about = () => {
           <div className="flex flex-col sm:flex-row justify-center text-center">
             <Link href="/signup">
               <div className="mx-auto my-3 sm:my-0 sm:mx-0">
-                <div className="font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
+                <div className="font-bold sm:font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
                   新規登録
                 </div>
               </div>
             </Link>
             <Link href="/login">
               <div className="mx-auto my-3 sm:my-0 sm:mx-0">
-                <div className="font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
+                <div className="font-bold sm:font-semibold bg-mainGreen px-14 py-2.5 rounded-md text-white hover:shadow-lg hover:opacity-80 cursor-pointer mx-4 sm:mx-6">
                   ログイン
                 </div>
               </div>

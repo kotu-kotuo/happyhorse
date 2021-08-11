@@ -162,7 +162,7 @@ const Filter: FC<Props> = (props) => {
     <div>
       <form onSubmit={filterPost}>
         <div className="px-4 py-6 shadow-md border border-gray-50 rounded-lg">
-          <div className=" text-center text-sm font-semibold text-gray-400 opacity-95">
+          <div className=" text-center text-sm font-bold sm:font-semibold text-gray-400 opacity-95">
             絞り込み検索
           </div>
 
@@ -193,7 +193,7 @@ const Filter: FC<Props> = (props) => {
             </div>
           </div>
 
-          <div className="mb-4 mt-7 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-7 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             カテゴリー
           </div>
           <div className="flex flex-wrap lg:block">
@@ -217,7 +217,7 @@ const Filter: FC<Props> = (props) => {
             ))}
           </div>
 
-          <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-8 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             価格
           </div>
           <div className="flex">
@@ -254,7 +254,7 @@ const Filter: FC<Props> = (props) => {
             />
           </div>
 
-          <div className="mb-4 mt-10 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-10 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             年齢
           </div>
           <div className="flex">
@@ -291,7 +291,7 @@ const Filter: FC<Props> = (props) => {
             />
           </div>
 
-          <div className="mb-4 mt-10 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-10 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             身長(cm)
           </div>
           <div className="flex">
@@ -332,7 +332,7 @@ const Filter: FC<Props> = (props) => {
             />
           </div>
 
-          <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-8 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             品種
           </div>
           <div className="mb-3">
@@ -363,7 +363,7 @@ const Filter: FC<Props> = (props) => {
             </select>
           </div>
 
-          <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-8 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             性別
           </div>
           <div className="mb-3">
@@ -394,7 +394,7 @@ const Filter: FC<Props> = (props) => {
             </select>
           </div>
 
-          <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-8 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             毛色
           </div>
           <select
@@ -421,7 +421,7 @@ const Filter: FC<Props> = (props) => {
             ))}
           </select>
 
-          <div className="mb-4 mt-10 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-10 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             地域
           </div>
           <div className="flex flex-wrap lg:block">
@@ -528,7 +528,7 @@ const Filter: FC<Props> = (props) => {
             </div>
           </div>
 
-          <div className="mb-4 mt-8 ml-2 text-sm font-semibold text-gray-400 opacity-90">
+          <div className="mb-4 mt-8 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
             特徴
           </div>
           <div className="flex flex-wrap lg:block">
@@ -565,7 +565,7 @@ const Filter: FC<Props> = (props) => {
           <div className="flex justify-center mt-8 lg:justify-self-auto">
             <button
               type="submit"
-              className="mr-1.5 whitespace-nowrap focus:outline-none text-white text-base font-semibold py-2 px-5 rounded-md bg-gray-400 block w-44 hover:opacity-90 hover:shadow-lg lg:mx-auto"
+              className="mr-1.5 whitespace-nowrap focus:outline-none text-white text-base font-bold sm:font-semibold py-2 px-5 rounded-md bg-gray-400 block w-44 hover:opacity-90 hover:shadow-lg lg:mx-auto"
             >
               検索
             </button>

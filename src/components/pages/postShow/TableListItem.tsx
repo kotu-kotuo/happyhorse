@@ -14,7 +14,7 @@ const TableListItem: FC<Props> = (props) => {
         <div className="fontSize-base w-1/4 text-gray-600 md:ml-10">
           {label}
         </div>
-        <div className="fontSize-base w-3/4 text-gray-700 font-semibold">
+        <div className="fontSize-base w-3/4 text-gray-700 font-bold sm:font-semibold">
           {value}
         </div>
       </div>

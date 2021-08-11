@@ -112,13 +112,13 @@ const decideClient = (
                   });
                 onClose();
               }}
-              className="focus:outline-none text-white text-base font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
+              className="focus:outline-none text-white text-base font-bold sm:font-semibold py-1.5 px-5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg"
             >
               Yes
             </button>
             <button
               onClick={onClose}
-              className="focus:outline-none text-gray-500 text-base border border-gray-400 font-semibold py-1.5 px-5 rounded-md bg-white hover:opacity-90 hover:shadow-lg"
+              className="focus:outline-none text-gray-500 text-base border border-gray-400 font-bold sm:font-semibold py-1.5 px-5 rounded-md bg-white hover:opacity-90 hover:shadow-lg"
             >
               No
             </button>

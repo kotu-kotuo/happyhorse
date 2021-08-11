@@ -26,7 +26,7 @@ const VideoListItem: FC<Props> = (props) => {
             ></iframe>
           </div>
           <div className="mx-4 sm:mx-0">
-            <div className="fontSize-base text-gray-700 mt-4 font-semibold">
+            <div className="fontSize-base text-gray-700 mt-4 font-bold sm:font-semibold">
               {videoTitle}
             </div>
             <div className="border-b shadow-xs my-6"></div>

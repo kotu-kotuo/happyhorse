@@ -39,7 +39,7 @@ const MenuList: FC<Props> = (props) => {
               src={user?.avatar}
               alt="avatar"
             />
-            <p className="pt-2 font-semibold sm:text-lg">{`${user.username}`}</p>
+            <p className="pt-2 font-bold sm:font-semibold sm:text-lg">{`${user.username}`}</p>
             <Link
               href={{
                 pathname: "/reviews",
@@ -76,7 +76,7 @@ const MenuList: FC<Props> = (props) => {
                   },
                 }}
               >
-                <a className="border rounded-full py-2 px-4 text-xs font-semibold text-gray-700 hover:opacity-80">
+                <a className="border rounded-full py-2 px-4 text-xs font-bold sm:font-semibold text-gray-700 hover:opacity-80">
                   マイプロフィール
                 </a>
               </Link>

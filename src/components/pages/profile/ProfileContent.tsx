@@ -35,7 +35,7 @@ const ProfileContent: FC<Props> = (props) => {
                 </Link>
               )}
             </div>
-            <div className="text-base text-gray-900 font-semibold mt-3 mb-1 sm:mt-6 px-2 text-center sm:text-lg">{`${user.username}`}</div>
+            <div className="text-base text-gray-900 font-bold sm:font-semibold mt-3 mb-1 sm:mt-6 px-2 text-center sm:text-lg">{`${user.username}`}</div>
 
             <Link
               href={{

@@ -49,7 +49,7 @@ const MobileProgressButton: FC<Props> = (props) => {
               );
             }}
           >
-            <p className="text-mainGreen font-semibold">取引者に決定</p>
+            <p className="text-mainGreen font-bold sm:font-semibold">取引者に決定</p>
           </div>
         )}
       {currentUser &&
@@ -72,7 +72,7 @@ const MobileProgressButton: FC<Props> = (props) => {
                 );
               }}
             >
-              <p className="mt-1 text-mainGreen font-semibold">
+              <p className="mt-1 text-mainGreen font-bold sm:font-semibold">
                 取引を完了する
               </p>
             </div>
@@ -90,7 +90,7 @@ const MobileProgressButton: FC<Props> = (props) => {
                 );
               }}
             >
-              <p className="mt-1 text-gray-300 font-semibold">取引を中断する</p>
+              <p className="mt-1 text-gray-300 font-bold sm:font-semibold">取引を中断する</p>
             </div>
           </div>
         )}
@@ -100,7 +100,7 @@ const MobileProgressButton: FC<Props> = (props) => {
         !post.isAvairable &&
         currentUser.uid === chatroom?.postUserID && (
           <div className="rounded-xl p-2 text-center bg-white">
-            <p className="text-mainGreen font-semibold">取引完了しました</p>
+            <p className="text-mainGreen font-bold sm:font-semibold">取引完了しました</p>
           </div>
         )}
     </div>

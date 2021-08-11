@@ -52,7 +52,7 @@ const LikeButton: FC<Props> = (props) => {
           )}
           <p className="text-gray-900 ml-3 mr-1">
             お気に入り
-            <span className="ml-3 text-gray-900 font-semibold">
+            <span className="ml-3 text-gray-900 font-bold sm:font-semibold">
               {post.likeUserIDs?.length}
             </span>
           </p>
@@ -81,7 +81,7 @@ const LikeButton: FC<Props> = (props) => {
           )}
           <div className="flex items-center text-gray-500 text-[11px]">
             <div className="text-gray-500">お気に入り</div>
-            <div className="ml-0.5 font-semibold">
+            <div className="ml-0.5 font-bold sm:font-semibold">
               {post.likeUserIDs?.length}
             </div>
           </div>

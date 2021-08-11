@@ -280,7 +280,7 @@ const messages: NextPage = () => {
                                       setIsOpenRatingModal(true);
                                     }}
                                   >
-                                    <p className="mt-1 text-mainGreen font-semibold">
+                                    <p className="mt-1 text-mainGreen font-bold sm:font-semibold">
                                       評価をお願いします
                                     </p>
                                   </div>
