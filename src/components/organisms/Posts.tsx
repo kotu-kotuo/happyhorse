@@ -102,7 +102,7 @@ const Posts: FC<Props> = (props) => {
           </div>
           <Link href={`/post/postShow/${post.postID}`} scroll={false}>
             <div className="cursor-pointer hover:opacity-80">
-              <h2 className="font-semibold text-gray-800 mt-3 mb-2 line-clamp-2 md:my-3 md:text-xl">
+              <h2 className="font-bold sm:font-semibold text-gray-800 mt-3 mb-2 line-clamp-2 md:my-3 md:text-xl">
                 {post.title}
               </h2>
             </div>
