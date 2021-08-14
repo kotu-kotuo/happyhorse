@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import getAge from "../../../functions/getAge";
 import { Post, User } from "../../../types/types";
 import Category from "../../atoms/Category";
 import PublisherValue from "../../molecules/PublisherValue";
@@ -41,7 +42,7 @@ const PostShowTable: FC<Props> = (props) => {
       </div>
 
       <div className="tableListItem-margin">
-        <TableListItem label={"年齢"} value={`${post.age}歳`} />
+        <TableListItem label={"年齢"} value={`${getAge(post.birth)}歳`} />
       </div>
 
       <div className="tableListItem-margin">
