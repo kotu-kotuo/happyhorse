@@ -30,7 +30,6 @@ export type Post = {
   gender: string;
   color: string;
   birth: { year: number; month: number; day: number };
-  age: number;
   height: number;
   area: string;
   features: Array<string>;

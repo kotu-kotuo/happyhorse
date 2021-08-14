@@ -35,7 +35,6 @@ const Post: NextPage = () => {
   const [year, setYear] = useState(null);
   const [month, setMonth] = useState(null);
   const [day, setDay] = useState(null);
-  const [age, setAge] = useState(null);
   const [height, setHeight] = useState(null);
   const [features, setFeatures] = useState(["empty"]);
   const [area, setArea] = useState("");
@@ -150,7 +149,6 @@ const Post: NextPage = () => {
                 year,
                 month,
                 day,
-                age,
                 height,
                 features,
                 area,
@@ -402,23 +400,6 @@ const Post: NextPage = () => {
                 />
                 <div className="mr-6 ml-2 text-sm">日</div>
               </div>
-            </div>
-
-            <div className="formItemContainer">
-              <div className="postFormLabel">
-                年齢
-                <RequiredMark />
-              </div>
-              <input
-                type="number"
-                name="age"
-                min="0"
-                max="100"
-                className="inputFormNumber w-full"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setAge(e.target.value);
-                }}
-              />
             </div>
 
             <div className="formItemContainer">

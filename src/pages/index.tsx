@@ -13,6 +13,7 @@ import { NextPage } from "next";
 import { Post } from "../types/types";
 import LoginModal from "../components/molecules/LoginModal";
 import admin from "../firebase/admin";
+import getAge from "../functions/getAge";
 
 const Index: NextPage = ({ posts }: any) => {
   const { currentUser, user, setUser } = useContext(AuthContext);
@@ -88,8 +89,8 @@ const Index: NextPage = ({ posts }: any) => {
                 category.includes(post.category) &&
                 post.price >= priceMin &&
                 post.price <= priceMax &&
-                post.age >= ageMin &&
-                post.age <= ageMax &&
+                getAge(post.birth) >= ageMin &&
+                getAge(post.birth) <= ageMax &&
                 post.height >= heightMin &&
                 post.height <= heightMax &&
                 breed.includes(post.breed) &&
@@ -166,8 +167,8 @@ const Index: NextPage = ({ posts }: any) => {
             category.includes(post.category) &&
             post.price >= priceMin &&
             post.price <= priceMax &&
-            post.age >= ageMin &&
-            post.age <= ageMax &&
+            getAge(post.birth) >= ageMin &&
+            getAge(post.birth) <= ageMax &&
             post.height >= heightMin &&
             post.height <= heightMax &&
             breed.includes(post.breed) &&

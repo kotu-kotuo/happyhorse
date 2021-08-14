@@ -35,7 +35,6 @@ const draft: NextPage = () => {
   const [year, setYear] = useState(null);
   const [month, setMonth] = useState(null);
   const [day, setDay] = useState(null);
-  const [age, setAge] = useState(null);
   const [height, setHeight] = useState(null);
   const [features, setFeatures] = useState(["empty"]);
   const [area, setArea] = useState("");
@@ -78,7 +77,6 @@ const draft: NextPage = () => {
       setYear(post.birth.year);
       setMonth(post.birth.month);
       setDay(post.birth.day);
-      setAge(post.age);
       setHeight(post.height);
       setFeatures(post.features);
       setArea(post.area);
@@ -187,7 +185,6 @@ const draft: NextPage = () => {
                 year,
                 month,
                 day,
-                age,
                 height,
                 features,
                 area,
@@ -221,7 +218,6 @@ const draft: NextPage = () => {
               setMonth={setMonth}
               setDay={setDay}
               setHeight={setHeight}
-              setAge={setAge}
               setArea={setArea}
               setPrice={setPrice}
               features={features}

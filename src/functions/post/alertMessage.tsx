@@ -13,7 +13,6 @@ const alertMessage = (
   year: number,
   month: number,
   day: number,
-  age: number,
   height: number,
   price: number,
   area: string
@@ -65,9 +64,6 @@ const alertMessage = (
   }
   if (!day) {
     alert("生年月日を記入してください");
-  }
-  if (!age) {
-    alert("年齢を記入してください");
   }
   if (!height) {
     alert("身長を記入してください");

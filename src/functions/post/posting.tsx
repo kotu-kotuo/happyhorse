@@ -27,7 +27,6 @@ const posting = async (
   year: number,
   month: number,
   day: number,
-  age: number,
   height: number,
   features: string[],
   area: string,
@@ -73,7 +72,6 @@ const posting = async (
             month: month,
             day: day,
           },
-          age: age,
           height: height,
           features: features,
           area: area,
@@ -118,7 +116,6 @@ const posting = async (
       year &&
       month &&
       day &&
-      age &&
       height &&
       area &&
       price
@@ -153,7 +150,6 @@ const posting = async (
               month: month,
               day: day,
             },
-            age: age,
             height: height,
             features: features,
             area: area,
@@ -196,7 +192,6 @@ const posting = async (
         year,
         month,
         day,
-        age,
         height,
         price,
         area

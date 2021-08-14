@@ -24,7 +24,6 @@ export const setPostStates = (data) => {
         month: data.birth.month,
         day: data.birth.day,
       },
-      age: data.age,
       height: data.height,
       area: data.area,
       features: data.features,

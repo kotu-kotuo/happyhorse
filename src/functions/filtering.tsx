@@ -1,4 +1,5 @@
 import { db } from "../firebase/firebase";
+import getAge from "./getAge";
 
 const filtering = (currentUser, posts) => {
   if (currentUser) {
@@ -31,8 +32,8 @@ const filtering = (currentUser, posts) => {
               category.includes(post.category) &&
               post.price >= priceMin &&
               post.price <= priceMax &&
-              post.age >= ageMin &&
-              post.age <= ageMax &&
+              getAge(post.birth) >= ageMin &&
+              getAge(post.birth) <= ageMax &&
               post.height >= heightMin &&
               post.height <= heightMax &&
               breed.includes(post.breed) &&

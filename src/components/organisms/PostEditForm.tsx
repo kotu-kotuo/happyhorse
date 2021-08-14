@@ -28,7 +28,6 @@ type Props = {
   setMonth;
   setDay;
   setHeight;
-  setAge;
   setArea: Dispatch<SetStateAction<string>>;
   setPrice;
   features: string[];
@@ -59,7 +58,6 @@ const PostEditForm: FC<Props> = (props) => {
     setMonth,
     setDay,
     setHeight,
-    setAge,
     setArea,
     setPrice,
     features,
@@ -345,19 +343,6 @@ const PostEditForm: FC<Props> = (props) => {
               />
               <div className="mr-6 ml-2 text-sm">日</div>
             </div>
-          </div>
-
-          <div className="formItemContainer">
-            <div className="postFormLabel">年齢</div>
-            <input
-              type="number"
-              name="age"
-              defaultValue={post?.age}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAge(e.target.value)
-              }
-              className="inputFormNumber w-full"
-            />
           </div>
 
           <div className="formItemContainer">

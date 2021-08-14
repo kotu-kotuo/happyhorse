@@ -36,7 +36,6 @@ const postEdit: NextPage = () => {
   const [year, setYear] = useState(null);
   const [month, setMonth] = useState(null);
   const [day, setDay] = useState(null);
-  const [age, setAge] = useState(null);
   const [height, setHeight] = useState(null);
   const [features, setFeatures] = useState([]);
   const [area, setArea] = useState("");
@@ -84,7 +83,6 @@ const postEdit: NextPage = () => {
       setYear(post.birth.year);
       setMonth(post.birth.month);
       setDay(post.birth.day);
-      setAge(post.age);
       setHeight(post.height);
       setFeatures(post.features);
       setArea(post.area);
@@ -163,7 +161,6 @@ const postEdit: NextPage = () => {
           month: month,
           day: day,
         },
-        age: age,
         height: height,
         features: features,
         area: area,
@@ -215,7 +212,6 @@ const postEdit: NextPage = () => {
               setMonth={setMonth}
               setDay={setDay}
               setHeight={setHeight}
-              setAge={setAge}
               setArea={setArea}
               setPrice={setPrice}
               features={features}

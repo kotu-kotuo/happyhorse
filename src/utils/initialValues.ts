@@ -146,7 +146,6 @@ export const postInitialValues = {
   gender: "",
   color: "",
   birth: { year: null, month: null, day: null },
-  age: null,
   height: null,
   area: "",
   features: ["empty"],

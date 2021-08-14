@@ -42,14 +42,14 @@ const PostShowTable: FC<Props> = (props) => {
       </div>
 
       <div className="tableListItem-margin">
-        <TableListItem label={"年齢"} value={`${getAge(post.birth)}歳`} />
-      </div>
-
-      <div className="tableListItem-margin">
         <TableListItem
           label={"生年月日"}
           value={`${post.birth?.year} / ${post.birth?.month} / ${post.birth?.day}`}
         />
+      </div>
+
+      <div className="tableListItem-margin">
+        <TableListItem label={"年齢"} value={`${getAge(post.birth)}歳`} />
       </div>
 
       <div className="tableListItem-margin">
