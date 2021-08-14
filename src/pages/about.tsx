@@ -133,7 +133,7 @@ const about = () => {
                     </div>
 
                     <div className="px-3 pb-6 text-gray-900 fontSize-base">
-                      馬を売りたい人は、入力フォームに品種や生年月日、写真、YouTube動画などの情報を入力して馬を掲載します。リッチで見やすい記事が簡単に作成できます。
+                      馬を売りたい人は、入力フォームに品種や生年月日、写真、YouTube動画などの情報を入力して馬を掲載します。画像・動画・表のある見やすい記事が簡単に作成できます。
                     </div>
                   </div>
                   <div className="md:w-56 p-5 hidden md:block">
