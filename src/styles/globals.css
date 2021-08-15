@@ -41,7 +41,7 @@
   list-style: none;
   display: inline-block;
   max-width: 1120px;
-  max-height: 56px;
+  max-height: 50px;
   margin: 5px;
 }
 
@@ -66,8 +66,8 @@
 
 .slick-dots img {
   object-fit: cover;
-  max-height: 54px;
-  max-width: 96px;
+  max-height: 50px;
+  max-width: 84px;
   cursor: pointer;
 }
 
