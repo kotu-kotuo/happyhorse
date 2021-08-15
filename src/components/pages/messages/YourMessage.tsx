@@ -35,7 +35,7 @@ const YourMessage: FC<Props> = (props) => {
         {message.deletedAccount === true ? (
           <img
             src={message.avatar}
-            className="h-8 w-8 rounded-full ml-0 object-cover sm:h-10 sm:w-10 sm:ml-3"
+            className="h-8 w-8 min-w-[32px] rounded-full ml-0 object-cover sm:h-10 sm:w-10 sm:ml-3 sm:min-w-[40px]"
           />
         ) : (
           <Link
@@ -48,7 +48,7 @@ const YourMessage: FC<Props> = (props) => {
           >
             <img
               src={message.avatar}
-              className="h-8 w-8 rounded-full ml-0 object-cover cursor-pointer hover:opacity-80 sm:h-10 sm:w-10 sm:ml-3"
+              className="h-8 w-8 min-w-[32px] rounded-full ml-0 object-cover cursor-pointer hover:opacity-80 sm:h-10 sm:w-10 sm:ml-3 sm:min-w-[40px]"
             />
           </Link>
         )}

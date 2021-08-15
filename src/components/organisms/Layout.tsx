@@ -53,9 +53,9 @@ export const Layout: React.FC<Props> = (props) => {
   return (
     <div
       className={
-        !(router.pathname === "/message/messages" && width < 640)
-          ? "min-h-screen box-border pb-10 relative touchAction-none"
-          : "min-h-screen box-border relative touchAction-none"
+        router.pathname === "/message/messages"
+          ? "min-h-screen box-border relative touchAction-none"
+          : "min-h-screen box-border pb-10 relative touchAction-none"
       }
       onClick={() => {
         setIsOpenMenu(false), setIsOpenNotification(false);

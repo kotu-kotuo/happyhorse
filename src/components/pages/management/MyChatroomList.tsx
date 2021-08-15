@@ -95,7 +95,7 @@ const MyChatroomList: FC<Props> = (props) => {
         onClick={() => {
           setIsMyPostsHidden(false), setIsMyPostChatroomsHidden(true);
         }}
-        className="text-gray-900 border-b border-gray-900 ml-12 w-20 cursor-pointer"
+        className="text-gray-900 border-b border-gray-900 ml-12 w-20 cursor-pointer mt-4"
       >
         戻る
       </div>

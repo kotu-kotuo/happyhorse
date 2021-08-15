@@ -24,7 +24,7 @@ const MyMessage: FC<Props> = (props) => {
   return (
     <>
       {message.firstOnDate && (
-        <div className="text-center mx-auto text-gray-600 text-xs border border-gray-600 rounded-full w-36 my-5 sm:text-sm sm:py-0.5">
+        <div className="text-center mx-auto text-gray-600 text-xs border-b border-gray-600 w-28 my-8 sm:text-sm sm:py-0.5 sm:my-5 sm:w-36 sm:rounded-full sm:border">
           {createdTime(message.createdAt)}
         </div>
       )}
@@ -47,7 +47,7 @@ const MyMessage: FC<Props> = (props) => {
               <>
                 <img
                   src={message.image}
-                  className="block max-h-80 rounded-lg"
+                  className="block max-h-80 rounded-lg cursor-pointer"
                   onClick={(e) => {
                     setIsOpenModal(true);
                     setImageSrc(e.currentTarget.getAttribute("data-src"));
@@ -67,7 +67,7 @@ const MyMessage: FC<Props> = (props) => {
         {message.deletedAccount === true ? (
           <img
             src={message.avatar}
-            className="h-8 w-8 rounded-full bg-gray-300 ml-3 object-cover sm:h-10 sm:w-10"
+            className="h-8 w-8 min-w-[32px] rounded-full bg-gray-300 ml-1.5 object-cover sm:h-10 sm:w-10 sm:min-w-[40px] sm:ml-3"
           />
         ) : (
           <Link
@@ -80,7 +80,7 @@ const MyMessage: FC<Props> = (props) => {
           >
             <img
               src={message.avatar}
-              className="h-8 w-8 rounded-full bg-gray-300 ml-3 object-cover cursor-pointer hover:opacity-80 sm:h-10 sm:w-10"
+              className="h-8 w-8 min-w-[32px] rounded-full bg-gray-300 ml-1.5 object-cover cursor-pointer hover:opacity-80 sm:h-10 sm:w-10 sm:min-w-[40px] sm:ml-3"
             />
           </Link>
         )}

@@ -12,14 +12,15 @@ const ImageModal: FC<Props> = (props) => {
   return (
     <div>
       <div
-        className="absolute inset-0 bg-gray-500 z-40 bg-opacity-70"
+        className="absolute inset-0 bg-gray-500 z-40 bg-opacity-70 flex justify-center align-middle "
         onClick={() => setIsOpenModal(false)}
-      ></div>
-      <img
-        src={image}
-        className="absolute inset-0  block rounded-lg z-50 opacity-100 mx-auto my-auto translate-x-1/2 translate-y-1/2 overflow-scroll"
-        onClick={() => setIsOpenModal(false)}
-      />
+      >
+        <img
+          src={image}
+          className="rounded-lg z-50 opacity-100 mx-auto my-auto overflow-scroll"
+          onClick={() => setIsOpenModal(false)}
+        />
+      </div>
     </div>
   );
 };
