@@ -347,7 +347,7 @@ const PostEditForm: FC<Props> = (props) => {
 
           <div className="formItemContainer">
             <div className="postFormLabel">
-              身長（cm）
+              体高（cm）
               <RequiredMark />
             </div>
             <input

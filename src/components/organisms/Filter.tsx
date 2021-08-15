@@ -292,7 +292,7 @@ const Filter: FC<Props> = (props) => {
           </div>
 
           <div className="mb-4 mt-10 ml-2 text-sm font-bold sm:font-semibold  text-gray-400 opacity-90">
-            身長(cm)
+            体高(cm)
           </div>
           <div className="flex">
             <input

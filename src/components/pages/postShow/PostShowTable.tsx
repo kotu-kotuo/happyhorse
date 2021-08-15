@@ -53,7 +53,7 @@ const PostShowTable: FC<Props> = (props) => {
       </div>
 
       <div className="tableListItem-margin">
-        <TableListItem label={"身長"} value={`${post.height}cm`} />
+        <TableListItem label={"体高"} value={`${post.height}cm`} />
       </div>
       <div className="tableListItem-margin">
         <TableListItem

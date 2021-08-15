@@ -66,7 +66,7 @@ const alertMessage = (
     alert("生年月日を記入してください");
   }
   if (!height) {
-    alert("身長を記入してください");
+    alert("体高を記入してください");
   }
   if (!price) {
     alert("値段を記入してください");
