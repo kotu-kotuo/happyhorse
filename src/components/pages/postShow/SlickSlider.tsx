@@ -18,7 +18,7 @@ const SlickSlider: FC<Props> = (props) => {
   const setting1 = {
     customPaging: function (i) {
       return (
-        <a >
+        <a>
           <img className="w-24 h-full object-cover" src={post.images[i]} />
         </a>
       );
