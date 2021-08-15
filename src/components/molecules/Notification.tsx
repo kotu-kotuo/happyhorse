@@ -31,7 +31,7 @@ const Notification: FC<Props> = (props) => {
       {notification.noLink ? (
         <div className="flex mt-3 cursor-pointer hover:opacity-80">
           <img
-            className="h-9 w-9 rounded object-cover mr-2"
+            className="h-9 min-w-[36px] w-9 rounded object-cover mr-2"
             src={notification.image || "/avatar(2).png"}
           />
           <div>
@@ -48,12 +48,12 @@ const Notification: FC<Props> = (props) => {
           <div className="flex mt-3 cursor-pointer hover:opacity-80">
             {!(notification.toMessage || notification.toProfile) ? (
               <img
-                className="h-9 w-9 rounded object-cover mr-2"
+                className="h-9 min-w-[36px] w-9 rounded object-cover mr-2"
                 src={notification.image}
               />
             ) : (
               <img
-                className="h-9 w-9 rounded-full object-cover mr-2"
+                className="h-9 min-w-[36px] w-9 rounded-full object-cover mr-2"
                 src={notification.avatar}
               />
             )}

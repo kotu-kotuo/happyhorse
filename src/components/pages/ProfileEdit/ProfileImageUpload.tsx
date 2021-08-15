@@ -14,13 +14,15 @@ const ProfileImageUpload: FC<Props> = (props) => {
     <div>
       <div className="text-xs text-gray-500 mb-2 ml-1">{label}</div>
       <div className="flex items-center mb-6">
-        <img
-          className={`w-20 h-20 mr-6 object-cover ${rounded}`}
-          src={image ? URL.createObjectURL(image) : src}
-          alt="uploaded"
-        />
+        <div>
+          <img
+            className={`w-16 h-16 mr-10 object-cover ${rounded} sm:w-20 sm:h-20`}
+            src={image ? URL.createObjectURL(image) : src}
+            alt="uploaded"
+          />
+        </div>
         <input
-          className="text-sm inline w-full text-gray-500 sm:text-base"
+          className="text-xs inline w-full text-gray-500 sm:text-base"
           type="file"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setImage(e.target.files[0]);

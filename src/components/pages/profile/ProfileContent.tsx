@@ -65,7 +65,7 @@ const ProfileContent: FC<Props> = (props) => {
               </div>
             </Link>
 
-            <div className="text-gray-900 sm:text-base text-sm mt-7 px-2 max-w-2xl mx-auto whitespace-pre-wrap">{`${user.profileText}`}</div>
+            <div className="text-gray-900 sm:text-base text-sm mt-7 px-4 max-w-2xl mx-auto whitespace-pre-wrap">{`${user.profileText}`}</div>
           </div>
         </div>
       )}

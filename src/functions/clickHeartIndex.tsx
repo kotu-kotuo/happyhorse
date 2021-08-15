@@ -161,7 +161,6 @@ const clickHeartIndex = async (
                 month: doc.data().birth.month,
                 day: doc.data().birth.day,
               },
-              age: doc.data().age,
               height: doc.data().height,
               area: doc.data().area,
               features: doc.data().features,
