@@ -54,7 +54,7 @@ const RatingModal: FC<Props> = (props) => {
                   }}
                 >
                   <div className="flex items-center justify-center mb-3">
-                    <label className="good-button mr-3">
+                    <label className="good-button mr-3 cursor-pointer hover:opacity-80">
                       <input
                         type="radio"
                         value="good"
@@ -71,7 +71,7 @@ const RatingModal: FC<Props> = (props) => {
                       </div>
                     </label>
 
-                    <label className="bad-button ml-3">
+                    <label className="bad-button ml-3 cursor-pointer hover:opacity-80">
                       <input
                         type="radio"
                         value="bad"
