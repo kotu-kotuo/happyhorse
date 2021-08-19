@@ -13,6 +13,8 @@ const profileEdit: NextPage = () => {
   const [cover, setCover] = useState<any>("");
   const [username, setUsername] = useState<string>("");
   const [profileText, setProfileText] = useState<string>("");
+  const [siteURL, setSiteURL] = useState("");
+  const [address, setAddress] = useState("");
   const router: NextRouter = useRouter();
 
   useRedirectLogin(currentUser);
@@ -34,6 +36,8 @@ const profileEdit: NextPage = () => {
                 e,
                 username,
                 profileText,
+                siteURL,
+                address,
                 image,
                 currentUser,
                 cover,
@@ -70,7 +74,7 @@ const profileEdit: NextPage = () => {
             <div className="text-xs text-gray-500 mb-1 ml-1">
               プロフィール文
             </div>
-            <div className="mb-7">
+            <div className="mb-6">
               <textarea
                 className="h-40 rounded-md inputText"
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -82,6 +86,26 @@ const profileEdit: NextPage = () => {
                 {`${profileText.length}` + "/4000"}
               </div>
             </div>
+
+            <div className="text-base sm:text-lg text-gray-700 mt-9 mb-7 border-b border-gray-700 inline-block">掲載者用（任意）</div>
+            <div className="text-xs text-gray-500 mb-1 ml-1">webサイトURL</div>
+            <input
+              className="mb-6 rounded-md inputText"
+              type="text"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSiteURL(e.target.value);
+              }}
+              defaultValue={user.siteURL}
+            />
+            <div className="text-xs text-gray-500 mb-1 ml-1">住所</div>
+            <input
+              className="mb-14 rounded-md inputText"
+              type="text"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setAddress(e.target.value);
+              }}
+              defaultValue={user.address}
+            />
             <div className="text-center">
               <button type="submit" className="buttonGreen">
                 更新する

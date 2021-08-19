@@ -4,6 +4,9 @@ export type User = {
   avatar: string;
   cover: string;
   profileText: string;
+  siteURL?: string;
+  address?: string;
+  location?: { lat?: number; lng?: number };
   good?: number;
   bad?: number;
   likePostIDs?: string[];

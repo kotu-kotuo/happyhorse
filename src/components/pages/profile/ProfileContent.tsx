@@ -2,6 +2,13 @@ import StarRatings from "react-star-ratings";
 import Link from "next/link";
 import { User } from "../../../types/types";
 import { FC } from "react";
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from "react-google-maps";
+import { FaLink, FaMapMarkerAlt } from "react-icons/fa";
 
 type Props = {
   user: User;
@@ -10,6 +17,23 @@ type Props = {
 
 const ProfileContent: FC<Props> = (props) => {
   const { user, currentUser } = props;
+
+  const defaultCenter = { lat: user?.location?.lat, lng: user?.location?.lng };
+  const defaultOptions = { scrollwheel: false };
+  const RegularMap = withScriptjs(
+    withGoogleMap((props: any) => (
+      <GoogleMap
+        defaultZoom={14}
+        defaultCenter={defaultCenter}
+        defaultOptions={defaultOptions}
+      >
+        <Marker position={defaultCenter} />
+      </GoogleMap>
+    ))
+  );
+  const loadingElementStyle = { height: "100%" };
+  const containerElementStyle = { height: "300px" };
+  const mapElementStyle = { height: "100%" };
 
   return (
     <div>
@@ -65,8 +89,37 @@ const ProfileContent: FC<Props> = (props) => {
               </div>
             </Link>
 
-            <div className="text-gray-900 sm:text-base text-sm mt-7 px-4 max-w-2xl mx-auto whitespace-pre-wrap">{`${user.profileText}`}</div>
+            <div className="text-gray-900 sm:text-base text-sm mt-7 px-4 max-w-2xl mx-auto whitespace-pre-wrap sm:mt-10">{`${user.profileText}`}</div>
+            <div className=" px-4 max-w-2xl mx-auto">
+              {user.siteURL && (
+                <div className="flex items-center my-10 sm:my-12">
+                  <FaLink className="text-2xl text-gray-500 min-w-[20px]" />
+                  <a
+                    href={user.siteURL}
+                    className="text-blue-500 border-b border-blue-500 cursor-pointer hover:opacity-80 ml-4 line-clamp-1 fontSize-base"
+                    target="_blank"
+                  >
+                    {user.siteURL}
+                  </a>
+                </div>
+              )}
+              {user.address && (
+                <div className="flex items-center my-10 sm:my-12 -ml-1">
+                  <FaMapMarkerAlt className="text-2xl text-gray-500 min-w-[20px] ml-0.5" />
+                  <div className="ml-4 fontSize-base">{user.address}</div>
+                </div>
+              )}
+            </div>
           </div>
+          <div className="mt-10 w-full h-48 sm:h-60">
+            <RegularMap
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`}
+              loadingElement={<div style={loadingElementStyle} />}
+              containerElement={<div style={containerElementStyle} />}
+              mapElement={<div style={mapElementStyle} />}
+            />
+          </div>
+          {console.log(process.env.NEXT_PUBLIC_MAP_API_KEY)}
         </div>
       )}
     </div>

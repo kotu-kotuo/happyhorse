@@ -41,24 +41,24 @@ const MobileMenuBar: FC<Props> = (props) => {
   const clickBell = () => {
     if (isOpenBottomNotification) {
       setIsOpenBottomNotification(false);
-      document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
+      // document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
     } else {
       setIsOpenBottomNotification(true);
-      document
-        .getElementsByTagName("body")[0]
-        .classList.remove("overflow-hidden");
+      // document
+      //   .getElementsByTagName("body")[0]
+      //   .classList.remove("overflow-hidden");
     }
   };
 
   const clickAvatar = () => {
     if (isOpenBottomMenu) {
       setIsOpenBottomMenu(false);
-      document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
+      // document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
     } else {
       setIsOpenBottomMenu(true);
-      document
-        .getElementsByTagName("body")[0]
-        .classList.remove("overflow-hidden");
+      // document
+      //   .getElementsByTagName("body")[0]
+      //   .classList.remove("overflow-hidden");
     }
   };
 

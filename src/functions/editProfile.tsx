@@ -1,4 +1,5 @@
 import { NextRouter } from "next/router";
+import fetch from "node-fetch";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { storage, db } from "../firebase/firebase";
@@ -9,6 +10,8 @@ const editProfile = async (
   e: React.FormEvent<HTMLFormElement>,
   username: string,
   profileText: string,
+  siteURL: string,
+  address: string,
   image,
   currentUser,
   cover,
@@ -16,6 +19,10 @@ const editProfile = async (
   router: NextRouter
 ) => {
   e.preventDefault();
+  // const { data, error } = useSWR(
+  //   "https://maps.googleapis.com/maps/api/geocode/json?address=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%BF%E6%A9%8B%E5%8C%BA%E6%88%90%E5%A2%972-36-37%20%E3%82%B3%E3%83%BC%E3%83%9D%E5%8A%A0%E8%97%A4&key=AIzaSyBmvNLDDb0kXWhzDfb37F90TeLmHf0R3sE",
+  //   fetcher
+  // );
 
   if (username.length > 20) {
     alert("ユーザーネームは20字以内でお願いします");
@@ -206,12 +213,43 @@ const editProfile = async (
       });
     }
 
+    if (siteURL) {
+      await db.collection("users").doc(`${currentUser.uid}`).update({
+        siteURL: siteURL,
+      });
+    }
+
+    if (address) {
+      await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          db.collection("users")
+            .doc(`${currentUser.uid}`)
+            .update({
+              location: {
+                lat: data.results[0].geometry.location.lat,
+                lng: data.results[0].geometry.location.lng,
+              },
+            });
+
+          db.collection("users").doc(`${currentUser.uid}`).update({
+            address: address,
+          });
+        })
+        .catch(async (error) => {
+          await alert(error.message);
+        });
+    }
+
     await db
       .collection("users")
       .doc(`${currentUser.uid}`)
       .get()
-      .then((snapshot) => {
-        setUser(setUserState(snapshot.data()));
+      .then(async (snapshot) => {
+        await setUser(setUserState(snapshot.data()));
       });
 
     await router.push({

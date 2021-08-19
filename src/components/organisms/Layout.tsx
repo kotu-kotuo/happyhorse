@@ -69,13 +69,6 @@ export const Layout: React.FC<Props> = (props) => {
         index={index}
       />
 
-      {(isOpenBottomNotification || isOpenBottomMenu) && (
-        <style jsx global>{`
-          body {
-            overflow: hidden;
-          }
-        `}</style>
-      )}
       {!(router.pathname === "/message/messages" && width < 640) && (
         <Header
           user={user}
@@ -115,7 +108,19 @@ export const Layout: React.FC<Props> = (props) => {
         isLoginModalOpen={isLoginModalOpen}
         setIsLoginModalOpen={setIsLoginModalOpen}
       />
-      <main className={"max-w-5xl mx-auto"}>{children}</main>
+
+      {/* ボトムメニューが開いている時の下のスクロール固定 */}
+      <main
+        className={`max-w-5xl mx-auto ${
+          isOpenBottomNotification !== undefined &&
+          isOpenBottomMenu !== undefined &&
+          (isOpenBottomNotification || isOpenBottomMenu) &&
+          "fixed"
+        }`}
+      >
+        {children}
+      </main>
+
       {router.pathname !== "/message/messages" && (
         <>
           <MobileMenuBar
