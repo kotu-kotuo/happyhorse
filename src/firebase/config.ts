@@ -1,4 +1,7 @@
-export const firebaseConfig = ((nodeEnv: string, projectId: string | undefined) => {
+export const firebaseConfig = ((
+  nodeEnv: string,
+  projectId: string | undefined
+) => {
   if (nodeEnv === "production" && projectId === "happyhorse-prod") {
     return {
       databeseURL: "https://happyhorse-prod.firebaseio.com",

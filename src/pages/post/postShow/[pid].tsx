@@ -56,6 +56,7 @@ const Show: NextPage = ({ posts }: any) => {
       ogpURL={"https://www.happyhorse.xyz" + router?.asPath}
       description={post.postText}
       ogpImage={post.images[0]}
+      index="all"
     >
       {console.log(post)}
       {currentUser !== undefined && (
