@@ -87,7 +87,9 @@ const profileEdit: NextPage = () => {
               </div>
             </div>
 
-            <div className="text-base sm:text-lg text-gray-700 mt-9 mb-7 border-b border-gray-700 inline-block">掲載者用（任意）</div>
+            <div className="text-base sm:text-lg text-gray-700 mt-9 mb-7 border-b border-gray-700 inline-block">
+              掲載者用（任意）
+            </div>
             <div className="text-xs text-gray-500 mb-1 ml-1">webサイトURL</div>
             <input
               className="mb-6 rounded-md inputText"
