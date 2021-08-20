@@ -19,10 +19,6 @@ const editProfile = async (
   router: NextRouter
 ) => {
   e.preventDefault();
-  // const { data, error } = useSWR(
-  //   "https://maps.googleapis.com/maps/api/geocode/json?address=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%9D%BF%E6%A9%8B%E5%8C%BA%E6%88%90%E5%A2%972-36-37%20%E3%82%B3%E3%83%BC%E3%83%9D%E5%8A%A0%E8%97%A4&key=AIzaSyBmvNLDDb0kXWhzDfb37F90TeLmHf0R3sE",
-  //   fetcher
-  // );
 
   if (username.length > 20) {
     alert("ユーザーネームは20字以内でお願いします");
