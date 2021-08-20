@@ -111,15 +111,16 @@ const ProfileContent: FC<Props> = (props) => {
               )}
             </div>
           </div>
-          <div className="mt-10 w-full h-48 sm:h-60">
-            <RegularMap
-              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`}
-              loadingElement={<div style={loadingElementStyle} />}
-              containerElement={<div style={containerElementStyle} />}
-              mapElement={<div style={mapElementStyle} />}
-            />
-          </div>
-          {console.log(process.env.NEXT_PUBLIC_MAP_API_KEY)}
+          {user.address && (
+            <div className="mt-10 w-full h-48 sm:h-60">
+              <RegularMap
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`}
+                loadingElement={<div style={loadingElementStyle} />}
+                containerElement={<div style={containerElementStyle} />}
+                mapElement={<div style={mapElementStyle} />}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
