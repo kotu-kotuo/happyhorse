@@ -6,6 +6,7 @@ import { firebaseConfig } from "./config";
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 } else {
   firebase.app();
 }

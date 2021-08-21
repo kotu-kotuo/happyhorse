@@ -11,6 +11,7 @@ export const firebaseConfig = ((
       storageBucket: "happyhorse-prod.appspot.com",
       messagingSenderId: "923894700791",
       appId: "1:923894700791:web:6717e42bf599513df611f2",
+      measurementId: "G-WEQ4KX4Y8C",
     };
   } else {
     return {
