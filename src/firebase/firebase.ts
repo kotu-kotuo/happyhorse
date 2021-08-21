@@ -7,10 +7,11 @@ import { firebaseConfig } from "./config";
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
-  const analytics = firebase.analytics();
 } else {
   firebase.app();
 }
+
+const analytics = firebase.analytics();
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();
