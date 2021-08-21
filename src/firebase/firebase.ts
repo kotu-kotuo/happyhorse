@@ -7,7 +7,7 @@ import { firebaseConfig } from "./config";
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics.isSupported().then((isSupported) => {
+  firebase?.analytics?.isSupported()?.then((isSupported) => {
     if (isSupported) {
       firebase.analytics();
     }

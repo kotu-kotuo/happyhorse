@@ -58,7 +58,6 @@ const Show: NextPage = ({ posts }: any) => {
       ogpImage={post.images[0]}
       index="all"
     >
-      {console.log(post)}
       {currentUser !== undefined && (
         <>
           <div className="mx-auto xl:px-10 lg:px-14 md:px-10">
