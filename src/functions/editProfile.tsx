@@ -220,9 +220,9 @@ const editProfile = async (
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`
       )
         .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          db.collection("users")
+        .then(async (data) => {
+          await db
+            .collection("users")
             .doc(`${currentUser.uid}`)
             .update({
               location: {
@@ -231,7 +231,7 @@ const editProfile = async (
               },
             });
 
-          db.collection("users").doc(`${currentUser.uid}`).update({
+          await db.collection("users").doc(`${currentUser.uid}`).update({
             address: address,
           });
         })
