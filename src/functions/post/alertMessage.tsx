@@ -23,8 +23,8 @@ const alertMessage = (
   if (postText.length > 2000) {
     alert("本文は2000字以内でお願いします");
   }
-  if (title.length > 20) {
-    alert("タイトルは20字以内でお願いします");
+  if (title.length > 40) {
+    alert("タイトルは40字以内でお願いします");
   }
   if (postText.length == 0) {
     alert("本文を記入してください");
