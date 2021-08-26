@@ -63,9 +63,9 @@ const about = () => {
         <section className="max-w-xl mx-auto px-2 md:max-w-4xl">
           <div className="md:flex md:justify-between">
             <div className="md:px-2">
-              <div className="text-gray-900 mb-6 text-3xl leading-10 md:text-4xl">
-                より便利に、
-                <span className="whitespace-nowrap">より手軽に。</span>
+              <div className="text-gray-900 mb-4 text-3xl leading-10 md:text-4xl sm:mb-6">
+                馬の売買を、
+                <span className="whitespace-nowrap">なめらかに。</span>
               </div>
               <div className="whitespace-pre-wrap text-gray-900 fontSize-base md:mr-16">
                 happy horse は
