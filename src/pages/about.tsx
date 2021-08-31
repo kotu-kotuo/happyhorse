@@ -41,7 +41,7 @@ const about = () => {
           </div>
         </div>
 
-        <div className="my-10 sm:my-20">
+        <div className="my-16 sm:my-28">
           <div className="flex flex-col sm:flex-row justify-center text-center">
             <Link href="/signup">
               <div className="mx-auto my-3 sm:my-0 sm:mx-0">
@@ -95,7 +95,26 @@ const about = () => {
           </div>
         </section>
 
-        <section className="max-w-5xl mx-auto pt-28 pb-20 px-2 md:px-10 md:pt-32 md:pb-32">
+        <section className="max-w-xl mx-auto px-2 md:max-w-4xl md:mt-36 mt-28">
+          <div className="mb-20 mx-auto text-center">
+            <div className="text-gray-900 text-3xl sm:text-4xl">紹介動画</div>
+            <div className="mt-4 border-b-4 border-mainGreen w-52 mx-auto"></div>
+          </div>
+          <div className="mb-6 mt-14 relative w-full pt-image">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/Tl9cOKcx18k"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute top-0 left-0 h-full w-full"
+            ></iframe>
+          </div>
+        </section>
+
+        <section className="max-w-5xl mx-auto pt-20 pb-20 px-2 md:px-10 md:pt-28  md:pb-32">
           <div className="mb-20 mx-auto text-center">
             <div className="text-gray-900 text-3xl sm:text-4xl">つかいかた</div>
             <div className="mt-4 border-b-4 border-mainGreen w-52 mx-auto"></div>
