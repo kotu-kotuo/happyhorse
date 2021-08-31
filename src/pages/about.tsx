@@ -12,7 +12,7 @@ const about = () => {
       setHeightFooter(footerHeight.current.clientHeight);
     }
   }, [footerHeight]);
-
+ 
   return (
     <>
       <Meta

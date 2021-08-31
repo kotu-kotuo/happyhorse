@@ -9,7 +9,7 @@ module.exports = {
         subBlue: "#49ADF7",
       },
       backgroundImage: {
-        "hero-image": "url('/hero-image1.jpg')",
+        "hero-image": "url('/hero-image.jpg')",
       },
       width: {
         18: "4.5rem",
