@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { Post, User } from "../../types/types";
 import Category from "../atoms/Category";
+import Image from "next/image";
 
 type Props = {
   posts: Post[];
@@ -56,24 +57,33 @@ const Posts: FC<Props> = (props) => {
                     SOLD OUT!
                   </div>
                 )}
-                <img
+                <Image
                   src={post.images[0] ? post.images[0] : "/no-image.png"}
                   className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                  width={445}
+                  height={250}
+                  alt={"postImage1"}
                 />
               </div>
             </div>
             {width > 768 && (
               <div className="w-1/3">
                 <div className="pb-image w-full h-0 relative">
-                  <img
+                  <Image
                     src={post.images[1] ? post.images[1] : "/no-image.png"}
                     className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                    width={222.5}
+                    height={125}
+                    alt={"postImage2"}
                   />
                 </div>
                 <div className="pb-image w-full h-0 relative">
-                  <img
+                  <Image
                     src={post.images[2] ? post.images[2] : "/no-image.png"}
                     className="object-cover outline-none w-full h-full cursor-pointer absolute"
+                    width={222.5}
+                    height={125}
+                    alt={"postImage3"}
                   />
                 </div>
               </div>
