@@ -63,6 +63,7 @@ const Posts: FC<Props> = (props) => {
                   width={445}
                   height={250}
                   alt={"postImage1"}
+                  loading="eager"
                 />
               </div>
             </div>
@@ -75,6 +76,7 @@ const Posts: FC<Props> = (props) => {
                     width={222.5}
                     height={125}
                     alt={"postImage2"}
+                    loading="eager"
                   />
                 </div>
                 <div className="pb-image w-full h-0 relative">
@@ -84,6 +86,7 @@ const Posts: FC<Props> = (props) => {
                     width={222.5}
                     height={125}
                     alt={"postImage3"}
+                    loading="eager"
                   />
                 </div>
               </div>
@@ -131,6 +134,7 @@ const Posts: FC<Props> = (props) => {
                     height={48}
                     alt="avatar"
                     objectFit="cover"
+                    loading="eager"
                   />
                 </div>
                 <p className="fontSize-base text-gray-900 ml-3">
@@ -156,6 +160,7 @@ const Posts: FC<Props> = (props) => {
                       height={48}
                       alt="avatar"
                       objectFit="cover"
+                      loading="eager"
                     />
                   </div>
                   <p className="fontSize-base text-gray-900 ml-3">

@@ -23,8 +23,9 @@ const SlickSlider: FC<Props> = (props) => {
           <Image
             objectFit="cover"
             width={90}
-            height={54}
+            height={56}
             src={post.images[i]}
+            loading="eager"
           />
         </div>
       );
@@ -84,6 +85,7 @@ const SlickSlider: FC<Props> = (props) => {
                   alt="horse-photo"
                   objectFit="cover"
                   className=" w-full h-full absolute"
+                  loading="eager"
                 />
               </div>
             </div>
@@ -115,6 +117,7 @@ const SlickSlider: FC<Props> = (props) => {
                   alt="horse-photo"
                   objectFit="cover"
                   className=" w-full h-full absolute"
+                  loading="eager"
                 />
               </div>
             </div>

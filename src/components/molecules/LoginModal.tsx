@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { FC } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
+import Image from "next/image";
 
 type Props = {
   isLoginModalOpen: boolean;
@@ -32,7 +33,14 @@ const LoginModal: FC<Props> = (props) => {
                   }}
                 />
               </div>
-              <img src="/hh-face.png" className="h-20 w-20 mx-auto mb-6" />
+              <div className="h-20 w-20 mx-auto mb-6">
+                <Image
+                  src="/hh-face.png"
+                  width={80}
+                  height={80}
+                  alt="logo-face"
+                />
+              </div>
               <p className="text-gray-900 text-sm text-center mb-6">
                 ログインまたは新規登録をお願いします。
               </p>

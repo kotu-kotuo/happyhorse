@@ -40,27 +40,26 @@ const ProfileContent: FC<Props> = (props) => {
     <div>
       {user && (
         <div className="mb-32">
-          <div className="sm:w-full sm:h-80 h-40 w-screen">
-            <Image
-              className="object-cover sm:rounded-b-3xl"
-              src={user.cover}
-              alt="cover"
-              width={1024}
-              height={320}
-              objectFit="cover"
-            />
-          </div>
+          <img
+            src={user.cover}
+            className="sm:w-full sm:min-h-[320px] sm:h-80 h-40 w-screen object-cover sm:rounded-b-3xl"
+            width={1024}
+            height={320}
+            alt="cover"
+          />
           <div className="max-w-3xl mx-auto">
             <div className="flex justify-center relative">
               <div className="sm:h-32 sm:w-32 h-20 w-20 sm:-mt-16 -mt-10 border-2 border-white rounded-full">
-                <Image
-                  className="rounded-full"
-                  src={user.avatar}
-                  alt="avatar"
-                  width={128}
-                  height={128}
-                  objectFit="cover"
-                />
+                {user.avatar && (
+                  <Image
+                    className="rounded-full"
+                    src={user.avatar}
+                    alt="avatar"
+                    width={128}
+                    height={128}
+                    objectFit="cover"
+                  />
+                )}
               </div>
               {user.id === currentUser?.uid && (
                 <Link href="/profileEdit">

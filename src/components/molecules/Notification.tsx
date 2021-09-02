@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { FaRegClock } from "react-icons/fa";
 import { FC } from "react";
+import Image from "next/image";
 
 type Props = {
   notification;
@@ -30,10 +31,17 @@ const Notification: FC<Props> = (props) => {
     <>
       {notification.noLink ? (
         <div className="flex mt-3 cursor-pointer hover:opacity-80">
-          <img
-            className="h-9 min-w-[36px] w-9 rounded object-cover mr-2"
-            src={notification.image || "/avatar(2).png"}
-          />
+          <div className="h-9 min-w-[36px] w-9 mr-2">
+            <Image
+              className="rounded"
+              width={36}
+              height={36}
+              alt="avatar"
+              objectFit="cover"
+              src={notification.image || "/avatar(2).png"}
+              loading="eager"
+            />
+          </div>
           <div>
             <div className="text-sm text-gray-900">{notification.text}</div>
             <div className="flex items-center text-xs text-gray-500 ">
@@ -47,15 +55,29 @@ const Notification: FC<Props> = (props) => {
         <Link href={href}>
           <div className="flex mt-3 cursor-pointer hover:opacity-80">
             {!(notification.toMessage || notification.toProfile) ? (
-              <img
-                className="h-9 min-w-[36px] w-9 rounded object-cover mr-2"
-                src={notification.image}
-              />
+              <div className="h-9 min-w-[36px] w-9 mr-2">
+                <Image
+                  className="rounded"
+                  src={notification.image}
+                  width={36}
+                  height={36}
+                  alt="post-image"
+                  objectFit="cover"
+                  loading="eager"
+                />
+              </div>
             ) : (
-              <img
-                className="h-9 min-w-[36px] w-9 rounded-full object-cover mr-2"
-                src={notification.avatar}
-              />
+              <div className="h-9 min-w-[36px] w-9 mr-2">
+                <Image
+                  className="rounded-full"
+                  src={notification.avatar}
+                  width={36}
+                  height={36}
+                  alt="post-image"
+                  objectFit="cover"
+                  loading="eager"
+                />
+              </div>
             )}
 
             <div>

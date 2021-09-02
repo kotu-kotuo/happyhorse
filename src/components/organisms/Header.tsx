@@ -48,6 +48,7 @@ const Header: FC<Props> = (props) => {
                 width={280}
                 height={70}
                 alt="logo"
+                priority={true}
               />
             </div>
           </Link>
@@ -113,6 +114,7 @@ const Header: FC<Props> = (props) => {
                   width={39}
                   height={39}
                   alt="avatar"
+                  priority={true}
                 />
                 <div hidden={!isOpenMenu}>
                   <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60">
