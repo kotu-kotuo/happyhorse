@@ -22,7 +22,7 @@ const SlickSlider: FC<Props> = (props) => {
         <div className="cursor-pointer">
           <Image
             objectFit="cover"
-            width={96}
+            width={90}
             height={54}
             src={post.images[i]}
           />

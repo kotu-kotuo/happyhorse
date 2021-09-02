@@ -69,12 +69,12 @@ const postEdit: NextPage = () => {
     if (post) {
       setTitle(post.title);
       setPostText(post.postText);
-      setVideo1URL(post.video1URL);
-      setVideo1Title(post.video1Title);
-      setVideo2URL(post.video2URL);
-      setVideo2Title(post.video2Title);
-      setVideo3URL(post.video3URL);
-      setVideo3Title(post.video3Title);
+      setVideo1URL(post.video1URL || "");
+      setVideo1Title(post.video1Title || "");
+      setVideo2URL(post.video2URL || "");
+      setVideo2Title(post.video2Title || "");
+      setVideo3URL(post.video3URL || "");
+      setVideo3Title(post.video3Title || "");
       setHorseName(post.horseName);
       setCategory(post.category);
       setBreed(post.breed);
@@ -187,6 +187,7 @@ const postEdit: NextPage = () => {
   return (
     <div>
       <Layout title="掲載編集フォーム | happy horse" index="noindex">
+        {console.log(video1Title, video1URL)}
         {currentUser && (
           <form onSubmit={updatePost} className="max-w-2xl mx-auto mt-16 px-2">
             <PostEditForm
