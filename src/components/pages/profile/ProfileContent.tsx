@@ -9,6 +9,7 @@ import {
   Marker,
 } from "react-google-maps";
 import { FaLink, FaMapMarkerAlt } from "react-icons/fa";
+import Image from "next/image";
 
 type Props = {
   user: User;
@@ -39,18 +40,28 @@ const ProfileContent: FC<Props> = (props) => {
     <div>
       {user && (
         <div className="mb-32">
-          <img
-            className="sm:w-full sm:h-80 h-40 w-screen object-cover sm:rounded-b-3xl"
-            src={user.cover}
-            alt="cover"
-          />
+          <div className="sm:w-full sm:h-80 h-40 w-screen">
+            <Image
+              className="object-cover sm:rounded-b-3xl"
+              src={user.cover}
+              alt="cover"
+              width={1024}
+              height={320}
+              objectFit="cover"
+            />
+          </div>
           <div className="max-w-3xl mx-auto">
             <div className="flex justify-center relative">
-              <img
-                className="rounded-full object-cover sm:h-32 sm:w-32 h-20 w-20 border-2 border-white sm:-mt-16 -mt-10"
-                src={user.avatar}
-                alt="avatar"
-              />
+              <div className="sm:h-32 sm:w-32 h-20 w-20 sm:-mt-16 -mt-10 border-2 border-white rounded-full">
+                <Image
+                  className="rounded-full"
+                  src={user.avatar}
+                  alt="avatar"
+                  width={128}
+                  height={128}
+                  objectFit="cover"
+                />
+              </div>
               {user.id === currentUser?.uid && (
                 <Link href="/profileEdit">
                   <a className="absolute bottom-0 right-7 border border-mainGreen rounded-md px-3 py-1 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300 sm:px-4 sm:py-2 sm:right-10">

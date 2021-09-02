@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Footer = (props) => {
   const { footerHeight, heightFooter } = props;
@@ -9,15 +10,21 @@ const Footer = (props) => {
     <div>
       <footer
         className={`w-full text-center bottom-0 shadow-md absolute py-4 bg-gray-50 sm:mb-0 ${
-          router.pathname === "/about" ? "mb-0" : "mb-14"
+          router.pathname === "/about" ? "mb-0" : "mb-12"
         }`}
         ref={footerHeight}
       >
         <Link href="/">
-          <img
-            src="/hh-logo2.png"
-            className="mx-auto object-cover h-10 w-auto pr-8 sm:h-14"
-          />
+          <div className=" h-10 w-auto pr-8 sm:h-14">
+            <Image
+              src="/hh-logo2.png"
+              className="mx-auto"
+              width={192}
+              height={48}
+              alt="logo"
+              objectFit="cover"
+            />
+          </div>
         </Link>
         <div className="sm:flex sm:justify-center py-4 text-gray-900">
           <Link href="/about">

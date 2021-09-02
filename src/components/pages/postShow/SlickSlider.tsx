@@ -5,6 +5,7 @@ import {
 } from "react-icons/io5";
 import { Post } from "../../../types/types";
 import { FC } from "react";
+import Image from "next/image";
 
 type Props = {
   currentUser;
@@ -18,9 +19,14 @@ const SlickSlider: FC<Props> = (props) => {
   const setting1 = {
     customPaging: function (i) {
       return (
-        <a>
-          <img className="w-24 h-full object-cover" src={post.images[i]} />
-        </a>
+        <div className="cursor-pointer">
+          <Image
+            objectFit="cover"
+            width={96}
+            height={54}
+            src={post.images[i]}
+          />
+        </div>
       );
     },
     dotsClass: "slick-dots",
@@ -70,10 +76,16 @@ const SlickSlider: FC<Props> = (props) => {
                     編集
                   </div>
                 )}
-              <img
-                src={image}
-                className="object-cover outline-none border-0 w-full h-full absolute"
-              />
+              <div>
+                <Image
+                  src={image}
+                  width={946}
+                  height={532}
+                  alt="horse-photo"
+                  objectFit="cover"
+                  className=" w-full h-full absolute"
+                />
+              </div>
             </div>
           ))}
         </Slider>
@@ -95,10 +107,16 @@ const SlickSlider: FC<Props> = (props) => {
                     編集
                   </div>
                 )}
-              <img
-                src={image}
-                className="object-cover outline-none border-0 w-full h-full absolute"
-              />
+              <div>
+                <Image
+                  src={image}
+                  width={946}
+                  height={532}
+                  alt="horse-photo"
+                  objectFit="cover"
+                  className=" w-full h-full absolute"
+                />
+              </div>
             </div>
           ))}
         </Slider>

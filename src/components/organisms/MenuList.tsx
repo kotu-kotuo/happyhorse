@@ -6,6 +6,7 @@ import { IoChevronForwardOutline } from "react-icons/io5";
 import StarRatings from "react-star-ratings";
 import { User } from "../../types/types";
 import { FC } from "react";
+import Image from "next/image";
 
 type Props = {
   currentUser;
@@ -34,11 +35,16 @@ const MenuList: FC<Props> = (props) => {
       {currentUser && user && (
         <>
           <div className="text-center p-6 border-b">
-            <img
-              className="h-24 w-24 rounded-full mx-auto object-cover mb-3"
-              src={user?.avatar}
-              alt="avatar"
-            />
+            <div className="h-24 w-24 mx-auto mb-3">
+              <Image
+                className="rounded-full"
+                src={user?.avatar}
+                alt="avatar"
+                width={96}
+                height={96}
+                objectFit="cover"
+              />
+            </div>
             <p className="pt-2 font-bold sm:font-semibold sm:text-lg">{`${user.username}`}</p>
             <Link
               href={{

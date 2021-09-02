@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import StarRatings from "react-star-ratings";
 import { Post, User } from "../../types/types";
+import Image from "next/image";
 
 type Props = {
   post: Post;
@@ -12,15 +13,23 @@ const PublisherValue: FC<Props> = (props) => {
   const { post, postUser } = props;
   return (
     <div>
-      {postUser && (
+      {postUser && post && (
         <div>
           {post.deletedAccount === true ? (
             <div className="flex items-center">
               <div className="mr-2">
-                <img
-                  src={post.avatar}
-                  className="min-w-10 min-h-10 w-10 h-10 object-cover rounded-full block"
-                ></img>
+                <div className="w-10 h-10">
+                  {post.avatar && (
+                    <Image
+                      src={post.avatar}
+                      className="rounded-full block"
+                      width={40}
+                      height={40}
+                      alt="avatar"
+                      objectFit="cover"
+                    />
+                  )}
+                </div>
               </div>
               <div>
                 <div>{post.username}</div>
@@ -51,10 +60,18 @@ const PublisherValue: FC<Props> = (props) => {
             >
               <div className="flex items-center cursor-pointer">
                 <div className="mr-2">
-                  <img
-                    src={post.avatar}
-                    className="min-w-10 min-h-10 w-10 h-10 object-cover rounded-full block"
-                  ></img>
+                  <div className="w-10 h-10">
+                    {post.avatar && (
+                      <Image
+                        src={post.avatar}
+                        className="rounded-full block"
+                        width={40}
+                        height={40}
+                        alt="avatar"
+                        objectFit="cover"
+                      />
+                    )}
+                  </div>
                 </div>
                 <div>
                   <div>{post.username}</div>

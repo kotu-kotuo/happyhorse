@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React, { SetStateAction } from "react";
 import { FC } from "react";
@@ -104,7 +105,7 @@ const MobileMenuBar: FC<Props> = (props) => {
 
           {user ? (
             <div
-              className="w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
+              className="w-1/4 pt-1 pb-1 cursor-pointer hover:opacity-80"
               onClick={() => {
                 clickAvatar();
                 if (isOpenBottomNotification) {
@@ -112,10 +113,16 @@ const MobileMenuBar: FC<Props> = (props) => {
                 }
               }}
             >
-              <img
-                src={user?.avatar}
-                className="h-9 w-9 rounded-full object-cover mx-auto"
-              />
+              <div className="mx-auto mt-0.5">
+                <Image
+                  src={user?.avatar}
+                  className="rounded-full"
+                  width={35}
+                  height={35}
+                  alt="avatar"
+                  objectFit="cover"
+                />
+              </div>
             </div>
           ) : (
             <div
@@ -124,10 +131,16 @@ const MobileMenuBar: FC<Props> = (props) => {
                 setIsLoginModalOpen(true);
               }}
             >
-              <img
-                src="/avatar(2).png"
-                className="h-9 w-9 rounded-full object-cover mx-auto"
-              />
+              <div className="mx-auto mt-0.5">
+                <Image
+                  src="/avatar(2).png"
+                  className="rounded-full"
+                  width={35}
+                  height={35}
+                  alt="avatar"
+                  objectFit="cover"
+                />
+              </div>
             </div>
           )}
         </div>
@@ -137,8 +150,8 @@ const MobileMenuBar: FC<Props> = (props) => {
         <div
           className={
             isOpenBottomNotification
-              ? "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
-              : "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
+              ? "fixed top-0 bottom-12 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
+              : "fixed top-0 bottom-12 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
           }
           onClick={() => {
             clickBell();
@@ -147,8 +160,8 @@ const MobileMenuBar: FC<Props> = (props) => {
           <div
             className={
               isOpenBottomNotification
-                ? `transform translate-x-0 bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-300`
-                : `transform translate-x-full bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
+                ? `transform translate-x-0 bg-white fixed top-0 bottom-12 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-300`
+                : `transform translate-x-full bg-white fixed top-0 bottom-12 w-64 px-2 right-0 overflow-auto ease-in-out transition-all duration-500`
             }
             onClick={(e) => e.stopPropagation()}
           >
@@ -163,8 +176,8 @@ const MobileMenuBar: FC<Props> = (props) => {
         <div
           className={
             isOpenBottomMenu
-              ? "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
-              : "fixed top-0 bottom-14 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
+              ? "fixed top-0 bottom-12 left-0 right-0 bg-black bg-opacity-70 transition-all duration-300 z-20"
+              : "fixed top-0 bottom-12 left-0 right-0 bg-black bg-opacity-0 transition-all duration-500 z-10-"
           }
           onClick={() => {
             clickAvatar();
@@ -173,8 +186,8 @@ const MobileMenuBar: FC<Props> = (props) => {
           <div
             className={
               isOpenBottomMenu
-                ? `transform translate-x-0 bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-300 z-30`
-                : `transform translate-x-full bg-white fixed top-0 bottom-14 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-500 z-30`
+                ? `transform translate-x-0 bg-white fixed top-0 bottom-12 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-300 z-30`
+                : `transform translate-x-full bg-white fixed top-0 bottom-12 w-64 px-2 right-0 overflow-scroll ease-in-out transition-all duration-500 z-30`
             }
             onClick={(e) => e.stopPropagation()}
           >

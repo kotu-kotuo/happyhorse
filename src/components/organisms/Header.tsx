@@ -7,6 +7,7 @@ import notificationChecked from "../../functions/notificationChecked";
 import { Notification, User } from "../../types/types";
 import { Dispatch } from "react";
 import { FC } from "react";
+import Image from "next/image";
 
 type Props = {
   user: User;
@@ -38,14 +39,17 @@ const Header: FC<Props> = (props) => {
   return (
     <header className="header-height w-full border-b border-gray-100 shadow-sm">
       <nav className="header-height flex items-center max-w-5xl mx-auto">
-        <div className="mr-auto pt-1 sm:pt-2">
+        <div className="mr-auto pt-2.5 sm:pt-3">
           <Link href="/">
-            <a>
-              <img
+            <div className="w-52 sm:w-64">
+              <Image
                 src="/hh-logo2.png"
-                className="object-cover cursor-pointer h-12 sm:h-12 sm:w-64"
+                className="object-cover cursor-pointer"
+                width={280}
+                height={70}
+                alt="logo"
               />
-            </a>
+            </div>
           </Link>
         </div>
 
@@ -99,13 +103,16 @@ const Header: FC<Props> = (props) => {
               </div>
 
               <div
-                className="mt-1 focus:outline-none relative hidden sm:block"
+                className="mt-1.5 focus:outline-none relative hidden sm:block"
                 onClick={(e) => e.stopPropagation()}
               >
-                <img
+                <Image
                   onClick={() => setIsOpenMenu(!isOpenMenu)}
                   src={user?.avatar}
-                  className="object-cover rounded-full cursor-pointer h-10 w-10 mb-1 hover:opacity-80"
+                  className="object-cover rounded-full cursor-pointer hover:opacity-80"
+                  width={39}
+                  height={39}
+                  alt="avatar"
                 />
                 <div hidden={!isOpenMenu}>
                   <div className="bg-white rounded overflow-hidden shadow-lg z-50 absolute right-0 w-60">

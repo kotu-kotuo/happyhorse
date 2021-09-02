@@ -123,10 +123,16 @@ const Posts: FC<Props> = (props) => {
           <div className="flex justify-between items-center mt-4 md:mt-6">
             {post.deletedAccount === true ? (
               <div className="flex items-center cursor-pointer hover:opacity-80 ml-0 sm:ml-1">
-                <img
-                  src={post.avatar}
-                  className="object-cover rounded-full w-10 h-10 md:w-12 md:h-12"
-                />
+                <div className="w-10 h-10 md:w-12 md:h-12">
+                  <Image
+                    src={post.avatar}
+                    className="rounded-full"
+                    width={48}
+                    height={48}
+                    alt="avatar"
+                    objectFit="cover"
+                  />
+                </div>
                 <p className="fontSize-base text-gray-900 ml-3">
                   {post.username}
                 </p>
@@ -142,10 +148,16 @@ const Posts: FC<Props> = (props) => {
                 scroll={false}
               >
                 <div className="flex items-center cursor-pointer hover:opacity-80 sm:ml-1">
-                  <img
-                    src={post.avatar}
-                    className="object-cover rounded-full w-10 h-10 md:w-12 md:h-12"
-                  />
+                  <div className="w-10 h-10 md:w-12 md:h-12">
+                    <Image
+                      src={post.avatar}
+                      className="rounded-full"
+                      width={48}
+                      height={48}
+                      alt="avatar"
+                      objectFit="cover"
+                    />
+                  </div>
                   <p className="fontSize-base text-gray-900 ml-3">
                     {post.username}
                   </p>
