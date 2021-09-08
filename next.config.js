@@ -12,6 +12,7 @@ const env = require(`./${environment()}.env.js`);
 module.exports = {
   env: {
     FIREBASE_PROJECT_ID: env.FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_MAP_API_KEY: process.env.NEXT_PUBLIC_MAP_API_KEY,
   },
   images: {
     domains: ["firebasestorage.googleapis.com"],
