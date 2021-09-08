@@ -216,7 +216,7 @@ const editProfile = async (
     }
 
     if (address) {
-      await console.log(address);
+      await console.log(address, process.env.NEXT_PUBLIC_MAP_API_KEY);
 
       await console.log(
         fetch(
