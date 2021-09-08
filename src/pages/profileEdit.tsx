@@ -46,6 +46,7 @@ const profileEdit: NextPage = () => {
               );
             }}
           >
+            {console.log(address)}
             <ProfileImageUpload
               image={image}
               setImage={setImage}
