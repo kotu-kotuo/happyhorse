@@ -216,6 +216,13 @@ const editProfile = async (
     }
 
     if (address) {
+      await console.log(
+        address,
+        fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`
+        )
+      );
+
       await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`
       )
