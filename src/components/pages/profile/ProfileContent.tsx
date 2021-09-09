@@ -102,7 +102,7 @@ const ProfileContent: FC<Props> = (props) => {
             <div className="text-gray-900 sm:text-base text-sm mt-7 px-4 max-w-2xl mx-auto whitespace-pre-wrap sm:mt-10">{`${user.profileText}`}</div>
             <div className=" px-4 max-w-2xl mx-auto">
               {user.siteURL && (
-                <div className="flex items-center my-10 sm:my-12">
+                <div className="flex items-center mt-10 mb-6 sm:mt-12 sm:mb-8">
                   <FaLink className="text-2xl text-gray-500 min-w-[20px]" />
                   <a
                     href={user.siteURL}
@@ -114,7 +114,7 @@ const ProfileContent: FC<Props> = (props) => {
                 </div>
               )}
               {user.address && (
-                <div className="flex items-center my-10 sm:my-12 -ml-1">
+                <div className="flex items-center mb-10 sm:mb-12 -ml-1">
                   <FaMapMarkerAlt className="text-2xl text-gray-500 min-w-[20px] ml-0.5" />
                   <div className="ml-4 fontSize-base">{user.address}</div>
                 </div>
