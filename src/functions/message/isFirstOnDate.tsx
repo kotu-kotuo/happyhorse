@@ -1,6 +1,6 @@
 import { Message } from "../../types/types";
 
-const isFirstOnDate = (messages:Message[]) => {
+const isFirstOnDate = (messages: Message[]) => {
   return !(
     messages &&
     messages

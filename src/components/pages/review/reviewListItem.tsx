@@ -23,9 +23,7 @@ const ReviewListItem: FC<Props> = (props) => {
             },
           }}
         >
-          <a>
-            <ReviewContent review={review} />
-          </a>
+          <ReviewContent review={review} />
         </Link>
       )}
     </>

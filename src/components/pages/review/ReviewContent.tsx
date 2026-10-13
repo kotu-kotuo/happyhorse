@@ -62,7 +62,7 @@ const ReviewContent: FC<Props> = (props) => {
             {review.reviewText}
           </div>
           <div className="flex justify-between items-center w-full">
-            <Link href={`/post/postShow/${review.postID}`}>
+            <Link href={`/post/postShow/${review.postID}`} legacyBehavior>
               <div className="text-gray-800 reviewPostTitleText border-b border-gray-800 mr-auto inline-block cursor-pointer line-clamp-1 z-10">
                 {review.postTitle}
               </div>

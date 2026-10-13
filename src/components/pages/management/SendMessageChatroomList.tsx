@@ -24,6 +24,7 @@ const SendMessageChatroomList: FC<Props> = (props) => {
             },
           }}
           key={index}
+          legacyBehavior
         >
           <div>
             <div className="mx-2 my-3 rounded-md shadow border-gray-500 cursor-pointer sm:my-6">

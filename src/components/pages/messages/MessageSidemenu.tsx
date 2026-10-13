@@ -26,7 +26,7 @@ const MessageSidemenu: FC<Props> = (props) => {
   } = props;
   return (
     <div className="ml-4 hidden sm:block sm:w-1/4">
-      <Link href={`/post/postShow/${post.postID}`}>
+      <Link href={`/post/postShow/${post.postID}`} legacyBehavior>
         <div className="shadow-md border border-gray-50 rounded-xl cursor-pointer hover:opacity-80">
           <div className="pb-image w-full h-0 relative">
             <img

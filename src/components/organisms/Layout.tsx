@@ -10,6 +10,7 @@ import Meta from "../Meta";
 import { SITE_URL } from "../../utils/site";
 
 type Props = {
+  children: React.ReactNode;
   title: string;
   ogpURL?: string;
   description?: string;
@@ -59,7 +60,8 @@ export const Layout: React.FC<Props> = (props) => {
           : "min-h-screen box-border pb-10 relative touchAction-none"
       }
       onClick={() => {
-        setIsOpenMenu(false), setIsOpenNotification(false);
+        setIsOpenMenu(false);
+        setIsOpenNotification(false);
       }}
     >
       <Meta

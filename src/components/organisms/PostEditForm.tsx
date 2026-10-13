@@ -9,8 +9,8 @@ type Props = {
   previewsURL: string[];
   setPreviewsURL: Dispatch<SetStateAction<string[]>>;
   post: Post;
-  images: string[];
-  setImages: Dispatch<SetStateAction<string[]>>;
+  images: File[];
+  setImages: Dispatch<SetStateAction<File[]>>;
   setTitle: Dispatch<SetStateAction<string>>;
   setPostText: Dispatch<SetStateAction<string>>;
   setVideo1URL: Dispatch<SetStateAction<string>>;
@@ -207,7 +207,6 @@ const PostEditForm: FC<Props> = (props) => {
               カテゴリー
               <RequiredMark />
             </div>
-            {console.log(post)}
             {post && (
               <select
                 name="category"

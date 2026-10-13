@@ -11,7 +11,7 @@ const PostListItem: FC<Props> = (props) => {
   const { post } = props;
   return (
     <div className="max-w-2xl mx-auto cursor-pointer hover:opacity-80">
-      <Link href={`postShow/${post.postID}`}>
+      <Link href={`postShow/${post.postID}`} legacyBehavior>
         <div className="mx-2 my-4 rounded-md shadow border-gray-500">
           <div className="flex">
             <div>

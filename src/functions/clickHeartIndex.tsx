@@ -1,5 +1,5 @@
 //いいね機能
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import { Dispatch, SetStateAction } from "react";
 import { Post, User } from "../types/types";
 import { db } from "../firebase/firebase";

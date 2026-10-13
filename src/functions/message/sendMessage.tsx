@@ -1,5 +1,5 @@
 import { db } from "../../firebase/firebase";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import { setChatroomStates, setMessageStates } from "../../utils/states";
 import isFirstOnDate from "./isFirstOnDate";
 import { Chatroom, Message, Post, User } from "../../types/types";

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FC } from "react";
 import StarRatings from "react-star-ratings";
 import { Post, User } from "../../types/types";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   post: Post;
@@ -57,6 +57,7 @@ const PublisherValue: FC<Props> = (props) => {
                 pathname: "/profile",
                 query: { uid: postUser.id },
               }}
+              legacyBehavior
             >
               <div className="flex items-center cursor-pointer">
                 <div className="mr-2">

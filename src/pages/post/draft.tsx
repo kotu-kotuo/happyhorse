@@ -3,7 +3,6 @@ import { AuthContext } from "../../auth/AuthProvider";
 import { Layout } from "../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db, storage } from "../../firebase/firebase";
-import fetch from "node-fetch";
 import { postInitialValues } from "../../utils/initialValues";
 import { setPostStates } from "../../utils/states";
 import { generateFileName } from "../../functions/generateFileName";

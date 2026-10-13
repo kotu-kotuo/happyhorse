@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { Post, User } from "../../types/types";
 import Category from "../atoms/Category";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   posts: Post[];
@@ -113,7 +113,11 @@ const Posts: FC<Props> = (props) => {
               {post.area}
             </div>
           </div>
-          <Link href={`/post/postShow/${post.postID}`} scroll={false}>
+          <Link
+            href={`/post/postShow/${post.postID}`}
+            scroll={false}
+            legacyBehavior
+          >
             <div className="cursor-pointer hover:opacity-80">
               <h2 className="font-bold sm:font-semibold text-gray-800 mt-3 mb-2 line-clamp-2 md:my-3 md:text-xl">
                 {post.title}
@@ -150,6 +154,7 @@ const Posts: FC<Props> = (props) => {
                   },
                 }}
                 scroll={false}
+                legacyBehavior
               >
                 <div className="flex items-center cursor-pointer hover:opacity-80 sm:ml-1">
                   <div className="w-10 h-10 md:w-12 md:h-12">
@@ -173,15 +178,17 @@ const Posts: FC<Props> = (props) => {
             <div
               className="flex items-center cursor-pointer hover:shadow-xl transition duration-500 rounded-full py-2 px-4"
               onClick={(e: React.MouseEvent<HTMLElement>) => {
-                currentUser
-                  ? clickHeartIndex(
-                      e,
-                      currentUser,
-                      user,
-                      setUser,
-                      setFilteredPosts
-                    )
-                  : setIsLoginModalOpen(true);
+                if (currentUser) {
+                  clickHeartIndex(
+                    e,
+                    currentUser,
+                    user,
+                    setUser,
+                    setFilteredPosts
+                  );
+                } else {
+                  setIsLoginModalOpen(true);
+                }
               }}
               data-id={post.postID}
             >

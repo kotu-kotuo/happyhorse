@@ -1,5 +1,4 @@
 import { NextRouter } from "next/router";
-import fetch from "node-fetch";
 import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { storage, db } from "../firebase/firebase";

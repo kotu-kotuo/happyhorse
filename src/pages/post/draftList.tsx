@@ -45,6 +45,7 @@ const draftList = () => {
                       },
                     }}
                     key={index}
+                    legacyBehavior
                   >
                     <div className="max-w-xl mx-auto">
                       <div className="mx-2 my-6 rounded-md shadow border-gray-500 cursor-pointer">

@@ -2,14 +2,9 @@ import StarRatings from "react-star-ratings";
 import Link from "next/link";
 import { User } from "../../../types/types";
 import { FC } from "react";
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-} from "react-google-maps";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { FaLink, FaMapMarkerAlt } from "react-icons/fa";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   user: User;
@@ -19,22 +14,12 @@ type Props = {
 const ProfileContent: FC<Props> = (props) => {
   const { user, currentUser } = props;
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAP_API_KEY ?? "",
+  });
   const defaultCenter = { lat: user?.location?.lat, lng: user?.location?.lng };
   const defaultOptions = { scrollwheel: false };
-  const RegularMap = withScriptjs(
-    withGoogleMap((props: any) => (
-      <GoogleMap
-        defaultZoom={14}
-        defaultCenter={defaultCenter}
-        defaultOptions={defaultOptions}
-      >
-        <Marker position={defaultCenter} />
-      </GoogleMap>
-    ))
-  );
-  const loadingElementStyle = { height: "100%" };
-  const containerElementStyle = { height: "300px" };
-  const mapElementStyle = { height: "100%" };
+  const containerElementStyle = { height: "300px", width: "100%" };
 
   return (
     <div>
@@ -62,10 +47,11 @@ const ProfileContent: FC<Props> = (props) => {
                 )}
               </div>
               {user.id === currentUser?.uid && (
-                <Link href="/profileEdit">
-                  <a className="absolute bottom-0 right-7 border border-mainGreen rounded-md px-3 py-1 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300 sm:px-4 sm:py-2 sm:right-10">
-                    編集
-                  </a>
+                <Link
+                  href="/profileEdit"
+                  className="absolute bottom-0 right-7 border border-mainGreen rounded-md px-3 py-1 bg-white text-mainGreen ml-auto hover:bg-mainGreen hover:text-white ease-in-out duration-300 sm:px-4 sm:py-2 sm:right-10"
+                >
+                  編集
                 </Link>
               )}
             </div>
@@ -78,6 +64,7 @@ const ProfileContent: FC<Props> = (props) => {
                   uid: user.id,
                 },
               }}
+              legacyBehavior
             >
               <div className="flex justify-center items-center cursor-pointer hover:opacity-80">
                 <div>
@@ -121,14 +108,16 @@ const ProfileContent: FC<Props> = (props) => {
               )}
             </div>
           </div>
-          {user.address && (
+          {user.address && isLoaded && (
             <div className="mt-10 w-full h-48 sm:h-60">
-              <RegularMap
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_MAP_API_KEY}`}
-                loadingElement={<div style={loadingElementStyle} />}
-                containerElement={<div style={containerElementStyle} />}
-                mapElement={<div style={mapElementStyle} />}
-              />
+              <GoogleMap
+                zoom={14}
+                center={defaultCenter}
+                options={defaultOptions}
+                mapContainerStyle={containerElementStyle}
+              >
+                <Marker position={defaultCenter} />
+              </GoogleMap>
             </div>
           )}
         </div>

@@ -39,12 +39,10 @@ const MessageButtonHandle: FC<Props> = (props) => {
         </>
       ) : currentUser?.uid === post.userID ? (
         <Link href="/message/management">
-          <a>
-            <MessageButton
-              bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
-              label={"メッセージ管理"}
-            />
-          </a>
+          <MessageButton
+            bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
+            label={"メッセージ管理"}
+          />
         </Link>
       ) : post.deletedAccount === true ? (
         <div></div>
@@ -74,16 +72,14 @@ const MessageButtonHandle: FC<Props> = (props) => {
               : { pathname: "/login" }
           }
         >
-          <a>
-            <MessageButton
-              bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
-              label={
-                post.sendMessageUserIDs.includes(currentUser?.uid)
-                  ? "メッセージ画面へ"
-                  : "メッセージを送る"
-              }
-            />
-          </a>
+          <MessageButton
+            bgStyle={" bg-mainGreen hover:opacity-90 hover:shadow-lg"}
+            label={
+              post.sendMessageUserIDs.includes(currentUser?.uid)
+                ? "メッセージ画面へ"
+                : "メッセージを送る"
+            }
+          />
         </Link>
       )}
     </div>

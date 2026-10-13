@@ -12,7 +12,6 @@ import { BsFilterRight } from "react-icons/bs";
 import { NextPage } from "next";
 import { Post } from "../types/types";
 import LoginModal from "../components/molecules/LoginModal";
-import admin from "../firebase/admin";
 import getAge from "../functions/getAge";
 
 const Index: NextPage = ({ posts }: any) => {
@@ -218,8 +217,6 @@ const Index: NextPage = ({ posts }: any) => {
   return (
     <div>
       <Layout title="happy horse | 馬の売買プラットフォーム">
-        {console.log(posts)}
-        {console.log(filteredPosts)}
         <LoginModal
           isLoginModalOpen={isLoginModalOpen}
           setIsLoginModalOpen={setIsLoginModalOpen}
@@ -341,17 +338,27 @@ const Index: NextPage = ({ posts }: any) => {
 export default Index;
 
 export async function getServerSideProps() {
-  const db = admin.firestore();
+  try {
+    const { getDb } = await import("../firebase/admin");
+    const db = getDb();
 
-  const data: FirebaseFirestore.DocumentData[] = (
-    await db.collectionGroup("posts").orderBy("createdAt", "desc").get()
-  ).docs.map((doc) => doc.data());
+    const data = (
+      await db.collectionGroup("posts").orderBy("createdAt", "desc").get()
+    ).docs.map((doc) => doc.data());
 
-  const posts = JSON.parse(JSON.stringify(data));
+    const posts = JSON.parse(JSON.stringify(data));
 
-  return {
-    props: {
-      posts,
-    },
-  };
+    return {
+      props: {
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error("getServerSideProps failed:", error);
+    return {
+      props: {
+        posts: [],
+      },
+    };
+  }
 }

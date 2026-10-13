@@ -1,27 +1,42 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
+import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { initTestHelpers, getPage } from "next-page-tester";
 import "setimmediate";
-
-initTestHelpers();
 
 jest.mock("next/router", () => require("next-router-mock"));
 
+jest.mock("../src/firebase/firebase", () => ({
+  auth: {
+    createUserWithEmailAndPassword: jest.fn(() =>
+      Promise.resolve({ user: { uid: "test-uid" } })
+    ),
+  },
+  db: {
+    collection: () => ({
+      doc: () => ({
+        set: () => Promise.resolve(),
+        collection: () => ({
+          doc: () => ({ set: () => Promise.resolve() }),
+        }),
+      }),
+    }),
+  },
+}));
+
+import SignUp from "../src/pages/signup";
+
 describe("SignUp", () => {
   it("Should pass user login", async () => {
-    const { page } = await getPage({
-      route: "/signup",
-    });
-    render(page);
+    const user = userEvent.setup();
+    render(<SignUp />);
 
     expect(await screen.findByText("Sign Up")).toBeInTheDocument();
-    userEvent.type(screen.getByPlaceholderText("ユーザーネーム"), "エミリア");
-    userEvent.type(
+    await user.type(screen.getByPlaceholderText("ユーザーネーム"), "エミリア");
+    await user.type(
       screen.getByPlaceholderText("メールアドレス"),
       "test1@gmail.com"
     );
-    userEvent.type(screen.getByPlaceholderText("パスワード"), "password");
+    await user.type(screen.getByPlaceholderText("パスワード"), "password");
     expect(await screen.getByPlaceholderText("ユーザーネーム")).toHaveValue(
       "エミリア"
     );
@@ -31,6 +46,6 @@ describe("SignUp", () => {
     expect(await screen.getByPlaceholderText("パスワード")).toHaveValue(
       "password"
     );
-    userEvent.click(screen.getByText("新規登録する"));
+    await user.click(screen.getByText("新規登録する"));
   });
 });

@@ -12,7 +12,7 @@ const MobilePostInfo: FC<Props> = (props) => {
   const { currentUser, post, chatroom } = props;
   return (
     <div className="sm:hidden">
-      <Link href={`/post/postShow/${post.postID}`}>
+      <Link href={`/post/postShow/${post.postID}`} legacyBehavior>
         <div
           className={
             currentUser?.uid === chatroom?.postUserID

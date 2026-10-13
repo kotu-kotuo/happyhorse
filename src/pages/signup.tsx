@@ -146,10 +146,11 @@ const SignUp: NextPage = () => {
             </div>
             <div className="flex items-center justify-end">
               <div className="text-xs">
-                <Link href="/login">
-                  <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                    ログインはこちら
-                  </a>
+                <Link
+                  href="/login"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  ログインはこちら
                 </Link>
               </div>
             </div>

@@ -3,8 +3,7 @@ import { AuthContext } from "../../../auth/AuthProvider";
 import { Layout } from "../../../components/organisms/Layout";
 import { useRouter } from "next/router";
 import { db, storage } from "../../../firebase/firebase";
-import firebase from "firebase/app";
-import fetch from "node-fetch";
+import firebase from "firebase/compat/app";
 import { postInitialValues } from "../../../utils/initialValues";
 import { setPostStates } from "../../../utils/states";
 import { generateFileName } from "../../../functions/generateFileName";
@@ -187,7 +186,6 @@ const postEdit: NextPage = () => {
   return (
     <div>
       <Layout title="掲載編集フォーム | happy horse" index="noindex">
-        {console.log(video1Title, video1URL)}
         {currentUser && (
           <form onSubmit={updatePost} className="max-w-2xl mx-auto mt-16 px-2">
             <PostEditForm

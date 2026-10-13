@@ -6,7 +6,7 @@ import { IoChevronForwardOutline } from "react-icons/io5";
 import StarRatings from "react-star-ratings";
 import { User } from "../../types/types";
 import { FC } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   currentUser;
@@ -53,6 +53,7 @@ const MenuList: FC<Props> = (props) => {
                   uid: user.id,
                 },
               }}
+              legacyBehavior
             >
               <div className="flex justify-center items-center cursor-pointer hover:opacity-80">
                 <div>
@@ -81,10 +82,9 @@ const MenuList: FC<Props> = (props) => {
                     uid: currentUser.uid,
                   },
                 }}
+                className="border rounded-full py-2 px-4 text-xs font-bold sm:font-semibold text-gray-700 hover:opacity-80"
               >
-                <a className="border rounded-full py-2 px-4 text-xs font-bold sm:font-semibold text-gray-700 hover:opacity-80">
-                  マイプロフィール
-                </a>
+                マイプロフィール
               </Link>
             </div>
           </div>

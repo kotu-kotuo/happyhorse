@@ -77,6 +77,7 @@ const MyMessage: FC<Props> = (props) => {
                 uid: message.userID,
               },
             }}
+            legacyBehavior
           >
             <img
               src={message.avatar}
