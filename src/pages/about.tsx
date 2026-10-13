@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import Footer from "../components/organisms/Footer";
 import Link from "next/link";
 import Meta from "../components/Meta";
+import { SITE_URL } from "../utils/site";
 
 const about = () => {
   const footerHeight = useRef(null);
@@ -17,7 +18,7 @@ const about = () => {
     <>
       <Meta
         title="happy horseについて | 馬の売買プラットフォーム"
-        ogpURL="https://www.happyhorse.xyz/about"
+        ogpURL={`${SITE_URL}/about`}
         description="happy horse（ハッピーホース）では、主に乗馬・馬術、レクレーションの馬の売買ができます。馬の販売・購入をより便利に、より手軽に。素敵な出会いがありますように。HAPPY UMA LIFE! "
         ogpImage="https://firebasestorage.googleapis.com/v0/b/happyhorse-prod.appspot.com/o/ogp-hh.png?alt=media&token=6a8c8771-2193-40a4-8f6b-920544654e05"
         index="all"

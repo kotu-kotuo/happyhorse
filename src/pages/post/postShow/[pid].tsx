@@ -15,6 +15,7 @@ import PostShowTable from "../../../components/pages/postShow/PostShowTable";
 import admin from "../../../firebase/admin";
 import VideoList from "../../../components/pages/postShow/VideoList";
 import { postInitialValues } from "../../../utils/initialValues";
+import { SITE_URL } from "../../../utils/site";
 
 const Show: NextPage = ({ posts }: any) => {
   const router: NextRouter = useRouter();
@@ -53,7 +54,7 @@ const Show: NextPage = ({ posts }: any) => {
   return (
     <Layout
       title={`${post.title + " | happy horse"}` || ""}
-      ogpURL={"https://www.happyhorse.xyz" + router?.asPath}
+      ogpURL={SITE_URL + router?.asPath}
       description={post.postText}
       ogpImage={post.images[0]}
       index="all"
