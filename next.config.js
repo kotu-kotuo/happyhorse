@@ -15,17 +15,17 @@ module.exports = {
     NEXT_PUBLIC_MAP_API_KEY: process.env.NEXT_PUBLIC_MAP_API_KEY,
   },
   images: {
-    domains: ["firebasestorage.googleapis.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+      },
+    ],
   },
-  node: {
-    global: false,
-    __filename: false,
-    __dirname: false,
-  },
+  serverExternalPackages: ["firebase-admin"],
   experimental: {
     scrollRestoration: true,
   },
-  webpack5: true,
   // webpack: (config) => {
   //   config.node = {
   //     fs: "empty",

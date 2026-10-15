@@ -12,9 +12,10 @@ import LikeButton from "../../../components/pages/postShow/LikeButton";
 import { NextPage } from "next";
 import "slick-carousel/slick/slick.css";
 import PostShowTable from "../../../components/pages/postShow/PostShowTable";
-import admin from "../../../firebase/admin";
+
 import VideoList from "../../../components/pages/postShow/VideoList";
 import { postInitialValues } from "../../../utils/initialValues";
+import { SITE_URL } from "../../../utils/site";
 
 const Show: NextPage = ({ posts }: any) => {
   const router: NextRouter = useRouter();
@@ -22,11 +23,11 @@ const Show: NextPage = ({ posts }: any) => {
   const [postState, setPostState] = useState(postInitialValues);
   const [postUser, setPostUser] = useState(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const post = posts.find((post) => post.postID === router.query.pid);
+  const post =
+    posts.find((post) => post.postID === router.query.pid) ?? postInitialValues;
 
   useEffect(() => {
     if (post.userID) {
-      console.log(post.userID);
       db.collection("users")
         .doc(`${post.userID}`)
         .get()
@@ -35,6 +36,9 @@ const Show: NextPage = ({ posts }: any) => {
   }, []);
 
   useEffect(() => {
+    if (!post.userID || !post.postID) {
+      return;
+    }
     db.collection("users")
       .doc(post.userID)
       .collection("posts")
@@ -52,8 +56,8 @@ const Show: NextPage = ({ posts }: any) => {
 
   return (
     <Layout
-      title={`${post.title + " | happy horse"}` || ""}
-      ogpURL={"https://www.happyhorse.xyz" + router?.asPath}
+      title={`${(post.title || "") + " | happy horse"}`}
+      ogpURL={SITE_URL + router?.asPath}
       description={post.postText}
       ogpImage={post.images[0]}
       index="all"
@@ -159,19 +163,29 @@ const Show: NextPage = ({ posts }: any) => {
 export default Show;
 
 export async function getServerSideProps() {
-  const db = admin.firestore();
+  try {
+    const { getDb } = await import("../../../firebase/admin");
+    const db = getDb();
 
-  const data: FirebaseFirestore.DocumentData[] = (
-    await db.collectionGroup("posts").get()
-  ).docs.map((doc) => doc.data());
+    const data = (await db.collectionGroup("posts").get()).docs.map((doc) =>
+      doc.data()
+    );
 
-  const posts = JSON.parse(JSON.stringify(data));
+    const posts = JSON.parse(JSON.stringify(data));
 
-  return {
-    props: {
-      posts,
-    },
-  };
+    return {
+      props: {
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error("getServerSideProps failed:", error);
+    return {
+      props: {
+        posts: [],
+      },
+    };
+  }
 
   // export async function getStaticPaths() {
   //   const db = admin.firestore();

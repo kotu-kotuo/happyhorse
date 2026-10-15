@@ -1,5 +1,5 @@
 import { db } from "../../firebase/firebase";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import alertMessage from "../../functions/post/alertMessage";
 import { NextRouter } from "next/router";
 import { FormEvent } from "react";

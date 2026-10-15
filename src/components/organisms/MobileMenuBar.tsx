@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import Link from "next/link";
 import React, { SetStateAction } from "react";
 import { FC } from "react";
@@ -60,7 +60,7 @@ const MobileMenuBar: FC<Props> = (props) => {
       <div className="fixed z-50 w-full text-center bottom-0 border-t  border-gray-100 shadow bg-white sm:hidden">
         <div className="flex justify-around items-center">
           {/* ホームボタン */}
-          <Link href="/">
+          <Link href="/" legacyBehavior>
             <div
               className="w-1/4 pt-2 pb-3 cursor-pointer hover:opacity-80"
               onClick={() => {

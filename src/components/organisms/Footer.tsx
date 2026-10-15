@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const Footer = (props) => {
   const { footerHeight, heightFooter } = props;
@@ -14,7 +14,7 @@ const Footer = (props) => {
         }`}
         ref={footerHeight}
       >
-        <Link href="/">
+        <Link href="/" legacyBehavior>
           <div className=" h-10 w-auto pr-8 sm:h-14">
             <Image
               src="/hh-logo2.png"
@@ -27,15 +27,15 @@ const Footer = (props) => {
           </div>
         </Link>
         <div className="sm:flex sm:justify-center py-4 text-gray-900">
-          <Link href="/about">
+          <Link href="/about" legacyBehavior>
             <p className="mx-4 cursor-pointer fontSize-base mb-2">
               happy horseについて
             </p>
           </Link>
-          <Link href="/terms">
+          <Link href="/terms" legacyBehavior>
             <p className="mx-4 cursor-pointer fontSize-base mb-2">利用規約</p>
           </Link>
-          <Link href="/privacyPolicy">
+          <Link href="/privacyPolicy" legacyBehavior>
             <p className="mx-4 cursor-pointer fontSize-base mb-2">
               プライバシーポリシー
             </p>

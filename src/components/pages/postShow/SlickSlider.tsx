@@ -5,7 +5,7 @@ import {
 } from "react-icons/io5";
 import { Post } from "../../../types/types";
 import { FC } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   currentUser;

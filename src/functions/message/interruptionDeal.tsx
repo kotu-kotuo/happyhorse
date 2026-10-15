@@ -1,8 +1,8 @@
 import { db } from "../../firebase/firebase";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import { setMessageStates } from "../../utils/states";
 import isFirstOnDate from "./isFirstOnDate";
-import { confirmAlert } from "react-confirm-alert";
+import { confirmAlert } from "../../utils/confirmAlert";
 import { Chatroom, Message, Post, User } from "../../types/types";
 import { Dispatch, SetStateAction } from "react";
 

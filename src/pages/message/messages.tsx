@@ -17,7 +17,6 @@ import {
   setReviewStates,
   setUserState,
 } from "../../utils/states";
-import "react-confirm-alert/src/react-confirm-alert.css";
 import { NextPage } from "next";
 import decideClient from "../../functions/message/decideClient";
 import interruptionDeal from "../../functions/message/interruptionDeal";
@@ -205,7 +204,6 @@ const messages: NextPage = () => {
         reviewText={reviewText}
       />
       <div>
-        {console.log(chatroom, messages, messageReceiver, post)}
         <Layout
           title={
             `メッセージ | ${messageReceiver?.username}さん | happy horse` || ""

@@ -7,8 +7,10 @@ import LoginModal from "../molecules/LoginModal";
 import MobileMenuBar from "./MobileMenuBar";
 import Footer from "./Footer";
 import Meta from "../Meta";
+import { SITE_URL } from "../../utils/site";
 
 type Props = {
+  children: React.ReactNode;
   title: string;
   ogpURL?: string;
   description?: string;
@@ -20,7 +22,7 @@ export const Layout: React.FC<Props> = (props) => {
   const {
     children,
     title = "happy horse | 馬の売買プラットフォーム",
-    ogpURL = "https://www.happyhorse.xyz/",
+    ogpURL = `${SITE_URL}/`,
     description = "happy horse（ハッピーホース）では、主に乗馬・馬術、レクレーションの馬の売買ができます。馬の販売・購入をより便利に、より手軽に。素敵な出会いがありますように。HAPPY UMA LIFE! サラブレッドなどの品種や値段で検索可能。",
     ogpImage = "https://firebasestorage.googleapis.com/v0/b/happyhorse-prod.appspot.com/o/ogp-hh.png?alt=media&token=6a8c8771-2193-40a4-8f6b-920544654e05",
     index = "all",
@@ -58,7 +60,8 @@ export const Layout: React.FC<Props> = (props) => {
           : "min-h-screen box-border pb-10 relative touchAction-none"
       }
       onClick={() => {
-        setIsOpenMenu(false), setIsOpenNotification(false);
+        setIsOpenMenu(false);
+        setIsOpenNotification(false);
       }}
     >
       <Meta

@@ -7,7 +7,7 @@ import notificationChecked from "../../functions/notificationChecked";
 import { Notification, User } from "../../types/types";
 import { Dispatch } from "react";
 import { FC } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   user: User;
@@ -40,7 +40,7 @@ const Header: FC<Props> = (props) => {
     <header className="header-height w-full border-b border-gray-100 shadow-sm">
       <nav className="header-height flex items-center max-w-5xl mx-auto">
         <div className="mr-auto pt-2.5 sm:pt-3">
-          <Link href="/">
+          <Link href="/" legacyBehavior>
             <div className="w-52 sm:w-64">
               <Image
                 src="/hh-logo2.png"
@@ -57,12 +57,12 @@ const Header: FC<Props> = (props) => {
         <div className="ml-auto flex items-center text-xs sm:text-base">
           {!currentUser && (
             <div className="flex items-center mt-1 mr-3 sm:mt-0.5 sm:mr-0">
-              <Link href="/signup">
-                <a className="text-gray-600">新規登録</a>
+              <Link href="/signup" className="text-gray-600">
+                新規登録
               </Link>
               <div className="mb-0.5 mx-1 sm:mx-2"> | </div>
-              <Link href="/login">
-                <a className="text-gray-600">ログイン</a>
+              <Link href="/login" className="text-gray-600">
+                ログイン
               </Link>
             </div>
           )}
@@ -75,8 +75,8 @@ const Header: FC<Props> = (props) => {
               >
                 <div
                   onClick={() => {
-                    setIsOpenNotification(!isOpenNotification),
-                      notificationChecked(currentUser, setNotifications);
+                    setIsOpenNotification(!isOpenNotification);
+                    notificationChecked(currentUser, setNotifications);
                   }}
                   className="relative"
                 >
@@ -136,7 +136,7 @@ const Header: FC<Props> = (props) => {
             }
           >
             {currentUser ? (
-              <Link href="/post/post">
+              <Link href="/post/post" legacyBehavior>
                 <button
                   type="button"
                   className="mr-3 focus:outline-none text-white text-base font-medium py-1.5 px-2.5 rounded-md bg-mainGreen hover:opacity-90 hover:shadow-lg sm:px-4"

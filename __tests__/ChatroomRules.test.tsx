@@ -1,12 +1,23 @@
+/** @jest-environment node */
+
 import { assertSucceeds, assertFails } from "@firebase/rules-unit-testing";
 import "jest";
 import * as helper from "../src/firebase/rule_helper";
-import { firestore } from "@firebase/rules-unit-testing";
-import { firestore as adminFirestore } from "firebase-admin";
+import {
+  collection,
+  collectionGroup,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import "setimmediate";
 
 // エミュレーターホスト指定
-process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
+process.env.FIRESTORE_EMULATOR_HOST ||= "localhost:8099";
 
 // FirebaseのProject ID
 const projectID = "happyhorse-bc5f6";
@@ -24,75 +35,88 @@ describe("chatroom", () => {
     describe("user authenticated", () => {
       let ref;
       beforeEach(async () => {
-        ref = helper
-          .adminApp(projectID)
-          .firestore()
-          .collection("users")
-          .doc(theirId)
-          .collection("posts")
-          .doc("postID")
-          .collection("chatrooms")
-          .doc();
+        await helper.withAdminDb(async (adminDb) => {
+          ref = doc(
+            collection(
+              adminDb,
+              "users",
+              theirId,
+              "posts",
+              "postID",
+              "chatrooms"
+            )
+          );
 
-        await ref.set({
-          sendUserID: myId,
-          sendUserName: "username",
-          sendUserAvatar: "avatar",
-          postUserID: theirId,
-          postID: "postID",
-          postImage: "image",
-          postTitle: "title",
-          latestMessage: "ooo",
-          messageCount: null,
-          createdAt: adminFirestore.FieldValue.serverTimestamp(),
-          messageUpdatedAt: adminFirestore.FieldValue.serverTimestamp(),
-          deletedAccount: false,
+          await setDoc(ref, {
+            sendUserID: myId,
+            sendUserName: "username",
+            sendUserAvatar: "avatar",
+            postUserID: theirId,
+            postID: "postID",
+            postImage: "image",
+            postTitle: "title",
+            latestMessage: "ooo",
+            messageCount: null,
+            createdAt: serverTimestamp(),
+            messageUpdatedAt: serverTimestamp(),
+            deletedAccount: false,
+          });
         });
       });
 
       test("should be succeeded", () => {
-        const db = helper.app(projectID, auth).firestore();
-        assertSucceeds(db.doc(ref.path).get());
-        assertSucceeds(db.collectionGroup("chatrooms").get());
+        const db = helper.db(auth);
+        assertSucceeds(getDoc(doc(db, ref.path)));
+        assertSucceeds(getDocs(collectionGroup(db, "chatrooms")));
       });
     });
   });
 
   describe("write operation", () => {
     describe("user authenticated", () => {
-      test("should be succeeded", () => {
-        const db = helper.app(projectID, auth).firestore();
+      test("should be denied by security rules", () => {
+        const db = helper.db(auth);
 
-        const ref = db
-          .collection("users")
-          .doc(theirId)
-          .collection("posts")
-          .doc("postID")
-          .collection("chatrooms")
-          .doc(myId);
+        const ref = doc(
+          db,
+          "users",
+          theirId,
+          "posts",
+          "postID",
+          "chatrooms",
+          myId
+        );
 
-        ref.set({
-          sendUserID: myId,
-          sendUserName: "username",
-          sendUserAvatar: "avatar",
-          postUserID: theirId,
-          postID: "postID",
-          postImage: "image",
-          postTitle: "title",
-          latestMessage: "ooo",
-          messageCount: null,
-          createdAt: firestore.FieldValue.serverTimestamp(),
-          messageUpdatedAt: firestore.FieldValue.serverTimestamp(),
-          deletedAccount: false,
-        });
+        // create requires incomingData().messageCount == 1, so this is denied
+        assertFails(
+          setDoc(ref, {
+            sendUserID: myId,
+            sendUserName: "username",
+            sendUserAvatar: "avatar",
+            postUserID: theirId,
+            postID: "postID",
+            postImage: "image",
+            postTitle: "title",
+            latestMessage: "ooo",
+            messageCount: null,
+            createdAt: serverTimestamp(),
+            messageUpdatedAt: serverTimestamp(),
+            deletedAccount: false,
+          })
+        );
 
-        ref.update({
-          latestMessage: "uuu",
-          messageCount: 3,
-          messageUpdatedAt: firestore.FieldValue.serverTimestamp(),
-        });
+        // update is allowed only for sendUserID / postUserID owners, and the
+        // document does not exist
+        assertFails(
+          updateDoc(ref, {
+            latestMessage: "uuu",
+            messageCount: 3,
+            messageUpdatedAt: serverTimestamp(),
+          })
+        );
 
-        ref.delete();
+        // delete requires existingData().postUserID == auth.uid
+        assertFails(deleteDoc(ref));
       });
     });
   });

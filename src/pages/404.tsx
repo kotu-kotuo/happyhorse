@@ -21,8 +21,8 @@ export default function Error() {
           <div className="text-lg mb-8">
             You may have mistyped the address or the page may have moved.
           </div>
-          <Link href="/">
-            <a className="border border-white rounded p-4">Go Home</a>
+          <Link href="/" className="border border-white rounded p-4">
+            Go Home
           </Link>
         </div>
       </div>

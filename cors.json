@@ -1,6 +1,6 @@
 [
   {
-    "origin": ["http://localhost:3000","https://www.happyhorse.xyz"],
+    "origin": ["http://localhost:3000","https://happyhorse.vercel.app"],
     "responseHeader": ["*"],
     "method": ["GET"],
     "maxAgeSeconds": 86400

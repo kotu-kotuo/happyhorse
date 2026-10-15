@@ -39,9 +39,11 @@ const LikeButton: FC<Props> = (props) => {
         <div
           className="flex items-center mb-4 cursor-pointer hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
-            currentUser
-              ? clickHeartShow(e, currentUser, user, setUser, setPostState)
-              : setIsLoginModalOpen(true);
+            if (currentUser) {
+              clickHeartShow(e, currentUser, user, setUser, setPostState);
+            } else {
+              setIsLoginModalOpen(true);
+            }
           }}
           data-id={post.postID}
         >
@@ -64,9 +66,11 @@ const LikeButton: FC<Props> = (props) => {
         <div
           className="cursor-pointer mb-0.5 hover:opacity-80"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
-            currentUser
-              ? clickHeartShow(e, currentUser, user, setUser, setPostState)
-              : setIsLoginModalOpen(true);
+            if (currentUser) {
+              clickHeartShow(e, currentUser, user, setUser, setPostState);
+            } else {
+              setIsLoginModalOpen(true);
+            }
           }}
           data-id={post.postID}
         >

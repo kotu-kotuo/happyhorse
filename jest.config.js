@@ -1,5 +1,5 @@
 module.exports = {
-  // setupFiles: ["<rootDir>" / src / __tests__ / testSetup.js],
+  setupFiles: ["<rootDir>/jest.setup.js"],
   testEnvironmentOptions: {
     beforeParse(window) {
       console.log("------------------------------------------  log ");
@@ -13,7 +13,7 @@ module.exports = {
   },
   testPathIgnorePatterns: ["<rootDir>/.next/", "<rootDir>/node_modules/"],
   moduleNameMapper: {
-    "\\.(css)$": "<rootDir>/node_modules/jest-css-modules",
+    "\\.(css)$": "<rootDir>/jest.styleMock.js",
   },
-  testEnvironment: "jest-environment-uint8array",
+  testEnvironment: "jest-environment-jsdom",
 };

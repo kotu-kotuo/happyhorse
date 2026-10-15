@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 type Props = {
-  image: string;
+  image: File;
   setImage: (file: File) => void;
   label: string;
   src: string;

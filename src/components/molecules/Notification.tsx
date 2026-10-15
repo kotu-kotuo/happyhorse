@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { FaRegClock } from "react-icons/fa";
 import { FC } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   notification;
@@ -52,7 +52,7 @@ const Notification: FC<Props> = (props) => {
           </div>
         </div>
       ) : (
-        <Link href={href}>
+        <Link href={href} legacyBehavior>
           <div className="flex mt-3 cursor-pointer hover:opacity-80">
             {!(notification.toMessage || notification.toProfile) ? (
               <div className="h-9 min-w-[36px] w-9 mr-2">

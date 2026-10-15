@@ -1,6 +1,6 @@
 import { generateFileName } from "../generateFileName";
 import { db, storage } from "../../firebase/firebase";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import { setChatroomStates, setMessageStates } from "../../utils/states";
 import isFirstOnDate from "./isFirstOnDate";
 import { ChangeEvent, SetStateAction } from "react";

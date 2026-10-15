@@ -1,5 +1,5 @@
 import { db, auth } from "../firebase/firebase";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import { NextRouter } from "next/router";
 
 const deleteAccountData = async (

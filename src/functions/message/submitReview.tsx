@@ -1,5 +1,5 @@
 import { db } from "../../firebase/firebase";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 import { setReviewStates } from "../../utils/states";
 import { Post, Review, User } from "../../types/types";
 import { Dispatch, SetStateAction } from "react";

@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { Dispatch, SetStateAction } from "react";
 import { FC } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type Props = {
   isLoginModalOpen: boolean;
@@ -46,12 +46,12 @@ const LoginModal: FC<Props> = (props) => {
               </p>
               <div>
                 <div className="flex items-center justify-between">
-                  <Link href="/login">
+                  <Link href="/login" legacyBehavior>
                     <button className="postFormMainButton mr-1 md:mr-2">
                       ログイン
                     </button>
                   </Link>
-                  <Link href="/signup">
+                  <Link href="/signup" legacyBehavior>
                     <button className="postFormMainButton ml-1 md:ml-2">
                       新規登録
                     </button>

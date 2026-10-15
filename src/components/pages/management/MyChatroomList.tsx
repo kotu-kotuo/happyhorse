@@ -36,6 +36,7 @@ const MyChatroomList: FC<Props> = (props) => {
                   cid: myPostChatroom.sendUserID,
                 },
               }}
+              legacyBehavior
             >
               <div className="mx-2 my-3 rounded-r-md rounded-l-full shadow border-gray-500 cursor-pointer sm:my-6">
                 <div className="flex">
@@ -53,6 +54,7 @@ const MyChatroomList: FC<Props> = (props) => {
                             uid: myPostChatroom.sendUserID,
                           },
                         }}
+                        legacyBehavior
                       >
                         <img
                           src={myPostChatroom.sendUserAvatar}
@@ -93,7 +95,8 @@ const MyChatroomList: FC<Props> = (props) => {
         ))}
       <div
         onClick={() => {
-          setIsMyPostsHidden(false), setIsMyPostChatroomsHidden(true);
+          setIsMyPostsHidden(false);
+          setIsMyPostChatroomsHidden(true);
         }}
         className="text-gray-900 border-b border-gray-900 ml-12 w-20 cursor-pointer mt-4"
       >

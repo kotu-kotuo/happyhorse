@@ -77,16 +77,17 @@ const Login: NextPage = () => {
               </button>
             </div>
             <div className="flex items-center justify-between">
-              <Link href="/passwordReset">
+              <Link href="/passwordReset" legacyBehavior>
                 <div className="font-medium text-indigo-600 hover:text-indigo-500 text-xs cursor-pointer">
                   パスワードを忘れた場合
                 </div>
               </Link>
 
-              <Link href="/signup">
-                <a className="font-medium text-xs text-indigo-600 hover:text-indigo-500">
-                  新規登録はこちら
-                </a>
+              <Link
+                href="/signup"
+                className="font-medium text-xs text-indigo-600 hover:text-indigo-500"
+              >
+                新規登録はこちら
               </Link>
             </div>
           </form>

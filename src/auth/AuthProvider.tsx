@@ -8,7 +8,7 @@ import {
 import { auth, db } from "../firebase/firebase";
 import { Notification, User } from "../types/types";
 import { setNotificationStates, setUserState } from "../utils/states";
-import firebase from "firebase/app";
+import firebase from "firebase/compat/app";
 
 type AuthContextProps = {
   currentUser: firebase.User | null | undefined;
@@ -28,7 +28,9 @@ const AuthContext = createContext<AuthContextProps>({
   setNotifications: undefined,
 });
 
-const AuthProvider: React.FC = ({ children }) => {
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [currentUser, setCurrentUser] = useState<
     firebase.User | null | undefined
   >(undefined);
