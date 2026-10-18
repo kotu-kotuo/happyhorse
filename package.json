@@ -68,6 +68,9 @@
     "**/proxy-addr": "^2.0.8",
     "**/websocket-driver": "^0.7.5",
     "**/jws": "^4.0.1",
-    "**/@grpc/grpc-js": "^1.14.6"
+    "**/@grpc/grpc-js": "^1.14.6",
+    "firebase-tools/express": "^4.22.3",
+    "**/qs": "^6.16.1",
+    "**/postcss": "^8.5.31"
   }
 }
