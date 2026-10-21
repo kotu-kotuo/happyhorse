@@ -3,7 +3,14 @@
 import { assertFails, assertSucceeds } from "@firebase/rules-unit-testing";
 import "jest";
 import * as helper from "../src/firebase/rule_helper";
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import "setimmediate";
 
 process.env.FIRESTORE_EMULATOR_HOST ||= "localhost:8099";
@@ -79,6 +86,10 @@ describe("abuse rules", () => {
       await assertFails(updateDoc(doc(as(owner), "users", owner), { good: 99 }));
     });
 
+    test("owner cannot change their id", async () => {
+      await assertFails(updateDoc(doc(as(owner), "users", owner), { id: "other" }));
+    });
+
     test("owner can still edit the profile", async () => {
       await assertSucceeds(
         updateDoc(doc(as(owner), "users", owner), { username: "new" })
@@ -118,8 +129,38 @@ describe("abuse rules", () => {
     });
 
     test("doc ID must be the post ID", async () => {
-      const ref = doc(as(client), "users", owner, "reviews", "other");
-      await assertFails(setDoc(ref, review(client, owner)));
+      await assertFails(
+        setDoc(reviewRef(client, owner), { ...review(client, owner), postID: "other" })
+      );
+    });
+
+    test("reviewer must be a deal party", async () => {
+      await assertFails(setDoc(reviewRef(client, owner), review(stranger, owner)));
+    });
+
+    test("owner as the second rater writes both reviews", async () => {
+      await assertSucceeds(setDoc(reviewRef(owner, client), review(owner, client)));
+      await assertSucceeds(setDoc(reviewRef(owner, owner), review(client, owner)));
+    });
+
+    test("owner cannot fabricate a deal with someone who never inquired", async () => {
+      // Without the chatroom check the owner could name anyone as the client and
+      // give them a bad rating once per fake post.
+      for (const fake of ["fake1", "fake2"]) {
+        await assertSucceeds(
+          setDoc(doc(as(owner), "users", owner, "posts", fake), {
+            ...basePost,
+            postID: fake,
+            clientUserID: stranger,
+          })
+        );
+        await assertFails(
+          setDoc(doc(as(owner), "users", stranger, "reviews", fake), {
+            ...review(owner, stranger, "bad"),
+            postID: fake,
+          })
+        );
+      }
     });
 
     test("deal must be closed", async () => {
@@ -141,6 +182,7 @@ describe("abuse rules", () => {
       const ref = reviewRef(client, owner);
       await assertSucceeds(updateDoc(ref, { reviewerName: "退会ユーザー" }));
       await assertFails(updateDoc(ref, { rating: "bad" }));
+      await assertFails(updateDoc(ref, { reviewText: "edited" }));
       await assertFails(
         updateDoc(doc(as(stranger), "users", owner, "reviews", postID), {
           reviewerID: stranger,
@@ -151,6 +193,12 @@ describe("abuse rules", () => {
   });
 
   describe("posts deal fields (#31)", () => {
+    test("client cannot close the deal themselves", async () => {
+      const ref = doc(as(client), ...postPath);
+      await assertFails(updateDoc(ref, { isAvairable: true }));
+      await assertFails(updateDoc(ref, { clientUserID: stranger }));
+    });
+
     test("stranger cannot make themselves the client", async () => {
       await assertFails(
         updateDoc(doc(as(stranger), ...postPath), {
@@ -163,18 +211,56 @@ describe("abuse rules", () => {
       );
     });
 
-    test("inquirer can still record their message", async () => {
+    test("inquirer can still record their first message", async () => {
+      // sendMessage: first message from a new inquirer.
       await assertSucceeds(
         updateDoc(doc(as(stranger), ...postPath), {
           sendMessageUserIDs: [stranger, client],
+          messageUpdatedAt: serverTimestamp(),
           latestMessage: "hi",
         })
       );
     });
 
-    test("anyone can still like", async () => {
+    test("inquirer can still update the latest message", async () => {
+      // sendMessage: later messages leave sendMessageUserIDs as it is.
       await assertSucceeds(
-        updateDoc(doc(as(stranger), ...postPath), { likeUserIDs: [stranger] })
+        updateDoc(doc(as(client), ...postPath), {
+          messageUpdatedAt: serverTimestamp(),
+          latestMessage: "again",
+        })
+      );
+    });
+
+    test("inquirer cannot drop other inquirers", async () => {
+      await assertFails(
+        updateDoc(doc(as(stranger), ...postPath), {
+          sendMessageUserIDs: [stranger],
+          latestMessage: "hi",
+        })
+      );
+    });
+
+    test("anyone can still like and unlike", async () => {
+      const ref = doc(as(stranger), ...postPath);
+      await assertSucceeds(updateDoc(ref, { likeUserIDs: [stranger] }));
+      await assertSucceeds(updateDoc(ref, { likeUserIDs: [] }));
+    });
+
+    test("liking cannot touch other fields or other likes", async () => {
+      const ref = doc(as(stranger), ...postPath);
+      await assertFails(
+        updateDoc(ref, { likeUserIDs: [stranger], sendMessageUserIDs: [] })
+      );
+      await assertFails(
+        updateDoc(ref, { likeUserIDs: [stranger], ratingCompleted: true })
+      );
+      await assertFails(updateDoc(ref, { likeUserIDs: [stranger, "someone"] }));
+    });
+
+    test("only the client can mark rating completed", async () => {
+      await assertFails(
+        updateDoc(doc(as(stranger), ...postPath), { ratingCompleted: true })
       );
     });
 
@@ -187,8 +273,9 @@ describe("abuse rules", () => {
     test("client can mark rating completed", async () => {
       await assertSucceeds(
         updateDoc(doc(as(client), ...postPath), {
-          ratingCompleted: true,
+          messageUpdatedAt: serverTimestamp(),
           latestMessage: "評価完了しました",
+          ratingCompleted: true,
         })
       );
     });
@@ -203,6 +290,10 @@ describe("abuse rules", () => {
       await assertSucceeds(addDoc(messages(owner), message(owner, client)));
     });
 
+    test("sender cannot pose as the other party", async () => {
+      await assertFails(addDoc(messages(client), message(owner, client)));
+    });
+
     test("receiver cannot be an outsider", async () => {
       await assertFails(addDoc(messages(client), message(client, stranger)));
     });
@@ -211,8 +302,11 @@ describe("abuse rules", () => {
       await assertFails(addDoc(messages(stranger), message(stranger, owner)));
     });
 
-    test("owner cannot open a room for someone else", async () => {
+    test("no message without an existing chatroom", async () => {
       await assertFails(addDoc(messages(owner, stranger), message(owner, stranger)));
+    });
+
+    test("owner cannot open a room for someone else", async () => {
       await assertFails(
         setDoc(doc(as(owner), ...postPath, "chatrooms", stranger), {
           sendUserID: owner,
@@ -222,11 +316,34 @@ describe("abuse rules", () => {
       );
     });
 
-    test("inquirer can open their own room", async () => {
+    test("new inquiry: open room, record on post, message, owner replies", async () => {
       await assertSucceeds(
         setDoc(doc(as(stranger), ...postPath, "chatrooms", stranger), {
           sendUserID: stranger,
           postUserID: owner,
+          messageCount: 1,
+        })
+      );
+      await assertSucceeds(
+        updateDoc(doc(as(stranger), ...postPath), {
+          sendMessageUserIDs: [stranger, client],
+          messageUpdatedAt: serverTimestamp(),
+          latestMessage: "hi",
+        })
+      );
+      await assertSucceeds(
+        addDoc(messages(stranger, stranger), message(stranger, owner))
+      );
+      await assertSucceeds(
+        addDoc(messages(owner, stranger), message(owner, stranger))
+      );
+    });
+
+    test("inquirer cannot claim someone else's post owner", async () => {
+      await assertFails(
+        setDoc(doc(as(stranger), ...postPath, "chatrooms", stranger), {
+          sendUserID: stranger,
+          postUserID: stranger,
           messageCount: 1,
         })
       );
@@ -236,6 +353,7 @@ describe("abuse rules", () => {
       const ref = await addDoc(messages(client), message(client, owner));
       await assertSucceeds(updateDoc(ref, { username: "退会ユーザー" }));
       await assertFails(updateDoc(ref, { messageReceiverID: stranger }));
+      await assertFails(updateDoc(ref, { dealCompleted: true }));
       await assertFails(
         updateDoc(doc(as(stranger), ref.path), { userID: stranger, messageText: "x" })
       );
@@ -246,6 +364,9 @@ describe("abuse rules", () => {
     test("parties can update, outsiders cannot take over", async () => {
       await assertSucceeds(
         updateDoc(doc(as(owner), ...chatroomPath), { messageCount: 2 })
+      );
+      await assertSucceeds(
+        updateDoc(doc(as(client), ...chatroomPath), { messageCount: 3 })
       );
       await assertFails(
         updateDoc(doc(as(stranger), ...chatroomPath), { sendUserID: stranger })
