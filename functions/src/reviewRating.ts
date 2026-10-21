@@ -16,11 +16,11 @@ export const reviewRating = functions
       .where("postID", "==", data.postID)
       .get();
 
-    await Promise.all([
-      db
-        .collection("users")
-        .doc(`${data.receiverID}`)
-        .update({ [field]: FieldValue.increment(1) }),
-      ...onHold.docs.map((doc) => doc.ref.delete()),
-    ]);
+    // One commit, so the count and the pending entries never drift apart.
+    const batch = db.batch();
+    batch.update(db.collection("users").doc(`${data.receiverID}`), {
+      [field]: FieldValue.increment(1),
+    });
+    for (const doc of onHold.docs) batch.delete(doc.ref);
+    await batch.commit();
   });
